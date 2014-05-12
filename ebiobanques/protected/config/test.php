@@ -9,7 +9,7 @@ return CMap::mergeArray(
 			),
 			'mongodb' => array(
 				'class'            => 'EMongoDB',
-				'connectionString' => 'mongodb://localhost',
+				'connectionString' => $GLOBALS["CONNECTION_STRING_DEV"],
 				'dbName'           => 'interop',
 				'fsyncFlag'        => true,
 				'safeFlag'         => true,

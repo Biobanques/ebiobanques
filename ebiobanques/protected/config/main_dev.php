@@ -56,7 +56,7 @@ return array(
 		
 		'mongodb' => array(
 				'class'            => 'EMongoDB',
-				'connectionString' => 'mongodb://ebiobanques:ebiobanques@localhost/interop',
+				'connectionString' => $GLOBALS["CONNECTION_STRING_DEV"],
 				'dbName'           => 'interop',
 				'fsyncFlag'        => true,
 				'safeFlag'         => true,
@@ -109,7 +109,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 	// this is used in contact page
-	'adminEmail'=>'admin@mail.com',
+	'adminEmail'=>$GLOBALS["ADMIN_EMAIL"],
 	//variable pour activer systeme de mail
 	'mailSystemActif'=>false,
 	'mailRelanceExport'=>false,

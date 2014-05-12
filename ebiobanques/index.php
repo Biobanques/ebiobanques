@@ -4,6 +4,7 @@ setlocale (LC_ALL, 'fr_FR.utf8','fra');
 //timezone des dates
 date_default_timezone_set('Europe/Paris');
 
+include dirname(__FILE__).'/CommonProperties.php';
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yii-1.1.13/framework/yii.php';

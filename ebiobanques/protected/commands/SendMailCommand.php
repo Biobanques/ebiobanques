@@ -21,12 +21,12 @@
 				foreach($models as $model){
 					$mail = new JPhpMailer;
 					$mail->IsSMTP();
-					$mail->Host = 'monsmtp.com';
+					$mail->Host = $GLOBALS["SMTP_SENDER_HOST"];
 					$mail->SMTPAuth = true;
-					$mail->Port = 587;
-					$mail->Username = 'email.com';
-					$mail->Password = 'pwd';
-					$mail->SetFrom('email.com', 'contact bsf');
+					$mail->Port = $GLOBALS["SMTP_SENDER_PORT"];
+					$mail->Username = $GLOBALS["SMTP_SENDER_USERNAME"];
+					$mail->Password = $GLOBALS["SMTP_SENDER_PASSWORD"];
+					$mail->SetFrom($GLOBALS["SMTP_SENDER_FROM_EMAIL"], 'ebiobanques news');
 					$mail->Subject = $model->subject;
 					$mail->AltBody = $model->body;
 					$mail->MsgHTML($model->body);

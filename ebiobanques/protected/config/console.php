@@ -25,25 +25,12 @@ return array(
 
 			'mongodb' => array(
 					'class'            => 'EMongoDB',
-					'connectionString' => 'mongodb://ebiobanques:ebiobanques@localhost/interop',
+					'connectionString' => $GLOBALS["CONNECTION_STRING_DEV"],
 					'dbName'           => 'interop',
 					'fsyncFlag'        => false,
 					'safeFlag'         => false,
 					'useCursor'        => false
 			),
-// 		'db'=>array(
-// 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-// 		),
-		// uncomment the following to use a MySQL database
-		/*
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),
-		*/
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -55,9 +42,7 @@ return array(
 		),
 	),
 		'params'=>array(
-				// this is used in contact page
-				//'adminEmail'=>'nicolas@malservet.eu',
-                               'adminEmail'=>'admin@mail.com',
+                               'adminEmail'=>$GLOBALS["ADMIN_EMAIL"],
 				//variable pour activer systeme de mail
 				'mailSystemActif'=>true,
 				'mailRelanceExport'=>false,

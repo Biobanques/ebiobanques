@@ -1,6 +1,9 @@
 <?php
 /**
- * classe de fonctions commuens utiles.
+ * class of Common tools to use in all functions.
+ * can agregate some common constants.
+ * @author nicolas malservet
+ * @since version 0.1
  */
 class CommonTools
 {

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/ebiobanques/index.php" />
+<title>SimpleUserTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SimpleUserTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LoginForm_username</td>
+	<td>user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LoginForm_password</td>
+	<td>user</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Accueil</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>ebiobanques.fr - Search Site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Rechercher des échantillons</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Mon compte</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Mise à jour de l'utilisateur : SimpleUser SimpleUser</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Contacts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>ebiobanques.fr - Contacts Site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Contacts</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Déconnexion (user)</td>
+	<td>Déconnexion (user)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Déconnexion (user)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Connexion</td>
+	<td>Connexion</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

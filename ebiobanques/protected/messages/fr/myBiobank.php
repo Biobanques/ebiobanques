@@ -7,5 +7,6 @@ return array(
     'filesReceptionActivity' => 'Réception de fichiers',
     'samplesReceptionActivity' => 'Réception d\'échantillons',
     'samplesCompletionRate' => 'Taux de complétude des échantillons',
+    'noRequiredStats' => 'Les statistiques necéssaire n\'ont pas encore été calculées'
 );
 ?>

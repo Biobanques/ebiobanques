@@ -46,6 +46,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'bbUpdate' => 'Mise à jour de la biobanque',
     'bbManage' => 'Administrer la biobanque',
     'echManage' => 'Gérer les échantillons',
+    'benchmarking' => 'Analyse comparative',
     'msgAnnulModif' => 'Attention : toutes les modifications seront perdues lors du prochain envoi de données.',
     'saveBtn' => 'Enregistrer',
     'createBtn' => 'Créer',

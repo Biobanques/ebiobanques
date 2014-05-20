@@ -45,6 +45,7 @@ return array(
     'bbManage' => 'Manage biobank',
     'bbUpdate' => 'Update biobank',
     'echManage' => 'Manage samples',
+    'benchmarking' => 'Benchmarking',
     'msgAnnulModif' => 'Warning : all updates will be lost at the next sending of data.',
     'saveBtn' => 'Save',
     'createBtn' => 'Create',

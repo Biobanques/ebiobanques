@@ -192,7 +192,7 @@ class MybiobankController extends Controller
             ));
         } else {
             $model = $this->loadModel($biobankId);
-            Yii::app()->user->setFlash('error', 'Les statistiques necéssaire n\'ont pas encore été calculées');
+            Yii::app()->user->setFlash('error', Yii::t('myBiobank', 'noRequiredStats'));
 
             $this->render('index', array(
                 'model' => $model,

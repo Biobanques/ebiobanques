@@ -28,7 +28,7 @@
             };
         </script>-->
         <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>-->
-       <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
     </head>
 
     <body class="container" id="page">
@@ -53,10 +53,10 @@
         <?php
         $this->widget('zii.widgets.CMenu', array(
             'items' => array(
-                array('label' => "Accueil", 'url' => array('/site/accueil')),
+                array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
                 array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search')),
-                array('label' => "Questions fréquentes", 'url' => array('/site/questions')),
-                array('label' => "Activités", 'url' => array('/site/dashboard')),
+                array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
+                array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
                 array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
                 array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
                 array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),

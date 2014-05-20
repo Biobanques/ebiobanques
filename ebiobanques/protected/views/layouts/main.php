@@ -37,7 +37,7 @@
         </div>
         <div style="float:left;">
             <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/ebiobanques.fr.png', 'nddlogo', array('height' => 60, 'width' => 400)); ?>
-            <div style="color:#D788F1;margin-left:380px;font-weight:bold;font-size:15px;"><i>Beta</i></div>
+
         </div>
         <div style="float:right;padding-right:20px;padding-top:20px;">
             <div ><a href="./index.php?lang=fr"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>

@@ -7,7 +7,8 @@
  * @author nicolas
  *
  */
-class MybiobankController extends Controller {
+class MybiobankController extends Controller
+{
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -58,12 +59,35 @@ class MybiobankController extends Controller {
         $today = date('Y-m-d H:i:s');
         $diffSec = strtotime($today) - strtotime($lastImportDate);
         $diffJours = round($diffSec / 60 / 60 / 24, 0);
+        /*  if ($diffJours < 10)
+          Yii::app()->user->setFlash('success', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+          elseif ($diffJours < 30)
+          Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+          else
+          Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+
+         */
+        $args = array();
+        $args['diffJours'] = $diffJours;
+        if (Yii::app()->getLocale()->id == "fr")
+            $args['lastImportDate'] = CommonTools::toShortDateFR(date('d/m/y', strtotime($lastImportDate)));
+        else if (Yii::app()->getLocale()->id == "en")
+            $args['lastImportDate'] = CommonTools::toShortDateEN(date('d/m/y', strtotime($lastImportDate)));
+        $args['status'] = 'success';
         if ($diffJours < 10)
-            Yii::app()->user->setFlash('success', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+            $args['status'] = 'success';
+
+
+
+//            Yii::app()->user->setFlash('success', Yii::t('common', 'lastImportMessage',array('lastImportDate'=>date('d/m/y', strtotime($lastImportDate)))));
         elseif ($diffJours < 30)
-            Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+            $args['status'] = 'notice';
+
+//            Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
         else
-            Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+//            Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+            $args['status'] = 'error';
+        Yii::app()->user->setFlash($args['status'], Yii::t('myBiobank', 'lastImportMessage' . '_' . $args['status'], $args));
         $model = $this->loadModel($id);
         $this->render('index', array(
             'model' => $model,
@@ -166,8 +190,7 @@ class MybiobankController extends Controller {
                 'globalStats' => $globalStats,
                 'biobankStats' => $biobankStats,
             ));
-        }
-        else {
+        } else {
             $model = $this->loadModel($biobankId);
             Yii::app()->user->setFlash('error', 'Les statistiques necéssaire n\'ont pas encore été calculées');
 

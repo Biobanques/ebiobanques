@@ -10,7 +10,7 @@ $('.detail-button').click(function(){
     <div style="float: left; width: 330px; padding-top: 10px">
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
-            'title' => "<i class='icon-share'></i>Samples Reception Activity - " . $model->identifier
+            'title' => "<i class='icon-share'></i>" . Yii::t('myBiobank', 'samplesReceptionActivity') . " -  $model->identifier"
         ));
         $this->widget('application.widgets.charting.CBarsChartWidget', array(
             'id' => 'columnchart-count-month',
@@ -26,27 +26,33 @@ $('.detail-button').click(function(){
     </div>
 
     <div
-        style="float: left; width: 330px; padding-left: 10px; padding-top: 10px">
-            <?php
-            $this->beginWidget('zii.widgets.CPortlet', array(
-                'title' => "<i class='icon-share'></i>Files Reception Activity - " . $model->identifier
-            ));
-            $this->widget('application.widgets.charting.CBarsChartWidget', array(
-                'id' => 'columnchart-filescount-month',
-                'theme' => 'Distinctive',
-                'title' => '',
-                'data' => StatTools::getCountFilesReceptionByMonthAndBiobank($model->id),
-                'width' => 310,
-                'heigth' => 230,
-                'xAxisRotation' => 0
-            ));
-            $this->endWidget();
-            ?>
+        style="float: left;
+        width: 330px;
+        padding-left: 10px;
+        padding-top: 10px">
+        <?php
+        $this->beginWidget('zii.widgets.CPortlet', array(
+            'title' => "<i class = 'icon-share'></i>" . Yii::t('myBiobank', 'filesReceptionActivity') . " - $model->identifier"
+        ));
+        $this->widget('application.widgets.charting.CBarsChartWidget', array(
+            'id' => 'columnchart-filescount-month',
+            'theme' => 'Distinctive',
+            'title' => '',
+            'data' => StatTools::getCountFilesReceptionByMonthAndBiobank($model->id),
+            'width' => 310,
+            'heigth' => 230,
+            'xAxisRotation' => 0
+        ));
+        $this->endWidget();
+        ?>
 
 
     </div>
 
-    <div style="float:left;width:330px;padding-top: 10px;">
+    <div style="float:left;
+         width:330px;
+         padding-top: 10px;
+         ">
 
         <?php
         $stats = BiobankStats::model()->findByAttributes(array('biobank_id' => $model->id), array('$sort' => array('date' => -1)));
@@ -66,7 +72,7 @@ $('.detail-button').click(function(){
             )
         );
         $this->beginWidget('zii.widgets.CPortlet', array(
-            'title' => "<i class='icon-adjust'></i> taux de complétude des échantillons"
+            'title' => "<i class = 'icon-adjust'></i> " . Yii::t('myBiobank', 'samplesCompletionRate') . " -  $model->identifier"
         ));
 // affichage du graphe de completude des echantillons
         $this->widget('application.widgets.charting.CPieChartWidget', array(
@@ -89,7 +95,7 @@ $('.detail-button').click(function(){
 
 
             foreach ($stats->values as $valueName => $value) {
-                $attributes[] = array('label' => Sample::model()->getAttributeLabel($valueName), 'value' => $value . '%');
+                $attributes[] = array('label ' => Sample::model()->getAttributeLabel($valueName), 'value' => $value . '%');
             }
 
             $this->widget('zii.widgets.CDetailView', array(

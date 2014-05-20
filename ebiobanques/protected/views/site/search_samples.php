@@ -8,7 +8,7 @@ if ($prefs == null) {
     $prefs->id_user = Yii::app()->user->id;
     $prefs->save();
 } else {
-    echo "Vous n'avez pas encore enregistrer vos préférences de tableau.";
+    echo "Vous n'avez pas encore enregistré vos préférences de tableau.";
 }
 //recuperation des noms des attributs affichables des colonnes du grid
 $prefsNames = Preferences::model()->attributeNames();
@@ -17,7 +17,7 @@ foreach ($prefsNames as $property) {
     if ($property != 'id_user') {
         $scriptCB = $scriptCB . '$(\'#Preferences_' . $property . '\').change(function(){
 $(\'.col_' . $property . '\').toggle();
-$(\'.prefs-form form\').submit();	
+$(\'.prefs-form form\').submit();
 return false;
 });
 '
@@ -45,7 +45,7 @@ $('.prefs-form form').submit(function(){
 	$('#sample-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
-		
+
 	return false;
 });
 $scriptCB;
@@ -127,21 +127,20 @@ $scriptCB;
     echo CHtml::link(Yii::t('common', 'proceedApplication'), Yii::app()->createUrl('demande/updateAndSend', array('id' => Yii::app()->session['activeDemand'][0]->_id)));
     ?>
     <?php
-$this->widget('application.widgets.HelpDivWidget', array(
-    'id' => 'helpdDivPanier',
-    'text' => Yii::t('help', 'remplirPanier'),
-));
-?>
+    $this->widget('application.widgets.HelpDivWidget', array(
+        'id' => 'helpdDivPanier',
+        'text' => Yii::t('help', 'remplirPanier'),
+    ));
+    ?>
 </div>
 <br>
 <div class="smart-search-form">
-<?php
-
-$this->renderPartial ( '_search_smart_samples', array (
-		'smartForm' => $smartForm 
-) );
-?>
- </div> 
+    <?php
+    $this->renderPartial('_search_smart_samples', array(
+        'smartForm' => $smartForm
+    ));
+    ?>
+</div>
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array(
     'links' => array(),
@@ -217,6 +216,7 @@ function getArrayColumn($property, $header, $value, $visibility) {
         )
     );
 }
+
 $countDisplayedColumns = 0;
 foreach ($prefsNames as $property) {
     if ($property != 'id_user' && $property != '_id') {
@@ -231,9 +231,9 @@ foreach ($prefsNames as $property) {
         } elseif ($property == 'biobank_id') {
             $columns [] = getArrayColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
         } elseif ($property == 'collect_date') {
-                 $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), '$data->collect_date', $visibility);
-       //TODO normaliser les dates de collecte avant d activer cette feature
-           // $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
+            $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), '$data->collect_date', $visibility);
+            //TODO normaliser les dates de collecte avant d activer cette feature
+            // $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
         } elseif ($property == 'storage_conditions') {
             $columns [] = getArrayColumn('storage_conditions', $model->getAttributeLabel('storage_conditions'), '$data->getLiteralStorageCondition()', $visibility);
         } else {
@@ -243,17 +243,17 @@ foreach ($prefsNames as $property) {
 }
 //cas d affichage des colonnes minimales si aucune colonne n est visible
 if ($countDisplayedColumns == 0) {
-    $visibility="table_cell";
+    $visibility = "table_cell";
     $columns [] = getArrayColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
-    $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)',  $visibility);
-    
-    $property ='id_sample';
+    $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
+
+    $property = 'id_sample';
     $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $property ='gender';
+    $property = 'gender';
     $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $property ='patient_birth_date';
+    $property = 'patient_birth_date';
     $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $columns [] = getArrayColumn('notes', $model->getAttributeLabel('notes'), '$data->getShortNotes()',  $visibility);
+    $columns [] = getArrayColumn('notes', $model->getAttributeLabel('notes'), '$data->getShortNotes()', $visibility);
 }
 //popup de choix des colonnes à afficher
 

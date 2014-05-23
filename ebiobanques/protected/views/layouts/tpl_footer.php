@@ -1,10 +1,6 @@
 	<footer>
-        <div class="subnav navbar navbar-fixed-bottom">
-            <div class="navbar-inner">
-                <div class="container">
-                 Copyright Inserm - Version 0.15.<?php include 'revision_number.php'?>- Project Biobanques <a href="http://www.biobanques.eu">www.biobanques.eu</a>
-                </div>
-            </div>
+            <div style="text-align:center">
+                Copyright Inserm - Version 1.0 rev. <?php include 'revision_number.php'?>- Project Biobanques <a href="http://www.biobanques.eu">www.biobanques.eu</a>       
         </div>      
 	</footer>
 

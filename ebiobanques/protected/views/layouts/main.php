@@ -47,14 +47,19 @@
                 <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>
             </div>
         </div>
-
-    </div>
     <div id="mainmenu" style="clear:both;">
         <?php
-        $this->widget('zii.widgets.CMenu', array(
+        $this->widget('zii.widgets.CMenu', 
+                
+                array(
+                    'id'=>'navMainMenu',
+                    'encodeLabel'=>false,
+                    'htmlOptions'=>array('class'=>'mainMenu last'),
             'items' => array(
                 array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
-                array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search')),
+                array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search'),
+                    'itemOptions'=>array('class'=>'visited'),
+		'linkOptions'=>array('class'=>'bar')),
                 array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
                 array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
                 array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
@@ -70,7 +75,7 @@
     </div>
 
     <section class="main-body">
-        <div class="container-fluid">
+        <div class="container-fluid" style="height:70%;">
             <?php
             $flashMessages = Yii::app()->user->getFlashes();
             if ($flashMessages) {
@@ -84,7 +89,7 @@
         </div>
     </section>
     <!-- Require the footer -->
-    <div style="float: left;width: 100%">
+    <div style="width: 100%;">
         <?php require_once('tpl_footer.php') ?></div>
 </body>
 </html>

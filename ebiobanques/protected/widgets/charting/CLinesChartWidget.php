@@ -10,7 +10,8 @@
  * Presentation of AGenda using DOJO lib
  * PREREQUIS : mettre dans header le lien de la lib dojo?
  */
-class CLinesChartWidget extends CWidget {
+class CLinesChartWidget extends CWidget
+{
     /**
      * theme utilisé par dojo, themes possibles: Tom, Claro,
      * @var unknown_type
@@ -122,8 +123,7 @@ mychart$this->id.render();
 		";
         if (isset($this->title)) {
             echo "<div style=\"text-align:center;font-weight:bold;font-style:italic;\">" . $this->title . "</div>";
-        }
-        else {
+        } else {
             echo "<div>Aucun titre</div>";
         }
     }

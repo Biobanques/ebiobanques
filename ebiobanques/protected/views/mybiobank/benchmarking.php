@@ -26,21 +26,27 @@ if (count($biobankStats) > 1) {
             $globalDatas['global'][] = null;
     }
     ?>
-    <div style="float: left;padding:25px">
+    <div style="padding:10px;">
         <?php
+        $this->beginWidget('zii.widgets.CPortlet', array(
+            'title' => 'Taux de complétude global',
+            'htmlOptions' => array(
+                'style' => 'height:280px'
+            )
+        ));
+
         $this->widget('application.widgets.charting.CLinesChartWidget', array(
             'id' => 'attributeChart_global',
-            'title' => 'Taux de complétude global',
+            'title' => '',
             'data' => $globalDatas,
             'width' => 550,
             'height' => 230,
             'enableCompare' => true,
             'theme' => $theme
         ));
+        $this->endWidget();
         ?>
     </div>
-
-
 
 
     <?php
@@ -64,20 +70,27 @@ if (count($biobankStats) > 1) {
                     'theme' => $theme)));
     }
     ?>
-    <div style="float:left;width:200px;padding-left:5px;padding-right:5px;padding-top:10px;">
-        <div class="span-5 last">
-            <?php
-            $this->beginWidget('zii.widgets.CPortlet', array(
-                'title' => 'Détails',
-            ));
-            $this->widget('ext.AjaxMenu', array(
-                'items' => $listWidgets,));
-            $this->endWidget();
-            ?>
+    <div style="overflow: hidden">
+        <div id="detailsMenu" style="float:left;width:200px;padding-left:5px;padding-right:5px;padding-top:5px;">
+            <div class="span-5 last">
+                <?php
+                $this->beginWidget('zii.widgets.CPortlet', array(
+                    'title' => 'Détails',
+                ));
+                $this->widget('ext.AjaxMenu', array(
+                    'items' => $listWidgets,));
+                $this->endWidget();
+                ?>
 
-        </div>
-    </div><div id='detailData' style="float: left;padding: 20px">
-    </div>
+            </div></div>
+
+
+
+        <div id='detailData' style="padding: 5px;">
+            <?php
+            $this->renderPartial('_renderWidget', array('datas' => $listWidgets['id_depositor']['ajax']['data']['datas'], 'attributeName' => $listWidgets['id_depositor']['ajax']['data']['attributeName'], 'theme' => $theme));
+            ?>
+        </div></div>
 
 
     <?php
@@ -107,6 +120,6 @@ elseif (count($biobankStats == 1)) {
     ?>
 </div>
 <?php
-foreach ($globalStats[0]->values as $name => $value)
-    $globalDatas[] = array($name, str_replace(',', '.', $value));
+//foreach ($globalStats[0]->values as $name => $value)
+//    $globalDatas[] = array($name, str_replace(',', '.', $value));
 ?>

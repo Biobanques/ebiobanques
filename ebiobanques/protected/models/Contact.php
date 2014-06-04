@@ -15,8 +15,8 @@
  * @property string $code_postal
  * @property integer $inactive
  */
-class Contact extends LoggableActiveRecord {
-
+class Contact extends LoggableActiveRecord
+{
     public $id;
     public $first_name;
     public $last_name;
@@ -129,6 +129,15 @@ class Contact extends LoggableActiveRecord {
             $res[$row->id] = $row->first_name . " " . $row->last_name;
         }
         return $res;
+    }
+
+    public function getBiobank() {
+        $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->id));
+
+        if ($biobank != null)
+            return $biobank->identifier;
+        else
+            return 'Aucune';
     }
 
 }

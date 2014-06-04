@@ -1,9 +1,5 @@
 <?php
 
-/**
- * config de main de dev pour avoir une conf standard de deve et ne pas avoir à modifier les 40 paramètres propres au dev et prod
- *
- */
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
@@ -28,15 +24,6 @@ return array(
     ),
     'modules' => array(
         'auditTrail' => array(),
-    /* 'gii'=>array(
-      'class'=>'system.gii.GiiModule',
-      'password'=>'ebiobanques',
-      // If removed, Gii defaults to localhost only. Edit carefully to taste.
-      'ipFilters'=>array('127.0.0.1','::1'),
-      'generatorPaths'=>array(
-      'ext.YiiMongoDbSuite.gii'
-      ),
-      ), */
     ),
     // application components
     'components' => array(
@@ -48,7 +35,7 @@ return array(
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',
-            'connectionString' => $GLOBALS["CONNECTION_STRING_DEV"],
+            'connectionString' => $GLOBALS["CONNECTION_STRING_DEMO"],
             'dbName' => 'interop',
             'fsyncFlag' => true,
             'safeFlag' => true,
@@ -65,6 +52,12 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ),
+            // uncomment the following to show log messages on web pages
+            /*
+              array(
+              'class'=>'CWebLogRoute',
+              ),
+             */
             ),
         ),
         'ePdf' => array(

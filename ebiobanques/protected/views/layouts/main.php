@@ -43,53 +43,51 @@
             <div ><a href="./index.php?lang=fr"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
                 <a style="padding-left: 10px;" href="./index.php?lang=en"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
             </div>
-            <div style="float:right;padding-top:10px;"">
+            <div style="float:right;padding-top:10px;">
                 <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>
             </div>
         </div>
-    <div id="mainmenu" style="clear:both;">
-        <?php
-        $this->widget('zii.widgets.CMenu', 
-                
-                array(
-                    'id'=>'navMainMenu',
-                    'encodeLabel'=>false,
-                    'htmlOptions'=>array('class'=>'mainMenu last'),
-            'items' => array(
-                array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
-                array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search'),
-                    'itemOptions'=>array('class'=>'visited'),
-		'linkOptions'=>array('class'=>'bar')),
-                array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
-                array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
-                array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
-                array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
-                array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
-                array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),
-                array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
-                array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-            ),
-        ));
-        ?>
-    </div>
-
-    <section class="main-body">
-        <div class="container-fluid" style="height:70%;">
+        <div id="mainmenu" style="clear:both;">
             <?php
-            $flashMessages = Yii::app()->user->getFlashes();
-            if ($flashMessages) {
-                foreach ($flashMessages as $key => $message) {
-                    echo '<br><div class="flash-' . $key . '">' . $message . "</div>";
-                }
-            }
+            $this->widget('zii.widgets.CMenu', array(
+                'id' => 'navMainMenu',
+                'encodeLabel' => false,
+                'htmlOptions' => array('class' => 'mainMenu last'),
+                'items' => array(
+                    array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
+                    array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search'),
+                        'itemOptions' => array('class' => 'visited'),
+                        'linkOptions' => array('class' => 'bar')),
+                    array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
+                    array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
+                    array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
+                    array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
+                    array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),
+                    array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
+                    array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                ),
+            ));
             ?>
-            <!-- Include content pages -->
-            <?php echo $content; ?>
         </div>
-    </section>
-    <!-- Require the footer -->
-    <div style="width: 100%;">
-        <?php require_once('tpl_footer.php') ?></div>
-</body>
+
+        <section class="main-body">
+            <div class="container-fluid" style="height:70%;">
+                <?php
+                $flashMessages = Yii::app()->user->getFlashes();
+                if ($flashMessages) {
+                    foreach ($flashMessages as $key => $message) {
+                        echo '<br><div class="flash-' . $key . '">' . $message . "</div>";
+                    }
+                }
+                ?>
+                <!-- Include content pages -->
+                <?php echo $content; ?>
+            </div>
+        </section>
+        <!-- Require the footer -->
+        <div style="width:100%;">
+            <?php require_once('tpl_footer.php') ?></div>
+    </body>
 </html>

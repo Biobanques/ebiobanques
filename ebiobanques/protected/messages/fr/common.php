@@ -103,5 +103,11 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'faq_c4' => '>La base de données ainsi que le site web ebiobanques.fr sont maintenus par l\'infrastructure nationale française  Biobanques.
     Les biobanques participantes au projet possèdent leurs propres outils de gestion de collections d\'échantillons biologiques, pour lesquelles un outil d\'export automatisé est conçu.
     Pour participer à l\'alimentation de ce système, une simple demande auprès de l\'infrastructure Biobanques suffit, ensuite un connecteur est adapté au logiciel de la biobanque pour lui permettre d\'exporter automatiquement ces informations utiles et autorisées.',
+    'forgotedPwd' => 'Mot de passe oublié',
+    'atLeastOneField' => 'Vous devez remplir au moins un champs pour récupérer votre mot de passe.',
+    'recoverMessageSent' => 'Un message contenant vos identifiants de connexion a été envoyé à l\'adresse : {userEmail}',
+    'noUserWithEmailAndIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\' et l\'email \'{badEmail}\'',
+    'noUserWithEmail' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'email \'{badEmail}\'',
+    'noUserWithIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\'',
 );
 ?>

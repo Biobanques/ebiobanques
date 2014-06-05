@@ -209,6 +209,7 @@ class UserController extends Controller
     }
 
     public function actionSubscribe() {
+        $this->layout = '//layouts/main';
         $model = new User ();
 
         // Uncomment the following line if AJAX validation is needed

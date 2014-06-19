@@ -179,10 +179,11 @@ class UserController extends Controller
         $this->performAjaxValidation($model);
 
         $model->inactif = 0;
-        if ($model->save()) {
+        if ($model->update()) {
             CommonMailer::sendUserRegisterConfirmationMail($model);
             Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été validé.');
         } else {
+
             Yii::app()->user->setFlash('error', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') n\'a pas pu être validé. Consultez les logs pour plus de détails.');
         }
         $this->redirect(array(

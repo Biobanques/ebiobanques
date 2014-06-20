@@ -2,6 +2,7 @@
 /**
  * user controller.
  * Used for admin tasks.
+ * Access rights only for admin
  */
 class UserController extends Controller
 {
@@ -28,12 +29,8 @@ class UserController extends Controller
      */
     public function accessRules() {
         return array(
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
-                'users' => array('@'),
-            ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index,admin', 'view', 'delete', 'validate', 'desactivate'),
+                'actions' => array('create', 'update','index','admin', 'view', 'delete', 'validate', 'desactivate'),
                 'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
@@ -80,10 +77,6 @@ class UserController extends Controller
      */
     public function actionCreate() {
         $model = new User;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save())
@@ -102,16 +95,11 @@ class UserController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->update())
                 $this->redirect(array('view', 'id' => $model->_id));
         }
-
         $this->render('update', array(
             'model' => $model,
         ));
@@ -124,7 +112,6 @@ class UserController extends Controller
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

@@ -60,7 +60,7 @@
                 <?php echo Yii::t('common', 'noAccount') ?><br><br>
                 <?php
                 echo CHtml::button(Yii::t('common', 'subscribe'), array(
-                    'submit' => array("user/subscribe")
+                    'submit' => array("site/subscribe")
                 ));
                 ?>
             </div>

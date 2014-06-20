@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * user controller.
+ * Used for admin tasks.
+ */
 class UserController extends Controller
 {
     /**
@@ -25,16 +28,12 @@ class UserController extends Controller
      */
     public function accessRules() {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'subscribe', 'captcha'),
-                'users' => array('*'),
-            ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'update'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'view', 'delete', 'validate', 'desactivate'),
+                'actions' => array('index,admin', 'view', 'delete', 'validate', 'desactivate'),
                 'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
@@ -209,33 +208,7 @@ class UserController extends Controller
         ));
     }
 
-    public function actionSubscribe() {
-        $this->layout = '//layouts/main';
-        $model = new User ();
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if (isset($_POST ['User'])) {
-            $model->attributes = $_POST ['User'];
-            $model->profil = 0;
-            $model->inactif = 1;
-
-            if ($model->save()) {
-                CommonMailer::sendSubscribeAdminMail($model);
-                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                $this->redirect(array(
-                    'site/index'
-                ));
-            } else {
-                Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
-            }
-        }
-
-        $this->render('subscribe', array(
-            'model' => $model
-        ));
-    }
 
     /**
      * Performs the AJAX validation.

@@ -11,14 +11,14 @@ Yii::import('ext.ECSVExport');
  * @author nicolas
  *
  */
-class SiteController extends Controller
-{
+class SiteController extends Controller {
 
     /**
      * @var string the default layout for the views. basic_column_layout is used to set an empty left column 
      * to maximize the view and set style to the content of each page.
      */
     public $layout = '//layouts/basic_column_layout';
+
     /**
      *
      * @return array action filters
@@ -50,7 +50,8 @@ class SiteController extends Controller
                     'logout',
                     'error',
                     'contactus',
-                    'captcha', 'recoverPwd'
+                    'captcha', 'recoverPwd',
+                    'subscribe',
                 ),
                 'users' => array(
                     '*'
@@ -469,6 +470,31 @@ class SiteController extends Controller
                 Yii::app()->user->setFlash($result, $message);
             }
         }$this->render('recoverPwd', array('model' => $model,));
+    }
+
+    /**
+     * action to subscribe a new user account.
+     */
+    public function actionSubscribe() {
+        $model = new User ();
+        if (isset($_POST ['User'])) {
+            $model->attributes = $_POST ['User'];
+            $model->profil = 0;
+            $model->inactif = 1;
+
+            if ($model->save()) {
+                CommonMailer::sendSubscribeAdminMail($model);
+                Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
+                $this->redirect(array(
+                    'site/index'
+                ));
+            } else {
+                Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
+            }
+        }
+        $this->render('subscribe', array(
+            'model' => $model
+        ));
     }
 
 }

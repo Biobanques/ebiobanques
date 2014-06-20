@@ -11,10 +11,9 @@ class MyaccountController extends Controller
 {
 	
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 * @var string the default layout for the views. basic left column view.
 	 */
-// 	public $layout='//layouts/menu_myaccount';
+ 	public $layout='//layouts/basic_column_layout';
 	
 	/**
 	 * @return array action filters

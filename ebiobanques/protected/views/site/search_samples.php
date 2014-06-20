@@ -144,7 +144,7 @@ $scriptCB;
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array(
     'links' => array(),
-    'controllerName' => 'searchSample',
+    'controllerName' => 'searchSamples',
     'searchable' => true,
 ));
 ?>
@@ -199,7 +199,7 @@ $countDisplayedColumns;
 /**
  * fonction pour preparer une colonne a ajouter dans le grid des colonnes
  */
-function getArrayColumn($property, $header, $value, $visibility) {
+function addColumn($property, $header, $value, $visibility) {
     return array(
         'class' => 'DataColumn',
         'name' => $property,
@@ -227,33 +227,33 @@ foreach ($prefsNames as $property) {
             $visibility = 'display:none';
         }
         if ($property == 'notes') {
-            $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->getShortNotes()', $visibility);
+            $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->getShortNotes()', $visibility);
         } elseif ($property == 'biobank_id') {
-            $columns [] = getArrayColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
+            $columns [] = addColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
         } elseif ($property == 'collect_date') {
-            $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), '$data->collect_date', $visibility);
+            $columns [] = addColumn('collect_date', $model->getAttributeLabel('collect_date'), '$data->collect_date', $visibility);
             //TODO normaliser les dates de collecte avant d activer cette feature
             // $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
         } elseif ($property == 'storage_conditions') {
-            $columns [] = getArrayColumn('storage_conditions', $model->getAttributeLabel('storage_conditions'), '$data->getLiteralStorageCondition()', $visibility);
+            $columns [] = addColumn('storage_conditions', $model->getAttributeLabel('storage_conditions'), '$data->getLiteralStorageCondition()', $visibility);
         } else {
-            $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
+            $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
         }
     }
 }
 //cas d affichage des colonnes minimales si aucune colonne n est visible
 if ($countDisplayedColumns == 0) {
     $visibility = "table_cell";
-    $columns [] = getArrayColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
-    $columns [] = getArrayColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
+    $columns [] = addColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
+    $columns [] = addColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
 
     $property = 'id_sample';
-    $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
+    $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
     $property = 'gender';
-    $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
+    $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
     $property = 'patient_birth_date';
-    $columns [] = getArrayColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $columns [] = getArrayColumn('notes', $model->getAttributeLabel('notes'), '$data->getShortNotes()', $visibility);
+    $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
+    $columns [] = addColumn('notes', $model->getAttributeLabel('notes'), '$data->getShortNotes()', $visibility);
 }
 //popup de choix des colonnes à afficher
 

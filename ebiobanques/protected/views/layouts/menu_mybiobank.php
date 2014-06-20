@@ -1,10 +1,13 @@
-<?php /* @var $this Controller */ ?>
+
 <?php $this->beginContent('//layouts/main'); ?>
 <div style="float:left;width:200px;padding-left:5px;padding-right:5px;padding-top:10px;">
     <div class="span-5 last">
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
             'title' => Yii::t('common', 'bbadmin'),
+            'htmlOptions' => array(
+                'style' => 'height:280px'
+            )
         ));
         $this->widget('zii.widgets.CMenu', array(
             /* 'type'=>'list', */
@@ -21,5 +24,7 @@
     </div>
 </div>
 <!-- Include content pages -->
+
+
 <?php echo $content; ?>
 <?php $this->endContent(); ?>

@@ -175,6 +175,7 @@ class MybiobankController extends Controller
     }
 
     public function actionBenchmark() {
+
         if (isset($_GET['limit']))
             $limit = $_GET['limit'];
         else

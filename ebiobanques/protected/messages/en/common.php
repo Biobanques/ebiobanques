@@ -102,5 +102,11 @@ It is also intended for anyone wishing to enhance their biological biobank mater
     'faq_c4' => 'The database and the web site are ebiobanques.fr maintained by the French national infrastructure Biobanks.
     Participating biobanks have their own tools for managing collections of biological samples, for which an automatic exporting tool is designed.
 To participate to feeding of system, a simple request to the infrastructure Biobanks is enough, then a connector is adapted to the biobank software to allow it to automatically export its useful and authorized information.',
+    'forgotedPwd' => 'Forgot password',
+    'atLeastOneField' => 'You have to fill at least one field to get your password back.',
+    'recoverMessageSent' => 'A message with your credentials was sent at the following mail adress : {userEmail}',
+    'noUserWithEmailAndIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\' and the email \'{badEmail}\'',
+    'noUserWithEmail' => 'There is no user in our database with the email \'{badEmail}\'',
+    'noUserWithIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\'',
 );
 ?>

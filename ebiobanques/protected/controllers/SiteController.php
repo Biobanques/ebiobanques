@@ -9,9 +9,10 @@ Yii::import('ext.ECSVExport');
  * controller principal par defaut.
  *
  * @author nicolas
- *        
+ *
  */
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
     /**
      *
@@ -44,7 +45,7 @@ class SiteController extends Controller {
                     'logout',
                     'error',
                     'contactus',
-                    'captcha'
+                    'captcha', 'recoverPwd'
                 ),
                 'users' => array(
                     '*'
@@ -305,7 +306,7 @@ class SiteController extends Controller {
                     'envoi' => 0
                         ), array(
                     'order' => 'date_demande desc'
-                        ));
+                ));
                 if ($lastDemandRequest != null) {
                     $lastDemand = $lastDemandRequest;
                     $newDemand = false;
@@ -347,7 +348,7 @@ class SiteController extends Controller {
     /**
      * load sample model by mongo id.
      *
-     * @param unknown $id        	
+     * @param unknown $id
      * @throws CHttpException
      * @return unknown$smartSearch = new LogSmartSearch();
      */
@@ -437,6 +438,32 @@ class SiteController extends Controller {
                 }
             }
         }
+    }
+
+// username and password are required
+    // rememberMe needs to be a boolean
+
+    /**
+     * display the recover password page
+     */
+    public function actionRecoverPwd() {
+        $model = new RecoverPwdForm();
+        $result = '';
+        if (isset($_POST['RecoverPwdForm'])) {
+            $model->attributes = $_POST['RecoverPwdForm'];
+            if ($model->validate()) {
+                $mixedResult = $model->validateFields();
+
+                if ($mixedResult['result'] == true) {
+                    $result = 'success';
+                    CommonMailer::sendMailRecoverPassword($mixedResult['user']);
+                } else {
+                    $result = 'error';
+                }
+                $message = $mixedResult['message'];
+                Yii::app()->user->setFlash($result, $message);
+            }
+        }$this->render('recoverPwd', array('model' => $model,));
     }
 
 }

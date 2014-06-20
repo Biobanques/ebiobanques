@@ -69,12 +69,12 @@ class Sample extends EMongoDocument
      */
     public $field_age_max;
 
-    // This has to be defined in every model, this is same as with standard Yii ActiveRecord
+// This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
-    // This method is required!
+// This method is required!
     public function getCollectionName() {
         return 'echantillon';
     }
@@ -171,6 +171,34 @@ class Sample extends EMongoDocument
         );
     }
 
+    public function attributeExportedLabels() {
+
+        return array(
+            'id' => Yii::t('sample', 'id'),
+            'biobank_id' => Yii::t('sample', 'biobank_id'),
+            'consent_ethical' => Yii::t('sample', 'consent_ethical'),
+            'id_depositor' => Yii::t('sample', 'id_depositor'),
+            'id_sample' => Yii::t('sample', 'id_sample'),
+            'gender' => Yii::t('sample', 'gender'),
+            'age' => Yii::t('sample', 'age'),
+            'collect_date' => Yii::t('sample', 'collect_date'),
+            'storage_conditions' => Yii::t('sample', 'storage_conditions'),
+            'consent' => Yii::t('sample', 'consent'),
+            'supply' => Yii::t('sample', 'supply'),
+            'max_delay_delivery' => Yii::t('sample', 'max_delay_delivery'),
+            'detail_treatment' => Yii::t('sample', 'detail_treatment'),
+            'disease_outcome' => Yii::t('sample', 'disease_outcome'),
+            'authentication_method' => Yii::t('sample', 'authentication_method'),
+            'patient_birth_date' => Yii::t('sample', 'patient_birth_date'),
+            'tumor_diagnosis' => Yii::t('sample', 'tumor_diagnosis'),
+            //'file_imported_id' => Yii::t('sample', 'file_imported_id'),
+            'notes' => Yii::t('sample', 'notes'),
+                //'field_notes' => Yii::t('sample', 'field_notes'),
+//'field_age_min' => Yii::t('sample', 'field_age_min'),
+//'field_age_max' => Yii::t('sample', 'field_age_max'),
+        );
+    }
+
     public function search($caseSensitive = false) {
         return $this->searchWithNotes();
     }
@@ -215,7 +243,7 @@ class Sample extends EMongoDocument
         if (isset($this->tumor_diagnosis) && !empty($this->tumor_diagnosis)) {
             $criteria->tumor_diagnosis = "" . $this->tumor_diagnosis . "";
         }
-        // // recherche dans notes
+// // recherche dans notes
         if (isset($this->field_notes) && !empty($this->field_notes)) {
             $criteria->addCond('notes.value', '==', new MongoRegex('/' . $this->field_notes . '*/i'));
         }
@@ -225,10 +253,10 @@ class Sample extends EMongoDocument
         if (isset($this->field_age_max) && !empty($this->field_age_max)) {
             $criteria->addcond('age', '<=', strval($this->field_age_max));
         }
-        // Yii::app()->session['criteria']=$criteria;
+        Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
-                ));
+        ));
     }
 
     /**
@@ -236,7 +264,7 @@ class Sample extends EMongoDocument
      */
     public function getShortNotes() {
         $result = "";
-        //TODO reactiver cette partie quand operationnelle
+//TODO reactiver cette partie quand operationnelle
         if ($this->notes != null && !empty($this->notes)) {
             foreach ($this->notes as $note) {
                 if ($note != null)
@@ -254,13 +282,13 @@ class Sample extends EMongoDocument
         $criteria->biobank_id = $biobankId;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
-                ));
+        ));
     }
 
     public function getBiobankName() {
         $biobank = Biobank::model()->findByAttributes(array(
             'id' => $this->biobank_id
-                ));
+        ));
         return $biobank->identifier;
     }
 
@@ -333,7 +361,7 @@ class Sample extends EMongoDocument
         $criteria->addCond('_id', 'in', $samples);
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
-                ));
+        ));
     }
 
 }

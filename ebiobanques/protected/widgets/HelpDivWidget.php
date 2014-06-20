@@ -39,7 +39,6 @@ class HelpDivWidget extends CWidget
 		<p style=\"display:inline;\">
 		".$this->text."
 		</p>
-                ooooo
 		</div>";
 	}
 }

@@ -21,7 +21,7 @@
         ?>
     </div>
 </div>
-<div id="content">
+<div id="content" style="background-color: white;">
 <!-- Include content pages -->
 <?php echo $content; ?>
 </div><!-- content -->

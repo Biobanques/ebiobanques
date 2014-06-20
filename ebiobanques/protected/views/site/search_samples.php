@@ -134,7 +134,7 @@ $scriptCB;
     ?>
 </div>
 <br>
-<div class="smart-search-form">
+<div>
     <?php
     $this->renderPartial('_search_smart_samples', array(
         'smartForm' => $smartForm

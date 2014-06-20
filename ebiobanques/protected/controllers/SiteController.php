@@ -15,6 +15,11 @@ class SiteController extends Controller
 {
 
     /**
+     * @var string the default layout for the views. basic_column_layout is used to set an empty left column 
+     * to maximize the view and set style to the content of each page.
+     */
+    public $layout = '//layouts/basic_column_layout';
+    /**
      *
      * @return array action filters
      */

@@ -25,6 +25,7 @@
 </div>
 <!-- Include content pages -->
 
-
+<div id="content" style="background-color: white;">
 <?php echo $content; ?>
+    </div><!-- content -->
 <?php $this->endContent(); ?>

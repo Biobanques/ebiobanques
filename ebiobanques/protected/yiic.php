@@ -1,4 +1,6 @@
 <?php
+//include common properties
+include dirname(__FILE__) . '/../CommonProperties.php';
 
 // change the following paths if necessary
 $yiic=dirname(__FILE__).'/../yii-1.1.13/framework/yiic.php';

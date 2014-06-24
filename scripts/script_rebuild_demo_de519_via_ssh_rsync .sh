@@ -8,7 +8,7 @@
 
 MUSER="root"
 MURL="de519.ispfr.net"
-MPATH="/var/www/vhosts/de519.ispfr.net/httpdocs/demo-ebiobanques"
+MPATH="/var/www/vhosts/de519.ispfr.net/httpdocs/demo-ebiobanques/ebiobanques"
 
 echo "delete local cache files"
 rm -Rf ./ebiobanques/assets/*

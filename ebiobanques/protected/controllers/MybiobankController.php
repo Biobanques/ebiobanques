@@ -36,6 +36,10 @@ class MybiobankController extends Controller
                 'actions' => array('index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph'),
                 'expression' => '$user->isBiobankAdmin()',
             ),
+            array('allow', // allow authenticated user to perform 'search' actions
+                'actions' => array('indexAdmin', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph'),
+                'expression' => '$user->isAdmin()',
+            ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
@@ -49,49 +53,57 @@ class MybiobankController extends Controller
         return array();
     }
 
+    public function actionIndexAdmin() {
+        $id = $_GET['id'];
+        $this->indexForBiobank($id);
+    }
+
     /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
         $id = Yii::app()->user->biobank_id;
-        $lastImportDate = FileImported::model()->getDateLastImportByBiobank($id);
-        $today = date('Y-m-d H:i:s');
-        $diffSec = strtotime($today) - strtotime($lastImportDate);
-        $diffJours = round($diffSec / 60 / 60 / 24, 0);
-        /*  if ($diffJours < 10)
-          Yii::app()->user->setFlash('success', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
-          elseif ($diffJours < 30)
-          Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
-          else
-          Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
-
-         */
-        $args = array();
-        $args['diffJours'] = $diffJours;
-        if (Yii::app()->getLocale()->id == "fr")
-            $args['lastImportDate'] = CommonTools::toShortDateFR(date('d/m/y', strtotime($lastImportDate)));
-        else if (Yii::app()->getLocale()->id == "en")
-            $args['lastImportDate'] = CommonTools::toShortDateEN(date('d/m/y', strtotime($lastImportDate)));
-        $args['status'] = 'success';
-        if ($diffJours < 10)
-            $args['status'] = 'success';
 
 
 
-//            Yii::app()->user->setFlash('success', Yii::t('common', 'lastImportMessage',array('lastImportDate'=>date('d/m/y', strtotime($lastImportDate)))));
-        elseif ($diffJours < 30)
-            $args['status'] = 'notice';
-
-//            Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
-        else
-//            Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
-            $args['status'] = 'error';
-        Yii::app()->user->setFlash($args['status'], Yii::t('myBiobank', 'lastImportMessage' . '_' . $args['status'], $args));
-        $model = $this->loadModel($id);
-        $this->render('index', array(
-            'model' => $model,
-        ));
+//        $lastImportDate = FileImported::model()->getDateLastImportByBiobank($id);
+//        $today = date('Y-m-d H:i:s');
+//        $diffSec = strtotime($today) - strtotime($lastImportDate);
+//        $diffJours = round($diffSec / 60 / 60 / 24, 0);
+//        /*  if ($diffJours < 10)
+//          Yii::app()->user->setFlash('success', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+//          elseif ($diffJours < 30)
+//          Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+//          else
+//          Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+//
+//         */
+//        $args = array();
+//        $args['diffJours'] = $diffJours;
+//        if (Yii::app()->getLocale()->id == "fr")
+//            $args['lastImportDate'] = CommonTools::toShortDateFR(date('d/m/y', strtotime($lastImportDate)));
+//        else if (Yii::app()->getLocale()->id == "en")
+//            $args['lastImportDate'] = CommonTools::toShortDateEN(date('d/m/y', strtotime($lastImportDate)));
+//        $args['status'] = 'success';
+//        if ($diffJours < 10)
+//            $args['status'] = 'success';
+//
+//
+//
+////            Yii::app()->user->setFlash('success', Yii::t('common', 'lastImportMessage',array('lastImportDate'=>date('d/m/y', strtotime($lastImportDate)))));
+//        elseif ($diffJours < 30)
+//            $args['status'] = 'notice';
+//
+////            Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+//        else
+////            Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+//            $args['status'] = 'error';
+//        Yii::app()->user->setFlash($args['status'], Yii::t('myBiobank', 'lastImportMessage' . '_' . $args['status'], $args));
+//        $model = $this->loadModel($id);
+//        $this->render('index', array(
+//            'model' => $model,
+//        ));
     }
 
     /**
@@ -223,6 +235,46 @@ class MybiobankController extends Controller
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
+    }
+
+    public function indexForBiobank($id) {
+        $lastImportDate = FileImported::model()->getDateLastImportByBiobank($id);
+        $today = date('Y-m-d H:i:s');
+        $diffSec = strtotime($today) - strtotime($lastImportDate);
+        $diffJours = round($diffSec / 60 / 60 / 24, 0);
+        /*  if ($diffJours < 10)
+          Yii::app()->user->setFlash('success', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+          elseif ($diffJours < 30)
+          Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+          else
+          Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+
+         */
+        $args = array();
+        $args['diffJours'] = $diffJours;
+        if (Yii::app()->getLocale()->id == "fr")
+            $args['lastImportDate'] = CommonTools::toShortDateFR(date('d/m/y', strtotime($lastImportDate)));
+        else if (Yii::app()->getLocale()->id == "en")
+            $args['lastImportDate'] = CommonTools::toShortDateEN(date('d/m/y', strtotime($lastImportDate)));
+        $args['status'] = 'success';
+        if ($diffJours < 10)
+            $args['status'] = 'success';
+
+
+
+//            Yii::app()->user->setFlash('success', Yii::t('common', 'lastImportMessage',array('lastImportDate'=>date('d/m/y', strtotime($lastImportDate)))));
+        elseif ($diffJours < 30)
+            $args['status'] = 'notice';
+
+//            Yii::app()->user->setFlash('notice', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours.');
+        else
+//            Yii::app()->user->setFlash('error', 'Votre dernier import date du ' . date('d/m/y', strtotime($lastImportDate)) . ', soit ' . $diffJours . ' jours. Merci de réactualiser les données.');
+            $args['status'] = 'error';
+        Yii::app()->user->setFlash($args['status'], Yii::t('myBiobank', 'lastImportMessage' . '_' . $args['status'], $args));
+        $model = $this->loadModel($id);
+        $this->render('index', array(
+            'model' => $model,
+        ));
     }
 
 }

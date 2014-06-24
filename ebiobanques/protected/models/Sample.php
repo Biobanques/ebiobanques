@@ -289,7 +289,10 @@ class Sample extends EMongoDocument
         $biobank = Biobank::model()->findByAttributes(array(
             'id' => $this->biobank_id
         ));
-        return $biobank->identifier;
+        if ($biobank != null)
+            return $biobank->identifier;
+        else
+            return null;
     }
 
     /**

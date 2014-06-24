@@ -85,12 +85,18 @@ class SiteController extends Controller {
      * Declares class-based actions.
      */
     public function actions() {
+        $captcha = array(
+            'class' => 'CaptchaExtendedAction',
+            'mode' => CaptchaExtendedAction::MODE_WORDS,
+        );
+        //ajout de fixed value si mode de dev
+        if (CommonTools::isInDevMode()) {
+            $captchaplus = array('fixedVerifyCode' => "nicolas");
+            $captcha = array_merge($captcha, $captchaplus);
+        }
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
-            'captcha' => array(
-                'class' => 'CCaptchaAction',
-                'backColor' => 0xFFFFFF
-            ),
+            'captcha' => $captcha,
             // page action renders "static" pages stored under 'protected/views/site/pages'
             // They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
@@ -484,6 +490,7 @@ class SiteController extends Controller {
 
             if ($model->save()) {
                 CommonMailer::sendSubscribeAdminMail($model);
+                 CommonMailer::sendSubscribeUserMail($model);
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                 $this->redirect(array(
                     'site/index'

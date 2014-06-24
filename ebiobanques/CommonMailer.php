@@ -175,6 +175,11 @@ class CommonMailer
         }
     }
 
+    /**
+     * send an email to indicate to the admin that there is a new user to confirm
+     * @param type $user
+     * @return type
+     */
     public static function sendSubscribeAdminMail($user) {
         $base = CommonMailer::isInDevMode() ? CommonMailer::DEV_URL : CommonMailer::PROD_URL;
         $to = Yii::app()->params['adminEmail'];
@@ -183,7 +188,6 @@ class CommonMailer
         foreach ($user->getAttributes() as $label => $value) {
             $userDetails.="<li>$label : $value</li>";
         }
-
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 				<?xml version=\"1.0\" encoding=\"utf-8\"?>
 				<html><head>
@@ -198,8 +202,36 @@ class CommonMailer
 		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
+    
+    /**
+     * send an email to confirm that the subscritption is valid and the account waiting for validatin by admin
+     * @param type $user
+     * @return type
+     */
+    public static function sendSubscribeUserMail($user) {
+        $to = $user->email;
+        $subject = "Welcome on ebiobanques.fr ".$user->prenom." ".$user->nom;
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+				<?xml version=\"1.0\" encoding=\"utf-8\"?>
+				<html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+                                <title>Welcome ".$user->prenom." ".$user->nom." on ebiobanques.fr</title>
+				</head><body>
+                                Welcome ".$user->prenom." ".$user->nom." on ebiobanques.fr.
+			Your account is waiting for a validation by the administrator of ebiobanques.<br>
+                        If you have any problem during your experience with ebiobanques.fr feel free to send an email to ".Yii::app()->params['adminEmail']."<br>
+                            Best 
+	</body>
+		";
+        return CommonMailer::sendMail($to, $subject, $body);
+    }
 
-    function sendUserRegisterConfirmationMail($user) {
+    /**
+     * send an email to confirm that the account is valid.
+     * @param type $user
+     * @return type
+     */
+    public static function sendUserRegisterConfirmationMail($user) {
         $to = $user->email;
         $subject = "Confirmation de votre inscription sur ebiobanques.fr";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">

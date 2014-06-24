@@ -40,19 +40,7 @@ class UserController extends Controller
     }
 
     public function actions() {
-        $captcha = array(
-            'class' => 'CaptchaExtendedAction',
-            'mode' => CaptchaExtendedAction::MODE_WORDS,
-        );
-        //ajout de fixed value si mode de dev
-        if (CommonTools::isInDevMode()) {
-            $captchaplus = array('fixedVerifyCode' => "nicolas");
-            $captcha = array_merge($captcha, $captchaplus);
-        }
-
         return array(
-            // captcha action renders the CAPTCHA image displayed on the inscription page
-            'captcha' => $captcha,
             // page action renders "static" pages stored under 'protected/views/site/pages'
             // They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(

@@ -52,17 +52,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id')),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name')),
+        array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name')), array(
+            'class' => 'CLinkColumn',
+            'label' => Yii::t('myBiobank', 'seeAsAdmin'),
+            'urlExpression' => 'Yii::app()->createUrl("mybiobank/indexAdmin",array("id"=>$data->id))',
+            'htmlOptions' => array('style' => "text-align:center"),
+            'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
+        ),
         array(
             'class' => 'CButtonColumn',
         ),
-        array(
-            'class' => 'CLinkColumn',
-            'label' => 'Voir comme administrateur',
-            'urlExpression' => 'Yii::app()->createUrl("mybiobank/indexAdmin",array("id"=>$data->id))',
-            'header' => 'Vue admin'
-        ),
-        array('name' => '',)
     ),
 ));
 ?>

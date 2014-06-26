@@ -7,6 +7,8 @@ return array(
     'filesReceptionActivity' => 'Files reception activity',
     'samplesReceptionActivity' => 'Samples reception activity',
     'samplesCompletionRate' => 'Samples completion rate',
-    'noRequiredStats' => 'Required statistics have not yet been calculated.'
+    'noRequiredStats' => 'Required statistics have not yet been calculated.',
+    'seeAsAdmin' => 'See',
+    'seeAsAdminHeader' => '"My biobank" views',
 );
 ?>

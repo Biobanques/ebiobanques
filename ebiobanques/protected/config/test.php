@@ -14,7 +14,7 @@ return CMap::mergeArray(
                 ),
                 'mongodb' => array(
                     'class' => 'EMongoDB',
-                    'connectionString' => $GLOBALS["CONNECTION_STRING_DEV"],
+                    'connectionString' => CommonProperties::$CONNECTION_STRING_DEV,
                     'dbName' => 'interop',
                     'fsyncFlag' => true,
                     'safeFlag' => true,

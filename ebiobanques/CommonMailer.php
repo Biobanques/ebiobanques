@@ -11,16 +11,6 @@ class CommonMailer
     const DEV_URL = "\"http://localhost/ebiobanques-mongodb";
 
     /**
-     * get si mode de dev.
-     */
-    public static function isInDevMode() {
-        if (isset($_SERVER ['HTTP_HOST']) && $_SERVER ['HTTP_HOST'] == 'localhost') {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * from by default
      */
     const MAIL_FROM = "contact@ebiobanques.fr";
@@ -84,7 +74,7 @@ class CommonMailer
      */
     public static function sendMailConfirmationEmail($to, $identifiant, $prenom, $nom, $idUser) {
         $base = CommonMailer::DEV_URL;
-        if (!CommonMailer::isInDevMode()) {
+        if (!CommonTools::isInDevMode()) {
             $base = CommonMailer::PROD_URL;
         }
         $urlConfirm = "http://" . $base . "/index.php?r=site/confirmmail&arg1=" . $idUser . "&arg2=" . $identifiant;
@@ -181,7 +171,7 @@ class CommonMailer
      * @return type
      */
     public static function sendSubscribeAdminMail($user) {
-        $base = CommonMailer::isInDevMode() ? CommonMailer::DEV_URL : CommonMailer::PROD_URL;
+        $base = CommonTools::isInDevMode() ? CommonMailer::DEV_URL : CommonMailer::PROD_URL;
         $to = Yii::app()->params['adminEmail'];
         $subject = "Inscription d'un nouvel utilisateur sur ebiobanques.fr";
         $userDetails = '';
@@ -304,8 +294,8 @@ A bientôt sur ebiobanques.fr
     }
 
     /**
-     * envoi generique de mail
-     *
+     * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
+     * the crontask will be executed using the command line yiic sendmail.
      * @param unknown $to
      * @param unknown $subject
      * @param unknown $body
@@ -315,7 +305,7 @@ A bientôt sur ebiobanques.fr
             $mailq = new mailqueue ();
             $headers = 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-            if (!CommonMailer::isInDevMode()) {
+            if (!CommonTools::isInDevMode()) {
                 $headers .= 'From: ' . CommonMailer::MAIL_FROM . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM . "\r\n" . 'X-Mailer: PHP/' . phpversion();
                 $mailq->emailto = $to;
             } else {

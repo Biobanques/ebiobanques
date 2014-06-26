@@ -1,15 +1,16 @@
 <?php
-
 /**
- * classe d outil pour recherche intelligente a partir de mots clés
+ * class to store methods around smart research.
+ * @author Nicolas Malservet
+ * @since 1.1
  */
 class SmartResearcherTool {
 
     /**
-     * recherche a parti de la chaine de caracteres formées de mots clés<br>
-     * decoupe la chaine en fonction des espaces
+     * search samples with the keywords given<br>
+     * keywords are separated by space.
      * @param unknown $keywords
-     * @return $model Echantillon avec fonction de recherche applicable et champs a recherché mappé
+     * @return $model sample model with search parameters setted
      */
     public function search($keywords) {
         //pour chaque mot clé, on cherche une correspondance avec des valeurs possibels d echamps

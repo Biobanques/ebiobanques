@@ -25,11 +25,12 @@ class CommonTools
      */
     const XLS_EXPORT_NB = 500;
 
+    /**
+     * get if the server is in dev mode.
+     * @return boolean
+     */
     public static function isInDevMode() {
-        if (isset($_SERVER ['HTTP_HOST']) && $_SERVER ['HTTP_HOST'] == 'localhost') {
-            return true;
-        }
-        return false;
+        return CommonProperties::$DEV_MODE;
     }
 
     /**

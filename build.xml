@@ -7,6 +7,7 @@
  <target name="clean" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
   <delete dir="${basedir}/build/coverage"/>
+  <delete dir="${basedir}/build/coverage_clover"/>
   <delete dir="${basedir}/build/logs"/>
   <delete dir="${basedir}/build/pdepend"/>
  </target>
@@ -14,6 +15,7 @@
  <target name="prepare" depends="clean" description="Prepare for build">
   <mkdir dir="${basedir}/build/api"/>
   <mkdir dir="${basedir}/build/coverage"/>
+  <mkdir dir="${basedir}/build/coverage_clover"/>
   <mkdir dir="${basedir}/build/logs"/>
   <mkdir dir="${basedir}/build/pdepend"/>
   <mkdir dir="${basedir}/build/phpdox"/>
@@ -40,7 +42,7 @@
 
   <target name="phpunit" description="Run unit tests with PHPUnit">
 <exec dir="${basedir}" executable="${basedir}/vendor/bin/phpunit" failonerror="true">
-<arg line="--bootstrap ${basedir}/ebiobanques/protected/tests/bootstrap.php --coverage-html ./build/coverage ${basedir}/ebiobanques/protected/tests/" />
+<arg line="--bootstrap ${basedir}/ebiobanques/protected/tests/bootstrap.php --coverage-html ./build/coverage --coverage-clover ./build/coverage_clover/coverage.xml ${basedir}/ebiobanques/protected/tests/" />
 </exec>
 </target>
 </project>

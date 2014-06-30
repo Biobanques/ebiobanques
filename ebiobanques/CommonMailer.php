@@ -14,7 +14,6 @@ class CommonMailer
      * from by default
      */
     const MAIL_FROM = "contact@ebiobanques.fr";
-    const MAIL_FROM_DEV = "mpenicaud@biosoftwarefactory.com";
 
     /**
      * envoi de mail inscription avec infos de connexion.
@@ -305,12 +304,11 @@ A bientôt sur ebiobanques.fr
             $mailq = new mailqueue ();
             $headers = 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+            $headers .= 'From: ' . CommonMailer::MAIL_FROM . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM . "\r\n" . 'X-Mailer: PHP/' . phpversion();
             if (!CommonTools::isInDevMode()) {
-                $headers .= 'From: ' . CommonMailer::MAIL_FROM . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM . "\r\n" . 'X-Mailer: PHP/' . phpversion();
                 $mailq->emailto = $to;
             } else {
-                $headers .= 'From: ' . CommonMailer::MAIL_FROM_DEV . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM_DEV . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-                $mailq->emailto = CommonMailer::MAIL_FROM_DEV;
+                $mailq->emailto = CommonMailer::MAIL_FROM;
             }
             $mailq->subject = $subject;
             $mailq->body = $body;

@@ -9,11 +9,17 @@ class CommonProperties{
 /*
  * connection string used in ./protected/config/main_dev.php 
  */
-var $CONNECTION_STRING_DEV='mongodb://ebiobanques:ebiobanques@localhost/interop';
-/*
- * conection string used in ./protected/config/main.php for prod file
+var $CONNECTION_STRING='mongodb://ebiobanques:ebiobanques@localhost/interop';
+/**
+ * Mail system active: true if you want to send email.
  */
-var $CONNECTION_STRING_PROD='mongodb://ebiobanques:ebiobanques@localhost/interop';
+public static $MAIL_SYSTEM_ACTIVE=false;
+
+/**
+ * true if you want to send an email to signal biobank to apply their export. 
+ * 
+ */
+public static $MAIL_RELANCE_EXPORT=false;
 /*
  * Admin email to send mails in case of errors or news.
  */

@@ -35,7 +35,7 @@ return array(
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',
-            'connectionString' => $GLOBALS["CONNECTION_STRING_PROD"],
+            'connectionString' => CommonProperties::$CONNECTION_STRING,
             'dbName' => 'interop',
             'fsyncFlag' => true,
             'safeFlag' => true,
@@ -69,19 +69,6 @@ return array(
                         '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
                     ),
                     'class' => 'mpdf', // the literal class filename to be loaded from the vendors folder
-                /* 'defaultParams'     => array( // More info: http://mpdf1.com/manual/index.php?tid=184
-                  'mode'              => '', //  This parameter specifies the mode of the new document.
-                  'format'            => 'A4', // format A4, A5, ...
-                  'default_font_size' => 0, // Sets the default document font size in points (pt)
-                  'default_font'      => '', // Sets the default font-family for the new document.
-                  'mgl'               => 15, // margin_left. Sets the page margins for the new document.
-                  'mgr'               => 15, // margin_right
-                  'mgt'               => 16, // margin_top
-                  'mgb'               => 16, // margin_bottom
-                  'mgh'               => 9, // margin_header
-                  'mgf'               => 9, // margin_footer
-                  'orientation'       => 'P', // landscape or portrait orientation
-                  ) */
                 ),
             ),
         ),
@@ -90,9 +77,9 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => $GLOBALS["ADMIN_EMAIL"],
+       'adminEmail' => CommonProperties::$ADMIN_EMAIL,
         //variable pour activer systeme de mail
-        'mailSystemActif' => true,
-        'mailRelanceExport' => false,
+        'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
+        'mailRelanceExport' => CommonProperties::$MAIL_RELANCE_EXPORT,
     ),
 );

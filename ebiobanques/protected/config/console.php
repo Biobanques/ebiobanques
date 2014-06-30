@@ -4,7 +4,7 @@
 // Any writable CConsoleApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Console Application',
+	'name'=>'ebiobanques Console Application',
 
 	// preloading 'log' component
 		'preload'=>array('log'),
@@ -25,7 +25,7 @@ return array(
 
 			'mongodb' => array(
 					'class'            => 'EMongoDB',
-					'connectionString' => $GLOBALS["CONNECTION_STRING_DEV"],
+					'connectionString' => CommonProperties::$CONNECTION_STRING,
 					'dbName'           => 'interop',
 					'fsyncFlag'        => false,
 					'safeFlag'         => false,
@@ -42,7 +42,7 @@ return array(
 		),
 	),
 		'params'=>array(
-                               'adminEmail'=>$GLOBALS["ADMIN_EMAIL"],
+                               'adminEmail'=>CommonProperties::$ADMIN_EMAIL,
 				//variable pour activer systeme de mail
 				'mailSystemActif'=>true,
 				'mailRelanceExport'=>false,

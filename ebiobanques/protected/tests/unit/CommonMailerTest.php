@@ -16,7 +16,7 @@ class CommonMailerTest extends PHPUnit_Framework_TestCase
         $subject="test send mail from unit test";
         $body="Have a nice day!";
         $res=CommonMailer::sendMail($to, $subject, $body);
-        $this->assertFalse($res); 
+        $this->assertTrue($res); 
     }
 }
 ?>

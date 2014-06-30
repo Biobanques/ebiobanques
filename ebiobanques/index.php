@@ -4,21 +4,11 @@
 setlocale(LC_ALL, 'fr_FR.utf8', 'fra');
 //timezone des dates
 date_default_timezone_set('Europe/Paris');
-
 include dirname(__FILE__) . '/CommonProperties.php';
-
 // change the following paths if necessary
-$yii = dirname(__FILE__) . '/yii-1.1.14/framework/yii.php';
-//chargement de la conf de dev ou prod selon le cas
-if (($_SERVER['HTTP_HOST'] == 'localhost'))
-//    $config = dirname(__FILE__) . '/protected/config/main_dev.php';
-    $config = dirname(__FILE__) . '/protected/config/main_dev.php';
-else
-if ($_SERVER['SERVER_ADDR'] == '195.14.0.236')
-    $config = dirname(__FILE__) . '/protected/config/demo.php';
-else
-    $config = dirname(__FILE__) . '/protected/config/main.php';
-
+$yii = dirname(__FILE__) . '/yii-1.1.15/framework/yii.php';
+//load config init file using common properties
+$config = dirname(__FILE__) . '/protected/config/main.php';
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 // specify how many levels of call stack should be shown in each log message

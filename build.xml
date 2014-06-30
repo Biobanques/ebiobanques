@@ -40,7 +40,7 @@
 
   <target name="phpunit" description="Run unit tests with PHPUnit">
 <exec dir="${basedir}" executable="${basedir}/vendor/bin/phpunit" failonerror="true">
-<arg line="--bootstrap ${basedir}/ebiobanques/protected/tests/bootstrap.php ${basedir}/ebiobanques/protected/tests/" />
+<arg line="--bootstrap ${basedir}/ebiobanques/protected/tests/bootstrap.php --coverage-html ./build/coverage ${basedir}/ebiobanques/protected/tests/" />
 </exec>
 </target>
 </project>

@@ -1,9 +1,6 @@
 <?php
 
-//if (($_SERVER['HTTP_HOST'] == 'localhost'))
-$mergeWith = dirname(__FILE__) . '/main_dev.php';
-//else
-//    $mergeWith = dirname(__FILE__) . '/main.php';
+$mergeWith = dirname(__FILE__) . '/main.php';
 
 return CMap::mergeArray(
                 require($mergeWith), array(
@@ -14,7 +11,7 @@ return CMap::mergeArray(
                 ),
                 'mongodb' => array(
                     'class' => 'EMongoDB',
-                    'connectionString' => CommonProperties::$CONNECTION_STRING_DEV,
+                    'connectionString' => CommonProperties::$CONNECTION_STRING,
                     'dbName' => 'interop',
                     'fsyncFlag' => true,
                     'safeFlag' => true,

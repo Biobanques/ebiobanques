@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ebiobanques" default="build">
+     
+ <target name="build"
+   depends="prepare,lint,phpunit"/>
+
+ <target name="clean" description="Cleanup build artifacts">
+  <delete dir="${basedir}/build/api"/>
+  <delete dir="${basedir}/build/coverage"/>
+  <delete dir="${basedir}/build/coverage_clover"/>
+  <delete dir="${basedir}/build/logs"/>
+  <delete dir="${basedir}/build/pdepend"/>
+ </target>
+
+ <target name="prepare" depends="clean" description="Prepare for build">
+  <mkdir dir="${basedir}/build/api"/>
+  <mkdir dir="${basedir}/build/coverage"/>
+  <mkdir dir="${basedir}/build/coverage_clover"/>
+  <mkdir dir="${basedir}/build/logs"/>
+  <mkdir dir="${basedir}/build/pdepend"/>
+  <mkdir dir="${basedir}/build/phpdox"/>
+ </target>
+
+<!-- lint : validator and documentor for php-->
+<!-- this configuration will only check src files in foleder /ebiobanques/protected -->
+ <target name="lint" description="Perform syntax check of sourcecode files">
+  <apply executable="php" failonerror="true">
+   <arg value="-l" />
+   <fileset dir="${basedir}/ebiobanques/protected/">
+    <include name="**/*.php" />
+    <modified />
+   </fileset>
+   <!--<fileset dir="${basedir}/ebiobanques/tests">
+    <include name="**/*.php" />
+    <modified />
+   </fileset>-->
+  </apply>
+ </target>
+
+<!-- PHPUnit : unit testing for php class files -->
+<!-- fail on error indicate that the build will fail if a test failed -->
+
+  <target name="phpunit" description="Run unit tests with PHPUnit">
+<exec dir="${basedir}" executable="${basedir}/vendor/bin/phpunit" failonerror="true">
+<arg line="--bootstrap ${basedir}/ebiobanques/protected/tests/bootstrap.php --coverage-html ./build/coverage --coverage-clover ./build/coverage_clover/coverage.xml ${basedir}/ebiobanques/protected/tests/" />
+</exec>
+</target>
+</project>

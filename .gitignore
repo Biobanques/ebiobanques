@@ -2,5 +2,8 @@
 /ebiobanques/assets/f9bf41b/
 /ebiobanques/CommonProperties.php
 /ebiobanques/assets/
-/nbproject/private/
+/scripts/script_rebuild_prod_de1185_via_ssh_rsync.sh
 /vendor/
+/composer.lock
+/ebiobanques/CommonProperties_IntegrationJenkins.php
+/build/

@@ -10,5 +10,7 @@ return array(
     'noRequiredStats' => 'Required statistics have not yet been calculated.',
     'seeAsAdmin' => 'See',
     'seeAsAdminHeader' => '"My biobank" views',
+    'connector' => 'Connector',
+    'uploadConnector' => "Upload connector",
 );
 ?>

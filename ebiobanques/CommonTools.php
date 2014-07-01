@@ -26,7 +26,7 @@ class CommonTools
     const XLS_EXPORT_NB = 500;
 
     public static function isInDevMode() {
-        if ($_SERVER['HTTP_HOST'] == 'localhost') {
+        if (isset($_SERVER ['HTTP_HOST']) && $_SERVER ['HTTP_HOST'] == 'localhost') {
             return true;
         }
         return false;

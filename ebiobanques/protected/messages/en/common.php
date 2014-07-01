@@ -108,5 +108,6 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'noUserWithEmailAndIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\' and the email \'{badEmail}\'',
     'noUserWithEmail' => 'There is no user in our database with the email \'{badEmail}\'',
     'noUserWithIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\'',
+    'download' => 'Download {filename}',
 );
 ?>

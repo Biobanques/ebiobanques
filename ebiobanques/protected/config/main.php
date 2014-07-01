@@ -35,7 +35,7 @@ return array(
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',
-            'connectionString' => $GLOBALS["CONNECTION_STRING_PROD"],
+            'connectionString' => CommonProperties::$CONNECTION_STRING_PROD,
             'dbName' => 'interop',
             'fsyncFlag' => true,
             'safeFlag' => true,

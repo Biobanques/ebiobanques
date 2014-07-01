@@ -31,7 +31,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
     </head>
 
-    <body class="container" id="page">
+    <body class="container" id="page" >
         <div style="float:left;">
             <a href="http://www.biobanques.eu" target="_blank"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/logobb.png', 'logo', array('height' => 80, 'width' => 110)); ?></a>
         </div>
@@ -73,7 +73,7 @@
         </div>
 
         <section class="main-body">
-            <div class="container-fluid" style="height:70%;">
+            <div class="container-fluid" style="height:70%; background-color: white">
                 <?php
                 $flashMessages = Yii::app()->user->getFlashes();
                 if ($flashMessages) {

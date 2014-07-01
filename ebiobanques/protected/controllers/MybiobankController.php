@@ -171,8 +171,6 @@ class MybiobankController extends Controller
             $biobankId = $_SESSION['biobank_id'];
         else
             $biobankId = Yii::app()->user->biobank_id;
-        // $biobankId = Yii::app()->user->biobank_id;
-
 
         $biobankStats = BiobankStats::model()->getByBiobank($biobankId, $limit);
         $globalStats = BiobankStats::model()->getByBiobank("0", $limit);

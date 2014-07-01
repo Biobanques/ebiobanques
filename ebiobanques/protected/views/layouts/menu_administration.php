@@ -5,6 +5,9 @@
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
             'title' => Yii::t('common', 'administration'),
+//            'htmlOptions' => array(
+//                'style' => 'height:280px'
+//            )
         ));
         $this->widget('zii.widgets.CMenu', array(
             'encodeLabel' => false,
@@ -21,8 +24,7 @@
         ?>
     </div>
 </div>
-<div id="content" style="background-color: white;">
-<!-- Include content pages -->
-<?php echo $content; ?>
+<div id="content" style="background-color: white; ">
+    <?php echo $content; ?>
 </div><!-- content -->
 <?php $this->endContent(); ?>

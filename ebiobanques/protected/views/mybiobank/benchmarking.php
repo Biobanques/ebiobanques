@@ -27,11 +27,13 @@ if (count($biobankStats) > 1) {
     }
     ?>
     <div style="padding:10px;">
+
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
             'title' => 'Taux de complétude global',
             'htmlOptions' => array(
-                'style' => 'height:280px'
+                'style' =>
+                'height:280px;display:inline-block',
             )
         ));
 
@@ -46,6 +48,7 @@ if (count($biobankStats) > 1) {
         ));
         $this->endWidget();
         ?>
+
     </div>
 
 
@@ -70,7 +73,8 @@ if (count($biobankStats) > 1) {
                     'theme' => $theme)));
     }
     ?>
-    <div style="overflow: hidden">
+
+    <div style="overflow: hidden;display: inline-block">
         <div id="detailsMenu" style="float:left;width:200px;padding-left:5px;padding-right:5px;padding-top:5px;">
             <div class="span-5 last">
                 <?php
@@ -86,7 +90,7 @@ if (count($biobankStats) > 1) {
 
 
 
-        <div id='detailData' style="padding: 5px;">
+        <div id='detailData' style="padding: 5px;display: inline-block">
             <?php
             $this->renderPartial('_renderWidget', array('datas' => $listWidgets['id_depositor']['ajax']['data']['datas'], 'attributeName' => $listWidgets['id_depositor']['ajax']['data']['attributeName'], 'theme' => $theme));
             ?>

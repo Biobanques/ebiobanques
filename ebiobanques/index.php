@@ -8,7 +8,7 @@ date_default_timezone_set('Europe/Paris');
 include dirname(__FILE__) . '/CommonProperties.php';
 
 // change the following paths if necessary
-$yii = dirname(__FILE__) . '/yii-1.1.13/framework/yii.php';
+$yii = dirname(__FILE__) . '/yii-1.1.14/framework/yii.php';
 //chargement de la conf de dev ou prod selon le cas
 if (($_SERVER['HTTP_HOST'] == 'localhost'))
 //    $config = dirname(__FILE__) . '/protected/config/main_dev.php';

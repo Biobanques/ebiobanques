@@ -60,6 +60,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
         ),
         array(
+            'class' => 'CLinkColumn',
+            'label' => Yii::t('myBiobank', 'uploadConnector'),
+            'urlExpression' => 'Yii::app()->createUrl("connecteur/upload",array("biobank_id"=>$data->id))',
+            'htmlOptions' => array('style' => "text-align:center"),
+            'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
+        ),
+        array(
             'class' => 'CButtonColumn',
         ),
     ),

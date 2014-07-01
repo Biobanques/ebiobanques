@@ -109,5 +109,6 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'noUserWithEmailAndIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\' et l\'email \'{badEmail}\'',
     'noUserWithEmail' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'email \'{badEmail}\'',
     'noUserWithIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\'',
+    'download' => 'Télécharger \'filename\'',
 );
 ?>

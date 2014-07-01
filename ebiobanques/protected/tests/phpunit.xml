@@ -9,9 +9,8 @@
 >
     
 
-	<selenium>
-		<!--<browser name="Internet Explorer" browser="*iexplore" />-->
+	<!--<selenium>
 		<browser name="Firefox" browser="*firefox" />
-	</selenium>
+	</selenium>-->
 
 </phpunit>

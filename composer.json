@@ -1,13 +1,9 @@
 {
-
-    "require-dev":{
-        "phpunit/phpunit": "3.7.*",
-        "phpunit/phpunit-selenium": ">=1.2",
-        "phpunit/dbunit":">=1.2",
+    "require-dev": {
+        "phpunit/phpunit": "4.1.3",
+        "phpunit/dbunit": ">=1.2",
         "phpunit/phpunit-story": "*",
-         "ext-mongo" : "*",
-         "ext-gd":"*"
-   
+        "phpunit/phpunit-selenium": ">=1.2",
+        "phpunit/php-invoker": "1.1.3"
     }
-
 }

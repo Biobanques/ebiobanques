@@ -10,5 +10,7 @@ return array(
     'noRequiredStats' => 'Les statistiques necéssaire n\'ont pas encore été calculées',
     'seeAsAdmin' => 'Voir',
     'seeAsAdminHeader' => 'Vues "ma biobanque"',
+    'connector' => 'Connecteur',
+    'uploadConnector' => 'Ajouter un connecteur',
 );
 ?>

@@ -16,6 +16,33 @@ class CommonMailer
     const MAIL_FROM = "contact@ebiobanques.fr";
 
     /**
+     * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
+     * the crontask will be executed using the command line yiic sendmail.
+     * @param unknown $to
+     * @param unknown $subject
+     * @param unknown $body
+     */
+    public static function sendMail($to, $subject, $body) {
+        try {
+            $mailq = new mailqueue ();
+            $headers = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+            $headers .= 'From: ' . CommonMailer::MAIL_FROM . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+            if (!CommonTools::isInDevMode()) {
+                $mailq->emailto = $to;
+            } else {
+                $mailq->emailto = CommonMailer::MAIL_FROM;
+            }
+            $mailq->subject = $subject;
+            $mailq->body = $body;
+            $mailq->headers = $headers;
+            return $mailq->save();
+        } catch (Exception $e) {
+            Yii::log("exception sur save mail", "error");
+        }
+    }
+    
+    /**
      * envoi de mail inscription avec infos de connexion.
      */
     function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
@@ -263,16 +290,18 @@ class CommonMailer
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
-    public static function sendMailRecoverPassword($contact) {
-
-        $to = $contact->email;
-        $fname = $contact->prenom;
-        $lname = $contact->nom;
-        $login = $contact->login;
-        $password = $contact->password;
-
-
-        $subject = "Vos exports sur ebiobanques.fr";
+    /**
+     * send a email to recover the password
+     * @param type $user
+     * @return true if it s sent ( stored in db then pull by the cron task)
+     */
+    public static function sendMailRecoverPassword($user) {
+        $to = $user->email;
+        $fname = $user->prenom;
+        $lname = $user->nom;
+        $login = $user->login;
+        $password = $user->password;
+        $subject = "Informations perdues sur ebiobanques.fr";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
@@ -283,42 +312,13 @@ class CommonMailer
                 Identifiant : $login<br>
                 Password : $password <br>
                 Vous pouvez dès à présent vous connecter avec ces identifiants.
-
 A bientôt sur ebiobanques.fr
-
-
 		</body>
 		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
-    /**
-     * "send" an email. To do it, store an email into db and a crontask will pull emails to send them.
-     * the crontask will be executed using the command line yiic sendmail.
-     * @param unknown $to
-     * @param unknown $subject
-     * @param unknown $body
-     */
-    public static function sendMail($to, $subject, $body) {
-        try {
-            $mailq = new mailqueue ();
-            $headers = 'MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-            $headers .= 'From: ' . CommonMailer::MAIL_FROM . "\r\n" . 'Reply-To: ' . CommonMailer::MAIL_FROM . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-            if (!CommonTools::isInDevMode()) {
-                $mailq->emailto = $to;
-            } else {
-                $mailq->emailto = CommonMailer::MAIL_FROM;
-            }
-            $mailq->subject = $subject;
-            $mailq->body = $body;
-            $mailq->headers = $headers;
-
-            return $mailq->save();
-        } catch (Exception $e) {
-            Yii::log("exception sur save mail", "error");
-        }
-    }
+    
 
 }
 ?>

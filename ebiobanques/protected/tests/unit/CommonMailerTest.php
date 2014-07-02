@@ -15,8 +15,17 @@ class CommonMailerTest extends PHPUnit_Framework_TestCase
         $to="contact@ebiobanques.fr";
         $subject="test send mail from unit test";
         $body="Have a nice day!";
-        $res=CommonMailer::sendMail($to, $subject, $body);
-        $this->assertTrue($res); 
+        $this->assertTrue(CommonMailer::sendMail($to, $subject, $body)); 
+    }
+    
+     /**
+     * testing method to check if sendMail is correct. 
+     */
+    public function testSendMailRecoverPassword(){
+        $criteria = new EMongoCriteria;
+        $criteria->login="nmalservet";
+        $user=User::model()->find($criteria);;
+        $this->assertTrue(CommonMailer::sendMailRecoverPassword($user)); 
     }
 }
 ?>

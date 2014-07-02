@@ -15,6 +15,7 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'ext.*',
+        'ext.SeleniumWebTestCase.*',
         'ext.YiiMongoDbSuite.*',
         'ext.YiiMongoDbSuite.extra.*',
         'application.models.*',
@@ -77,7 +78,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-       'adminEmail' => CommonProperties::$ADMIN_EMAIL,
+        'adminEmail' => CommonProperties::$ADMIN_EMAIL,
         //variable pour activer systeme de mail
         'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
         'mailRelanceExport' => CommonProperties::$MAIL_RELANCE_EXPORT,

@@ -1,15 +1,19 @@
 <phpunit 
    bootstrap="bootstrap.php"
-		colors="false"
+		colors="true"
 		convertErrorsToExceptions="true"
 		convertNoticesToExceptions="true"
 		convertWarningsToExceptions="true"
 		stopOnFailure="false"
                 stopOnError="false"
 >
-    
+   <logging>
+<log type="coverage-html" target="/home/matthieu/Documents/test/result/" charset="UTF-8"
+                yui="true" highlight="true" lowUpperBound="35" highLowerBound="70" />
+</logging>
+ 
 
-	<!--<selenium>
+<!--	<selenium>
 		<browser name="Firefox" browser="*firefox" />
 	</selenium>-->
 

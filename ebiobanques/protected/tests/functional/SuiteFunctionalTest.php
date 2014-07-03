@@ -3,8 +3,6 @@
 class SuiteFunctionalTest extends SeleniumWebTestCase
 {
 
-    //protected $coverageScriptUrl = 'http://localhost/phpunit/phpunit_coverage.php';
-
     protected function setUp() {
         parent::setUp();
         $this->setBrowser("*firefox");

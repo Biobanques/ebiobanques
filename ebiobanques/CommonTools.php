@@ -17,11 +17,11 @@ class CommonTools
     const FRENCH_SHORT_DATE_FORMAT = "d/m/Y";
     const ENGLISH_SHORT_DATE_FORMAT = "Y-m-d";
     const FRENCH_HD_DATE_FORMAT = "d/m/Y H:i";
-    const ENGLISH_HD_DATE_FORMAT = "Y/m/d H:i";
+    const ENGLISH_HD_DATE_FORMAT = "Y-m-d H:i";
     const HOUR_DATE_FORMAT = "H:i";
 
     /*
-     * limite pour export xls
+     * limit number of lines for excel export to prevent memory issue
      */
     const XLS_EXPORT_NB = 500;
 
@@ -34,44 +34,46 @@ class CommonTools
     }
 
     /**
-     * transforme la date mysql en format français jj/mm/aaaa
+     * translate a mysql date to en franch format dd/mm/yyyy
      * @param unknown $madate
      */
     public static function toShortDateFR($madate) {
-        $result = "";
-        if ($madate != "") {
-            $result = date(CommonTools::FRENCH_SHORT_DATE_FORMAT, strtotime($madate));
-        }
-        return $result;
-    }
-
-    public static function toShortDateEN($madate) {
-        $result = "";
-        if ($madate != "") {
-            $result = date(CommonTools::ENGLISH_SHORT_DATE_FORMAT, strtotime($madate));
-        }
-        return $result;
+        return CommonTools::toDate(CommonTools::FRENCH_SHORT_DATE_FORMAT, $madate);
     }
 
     /**
-     * transforme la date mysql en format français jj/mm/aaaa
+     * translate a mysql date to en english date short format yyyy-mm-dd.
+     * @param type $madate
+     * @return type
+     */
+    public static function toShortDateEN($madate) {
+            return CommonTools::toDate(CommonTools::ENGLISH_SHORT_DATE_FORMAT, $madate);
+    }
+
+    /**
+     * translate a mysql date format into a french long format dd/mm/yyyy hh:mm 
      * @param unknown $madate
      */
     public static function toDateFR($madate) {
-        $result = "";
-        if ($madate != "") {
-            $result = date(CommonTools::FRENCH_HD_DATE_FORMAT, strtotime($madate));
-        }
-        return $result;
+        return CommonTools::toDate(CommonTools::FRENCH_HD_DATE_FORMAT, $madate);
     }
 
     public static function toDateEN($madate) {
+        return CommonTools::toDate(CommonTools::ENGLISH_HD_DATE_FORMAT, $madate);
+    }
+    /**
+     * method to encapsulate controls on date translation, null, empty
+     * @param type $format
+     * @param type $mydate
+     * @return type
+     */
+    public static function toDate($format,$mydate)
+            {
         $result = "";
-        if ($madate != "") {
-            $result = date(CommonTools::ENGLISH_HD_DATE_FORMAT, strtotime($madate));
+        if ($mydate != "") {
+            $result = date($format, strtotime($mydate));
         }
         return $result;
     }
-
 }
 ?>

@@ -13,7 +13,7 @@
 </logging>
  
 
-<!--	<selenium>
+	<!--<selenium>
 		<browser name="Firefox" browser="*firefox" />
 	</selenium>-->
 

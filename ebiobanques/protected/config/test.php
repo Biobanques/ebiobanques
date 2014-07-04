@@ -4,6 +4,9 @@ $mergeWith = dirname(__FILE__) . '/main.php';
 
 return CMap::mergeArray(
                 require($mergeWith), array(
+            'import' => array(
+                'ext.SeleniumWebTestCase.*',
+            ),
             'components' => array(
                 'fixture' => array(
                     'class' => 'ext.YiiMongoDbSuite.test.EMongoDbFixtureManager',
@@ -11,7 +14,8 @@ return CMap::mergeArray(
                 ),
                 'mongodb' => array(
                     'class' => 'EMongoDB',
-                    'connectionString' => CommonProperties::$CONNECTION_STRING,
+                    'connectionString' => CommonProperties::$CONNECTION_DEMO_STRING,
+                    //'connectionString' => CommonProperties::$CONNECTION_STRING,
                     'dbName' => 'interop',
                     'fsyncFlag' => true,
                     'safeFlag' => true,

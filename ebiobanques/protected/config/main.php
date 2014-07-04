@@ -15,7 +15,6 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'ext.*',
-        'ext.SeleniumWebTestCase.*',
         'ext.YiiMongoDbSuite.*',
         'ext.YiiMongoDbSuite.extra.*',
         'application.models.*',

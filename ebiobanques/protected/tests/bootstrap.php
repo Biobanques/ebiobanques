@@ -9,6 +9,7 @@
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 include dirname(__FILE__) . '/../../CommonProperties.php';
+include dirname(__FILE__) . '/../../TestProperties.php';
 //includes fichiers statiques à la racine
 require_once dirname(__FILE__) . '/../../CommonMailer.php';
 require_once dirname(__FILE__) . '/../../CommonTools.php';

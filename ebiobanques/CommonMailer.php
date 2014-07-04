@@ -9,7 +9,6 @@ class CommonMailer
 {
     const PROD_URL = "\"http://www.ebiobanques.fr/";
     const DEV_URL = "\"http://localhost/ebiobanques-mongodb";
-
     /**
      * from by default
      */
@@ -41,7 +40,7 @@ class CommonMailer
             Yii::log("exception sur save mail", "error");
         }
     }
-    
+
     /**
      * envoi de mail inscription avec infos de connexion.
      */
@@ -218,7 +217,7 @@ class CommonMailer
 		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
-    
+
     /**
      * send an email to confirm that the subscritption is valid and the account waiting for validatin by admin
      * @param type $user
@@ -226,17 +225,17 @@ class CommonMailer
      */
     public static function sendSubscribeUserMail($user) {
         $to = $user->email;
-        $subject = "Welcome on ebiobanques.fr ".$user->prenom." ".$user->nom;
+        $subject = "Welcome on ebiobanques.fr " . $user->prenom . " " . $user->nom;
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 				<?xml version=\"1.0\" encoding=\"utf-8\"?>
 				<html><head>
 				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
-                                <title>Welcome ".$user->prenom." ".$user->nom." on ebiobanques.fr</title>
+                                <title>Welcome " . $user->prenom . " " . $user->nom . " on ebiobanques.fr</title>
 				</head><body>
-                                Welcome ".$user->prenom." ".$user->nom." on ebiobanques.fr.
+                                Welcome " . $user->prenom . " " . $user->nom . " on ebiobanques.fr.
 			Your account is waiting for a validation by the administrator of ebiobanques.<br>
-                        If you have any problem during your experience with ebiobanques.fr feel free to send an email to ".Yii::app()->params['adminEmail']."<br>
-                            Best 
+                        If you have any problem during your experience with ebiobanques.fr feel free to send an email to " . Yii::app()->params['adminEmail'] . "<br>
+                            Best
 	</body>
 		";
         return CommonMailer::sendMail($to, $subject, $body);
@@ -296,13 +295,15 @@ class CommonMailer
      * @return true if it s sent ( stored in db then pull by the cron task)
      */
     public static function sendMailRecoverPassword($user) {
-        $to = $user->email;
-        $fname = $user->prenom;
-        $lname = $user->nom;
-        $login = $user->login;
-        $password = $user->password;
-        $subject = "Informations perdues sur ebiobanques.fr";
-        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+        try {
+            if ($user != null)
+                $to = $user->email;
+            $fname = $user->prenom;
+            $lname = $user->nom;
+            $login = $user->login;
+            $password = $user->password;
+            $subject = "Informations perdues sur ebiobanques.fr";
+            $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur ebiobanques.fr</title>
@@ -315,10 +316,12 @@ class CommonMailer
 A bientôt sur ebiobanques.fr
 		</body>
 		";
-        return CommonMailer::sendMail($to, $subject, $body);
+            return CommonMailer::sendMail($to, $subject, $body);
+        } catch (Exception $e) {
+            Yii::log("exception sur save mail", "error");
+            return false;
+        }
     }
-
-    
 
 }
 ?>

@@ -4,41 +4,16 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/ebiobanques/index.php" />
-<title>BioAdminTest</title>
+<title>AnonymeTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">BioAdminTest</td></tr>
+<tr><td rowspan="1" colspan="3">AnonymeTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/ebiobanques/index.php</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Connexion</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=LoginForm_username</td>
-	<td>bbadmin</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=LoginForm_password</td>
-	<td>bbadmin</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>name=yt0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>name=yt0</td>
+	<td>/ebiobanques/index-test.php?r=site/accueil</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,13 +28,43 @@
 </tr>
 <tr>
 	<td>assertTitle</td>
-	<td>ebiobanques.fr - Search Site</td>
+	<td>ebiobanques.fr - Login Site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Questions fréquentes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>ebiobanques.fr - Questions Site</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Activités</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>css=h1</td>
-	<td>Rechercher des échantillons</td>
+	<td>css=div.portlet-title</td>
+	<td>Reception de fichiers</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Localisation des échantillons</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Biobanques</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>ebiobanques.fr - Biobanks Site</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -68,32 +73,17 @@
 </tr>
 <tr>
 	<td>assertTitle</td>
-	<td>ebiobanques.fr - Contacts Site</td>
+	<td>ebiobanques.fr - Login Site</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=h1</td>
-	<td>Contacts</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
-	<td>link=Ma biobanque</td>
+	<td>link=Connexion</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTitle</td>
-	<td>ebiobanques.fr - Mybiobank</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=div.portlet-title</td>
-	<td>Ma biobanque</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Déconnexion (bbadmin)</td>
+	<td>ebiobanques.fr - Login Site</td>
 	<td></td>
 </tr>
 

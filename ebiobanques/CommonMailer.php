@@ -9,6 +9,7 @@ class CommonMailer
 {
     const PROD_URL = "\"http://www.ebiobanques.fr/";
     const DEV_URL = "\"http://localhost/ebiobanques-mongodb";
+
     /**
      * from by default
      */
@@ -40,7 +41,7 @@ class CommonMailer
             Yii::log("exception sur save mail", "error");
         }
     }
-
+    
     /**
      * envoi de mail inscription avec infos de connexion.
      */

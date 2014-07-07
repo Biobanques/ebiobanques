@@ -11,7 +11,7 @@ class SeleniumWebTestCase extends CWebTestCase
     protected function setUp() {
         parent::setUp();
         $this->setBrowser("*firefox");
-        $this->setBrowserUrl("http://localhost/ebiobanques/index-test.php");
+        $this->setBrowserUrl("http://localhost/demo-ebiobanques/index-test.php");
     }
 
 }

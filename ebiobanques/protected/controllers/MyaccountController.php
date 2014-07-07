@@ -3,87 +3,79 @@
 /**
  * controller de la partie administration.<br>
  * Administration du site avec users, biobanks etc.
- * 
+ *
  * @author nicolas
  *
  */
 class MyaccountController extends Controller
 {
-	
-	/**
-	 * @var string the default layout for the views. basic left column view.
-	 */
- 	public $layout='//layouts/basic_column_layout';
-	
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-				'accessControl', // perform access control for CRUD operations
-				'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
-	
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-				array('allow', // allow authenticated user to perform 'search' actions
-						'actions'=>array('index','dashboard'),
-						'users'=>array('@'),
-				),
-				array('deny',  // deny all users
-						'users'=>array('*'),
-				),
-		);
-	}
-	/**
-	 * Declares class-based actions.
-	 */
-	public function actions()
-	{
-		return array();
-	}
+    /**
+     * @var string the default layout for the views. basic left column view.
+     */
+    public $layout = '//layouts/basic_column_layout';
 
-	/**
-	 * This is the default 'index' action that is invoked
-	 * when an action is not explicitly requested by users.
-	 */
-	public function actionIndex()
-	{
-		$id=Yii::app()->user->getId();
-		$model=$this->loadModel($id);
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('index','id'=>$model->id));
-		}
-		$this->render('index',array(
-				'model'=>$model));
-		
-	}
+    /**
+     * @return array action filters
+     */
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
+    }
 
-	/**
-	 * affichage du tableau de bord
-	 */
-	public function actionDashboard()
-	{
-		$this->render('dashboard');
-	}
-	public function loadModel($id)
-	{
-		$model=User::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
-	
-	
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules() {
+        return array(
+            array('allow', // allow authenticated user to perform 'search' actions
+                'actions' => array('index', 'dashboard'),
+                'users' => array('@'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
+
+    /**
+     * Declares class-based actions.
+     */
+    public function actions() {
+        return array();
+    }
+
+    /**
+     * This is the default 'index' action that is invoked
+     * when an action is not explicitly requested by users.
+     */
+    public function actionIndex() {
+        $id = Yii::app()->user->getId();
+        $model = $this->loadModel($id);
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
+            if ($model->save(null))
+                $this->redirect(array('index', 'id' => $model->_id));
+        }
+        $this->render('index', array(
+            'model' => $model));
+    }
+
+    /**
+     * affichage du tableau de bord
+     */
+    public function actionDashboard() {
+        $this->render('dashboard');
+    }
+
+    public function loadModel($id) {
+        $model = User::model()->findByPk($id);
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+
 }

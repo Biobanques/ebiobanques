@@ -6,7 +6,7 @@ return array(
         "nom" => "demoUser",
         "prenom" => "demoUser",
         "login" => "demo",
-        "password" => "demoTest",
+        "password" => "demo",
         "email" => "demo@ebb.fr",
         "gsm" => "0102030405",
         "profil" => "0",

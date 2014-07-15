@@ -12,7 +12,7 @@ $theme = 'Claro';
 
 
 if (count($biobankStats) > 1) {
-    $max = max(array(count($globalStats), count($biobankStats))) - 1;
+    $max = min(array(count($globalStats), count($biobankStats))) - 1;
     $globalDatas = array();
     for ($i = 0; $i <= $max; $i++) {
         if (isset($biobankStats[$max - $i]))

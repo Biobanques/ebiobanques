@@ -11,10 +11,10 @@ Yii::import('ext.ECSVExport');
  * @author nicolas
  *
  */
-class SiteController extends Controller {
-
+class SiteController extends Controller
+{
     /**
-     * @var string the default layout for the views. basic_column_layout is used to set an empty left column 
+     * @var string the default layout for the views. basic_column_layout is used to set an empty left column
      * to maximize the view and set style to the content of each page.
      */
     public $layout = '//layouts/basic_column_layout';
@@ -52,6 +52,7 @@ class SiteController extends Controller {
                     'contactus',
                     'captcha', 'recoverPwd',
                     'subscribe',
+                    'test'
                 ),
                 'users' => array(
                     '*'
@@ -490,7 +491,7 @@ class SiteController extends Controller {
 
             if ($model->save()) {
                 CommonMailer::sendSubscribeAdminMail($model);
-                 CommonMailer::sendSubscribeUserMail($model);
+                CommonMailer::sendSubscribeUserMail($model);
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
                 $this->redirect(array(
                     'site/index'
@@ -502,6 +503,10 @@ class SiteController extends Controller {
         $this->render('subscribe', array(
             'model' => $model
         ));
+    }
+
+    public function ActionTest() {
+        $this->render('test');
     }
 
 }

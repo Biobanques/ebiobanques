@@ -221,9 +221,10 @@ class MybiobankController extends Controller
         $args = array();
         $args['diffJours'] = $diffJours;
         if (Yii::app()->getLocale()->id == "fr")
-            $args['lastImportDate'] = CommonTools::toShortDateFR(date('d/m/y', strtotime($lastImportDate)));
+//            $args['lastImportDate'] = date('d/m/y', strtotime($lastImportDate));
+            $args['lastImportDate'] = CommonTools::toShortDateFR($lastImportDate);
         else if (Yii::app()->getLocale()->id == "en")
-            $args['lastImportDate'] = CommonTools::toShortDateEN(date('d/m/y', strtotime($lastImportDate)));
+            $args['lastImportDate'] = CommonTools::toShortDateEN($lastImportDate);
         $args['status'] = 'success';
         if ($diffJours < 10)
             $args['status'] = 'success';

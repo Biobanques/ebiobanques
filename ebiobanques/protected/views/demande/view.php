@@ -22,7 +22,7 @@ $prefsNames = Preferences::model ()->attributeNames ();
 $sortedData = $model->getArraySamples();
 $arrayBiobank=$model->getBiobanksFromSamples($sortedData);
 
-$imageSampleDetail = './images/zoom.png';
+$imageSampleDetail = Yii::app()->baseUrl.'/images/zoom.png';
 $columns = array ();
 
 $columns [] = '_id';

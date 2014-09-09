@@ -15,27 +15,31 @@ $('#biobanks-grid').yiiGridView('update', {
 ?>
 
 <div class="page-header">
-	<h1><?php echo Yii::t('common','biobanks') ?></h1>
+    <h1><?php echo Yii::t('common', 'biobanks') ?></h1>
 </div>
 
-<?php 
-// echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); 
-$this->widget('application.widgets.menu.CMenuBarLineWidget', array('links'=>array(),'controllerName'=>'searchBiobank','searchable'=>true));
+<?php
+// echo CHtml::link('Advanced Search','#',array('class'=>'search-button'));
+$this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'searchBiobank', 'searchable' => true));
 ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'biobanks-grid',
-	'dataProvider'=>$model->search(),
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'biobanks-grid',
+    'dataProvider' => $model->search(),
 // 	'filter'=>$model,
-	'columns'=>array(
-array('name'=>'identifier','header'=>$model->getAttributeLabel('identifier')),
-array('name'=>'name','header'=>$model->getAttributeLabel('name')),
-array('name'=>'collection_id','header'=>$model->getAttributeLabel('collection_id')),
-array('name'=>'contact','value'=>'$data->getShortContact()','header'=>$model->getAttributeLabel('contact_id')),
-	),
-)); ?>
+    'columns' => array(
+        array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
+        array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
+        array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id')),
+        array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
+    ),
+));
+?>

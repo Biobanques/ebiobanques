@@ -11,7 +11,7 @@ if ($prefs == null) {
 }
 
 $prefsNames = Preferences::model()->attributeNames();
-$imageSampleDetail = './images/zoom.png';
+$imageSampleDetail = Yii::app()->baseUrl.'/images/zoom.png';
 $columns = array();
 foreach ($prefsNames as $property) {
 

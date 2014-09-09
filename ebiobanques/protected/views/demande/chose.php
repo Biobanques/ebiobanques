@@ -80,7 +80,7 @@ $this->renderPartial('_search', array(
 <!-- search-form -->
 
 <?php
-$imageSampleDetail = './images/zoom.png';
+$imageSampleDetail = Yii::app()->baseUrl.'/images/zoom.png';
 $this->widget('application.extensions.selgridview.SelGridView', array(
     'id' => 'demande-grid',
     'dataProvider' => $model->searchForCurrentUser(),

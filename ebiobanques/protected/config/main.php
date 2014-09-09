@@ -33,6 +33,9 @@ return array(
             //tell the application to use your WebUser class instead of the default CWebUser
             'class' => 'WebUser',
         ),
+        'urlManager' => array(
+            'urlFormat' => 'path',
+        ),
         'mongodb' => array(
             'class' => 'EMongoDB',
             'connectionString' => CommonProperties::$CONNECTION_STRING,

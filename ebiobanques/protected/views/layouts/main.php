@@ -40,8 +40,8 @@
 
         </div>
         <div style="float:right;padding-right:20px;padding-top:20px;">
-            <div ><a href="./index.php?lang=fr"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
-                <a style="padding-left: 10px;" href="./index.php?lang=en"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
+            <div ><a href="<?php echo (Yii::app()->request->baseUrl . "/index.php?lang=fr"); ?>"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
+                <a style="padding-left: 10px;" href="<?php echo (Yii::app()->request->baseUrl . "/index.php?lang=en"); ?>"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
             </div>
             <div style="float:right;padding-top:10px;">
                 <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>

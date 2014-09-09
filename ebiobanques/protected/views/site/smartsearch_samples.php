@@ -80,7 +80,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
 <?php 
 $this->endWidget('zii.widgets.jui.CJuiDialog');
 
-$imageSelect= CHtml::image('./images/table-icone.png', Yii::t('common','prefsSelect'));
+$imageSelect= CHtml::image(Yii::app()->baseUrl.'/images/table-icone.png', Yii::t('common','prefsSelect'));
 $this->widget ( 'application.widgets.menu.CMenuBarLineWidget', array (
 		'links' => array (),
 		'controllerName' => 'searchSamples',

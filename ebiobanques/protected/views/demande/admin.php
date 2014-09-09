@@ -50,8 +50,8 @@ $this->endWidget ( 'zii.widgets.jui.CJuiDialog' );
 </div><!-- search-form -->
 
 <?php
-$imageSelect = CHtml::image ( './images/table-icone.png', Yii::t ( 'common', 'prefsSelect' ) );
-$imageSampleDetail = './images/zoom.png';
+$imageSelect = CHtml::image ( Yii::app()->baseUrl.'/images/table-icone.png', Yii::t ( 'common', 'prefsSelect' ) );
+$imageSampleDetail = Yii::app()->baseUrl.'/images/zoom.png';
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'demande-grid',
 	'dataProvider'=>$model->searchForCurrentUser(),

@@ -47,11 +47,11 @@ class CommonTools
      * @return type
      */
     public static function toShortDateEN($madate) {
-            return CommonTools::toDate(CommonTools::ENGLISH_SHORT_DATE_FORMAT, $madate);
+        return CommonTools::toDate(CommonTools::ENGLISH_SHORT_DATE_FORMAT, $madate);
     }
 
     /**
-     * translate a mysql date format into a french long format dd/mm/yyyy hh:mm 
+     * translate a mysql date format into a french long format dd/mm/yyyy hh:mm
      * @param unknown $madate
      */
     public static function toDateFR($madate) {
@@ -61,19 +61,20 @@ class CommonTools
     public static function toDateEN($madate) {
         return CommonTools::toDate(CommonTools::ENGLISH_HD_DATE_FORMAT, $madate);
     }
+
     /**
      * method to encapsulate controls on date translation, null, empty
      * @param type $format
      * @param type $mydate
      * @return type
      */
-    public static function toDate($format,$mydate)
-            {
+    public static function toDate($format, $mydate) {
         $result = "";
         if ($mydate != "") {
             $result = date($format, strtotime($mydate));
         }
         return $result;
     }
+
 }
 ?>

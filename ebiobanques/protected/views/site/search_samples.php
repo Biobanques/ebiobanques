@@ -55,7 +55,7 @@ $scriptCB;
 <h1><?php echo Yii::t('common', 'searchsamples'); ?></h1>
 <div style="margin: 5px;"><?php echo Yii::t('common', 'totalnumbersamples'); ?> : <b><?php echo $model->count(); ?></b>.<br>
     <?php
-    $imageSelect = CHtml::image('./images/table-icone.png', Yii::t('common', 'prefsSelect'));
+    $imageSelect = CHtml::image(Yii::app()->baseUrl.'/images/table-icone.png', Yii::t('common', 'prefsSelect'));
     ?>
     <script type="text/javascript">
         function addEchToDemand(id) {
@@ -118,12 +118,14 @@ $scriptCB;
 </div>
 <br>
 <div style="border:1px solid blueviolet;padding:3px;">
-    <img src="./images/basket.png" alt="mon panier"/>
+    <!--<img src=Yii::app()->baseUrl."/images/basket.png" alt="mon panier"/>-->
     <?php
+    echo CHtml::image(yii::app()->baseUrl . "/images/basket.png", "mon panier");
     echo CHtml::link(Yii::t('common', 'choseDemand'), Yii::app()->createUrl('demande/chose', array('id_user' => Yii::app()->user->id)));
     ?>
-    <img src="./images/basket_go.png" alt="finaliser mon panier" style="padding-left:10px;"/>
+<!--    <img src=Yii::app()->baseUrl."/images/basket_go.png" alt="finaliser mon panier" style="padding-left:10px;"/>-->
     <?php
+    echo CHtml::image(yii::app()->baseUrl . "/images/basket_go.png", "finaliser mon panier");
     echo CHtml::link(Yii::t('common', 'proceedApplication'), Yii::app()->createUrl('demande/updateAndSend', array('id' => Yii::app()->session['activeDemand'][0]->_id)));
     ?>
     <?php

@@ -17,6 +17,8 @@ return array(
         'ext.*',
         'ext.YiiMongoDbSuite.*',
         'ext.YiiMongoDbSuite.extra.*',
+        'ext.editMe.*',
+        'ext.editMe.widgets.*',
         'application.models.*',
         'application.components.*',
         'application.modules.auditTrail.models.AuditTrail',

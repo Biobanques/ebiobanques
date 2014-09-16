@@ -227,6 +227,7 @@ class SiteController extends Controller
      *        	the ID of the model to be displayed
      */
     public function actionView($id) {
+        $this->layout = 'detailview';
         $this->render('view', array(
             'model' => $this->loadModel($id)
         ));
@@ -345,6 +346,7 @@ class SiteController extends Controller
             }
         }
         // display the login form
+
         $this->render('login', array(
             'model' => $model
         ));

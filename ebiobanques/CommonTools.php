@@ -76,5 +76,16 @@ class CommonTools
         return $result;
     }
 
+    /**
+     * Trasforme un fichier binaire dans le format mime indiqué.
+     * @param type $bin
+     * @param type $mime
+     * @return string
+     */
+    public static function data_uri($bin, $mime) {
+        $base64 = base64_encode($bin);
+        return ('data:' . $mime . ';base64,' . $base64);
+    }
+
 }
 ?>

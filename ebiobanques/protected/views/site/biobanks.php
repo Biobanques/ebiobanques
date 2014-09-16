@@ -31,7 +31,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 </div><!-- search-form -->
 
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->Widget('zii.widgets.grid.CGridView', array(
     'id' => 'biobanks-grid',
     'dataProvider' => $model->search(),
 // 	'filter'=>$model,
@@ -40,6 +40,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id')),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-    ),
+        array(
+            'class' => 'CLinkColumn',
+            'labelExpression' => 'isset($data->vitrine)&&$data->vitrine!=null?"Voir le site vitrine":null',
+            'urlExpression' => '$data->getVitrineLink()',
+            'htmlOptions' => array('style' => "text-align:center"),
+            'header' => 'Site vitrine'
+        )
+    )
 ));
 ?>

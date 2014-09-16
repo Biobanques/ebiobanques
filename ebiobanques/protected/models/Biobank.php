@@ -19,18 +19,19 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord {
-
+class Biobank extends LoggableActiveRecord
+{
     public $id;
     public $identifier;
-    public $name;
-    public $collection_name;
+    public $name = 'Non défini';
+    public $collection_name = 'Non définie';
     public $collection_id;
     public $date_entry;
     public $folder_reception;
     public $folder_done;
     public $passphrase;
     public $contact_id;
+    public $vitrine;
 
     /**
      * Returns the static model of the specified AR class.
@@ -53,14 +54,14 @@ class Biobank extends LoggableActiveRecord {
      */
     public function rules() {
         return array(
-            array('id, identifier, name, collection_name, folder_reception, folder_done, passphrase', 'required'),
+            array('id, identifier, name, collection_name, folder_reception, folder_done, passphrase,', 'required'),
             array('id,contact_id', 'numerical', 'integerOnly' => true),
             array('identifier, name, collection_name, collection_id', 'length', 'max' => 45),
             array('folder_reception, folder_done, passphrase', 'length', 'max' => 200),
             array('date_entry', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, identifier, name, collection_name, collection_id,contact_id, date_entry, folder_reception, folder_done, passphrase', 'safe', 'on' => 'search'),
+            array('id, identifier, name, collection_name, collection_id,contact_id, date_entry, folder_reception, folder_done, passphrase,vitrine', 'safe', 'on' => 'search'),
         );
     }
 
@@ -79,6 +80,8 @@ class Biobank extends LoggableActiveRecord {
             'folder_done' => Yii::t('common', 'folder_done'),
             'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
+            'vitrine[fr]' => 'Texte en francais',
+            'vitrine[logo]' => 'Emplacement du logo'
         );
     }
 
@@ -94,6 +97,7 @@ class Biobank extends LoggableActiveRecord {
             'folder_done' => Yii::t('common', 'folder_done'),
             'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
+            'vitrine["fr"]' => 'Texte en francais'
         );
     }
 
@@ -188,7 +192,7 @@ class Biobank extends LoggableActiveRecord {
         $result = null;
         $c = new EMongoCriteria;
         $c->id('==', $idBiobank);
-        $biobanks = $this->findAll($c);
+        $biobanks = Biobank::model()->findAll($c);
         if (count($biobanks) == 1) {
             $result = $biobanks[0];
         }
@@ -207,6 +211,13 @@ class Biobank extends LoggableActiveRecord {
             $result = $biobank->name;
         }
         return $result;
+    }
+
+    public function getVitrineLink() {
+        if (isset($this->vitrine) && $this->vitrine != null)
+            return Yii::app()->createUrl('vitrine/view', array('id' => $this->id));
+        else
+            return null;
     }
 
 }

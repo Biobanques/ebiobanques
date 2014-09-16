@@ -12,5 +12,6 @@ return array(
     'seeAsAdminHeader' => 'Vues "ma biobanque"',
     'connector' => 'Connecteur',
     'uploadConnector' => 'Ajouter un connecteur',
+    'vitrine' => 'Site vitrine',
 );
 ?>

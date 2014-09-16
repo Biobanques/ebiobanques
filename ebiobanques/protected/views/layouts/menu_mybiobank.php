@@ -19,6 +19,8 @@
         if (Yii::app()->user->isAdmin()) {
             $items[] = array('label' => Yii::t("myBiobank", "uploadConnector"), 'url' => array('/connecteur/upload'),);
         }
+        $items[] = array('label' => Yii::t("myBiobank", "vitrine"), 'url' => array('/vitrine/admin'), 'template' => '<hr> {menu}');
+        $items[] = array('label' => 'test', 'url' => array('/vitrine/test'), 'template' => '<hr> {menu}');
 
         $this->widget('zii.widgets.CMenu', array(
             /* 'type'=>'list', */

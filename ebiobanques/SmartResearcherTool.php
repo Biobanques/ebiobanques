@@ -1,10 +1,12 @@
 <?php
+
 /**
  * class to store methods around smart research.
  * @author Nicolas Malservet
  * @since 1.1
  */
-class SmartResearcherTool {
+class SmartResearcherTool
+{
 
     /**
      * search samples with the keywords given<br>
@@ -12,9 +14,11 @@ class SmartResearcherTool {
      * @param unknown $keywords
      * @return $model sample model with search parameters setted
      */
-    public function search($keywords) {
+    public function search($keywords, $biobank_id = null) {
         //pour chaque mot clé, on cherche une correspondance avec des valeurs possibels d echamps
         $model = new Sample('search');
+        if ($biobank_id != null)
+            $model->biobank_id = $biobank_id;
         //split des mots cles
         $tabKeywords = explode(" ", $keywords);
         //la correspondance de valeur n est utile que pour un champ, sinon ç ava pas souvent marcher
@@ -53,7 +57,7 @@ class SmartResearcherTool {
      */
     public static function isGenderKeyword($keyword) {
         $result = null;
-        $possibilities = array("male" => "M", "female" => "F", "homme" => "M", "femme" => "F", "H" => "M", "F" => "F","M" => "M");
+        $possibilities = array("male" => "M", "female" => "F", "homme" => "M", "femme" => "F", "H" => "M", "F" => "F", "M" => "M");
         foreach (array_keys($possibilities) as $possibility) {
             if (strcasecmp($keyword, $possibility) == 0) {
                 $result = $possibilities[$possibility];
@@ -66,7 +70,7 @@ class SmartResearcherTool {
      * si le mot clé est une valeur possible d'age, alors conversion
      * @param type $keyword
      * @return array avec en premiere valeur le comparateur, et en seconde la valeur numérique
-     * 
+     *
      */
     public static function isAgeKeyword($keyword) {
         $result = null;
@@ -95,7 +99,7 @@ class SmartResearcherTool {
                 }
             }
             //recuperation de la valeur numerique à droite du comparateur
-            $agevalue = substr($keyword, $comparateurpos+1, $yearpos-1);
+            $agevalue = substr($keyword, $comparateurpos + 1, $yearpos - 1);
             if ($comparateur == null) {
                 $comparateur = "==";
             }
@@ -105,5 +109,4 @@ class SmartResearcherTool {
     }
 
 }
-
 ?>

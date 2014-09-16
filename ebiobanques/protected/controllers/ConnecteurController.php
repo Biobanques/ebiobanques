@@ -76,7 +76,7 @@ class ConnecteurController extends Controller
     public function actionDownload() {
 
         $id = $_GET['id'];
-        $file = Connecteur::model()->findByPk(new MongoId($id));
+        $file = Logo::model()->findByPk(new MongoId($id));
         $splitStringArray = split("/", $file->filename);
         $fileName = end($splitStringArray);
         header('Content-Type: application/java-archive');

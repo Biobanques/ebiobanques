@@ -12,5 +12,6 @@ return array(
     'seeAsAdminHeader' => '"My biobank" views',
     'connector' => 'Connector',
     'uploadConnector' => "Upload connector",
+    'vitrine' => 'showcase',
 );
 ?>

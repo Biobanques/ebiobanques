@@ -49,7 +49,7 @@
                 <?php
                 $this->endWidget();
 
-                echo CHtml::link(Yii::t('common', 'forgotedPwd'), array('site/recoverPwd'));
+                echo CHtml::link(Yii::t('common', 'forgotedPwd'), array_merge(array("site/recoverPwd"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array()));
                 ?>
 
 
@@ -60,7 +60,7 @@
                 <?php echo Yii::t('common', 'noAccount') ?><br><br>
                 <?php
                 echo CHtml::button(Yii::t('common', 'subscribe'), array(
-                    'submit' => array("site/subscribe")
+                    'submit' => array_merge(array("site/subscribe"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
                 ));
                 ?>
             </div>

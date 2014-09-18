@@ -53,22 +53,17 @@ class MybiobankController extends Controller
         return array();
     }
 
-    public function actionIndexAdmin() {
-
-        $id = $_GET['id'];
-        $_SESSION['biobank_id'] = $id;
-        $this->indexForBiobank($id);
-    }
-
     /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-        if (Yii::app()->user->isAdmin())
-            $id = $_SESSION['biobank_id'];
-        else
+
+        if (Yii::app()->user->isAdmin() && isset($_GET['id']))
+            $id = $_GET['id'];
+        elseif (Yii::app()->user->isBiobankAdmin())
             $id = Yii::app()->user->biobank_id;
+        $_SESSION['biobank_id'] = $id;
         $this->indexForBiobank($id);
     }
 
@@ -85,7 +80,7 @@ class MybiobankController extends Controller
         if (isset($_POST['Biobank'])) {
             $model->attributes = $_POST['Biobank'];
             if ($model->save())
-                $this->redirect(array('index', 'id' => $model->_id));
+                $thisgagner->redirect(array('index', 'id' => $model->_id));
         }
 
         $this->render('update', array(

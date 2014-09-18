@@ -41,7 +41,7 @@ class VitrineController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('view', 'login'),
+                'actions' => array('view', 'login', 'contactus'),
                 'users' => array('*'),
             ),
             array('deny', // deny all users
@@ -50,9 +50,25 @@ class VitrineController extends Controller
         );
     }
 
-    public function actions() {
+    public function beforeAction() {
+        if (isset($_GET['id']))
+            $_SESSION['biobank_id'] = $_GET['id'];
+        return true;
+    }
 
+    public function actions() {
+        $captcha = array(
+            'class' => 'CaptchaExtendedAction',
+            'mode' => CaptchaExtendedAction::MODE_WORDS,
+        );
+        //ajout de fixed value si mode de dev
+        if (CommonTools::isInDevMode()) {
+            $captchaplus = array('fixedVerifyCode' => "nicolas");
+            $captcha = array_merge($captcha, $captchaplus);
+        }
         return array(
+            // captcha action renders the CAPTCHA image displayed on the contact page
+            'captcha' => $captcha,
 // page action renders "static" pages stored under 'protected/views/site/pages'
 // They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
@@ -71,87 +87,9 @@ class VitrineController extends Controller
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView() {
-        $id = $this->getBiobankId();
+        $id = CommonTools::getBiobankInfo();
 
         $this->render('view');
-    }
-
-    /**
-     * Displays the login page
-     */
-    public function actionLogin() {
-        $model = new LoginForm ();
-        $id = $this->getBiobankId();
-// if it is ajax validation request
-        if (isset($_POST ['ajax']) && $_POST ['ajax'] === 'login-form') {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-
-// collect user input data
-        if (isset($_POST ['LoginForm'])) {
-            $model->attributes = $_POST ['LoginForm'];
-// validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login()) {
-                $lastDemandRequest = Demande::model()->findByAttributes(array(
-                    'id_user' => Yii::app()->user->id,
-                    'envoi' => 0
-                        ), array(
-                    'order' => 'date_demande desc'
-                ));
-                if ($lastDemandRequest != null) {
-                    $lastDemand = $lastDemandRequest;
-                    $newDemand = false;
-
-                    Yii::app()->session ['activeDemand'] = array(
-                        $lastDemand,
-                        $newDemand
-                    );
-                } else {
-                    $lastDemandRequest = new Demande ();
-                    $lastDemandRequest->id_user = Yii::app()->user->id;
-                    $lastDemandRequest->date_demande = date("Y-m-d H:i:s");
-                    $lastDemandRequest->envoi = 0;
-                    $lastDemandRequest->sampleList = array();
-                    $lastDemandRequest->save();
-                    $newDemand = true;
-                    Yii::app()->session ['activeDemand'] = array(
-                        $lastDemandRequest,
-                        $newDemand
-                    );
-                }
-                $this->redirect(Yii::app()->user->returnUrl);
-            }
-        }
-// display the login form
-
-        $this->render('/site/login', array(
-            'model' => $model
-        ));
-    }
-
-    public function actionLogout() {
-        Yii::app()->user->logout();
-        $this->redirect('vitrine/view');
-    }
-
-    public function actionTest() {
-        $id = $this->getBiobankId();
-
-        $this->render('view');
-    }
-
-    public function getBiobankId() {
-        if (isset($_GET['id']))
-            $id = $_GET['id'];
-        elseif (Yii::app()->user->isAdmin())
-            $id = $_SESSION['biobank_id'];
-        else
-            $id = Yii::app()->user->biobank_id;
-        $this->biobank = Biobank::getBiobank($id);
-        $pk = $this->biobank->vitrine['logo'];
-        $this->logo = Logo::model()->findByPk(new MongoId($pk));
-        return $id;
     }
 
     /**
@@ -200,9 +138,9 @@ class VitrineController extends Controller
     }
 
     public function actionSearchSample() {
-        $id = $this->getBiobankId();
+        $id = CommonTools::getBiobankInfo();
         if (Yii::app()->user->isGuest)
-            $this->redirect(array('login', 'id' => $this->biobank->id));
+            $this->redirect(array('login', 'id' => $id));
 
         $model = new Sample('search');
         $model->unsetAttributes();
@@ -228,7 +166,6 @@ class VitrineController extends Controller
             }
             if (Yii::app()->session ['SampleForm'] != $_GET ['Sample']) {
                 $_GET ['Echantillon_page'] = null;
-//$this->logAdvancedSearch($content);
             }
             Yii::app()->session ['SampleForm'] = $_GET ['Sample'];
         }
@@ -240,10 +177,9 @@ class VitrineController extends Controller
             $smartForm->attributes = $_POST ['SampleSmartForm'];
             if (Yii::app()->session ['keywords'] != $smartForm->keywords) {
                 $_GET ['Echantillon_page'] = null;
-//$this->logSmartSearch($smartForm->keywords);
             }
             Yii::app()->session ['keywords'] = $smartForm->keywords;
-            $model = SmartResearcherTool::search($smartForm->keywords, $this->biobank->id);
+            $model = SmartResearcherTool::search($smartForm->keywords, $id);
         }
         $this->render('search_samples', array(
             'model' => $model,
@@ -278,6 +214,29 @@ class VitrineController extends Controller
         $this->render('admin', array("model" => $model));
     }
 
+    /**
+     * Displays the contact page
+     */
+    public function actionContactus() {
+        CommonTools::getBiobankInfo();
+        $model = new ContactForm ();
+        if (isset($_POST ['ContactForm'])) {
+            $model->attributes = $_POST ['ContactForm'];
+            if ($model->validate()) {
+                $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
+                $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
+                $headers = "From: $name <{$model->email}>\r\n" . "Reply-To: {$model->email}\r\n" . "MIME-Version: 1.0\r\n" . "Content-type: text/plain; charset=UTF-8";
+
+                mail(Yii::app()->params ['adminEmail'], $subject, $model->body, $headers);
+                Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                $this->refresh();
+            }
+        }
+        $this->render('../site/contact', array(
+            'model' => $model
+        ));
+    }
+
     private function logoUpload() {
         if (Yii::app()->user->isAdmin())
             $biobank_id = $_SESSION['biobank_id'];
@@ -289,7 +248,7 @@ class VitrineController extends Controller
             $tempFilename = $_FILES["Biobank"]["tmp_name"]['vitrine']['logo'];
             $filename = $_FILES["Biobank"]["name"]['vitrine']['logo'];
             if ($_FILES['Biobank']['size']['vitrine']['logo'] < 1000000) {
-// print_r($_FILES['Biobank']['size']['vitrine']['logo']);
+
 
                 if (in_array(substr($filename, -4), array('.jpg', '.png')) || in_array(substr($filename, -5), array('.jpeg'))) {
                     $model->filename = $tempFilename;
@@ -300,7 +259,7 @@ class VitrineController extends Controller
                     if ($model->save()) {
                         $model->filename = $filename;
                         if ($model->save()) {
-//                        Yii::app()->user->setFlash('success', "The picture $filename has been successfully uploaded.");
+
                             return $model->_id;
                         }
                     }
@@ -312,12 +271,6 @@ class VitrineController extends Controller
             }
         }
     }
-
-//    public function affich($id) {
-//        $file = logo::model()->findByPk(new MongoId($id));
-//
-//        return $file;
-//    }
 
     /**
      * Returns the data model based on the primary key given in the GET variable.

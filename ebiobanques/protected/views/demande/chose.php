@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-    window.onfocus = function() {
+    window.onfocus = function () {
         $('#demande-grid').yiiGridView('update', {
             data: $(this).serialize()
         });
@@ -35,7 +35,7 @@ $('.search-form form').submit(function(){
             'data': {'id': id},
             'type': 'post',
             'cache': false,
-            'success': function(data) {
+            'success': function (data) {
                 $('.demandeActiveMsg').html(data);
             }
         });
@@ -48,7 +48,7 @@ $('.search-form form').submit(function(){
             'url': '<?php echo Yii::app()->createUrl("demande/createNewDemand") ?>',
             'type': 'post',
             'cache': false,
-            'success': function(data) {
+            'success': function (data) {
                 $('.demandeActiveMsg').html(data);
             }
 
@@ -64,23 +64,24 @@ $('.search-form form').submit(function(){
 </script>
 <h1><?php echo Yii::t('demande', 'gererDemandes'); ?></h1>
 <p>
-    <span class="demandeActiveMsg"> 
-<?php //echo Yii::t('common','activeDemandMsg').Yii::app()->session['activeDemand'][0]->_id ?></span>
+    <span class="demandeActiveMsg">
+        <?php //echo Yii::t('common','activeDemandMsg').Yii::app()->session['activeDemand'][0]->_id ?></span>
 </p>
-        <?php echo CHtml::link(Yii::t('demande', 'creerDemande'), '#', array(
-            'onclick' => 'createNewDemand()'));
-        ?>
-<div class="search-form" style="display: none">
 <?php
-$this->renderPartial('_search', array(
-    'model' => $model
-));
+echo CHtml::link(Yii::t('demande', 'creerDemande'), '#', array(
+    'onclick' => 'createNewDemand()'));
 ?>
+<div class="search-form" style="display: none">
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model
+    ));
+    ?>
 </div>
 <!-- search-form -->
 
 <?php
-$imageSampleDetail = Yii::app()->baseUrl.'/images/zoom.png';
+$imageSampleDetail = Yii::app()->baseUrl . '/images/zoom.png';
 $this->widget('application.extensions.selgridview.SelGridView', array(
     'id' => 'demande-grid',
     'dataProvider' => $model->searchForCurrentUser(),
@@ -122,7 +123,7 @@ $this->widget('application.extensions.selgridview.SelGridView', array(
             'header' => $model->getAttributeLabel('details'), // lien d'affichage de la popup
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->_id',
-            'urlExpression' => 'Yii::app()->createUrl("demande/update",array("id"=>"$data->_id"))',
+            'urlExpression' => 'Yii::app()->createUrl("demande/update",array_merge(array("id"=>"$data->_id"),isset($_GET["layout"]) ? array("layout" => $_GET["layout"]) : array()))',
             'htmlOptions' => array(
                 'style' => 'text-align:center'
             ),

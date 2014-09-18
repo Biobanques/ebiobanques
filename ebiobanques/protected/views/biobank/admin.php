@@ -55,7 +55,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name')), array(
             'class' => 'CLinkColumn',
             'label' => Yii::t('myBiobank', 'seeAsAdmin'),
-            'urlExpression' => 'Yii::app()->createUrl("mybiobank/indexAdmin",array("id"=>$data->id))',
+            'urlExpression' => 'Yii::app()->createUrl("mybiobank/index",array("id"=>$data->id))',
             'htmlOptions' => array('style' => "text-align:center"),
             'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
         ),

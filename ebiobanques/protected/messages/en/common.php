@@ -109,5 +109,6 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'noUserWithEmail' => 'There is no user in our database with the email \'{badEmail}\'',
     'noUserWithIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\'',
     'download' => 'Download {filename}',
+    'noBiobankFound' => 'The biobank website cannot be found, please chose one in the following list',
 );
 ?>

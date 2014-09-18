@@ -6,7 +6,7 @@
 $this->pageTitle = Yii::app()->name . ' - Contact Us';
 ?>
 
-<h1>Contact Us</h1>
+<h1><?php echo Yii::t('common', 'contactus') ?></h1>
 
 <?php if (Yii::app()->user->hasFlash('contact')): ?>
 

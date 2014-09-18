@@ -18,35 +18,47 @@
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-        <!-- javascripts ( en fin de page pour meilleurs perfs) -->
-        <!--  utilisation d un CDN gogle pour accelerer temps de chargement JS -->
-        <!--<script src='js/dojo-release-1.9.1/dojo/dojo.js'></script>
-        <script type="text/javascript">
-            var dojoConfig = {
-                parseOnLoad: true,
-                afterOnLoad: true,
-            };
-        </script>-->
-        <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>-->
+
         <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
     </head>
     <?php
-    $splitStringArray = split(".", $this->logo->filename);
+    CommonTools::getBiobankInfo();
+    $splitStringArray = split(".", $_SESSION['vitrine']['biobankLogo']->filename);
     $extention = end($splitStringArray);
     ?>
     <body class="container" id="page" >
         <div style="float:left;">
-            <a href="http://www.biobanques.eu" target="_blank"><img src="<?php echo CommonTools::data_uri($this->logo->getBytes(), "image/$extention"); ?>" alt="1 photo" style="height:120px;"/></a>
+            <a href="http://www.biobanques.eu" target="_blank"><img src="<?php echo CommonTools::data_uri($_SESSION['vitrine']['biobankLogo']->getBytes(), "image/$extention"); ?>" alt="1 photo" style="height:120px;"/></a>
         </div>
         <div style="float:left;">
-            <h1><?php echo $this->biobank->identifier; ?></h1>
+            <h1><?php echo $_SESSION['vitrine']['biobank']->identifier; ?></h1>
         </div>
         <div style="float:right;padding-right:20px;padding-top:20px;">
-            <div ><a href="<?php echo (Yii::app()->request->baseUrl . "/index.php?lang=fr"); ?>"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
-                <a style="padding-left: 10px;" href="<?php echo (Yii::app()->request->baseUrl . "/index.php?lang=en"); ?>"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
+            <div >
+
+
+                <?php
+                /**
+                 * Affichage des liens de traduction en gardant le couple controlleur/action et les parametres d'origine.
+                 */
+                $id = $_SESSION['vitrine']['biobank']->id;
+                $controler = Yii::app()->getController()->getId();
+                $action = Yii::app()->getController()->getAction()->getId();
+                echo CHtml::link(
+                        CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "fr"))
+                        )
+//                        ,                      $htmlOptions
+                );
+                echo CHtml::link(
+                        CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "en")))
+                        , array('style' => "padding-left: 10px;")
+                );
+                ?>
+
+
             </div>
             <div style="float:right;padding-top:10px;">
-                <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>
+                <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus', 'id' => $id, 'layout' => 'vitrine_layout')); ?>
             </div>
         </div>
         <div id="mainmenu" style="clear:both;">
@@ -56,19 +68,12 @@
                 'encodeLabel' => false,
                 'htmlOptions' => array('class' => 'mainMenu last'),
                 'items' => array(
-                    array('label' => Yii::t('common', 'accueil'), 'url' => array('vitrine/view', 'id' => $this->biobank->id)),
-                    array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/vitrine/searchSample', 'id' => $this->biobank->id),
+                    array('label' => Yii::t('common', 'accueil'), 'url' => array('vitrine/view', 'id' => $id)),
+                    array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search', 'id' => $id, 'layout' => 'vitrine_layout'),
                         'itemOptions' => array('class' => 'visited'),
                         'linkOptions' => array('class' => 'bar')),
-//                    array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
-//                    array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
-//                    array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
-//                    array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
-//                    array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
-//                    array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),
-//                    array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
-                    array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/vitrine/login', 'id' => $this->biobank->id), 'visible' => Yii::app()->user->isGuest),
-                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/vitrine/logout'), 'visible' => !Yii::app()->user->isGuest),
+                    array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login', 'id' => $id, 'layout' => 'vitrine_layout'), 'visible' => Yii::app()->user->isGuest),
+                    array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout', 'id' => $id, 'layout' => 'vitrine_layout'), 'visible' => !Yii::app()->user->isGuest),
                 ),
             ));
             ?>

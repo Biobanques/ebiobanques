@@ -18,16 +18,7 @@
 
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-        <!-- javascripts ( en fin de page pour meilleurs perfs) -->
-        <!--  utilisation d un CDN gogle pour accelerer temps de chargement JS -->
-        <!--<script src='js/dojo-release-1.9.1/dojo/dojo.js'></script>
-        <script type="text/javascript">
-            var dojoConfig = {
-                parseOnLoad: true,
-                afterOnLoad: true,
-            };
-        </script>-->
-        <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>-->
+
         <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
     </head>
 
@@ -40,8 +31,23 @@
 
         </div>
         <div style="float:right;padding-right:20px;padding-top:20px;">
-            <div ><a href="<?php echo (Yii::app()->request->baseUrl . "/index.php?lang=fr"); ?>"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
-                <a style="padding-left: 10px;" href="<?php echo (Yii::app()->request->baseUrl . "/index.php?lang=en"); ?>"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
+            <div >
+                <?php
+                /**
+                 * Affichage des liens de traduction en gardant le couple controlleur/action et les parametres d'origine.
+                 */
+                $controler = Yii::app()->getController()->getId();
+                $action = Yii::app()->getController()->getAction()->getId();
+                echo CHtml::link(
+                        CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "fr"))
+                        )
+//                        ,                      $htmlOptions
+                );
+                echo CHtml::link(
+                        CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "en")))
+                        , array('style' => "padding-left: 10px;")
+                );
+                ?>
             </div>
             <div style="float:right;padding-top:10px;">
                 <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>

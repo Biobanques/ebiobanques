@@ -187,40 +187,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays smartsearch page
-     */
-    /*
-      public function actionSmartsearch() {
-      $model = new Sample ( 'search' );
-      $model->unsetAttributes (); // clear any default values
-      $prefs = Preferences::model ()->findByAttributes ( array('id_user'=>Yii::app ()->user->id ));
-      if($prefs==null){
-      $prefs=new Preferences;
-      $prefs->id_user=Yii::app()->user->id;
-      $prefs->save();
-      }
-      if (isset ( $_GET ['Preferences'] )) {
-      $prefs->attributes = $_GET ['Preferences'];
-      $prefs->save ();
-      }
-      $smartForm = new SampleSmartForm ();
-      if (isset ( $_GET ['SampleSmartForm'] )) {
-      $smartForm->attributes = $_GET ['SampleSmartForm'];
-      if (Yii::app ()->session ['keywords'] != $smartForm->keywords) {
-      $_GET ['Echantillon_page'] = null;
-      $this->logSmartSearch ( $smartForm->keywords );
-      }
-      Yii::app ()->session ['keywords'] = $smartForm->keywords;
-      $model = SmartResearcherTool::search ( $smartForm->keywords );
-      }
-      $this->render ( 'smartsearch_samples', array (
-      'model' => $model,
-      'smartForm' => $smartForm
-      ) );
-      }
-     */
-
-    /**
      * Displays a echantillon model.
      *
      * @param integer $id
@@ -302,6 +268,7 @@ class SiteController extends Controller
      * Displays the login page
      */
     public function actionLogin() {
+
         $model = new LoginForm ();
 
         // if it is ajax validation request
@@ -485,6 +452,7 @@ class SiteController extends Controller
      * action to subscribe a new user account.
      */
     public function actionSubscribe() {
+
         $model = new User ();
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
@@ -495,16 +463,24 @@ class SiteController extends Controller
                 CommonMailer::sendSubscribeAdminMail($model);
                 CommonMailer::sendSubscribeUserMail($model);
                 Yii::app()->user->setFlash('success', Yii::t('common', 'success_register'));
-                $this->redirect(array(
-                    'site/index'
-                ));
+                if (isset($_GET['layout'])) {
+                    if ($_GET['layout'] == 'vitrine_layout') {
+                        $this->redirect(array(
+                            'vitrine/view', 'id' => $_SESSION['biobank_id']
+                        ));
+                    }
+                } else
+                    $this->redirect(array(
+                        'site/index'
+                    ));
             } else {
                 Yii::app()->user->setFlash('error', Yii::t('common', 'error_register'));
             }
         }
         $this->render('subscribe', array(
             'model' => $model
-        ));
+                )
+        );
     }
 
     public function ActionTest() {

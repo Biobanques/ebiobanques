@@ -110,5 +110,6 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'noUserWithEmail' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'email \'{badEmail}\'',
     'noUserWithIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\'',
     'download' => 'Télécharger \'filename\'',
+    'noBiobankFound' => 'Le site vitrine de la biobanque n\'a pas pu $etre trouvé, merci de choisir dans la liste suivante'
 );
 ?>

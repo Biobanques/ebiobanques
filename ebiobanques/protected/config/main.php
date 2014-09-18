@@ -34,6 +34,7 @@ return array(
             'allowAutoLogin' => true,
             //tell the application to use your WebUser class instead of the default CWebUser
             'class' => 'WebUser',
+//            'loginUrl' => array_merge(array('site/login'), isset($_SESSION['layout']) ? array('layout' => $_SESSION['layout']) : array('test' => 'tttt')),
         ),
         'urlManager' => array(
             'urlFormat' => 'path',

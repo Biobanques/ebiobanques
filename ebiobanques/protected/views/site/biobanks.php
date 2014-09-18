@@ -44,7 +44,8 @@ $this->Widget('zii.widgets.grid.CGridView', array(
             'class' => 'CLinkColumn',
             'labelExpression' => 'isset($data->vitrine)&&$data->vitrine!=null?"Voir le site vitrine":null',
             'urlExpression' => '$data->getVitrineLink()',
-            'htmlOptions' => array('style' => "text-align:center"),
+            'htmlOptions' => array('style' => "text-align:center",),
+            'linkHtmlOptions' => array('target' => 'blank'),
             'header' => 'Site vitrine'
         )
     )

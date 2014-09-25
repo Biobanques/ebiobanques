@@ -45,9 +45,4 @@ class Controller extends CController
         ));
     }
 
-    public function beforeAction() {
-
-        return true;
-    }
-
 }

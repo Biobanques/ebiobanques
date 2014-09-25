@@ -143,6 +143,10 @@ class SiteController extends Controller
     public function actionSearch() {
         $model = new Sample('search');
         $model->unsetAttributes();
+        $biobankId = null;
+        if (isset($_GET['id']) && isset($_GET['layout']) && $_GET['layout'] == 'vitrine_layout')
+            $biobankId = $_GET['id'];
+        $model->biobank_id = $biobankId;
         $prefs = Preferences::model()->findByAttributes(array('id_user' => Yii::app()->user->id));
         if ($prefs == null) {
             $prefs = new Preferences;
@@ -172,13 +176,14 @@ class SiteController extends Controller
         $smartForm = new SampleSmartForm ();
         if (isset($_POST ['SampleSmartForm'])) {
             $model->unsetAttributes();
+
             $smartForm->attributes = $_POST ['SampleSmartForm'];
             if (Yii::app()->session ['keywords'] != $smartForm->keywords) {
                 $_GET ['Echantillon_page'] = null;
                 $this->logSmartSearch($smartForm->keywords);
             }
             Yii::app()->session ['keywords'] = $smartForm->keywords;
-            $model = SmartResearcherTool::search($smartForm->keywords);
+            $model = SmartResearcherTool::search($smartForm->keywords, $biobankId);
         }
         $this->render('search_samples', array(
             'model' => $model,

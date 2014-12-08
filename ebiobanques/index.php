@@ -1,5 +1,10 @@
 <?php
 
+//include './protected/extensions/YiiMongoDbSuite/YiiMongoDbSuite/*.php';
+//clean .htaccess file
+$fp = fopen('.htaccess', "w");
+fputs($fp, "");
+fclose($fp);
 //locale du serveur en francais si besoin
 setlocale(LC_ALL, 'fr_FR.utf8', 'fra');
 //timezone des dates
@@ -14,10 +19,7 @@ defined('YII_DEBUG') or define('YII_DEBUG', true);
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 
-//clean .htaccess file
-$fp = fopen('.htaccess', "w");
-fputs($fp, "");
-fclose($fp);
+
 
 require_once($yii);
 Yii::createWebApplication($config)->run();

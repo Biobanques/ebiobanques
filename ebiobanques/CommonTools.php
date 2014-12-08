@@ -77,6 +77,8 @@ class CommonTools
     }
 
     /**
+     *
+     *
      * Trasforme un fichier binaire dans le format mime indiqué.
      * @param type $bin
      * @param type $mime
@@ -103,5 +105,126 @@ class CommonTools
         }
     }
 
+    public static function importFile($file) {
+        $error = 0;
+
+        $biobank_id = $file->metadata['biobank_id'];
+        $file_imported_id = $file->_id;
+        $bytes = CommonTools::toCsv($file);
+        $error = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id);
+
+
+
+        if ($error == 0)
+            Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . '<br>All samples where successfully imported');
+        else {
+            Yii::app()->user->setFlash('notice', Yii::app()->user->getFlash('success') . "<br>$error elements were not correctly imported. Please ask admin for more details");
+            Yii::app()->user->setFlash('success', null);
+        }
+    }
+
+    public static function toCsv($file) {
+        $splitted = explode(".", $file->filename);
+        $extension = end($splitted);
+        switch ($extension) {
+            case 'csv':
+                return $file->getBytes();
+            case 'xls':
+                return CommonTools::xlsToCsv($file, 'Excel5');
+            case 'xlsx':
+                return CommonTools::xlsToCsv($file, 'Excel2007');
+            default:
+
+                Yii::app()->user->setFlash('error', "bad extension :$extension , $file->filename");
+        }
+        return null;
+    }
+
+    public static function xlsToCsv($file, $excelFormat) {
+        $result = 0;
+        require_once 'protected/extensions/ExcelExt/PHPExcel.php';
+        $path = Yii::app()->basePath . "/runtime/tmp_files/temp_$file->filename";
+        /*
+         * Création du fichier sur le disque
+         */
+        $fres = $file->write($path);
+        $reader = PHPExcel_IOFactory::createReader($excelFormat);
+        /*
+         * Chargement par phpExcel
+         */
+        $excel = $reader->load($path);
+        /*
+         * Ecriture en .csv
+         */
+        $writer = PHPExcel_IOFactory::createWriter($excel, 'CSV');
+        $writer->save("$path.csv");
+        /*
+         * Récupération du csv
+         */
+        $result = file_get_contents("$path.csv");
+        /*
+         * Suppression des fichiers temporaires
+         */
+        unlink($path);
+        unlink("$path.csv");
+        return $result;
+    }
+
+    protected static function analyzeCsv($bytes, $biobank_id, $fileImportedId) {
+
+        $import = fopen(CommonTools::data_uri($bytes, 'text/csv'), 'r');
+        $row = 1;
+        $keysArray = array();
+        $listBadSamples = array();
+        while (($data = fgetcsv($import, 1000, ",")) !== FALSE) {
+            /*
+             * Traitement de la ligne d'entete
+             */
+            if ($row == 1) {
+                foreach ($data as $key => $value) {
+                    if (in_array($value, Sample::model()->attributeNames())) {
+                        $keysArray[$key] = $value;
+                    } elseif (substr($value, 0, 5) == 'notes') {
+                        $keysArray[$key] = $value;
+                    }
+                }
+                /*
+                 * Traitement des lignes de données
+                 */
+            } else {
+                $model = new Sample();
+                $model->disableBehavior('LoggableBehavior');
+                $model->biobank_id = $biobank_id;
+                $model->file_imported_id = $fileImportedId;
+                foreach ($keysArray as $key2 => $value2) {
+                    if (substr($value2, 0, 5) != 'notes')
+                        $model->$value2 = $data[$key2];
+
+                    else {
+
+                        $noteKey = end(explode(':', $value2));
+                        $note = new Note();
+                        $note->key = $noteKey;
+                        $note->value = $data[$key2];
+                        $model->notes[] = $note;
+                    }
+                }
+
+                if (!$model->save())
+                    $listBadSamples[] = $row;
+            }
+            $row++;
+        }
+        fclose($import);
+        if (count($listBadSamples) != 0) {
+            $log = '';
+            foreach ($listBadSamples as $badSample) {
+                $log = 'Error with manual import. File id : ' . $fileImportedId . ' - line : ' . $badSample;
+                Yii::log($log, CLogger::LEVEL_ERROR);
+            }
+        }return count($listBadSamples);
+    }
+
 }
 ?>
+

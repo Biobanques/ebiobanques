@@ -33,11 +33,11 @@ class MybiobankController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'search' actions
-                'actions' => array('index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph'),
+                'actions' => array('index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph', 'uploadEchFile'),
                 'expression' => '$user->isBiobankAdmin()',
             ),
             array('allow', // allow authenticated user to perform 'search' actions
-                'actions' => array('indexAdmin', 'index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph'),
+                'actions' => array('indexAdmin', 'index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph', 'uploadEchFile'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users

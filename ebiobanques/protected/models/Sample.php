@@ -56,7 +56,7 @@ class Sample extends EMongoDocument
     public $patient_birth_date;
     public $tumor_diagnosis;
     public $file_imported_id;
-    public $notes;
+    public $notes = array();
     public $field_notes;
     /**
      * format string uniquement pas de int
@@ -97,7 +97,7 @@ class Sample extends EMongoDocument
                 'required'
             ),
             array(
-                'age, max_delay_delivery, biobank_id, file_imported_id',
+                'age, max_delay_delivery, biobank_id',
                 'numerical',
                 'integerOnly' => true
             ),
@@ -265,7 +265,7 @@ class Sample extends EMongoDocument
     public function getShortNotes() {
         $result = "";
 //TODO reactiver cette partie quand operationnelle
-        if ($this->notes != null && !empty($this->notes)) {
+        if (is_array($this->notes) && $this->notes != null && !empty($this->notes)) {
             foreach ($this->notes as $note) {
                 if ($note != null)
                     $result .= $note->value;

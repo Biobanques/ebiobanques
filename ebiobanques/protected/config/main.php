@@ -5,6 +5,7 @@
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
+    // 'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'ebiobanques.fr',
     //par defaut en français
@@ -15,8 +16,10 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'ext.*',
+        //'ext.YiiMongoDbSuite.*',
         'ext.YiiMongoDbSuite.*',
         'ext.YiiMongoDbSuite.extra.*',
+        //  'ext.YiiMongoDbSuite.extra.*',
         'ext.editMe.*',
         'ext.editMe.widgets.*',
         'application.models.*',

@@ -5,6 +5,7 @@
  */
 class User extends LoggableActiveRecord
 {
+    public $id;
     public $prenom;
     public $nom;
     public $login;

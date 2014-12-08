@@ -121,8 +121,11 @@ class Biobank extends LoggableActiveRecord
     }
 
     public function getContact() {
-        $contact = Contact::model()->findByAttributes(array('id' => $this->contact_id));
-        return $contact;
+        if ($this->contact_id != null) {
+            $contact = Contact::model()->findByAttributes(array('id' => $this->contact_id));
+            return $contact;
+        } else
+            return null;
     }
 
     /**
@@ -191,7 +194,8 @@ class Biobank extends LoggableActiveRecord
     public function getBiobank($idBiobank) {
         $result = null;
         $c = new EMongoCriteria;
-        $c->id('==', $idBiobank);
+        $c->id = $idBiobank;
+        //$c->addCond('id', '==', $idBiobank);
         $biobanks = Biobank::model()->findAll($c);
         if (count($biobanks) == 1) {
             $result = $biobanks[0];
@@ -208,7 +212,7 @@ class Biobank extends LoggableActiveRecord
         $result = "Non défini";
         $biobank = $this->getBiobank($idBiobank);
         if ($biobank != null) {
-            $result = $biobank->name;
+            $result = $biobank->identifier;
         }
         return $result;
     }

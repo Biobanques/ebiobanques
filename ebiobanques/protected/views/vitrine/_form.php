@@ -24,9 +24,22 @@
 
 
         <div class="row">
+            <div style="float:left;">
             <?php echo $form->labelEx($model, 'vitrine[logo]'); ?>
             <?php echo $form->fileField($model, 'vitrine[logo]'); ?>
             <?php echo $form->error($model, 'logo'); ?>
+                </div>
+            <div style="float:left;">
+                <?php
+    CommonTools::getBiobankInfo();
+    $splitStringArray = split(".", $_SESSION['vitrine']['biobankLogo']->filename);
+    $extention = end($splitStringArray);
+    ?>
+                <img src="<?php 
+                $logo = Logo::model()->findByPk(new MongoId($model->vitrine['logo']));
+                echo CommonTools::data_uri($logo->getBytes(), "image/$extention"); ?>" alt="1 photo" style="height:120px;"/>
+            </div>
+            <div style="clear:both;"/>
         </div>
         <?php
         echo $form->labelEx($model, 'vitrine[fr]');

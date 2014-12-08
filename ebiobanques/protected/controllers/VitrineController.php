@@ -196,10 +196,13 @@ class VitrineController extends Controller
             $id = $_SESSION['biobank_id'];
         else
             $id = Yii::app()->user->biobank_id;
+        echo "id:".$id;
         $model = Biobank::model()->findByAttributes(array("id" => $id));
-        if (!isset($model->vitrine))
+        if (!isset($model->vitrine)) {
+            echo "vitrine not set";
             $model->vitrine = array();
-        $model->vitrine['fr'] = null;
+        }
+        //$model->vitrine['fr'] = null;
 // $model->vitrine['en'] = null;
         $vitrine = $model->vitrine;
         if (isset($_POST['Biobank'])) {

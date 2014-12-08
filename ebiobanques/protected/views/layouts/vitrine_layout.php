@@ -31,6 +31,7 @@
             <a href="http://www.biobanques.eu" target="_blank"><img src="<?php echo CommonTools::data_uri($_SESSION['vitrine']['biobankLogo']->getBytes(), "image/$extention"); ?>" alt="1 photo" style="height:120px;"/></a>
         </div>
         <div style="float:left;">
+            
             <h1><?php echo $_SESSION['vitrine']['biobank']->identifier; ?></h1>
         </div>
         <div style="float:right;padding-right:20px;padding-top:20px;">

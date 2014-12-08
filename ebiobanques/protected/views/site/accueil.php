@@ -4,6 +4,7 @@
  */
 ?>
 <div>
+    <h1>Bonjour!</h1>
     <h3><?php echo Yii::t('common', 'indexTitle') ?></h3>
     <div style="float:left;width:400px;font-size: 1.2em;">&emsp;&emsp;<?php echo Yii::t('common', 'indexContent_p1') ?>
         <br><br>&emsp;&emsp;<?php echo Yii::t('common', 'indexContent_p2') ?></div>

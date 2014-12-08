@@ -52,10 +52,12 @@ class UploadedFileController extends Controller
     public function actionAdmin() {
         $model = new UploadedFile();
         if (isset($_POST['UploadedFile']['fileUploaded'])) {
-
+            $add = false;
+            if (isset($_POST['addOrRemove']) && $_POST['addOrRemove'] == 'add')
+                $add = true;
             $fileId = $this->uploadEchFile($_FILES['UploadedFile']);
             if ($fileId != null) {
-                $file = CommonTools::importFile($this->loadModel($fileId));
+                $file = CommonTools::importFile($this->loadModel($fileId), $add);
             } else {
 
             }
@@ -71,17 +73,17 @@ class UploadedFileController extends Controller
         return $model;
     }
 
-    private function uploadEchFile() {
+    private function uploadEchFile($file) {
         if (Yii::app()->user->isAdmin())
             $biobank_id = $_SESSION['biobank_id'];
         else
             $biobank_id = Yii::app()->user->biobank_id;
         $model = new UploadedFile();
         $_SESSION['biobank_id'] = $biobank_id;
-        if (isset($_FILES['UploadedFile'])) {
-            $tempFilename = $_FILES['UploadedFile']["tmp_name"]['fileUploaded'];
-            $filename = $_FILES['UploadedFile']["name"]['fileUploaded'];
-            if ($_FILES['UploadedFile']['size']['fileUploaded'] < 15000000) {
+        if (isset($file)) {
+            $tempFilename = $file["tmp_name"]['fileUploaded'];
+            $filename = $file["name"]['fileUploaded'];
+            if ($file['size']['fileUploaded'] < 15000000) {
 
                 $splitted = explode(".", $filename);
                 $extension = end($splitted);

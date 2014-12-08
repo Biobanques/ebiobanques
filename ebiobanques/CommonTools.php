@@ -105,13 +105,13 @@ class CommonTools
         }
     }
 
-    public static function importFile($file) {
+    public static function importFile($file, $add) {
         $error = 0;
 
         $biobank_id = $file->metadata['biobank_id'];
         $file_imported_id = $file->_id;
         $bytes = CommonTools::toCsv($file);
-        $error = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id);
+        $error = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id, $add);
 
 
 
@@ -170,12 +170,14 @@ class CommonTools
         return $result;
     }
 
-    protected static function analyzeCsv($bytes, $biobank_id, $fileImportedId) {
+    protected static function analyzeCsv($bytes, $biobank_id, $fileImportedId, $add) {
 
         $import = fopen(CommonTools::data_uri($bytes, 'text/csv'), 'r');
         $row = 1;
         $keysArray = array();
         $listBadSamples = array();
+        $newSamples = array();
+
         while (($data = fgetcsv($import, 1000, ",")) !== FALSE) {
             /*
              * Traitement de la ligne d'entete
@@ -210,12 +212,23 @@ class CommonTools
                     }
                 }
 
-                if (!$model->save())
+                if (!$model->save()) {
                     $listBadSamples[] = $row;
+                } else {
+                    $newSamples[] = $model->_id;
+                }
             }
             $row++;
         }
+
+
         fclose($import);
+        if (!$add && count($newSamples) > 0) {
+            $deleteCriteria = new EMongoCriteria();
+            $deleteCriteria->biobank_id('==', $biobank_id);
+            $deleteCriteria->_id('notIn', $newSamples);
+            Sample::model()->deleteAll($deleteCriteria);
+        }
         if (count($listBadSamples) != 0) {
             $log = '';
             foreach ($listBadSamples as $badSample) {

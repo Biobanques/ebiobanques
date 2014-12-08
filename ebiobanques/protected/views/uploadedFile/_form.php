@@ -24,6 +24,14 @@
 
 
         <div class="row">
+            <h3>What do you want to do?</h3>
+            <h4><input type="radio" name="addOrRemove"  value="add">Add samples to previous</h4>
+
+            <h4><input type="radio" name="addOrRemove" value="remove" checked="true">Remove previous after insert</h4>
+
+            <?php // echo Yii::t('common', 'addOrReplace'); ?>
+            <?php // echo $form->radioButtonList('', 'addOrRemove', array('add' => 'add samples to previous ones.', 'remove' => 'Remove samples after import')); ?>
+            <?php // echo $form->radioButton(); ?>
             <?php echo $form->labelEx($model, 'formLabel'); ?>
             <?php echo $form->fileField($model, 'fileUploaded'); ?>
             <?php echo $form->error($model, 'fileUploaded'); ?>

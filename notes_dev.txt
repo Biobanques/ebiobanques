@@ -1,0 +1,99 @@
+-- methodes mongo
+findAll sur echantillon provoque une error memory size allowed ( cf log apache)
+
+--quelques requetes mongo utiles: 
+
+db.echantillon.find( {"notes.value": /8230*/i } );
+
+
+-- exemple pour echantillon avec thorax
+db.echantillon.find( { origin: /thorax/i } );
+
+Pour activer smartsearch sur notes
+	upgrade mongodb 2.4.8
+	modif fichier /etc/mongodb.conf, ajouter 'setParameter=textSearchEnabled=true'
+	restart mongodb
+	creer un index sur toute la collection : db.echantillon.ensureIndex({"$**":"text"},{name:"notesIndex"})
+	
+	Pour utiliser la recherche, db.echantillon.runCommand("text",{search : "..............."}) 
+
+	-- une page tres interressante sur la normalisation des modèles de données sous mongo ( utile pour notre relation echantillon-note) :
+	http://docs.mongodb.org/manual/core/data-model-design/#data-modeling-embedding
+	-- et pour faire des requetes dans les documents embarqués : 
+	http://docs.mongodb.org/manual/tutorial/query-documents/#read-operations-subdocuments
+	
+	
+	> apres modification du schema de note pour plus de simplicité de recherche et cohérence avec l existant sous mysql : 
+	db.echantillon.find( {'notes.value': /8230*/i } );
+	marche bien
+	
+	> sous mongo pour activer les logs des requetes de base meme simpples :
+	db.setProfilingLevel(2)
+	
+	>puis pour les afficher : 
+	db.system.profile.find().limit(10).sort( { ts : -1 } ).pretty()
+	
+	
+	-- notes pour les tests 
+-- pré-requis installer phpunit
+--installer phpunit_selenium ( dependance yii)
+sudo pear install phpunit/PHPUnit_Selenium
+--installer dbunit pour les test en rappaort avec la base
+sudo pear install phpunit/DbUnit
+-- installer pear paquet story
+sudo pear install phpunit/PHPUnit_Story
+% cd /data/DEVELOPPEMENT/workspaces/workspace_.../protected/tests
+% phpunit unit/STrucTest.php    // executes an individual test
+% phpunit --verbose functional       // executes all tests under 'functional'
+% phpunit --coverage-html ./report
+
+
+----------------------------------------------------------------------------------------------
+Couverture de tests selenium : instruction d'installation / configuration
+
+//En raison d'un probleme d'autoload sur composer, installer cette extension par pear
+sudo pear channel-discover pear.phpunit.de
+sudo pear channel-discover components.ez.no
+sudo pear channel-discover pear.symfony-project.com
+sudo pear install phpunit/PHP_CodeCoverage
+
+Pour utiliser avec les alias apache2, 
+ - dans le projet, dossier /vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumCommon/ :
+    -- Modifier phpunit-coverage.php :
+//$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
+$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = $_SERVER['DOCUMENT_ROOT'];
+
+    -- Modifier prepend.php :
+    //$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = FALSE;
+$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = $_SERVER['DOCUMENT_ROOT'];
+
+
+    - modifier /etc/apache2/sites-available/000-default.conf (ajoute les droits d'acces pour le serveur, nécessaire aux fichiers temporaires ---- A adapter en fonction du DocumentRoot)
+DocumentRoot /var/www/html/
+<Directory "/var/www/html/">
+	Options FollowSymLinks Indexes
+	AllowOverride all
+	Require all granted
+	allow from all
+	#deny from all
+	AddDefaultCharset utf-8 
+</Directory>
+
+    - Ajouter un alias phpunit dans /etc/apache2/sites-available/000-default.conf (utilisé dans l'extension SeleniumWebTestCase)
+<Directory "/home/matthieu/NetBeansProjects/ebiobanques.fr/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumCommon">
+	Options FollowSymLinks Indexes
+	AllowOverride all
+	Require all granted
+
+	AddDefaultCharset utf-8 
+</Directory>
+Alias /phpunit "/home/matthieu/NetBeansProjects/ebiobanques.fr/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumCommon"
+
+    - verifier dans  /etc/apache2/apache2.conf, verifier la presence : (permet de charger les .htaccess rencontrés dans les repertoires parents du fichier sur lequel porte la requete, jusqu'au  $_SERVER['DOCUMENT_ROOT']) 
+AccessFileName .htaccess
+
+    - Ajouter un fichier '.htaccess' à la racine du projet, vide, et ajouter les droits en ecriture dessus
+
+Les tests selenium doivent étendre SeleniumWebTestCase (exntension). Le fichier de configuration doit etre completé
+
+   

@@ -1,0 +1,107 @@
+-- install yii from scratch
+/data/developpement/workspace_zend_eclipse_php/inserm-samplebrowser-webapp/samplebrowser/yii-1.1.13/framework/yiic webapp /data/developpement/workspace_zend_eclipse_php/inserm-samplebrowser-webapp/samplebrowser
+
+--creer un alias de dir dans sites-enabled
+vi /etc/apache2/site-enabled/000-default
+--
+Alias /inserm-samplebrowser-webapp "/data/developpement/workspace_zend_eclipse_php/inserm-samplebrowser-webapp/samplebrowser/"
+<Directory "/data/developpement/workspace_zend_eclipse_php/inserm-samplebrowser-webapp/samplebrowser/">
+	Options FollowSymLinks Indexes
+	AllowOverride all
+	Order allow,deny
+	allow from all
+	#deny from all
+	AddDefaultCharset utf-8 
+</Directory>
+-- restart apache
+sudo /etc/init.d/apache2 restart
+--tester ;
+http://localhost/inserm-samplebrowser-webapp/
+-- generer le crud via yii
+-- d'abord model puis CRUD ( pasword : nicolas pour gii)
+http://localhost/inserm-samplebrowser-webapp/index.php?r=gii
+
+
+-- pour config en ssl auto : activer ssl dans plesk, puis génerer un certificat puis à la racine du repo, rediriger vers ssl auto via .htaccess à la racine contenant : 
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,QSA]
+</IfModule>
+
+-- pourignorer le revision .html
+svn changelist ignore-on-commit file-you-want-to-add
+
+-- installer le driver mongo db si pas encore install : 
+pré-requis : apt-get install php5-dev
+sudo pecl install mongo
+-- puis installe l extension dans php.ini
+:You should add "extension=mongo.so" to php.ini
+sudo vi /etc/php5/conf.d/mongo.ini
+puis ajouter dedans:
+extension=mongo.so
+et enfin : 
+sudo /etc/init.d/apache2 restart
+
+--notes utile pour packaging de l appli avant upgrade:
+
+A ajouter dans crontab sur le serveur pour activer la relance pour les imports trop anciens. La verification se fera tous les jours à 07h00. 
+0 7 * * * /var/www/vhosts/de1185.ispfr.net/sitesamplesbrowser/protected/yiic checkImport
+
+Pour faire un dump de la base de prod, depuis la console de la machine locale (/PATH/TO/SAVE peut être sur la machine locale ou sur un serveur distant)
+mongodump --host de1185.ispfr.net --port 32020 --username admin --password ebbAdmin --out=/PATH/TO/SAVE 
+
+
+Pour restaurer la base de prod à partir d'un dump (/PATH/TO/DUMP peut être sur la machine locale ou sur un serveur distant): 
+mongorestore --host de1185.ispfr.net --port 32020 --username admin --password ebbAdmin /PATH/TO/DUMP --drop
+mongorestore --host localhost --port 32020 --username admin --password ebbAdmin /Users/nicolas/ --drop
+
+--ATTENTION pour executer le restore depuis la machine locale, editer le fichier de configuration (/etc/mongod.conf) et commenter la ligne bind_ip = 127.0.0.1
+
+-- --drop sert à reinitialiser la  base avant insertion, sinon ajout de nouveaux éléments uniquement (pas d'update sur id existants)
+
+--Pour changer le port d'utlisation de mongodb en 32020:
+editer le fichier /etc/mongodb.conf
+Ajouter la ligne port=32020
+Redémarrer le service en utilisant le fichier de configuration (connexion en root nécessaire): mongod -f /etc/mongodb.conf 
+ATTENTION : Par défaut la commande mongo (pour lancer l'outil de gestion de base mongo dans le terminal) utilise le port 27017. Pour lancer sur un port différent, 
+utiliser mongo host:port .
+-
+--------------------------------------------------------
+--Pour ajouter un administrateur de base de données (base en prod) : 
+--créer l'administrateur
+mongo 
+use admin
+db.addUser('admin','ebbAdmin')
+--ajouter le role 'restore' pour pouvoir importer les dumps
+db.grantRolesToUser('admin',['restore'])
+
+--arreter le serveur et quitter
+db.shutdownServer()
+exit
+
+--activer le service d'authentification
+editer le fichier /etc/mongodb.conf : 
+Ajouter la ligne auth=true
+--restart mongo avec aurhentification activée (ajouter l'option --fork pour lancer le service en daemon)
+mongod -f /etc/mongodb.conf --fork 
+----------------------------------------------------------
+
+--pour créer un utilisateur sur la base interop
+-se connecter en administarteur : 
+mongo HOST:PORT/admin -u <username> -p <password>
+use interop
+db.addUser({user:'ebiobanques', pwd:'insermEbb', roles:['readWrite']})
+----------------------------------------------------------
+
+
+--CAPTCHA :
+ajouter la librairie php5-gd à php pour utilisation du systeme de captcha. Version à jour sur le serveur.
+
+--note specifique mongo : mongo gere les acces au niveau de la base, donc il faut specifier obligatoirement sur quelle base on va se connecter sinon auth fail
+mongo localhost:32020/interop -u ebiobanques -p insermEbb
+
+
+ 
+
+

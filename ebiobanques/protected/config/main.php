@@ -17,8 +17,8 @@ return array(
     'import' => array(
         'ext.*',
         //'ext.YiiMongoDbSuite.*',
-        'ext.YiiMongoDbSuite.*',
-        'ext.YiiMongoDbSuite.extra.*',
+        'ext.MongoDbSuite.*',
+        'ext.MongoDbSuite.extra.*',
         //  'ext.YiiMongoDbSuite.extra.*',
         'ext.editMe.*',
         'ext.editMe.widgets.*',

@@ -81,7 +81,7 @@ class Sample extends EMongoDocument
 
     public function behaviors() {
         return array('embeddedArrays' => array(
-                'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
+                'class' => 'ext.MongoDbSuite.extra.EEmbeddedArraysBehavior',
                 'arrayPropertyName' => 'notes', // name of property, that will be used as an array
                 'arrayDocClassName' => 'Note'  // class name of embedded documents in array
             ),

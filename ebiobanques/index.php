@@ -1,10 +1,4 @@
 <?php
-
-//include './protected/extensions/YiiMongoDbSuite/YiiMongoDbSuite/*.php';
-//clean .htaccess file
-$fp = fopen('.htaccess', "w");
-fputs($fp, "");
-fclose($fp);
 //locale du serveur en francais si besoin
 setlocale(LC_ALL, 'fr_FR.utf8', 'fra');
 //timezone des dates

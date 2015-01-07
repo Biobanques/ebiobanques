@@ -11,7 +11,7 @@ setlocale(LC_ALL, 'fr_FR.utf8', 'fra');
 date_default_timezone_set('Europe/Paris');
 include dirname(__FILE__) . '/CommonProperties.php';
 // change the following paths if necessary
-$yii = dirname(__FILE__) . '/yii-1.1.15/framework/yii.php';
+$yii = dirname(__FILE__) . '/yii-1.1.16/framework/yii.php';
 //load config init file using common properties
 $config = dirname(__FILE__) . '/protected/config/main.php';
 // remove the following lines when in production mode

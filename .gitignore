@@ -10,3 +10,5 @@
 /ebiobanques/.htaccess
 /ebiobanques/yii-1.1.15/
 /ebiobanques/protected/extensions/editMe/
+/nbproject/private/
+/tests_selenium/results.html

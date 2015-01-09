@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/electures/index.php?r=site/inscription" />
+<title>mabiobanqueTestCase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">mabiobanqueTestCase</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Ma biobanque</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.portlet-title</td>
+	<td>Ma biobanque</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Administrer la biobanque</td>
+	<td>Administrer la biobanque</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw5 &gt; li.active &gt; a</td>
+	<td>Accueil</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw0 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Réception d'échantillons - CRB Grenoble</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Gérer les échantillons</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

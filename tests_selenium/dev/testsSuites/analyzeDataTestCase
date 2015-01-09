@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/electures/index.php?r=site/inscription" />
+<title>analyzeDataTestCase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">analyzeDataTestCase</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php/mybiobank/index/id/52e00282975af51ac91e8424</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Analyse comparative</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Détails</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=#yw0 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw3 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Taux de complétude détaillé : id_depositor</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>id=am-4</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

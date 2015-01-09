@@ -53,8 +53,9 @@ class UploadedFileController extends Controller
         $model = new UploadedFile();
         if (isset($_POST['UploadedFile']['fileUploaded'])) {
             $add = false;
-            if (isset($_POST['addOrRemove']) && $_POST['addOrRemove'] == 'add')
+            if (isset($model->addOrReplace) && $model->addOrReplace == 'add') {
                 $add = true;
+            }
             $fileId = $this->uploadEchFile($_FILES['UploadedFile']);
             if ($fileId != null) {
                 $file = CommonTools::importFile($this->loadModel($fileId), $add);

@@ -68,6 +68,7 @@
 		<?php echo $form->textField($model,'passphrase',array('size'=>60,'maxlength'=>200)); ?>
 		<?php echo $form->error($model,'passphrase'); ?>
 	</div>
+        <div><p>Le contact de la biobanque est une entrée différente de l utilisateur.<br>Elle est utile pour l'envoi d'informations tels les emails automatqiues de mise à jour.</p></div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'contact_id'); ?>
                 <?php echo $form->dropDownList($model,'contact_id',Contact::model()->getArrayContacts(),array('prompt' => '----')); ?>

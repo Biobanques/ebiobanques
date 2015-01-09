@@ -16,6 +16,10 @@ class UploadedFile extends EMongoGridFS
     public $filename;
     public $metadata = array();
     public $uploadDate;
+    /**
+     * property to store the value if add samples at the end or replace 
+     */
+    public $addOrReplace;
 
     // this method should return the collection name for storing files
     public function getCollectionName() {
@@ -47,7 +51,7 @@ class UploadedFile extends EMongoGridFS
 
     public function attributeLabels() {
         return array(
-            'formLabel' => 'File to upload'
+            'formLabel' => 'Fichier à importer'
         );
     }
 

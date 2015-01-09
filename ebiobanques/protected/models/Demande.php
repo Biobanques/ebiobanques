@@ -15,8 +15,8 @@
  * @property ConcernerEchantillon[] $concernerEchantillons
  * @property User $idUser
  */
-class Demande extends EMongoDocument
-{
+class Demande extends EMongoDocument {
+
     public $id_user;
     public $date_demande;
     public $detail;
@@ -45,7 +45,7 @@ class Demande extends EMongoDocument
 
     public function behaviors() {
         return array('embeddedArrays' => array(
-                'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
+                'class' => 'ext.MongoDbSuite.extra.EEmbeddedArraysBehavior',
                 'arrayPropertyName' => 'sampleList', // name of property, that will be used as an array
                 'arrayDocClassName' => 'EchDemande'  // class name of embedded documents in array
             ),

@@ -41,8 +41,6 @@ class User extends LoggableActiveRecord
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
 //			array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty'=>!CCaptcha::checkRequirements()),
             array('profil, inactif, biobank_id,gsm, telephone', 'numerical', 'integerOnly' => true),
@@ -50,12 +48,9 @@ class User extends LoggableActiveRecord
             array('gsm, telephone', 'length', 'min' => 8),
             array('prenom, nom, login, password, email, gsm', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
-// 				array('login,email','CUniqueValidator'),
             array('login,email', 'EMongoUniqueValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, biobank_id', 'safe', 'on' => 'search'),
         );
     }

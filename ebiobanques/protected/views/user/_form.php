@@ -14,12 +14,6 @@
 	<p class="note"><?php echo Yii::t('common','ChampsObligatoires'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
-
-        <div class="row">
-		<?php echo $form->labelEx($model,'_id'); ?>
-		<?php echo $form->textField($model,'prenom',array('size'=>60,'maxlength'=>250)); ?>
-		<?php echo $form->error($model,'prenom'); ?>
-	</div>
         
 	<div class="row">
 		<?php echo $form->labelEx($model,'prenom'); ?>

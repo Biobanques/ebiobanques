@@ -20,8 +20,8 @@
             $items[] = array('label' => Yii::t("myBiobank", "uploadConnector"), 'url' => array('/connecteur/upload'),);
         }
         $items[] = array('label' => Yii::t("myBiobank", "vitrine"), 'url' => array('/vitrine/admin'), 'template' => '<hr> {menu}');
-        $items[] = array('label' => 'test du site vitrine', 'url' => array('/vitrine/view'), 'template' => '<hr> {menu}');
-        $items[] = array('label' => 'importer un fichier d\'échantillons', 'url' => array('/uploadedFile/admin'), 'template' => '<hr> {menu}');
+        $items[] = array('label' => 'Aperçu du site vitrine', 'url' => array('/vitrine/view'), 'template' => '<hr> {menu}');
+        $items[] = array('label' => 'Importer un fichier d\'échantillons', 'url' => array('/uploadedFile/admin'), 'template' => '<hr> {menu}');
 
         $this->widget('zii.widgets.CMenu', array(
             /* 'type'=>'list', */

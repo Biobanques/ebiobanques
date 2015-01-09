@@ -80,7 +80,7 @@ class MybiobankController extends Controller
         if (isset($_POST['Biobank'])) {
             $model->attributes = $_POST['Biobank'];
             if ($model->save())
-                $thisgagner->redirect(array('index', 'id' => $model->_id));
+                $this->redirect(array('index', 'id' => $model->_id));
         }
 
         $this->render('update', array(

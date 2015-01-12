@@ -82,12 +82,11 @@ class User extends LoggableActiveRecord
     public function getProfil() {
         $result = $this->profil;
         $arr = $this->getArrayProfil();
-        if (empty($result))
-            $result = 'U';
-        if ($arr [$result] != null)
+        if (!empty($result) && $arr [$result] != null) {
             $result = $arr [$result];
-        else
-            $result = $arr ['U'];
+        } else {
+            $result = "Not defined";
+        }
         return $result;
     }
     

@@ -1,15 +1,8 @@
 
-
-<?php
-/* @var $this EchantillonController */
-/* @var $model Echantillon */
-/* @var $form CActiveForm */
-?>
-
 <div class="wide form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'echantillon-form',
+	'id'=>'sample-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 

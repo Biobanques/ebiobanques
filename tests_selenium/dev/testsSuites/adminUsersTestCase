@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/ebiobanques" />
+<title>adminUsersTestCase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">adminUsersTestCase</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php/echantillon/update/id/52e00285975af51ac91e8765</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Gestion des utilisateurs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Créer un utilisateur</td>
+	<td>Créer un utilisateur</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=user-grid_c0</td>
+	<td>prenom</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=user-grid_c1</td>
+	<td>nom</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='user-grid']/table/tbody/tr/td[3]</td>
+	<td>gdagher</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Désactiver</td>
+	<td>Désactiver</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=img[alt=&quot;Voir&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=img[alt=&quot;Mettre à jour&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=img[alt=&quot;Voir&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>View User #52e00281975af51ac91e8412</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=img[alt=&quot;Mettre à jour&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_gsm</td>
+	<td>0647920113</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>View User #52e00281975af51ac91e8412</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@id='yw0']/tbody/tr[6]/td</td>
+	<td>georges.dagher@inserm.fr</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

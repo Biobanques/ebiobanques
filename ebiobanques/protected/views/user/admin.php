@@ -43,6 +43,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => Yii::t('sample', 'biobank_id'),
             'value' => 'Biobank::model()->getBiobankName($data->biobank_id)'),
         'email',
+        'profil',
         array('class' => 'CButtonColumn',
             'template' => '{valider}{desactiver}',
             'buttons' => array(

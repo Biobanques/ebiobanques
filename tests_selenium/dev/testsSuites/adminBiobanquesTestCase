@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/ebiobanques" />
+<title>adminBiobanquesTestCase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">adminBiobanquesTestCase</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php/administration/index</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Biobanks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Gestion des Biobanques</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=biobank-grid_c2</td>
+	<td>Nom</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=biobank-grid_c5</td>
+	<td>Nom de la collection</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Voir</td>
+	<td>Voir</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Ajouter un connecteur</td>
+	<td>Ajouter un connecteur</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=img[alt=&quot;Voir&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>View Biobank #1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Biobanks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=img[alt=&quot;Mettre à jour&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Update Biobank 1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Biobanks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=img[alt=&quot;Supprimer&quot;]</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

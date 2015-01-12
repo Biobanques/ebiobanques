@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View User #<?php echo $model->_id; ?></h1>
+<h1>View User #<?php echo $model->nom." ".$model->prenom; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -26,7 +26,7 @@ $this->menu=array(
 		'email',
 		'telephone',
 		'gsm',
-		'profil',
-		'inactif',
+                 array('name'=>'profil','value'=>$model->getProfil()),
+		array('name'=>'statut','value'=>$model->getInactif()),
 	),
 )); ?>

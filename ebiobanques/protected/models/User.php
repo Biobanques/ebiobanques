@@ -75,9 +75,55 @@ class User extends LoggableActiveRecord
         );
     }
 
+    /**
+     * profils : 0 : utilisateur, 1 : admin sys, 2 :admin d une biobanque
+     * @return type
+     */
     public function getProfil() {
-        $literalProfil = ($this->profil == 0 ? 'utilisateur' : 'administrateur de la biobanque');
-        return $literalProfil;
+        $result = $this->profil;
+        $arr = $this->getArrayProfil();
+        if (empty($result))
+            $result = 'U';
+        if ($arr [$result] != null)
+            $result = $arr [$result];
+        else
+            $result = $arr ['U'];
+        return $result;
+    }
+    
+        /**
+     * @return type
+     */
+    public function getInactif() {
+        $result = $this->inactif;
+        $arr = $this->getArrayInactif();
+        if (!empty($result)&&$arr [$result] != null) {
+            $result = $arr [$result];
+        } else {
+            $result = "Not defined";
+        }
+        return $result;
+    }
+    
+     /**
+     * get an array of consent used by dropDownLIst.
+     */
+    public function getArrayProfil() {
+        $res = array();
+        $res ["O"] = "standard user";
+        $res ["1"] = "admin systeme";
+        $res ["2"] = "admin de biobanque";
+        return $res;
+    }
+    
+      /**
+     * get an array of inactif
+     */
+    public function getArrayInactif() {
+        $res = array();
+        $res ["O"] = "actif";
+        $res ["1"] = "inactif";
+        return $res;
     }
 
     public function pwdStrength() {

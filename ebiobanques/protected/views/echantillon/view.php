@@ -16,7 +16,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Echantillon #<?php echo $model->biobank_id.'_'.$model->id_sample; ?></h1>
+<h1>View Sample #<?php echo $model->biobank_id.'_'.$model->id_sample; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -36,7 +36,7 @@ $this->menu=array(
 		'authentication_method',
 		'patient_birth_date',
 		'tumor_diagnosis',
-		'biobank_id',
+		array('name'=>'biobank','value'=>$model->getBiobankName()),
 		'file_imported_id',
 	),
 )); ?>

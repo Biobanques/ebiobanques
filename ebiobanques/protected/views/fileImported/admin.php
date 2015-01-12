@@ -36,7 +36,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'biobank_id',
+		array('header'=>'biobank','value'=>'$data->getBiobankName()'),
 		'extraction_id',
 		'given_name',
 		array(

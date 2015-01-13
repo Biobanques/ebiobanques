@@ -188,31 +188,34 @@ class VitrineController extends Controller
     }
 
     /**
-     * Manages all models.
+     * admin site vitrine.
+     * load biobank model.
      */
     public function actionAdmin() {
         $this->layout = '//layouts/menu_mybiobank';
-        if (Yii::app()->user->isAdmin())
+        if (Yii::app()->user->isAdmin()) {
             $id = $_SESSION['biobank_id'];
-        else
+        } else {
             $id = Yii::app()->user->biobank_id;
-        echo "id:".$id;
+        }
         $model = Biobank::model()->findByAttributes(array("id" => $id));
+        //una
         if (!isset($model->vitrine)) {
-            echo "vitrine not set";
+            Yii::app()->user->setFlash('warning', 'Le site vitrine est non défini.');
             $model->vitrine = array();
         }
-        //$model->vitrine['fr'] = null;
-// $model->vitrine['en'] = null;
-        $vitrine = $model->vitrine;
         if (isset($_POST['Biobank'])) {
-            $model->attributes = $_POST['Biobank'];
-            $model->vitrine['fr'] = $_POST['Biobank']['vitrine']['fr'];
-            if (isset($_FILES['Biobank']))
-                $model->vitrine['logo'] = $this->logoUpload($_FILES['Biobank']);
-
-            if (!$model->save())
+            //NB ne pas reallouer generiquement les attributs car sinon si pas d image, alors input vide donc bug $model->attributes = $_POST['Biobank'];
+            $model->vitrine['page_accueil_fr'] = $_POST['Biobank']['vitrine']['page_accueil_fr'];
+            if (isset($_FILES['Biobank'])&&isset($_POST['Biobank']['vitrine']['logo'])&&!empty($_FILES["Biobank"]["name"]['vitrine']['logo'])) {
+                    $model->vitrine['logo'] = $this->logoUpload($_FILES['Biobank']);
+                
+            }
+            if (!$model->save()) {
                 Yii::app()->user->setFlash('error', 'Probleme de sauvegarde');
+            } else {
+                Yii::app()->user->setFlash('success', 'Le site vitrine a été enregistrée avec succès.');
+            }
         }
         $this->render('admin', array("model" => $model));
     }
@@ -240,6 +243,10 @@ class VitrineController extends Controller
         ));
     }
 
+    /**
+     * upload de l image dans la collection Mongo Logo
+     * @return type
+     */
     private function logoUpload() {
         if (Yii::app()->user->isAdmin())
             $biobank_id = $_SESSION['biobank_id'];
@@ -251,26 +258,21 @@ class VitrineController extends Controller
             $tempFilename = $_FILES["Biobank"]["tmp_name"]['vitrine']['logo'];
             $filename = $_FILES["Biobank"]["name"]['vitrine']['logo'];
             if ($_FILES['Biobank']['size']['vitrine']['logo'] < 1000000) {
-
-
                 if (in_array(substr($filename, -4), array('.jpg', '.png')) || in_array(substr($filename, -5), array('.jpeg'))) {
                     $model->filename = $tempFilename;
                     $model->metadata['biobank_id'] = $biobank_id;
-
                     $model->uploadDate = new MongoDate();
-
                     if ($model->save()) {
                         $model->filename = $filename;
                         if ($model->save()) {
-
                             return $model->_id;
                         }
                     }
                 } else {
-                    Yii::app()->user->setFlash('error', "$filename is not a valid picture file.");
+                    Yii::app()->user->setFlash('error', "le fichier '$filename' n\'est pas une image valide.");
                 }
             } else {
-                Yii::app()->user->setFlash('error', "$filename is too big");
+                Yii::app()->user->setFlash('error', "le fichier '$filename' est trop volumineux.");
             }
         }
     }

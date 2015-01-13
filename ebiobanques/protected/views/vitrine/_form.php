@@ -16,36 +16,33 @@
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
     ));
     ?>
-
     <p class="note"><?php echo Yii::t('common', 'requiredField'); ?></p>
-
     <?php echo $form->errorSummary($model); ?>
     <div style="float:left;width:750px;padding-left:5px;padding-right:5px;padding-top:10px">
 
 
         <div class="row">
             <div style="float:left;">
-            <?php echo $form->labelEx($model, 'vitrine[logo]'); ?>
-            <?php echo $form->fileField($model, 'vitrine[logo]'); ?>
-            <?php echo $form->error($model, 'logo'); ?>
-                </div>
+                <?php echo $form->labelEx($model, 'vitrine[logo]'); ?>
+                <?php echo $form->fileField($model, 'vitrine[logo]'); ?>
+                <?php echo $form->error($model, 'logo'); ?>
+            </div>
             <div style="float:left;">
                 <?php
-    CommonTools::getBiobankInfo();
-    $splitStringArray = split(".", $_SESSION['vitrine']['biobankLogo']->filename);
-    $extention = end($splitStringArray);
-    ?>
-                <img src="<?php 
-                $logo = Logo::model()->findByPk(new MongoId($model->vitrine['logo']));
-                echo CommonTools::data_uri($logo->getBytes(), "image/$extention"); ?>" alt="1 photo" style="height:120px;"/>
+                //affichage du logo
+                $logo = $model->getLogo();
+                if ($logo != null) {
+                    echo $logo->toHtml();
+                }
+                ?>
             </div>
             <div style="clear:both;"/>
         </div>
         <?php
-        echo $form->labelEx($model, 'vitrine[fr]');
+        echo $form->labelEx($model, 'vitrine[page_accueil_fr]');
         $this->widget('ext.editMe.widgets.ExtEditMe', array(
             'model' => $model,
-            'attribute' => 'vitrine[fr]',
+            'attribute' => 'vitrine[page_accueil_fr]',
             'width' => '700px',
             'advancedTabs' => false,
             'resizeMode' => 'vertical',
@@ -53,19 +50,12 @@
                 array(
                     'Source',
                     '-',
-//                    'Save',
-//                    'NewPage',
                     'Preview',
-//                    'Print',
-//                    '-',
-//                    'Templates',
                 ),
                 array(
                     'Cut',
                     'Copy',
                     'Paste',
-//                    'PasteText',
-//                    'PasteFromWord',
                     '-',
                     'Undo',
                     'Redo',
@@ -78,30 +68,14 @@
                     'Scayt'
                 ),
                 array(
-//                    'Image',
-//                    'Flash',
                     'Table',
                     'HorizontalRule',
-//                    'Smiley',
                     'SpecialChar',
-//                    'PageBreak',
-//                    'Iframe'
                 ),
                 array(
                     'Maximize',
                     'ShowBlocks',
                 ),
-//                array(
-//                    'Form',
-//                    'Checkbox',
-//                    'Radio',
-//                    'TextField',
-//                    'Textarea',
-//                    'Select',
-//                    'Button',
-//                    'ImageButton',
-//                    'HiddenField'
-//                ),
                 array(
                     'Bold',
                     'Italic',
@@ -125,8 +99,6 @@
                     '-',
                     'Blockquote',
                     'CreateDiv',
-//                    '-', 'BidiLtr',
-//                    'BidiRtl',
                 ),
                 '/',
                 array(
@@ -144,9 +116,6 @@
                     'TextColor',
                     'BGColor',
                 ),
-//                array(
-//                    'About',
-//                ),
             )
         ));
         ?>

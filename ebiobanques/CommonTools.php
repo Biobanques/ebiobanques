@@ -79,7 +79,7 @@ class CommonTools
     /**
      *
      *
-     * Trasforme un fichier binaire dans le format mime indiqué.
+     * Transforme un fichier binaire dans le format mime indiqué.
      * @param type $bin
      * @param type $mime
      * @return string
@@ -89,9 +89,13 @@ class CommonTools
         return ('data:' . $mime . ';base64,' . $base64);
     }
 
+    
+    /**
+     * FIXME fonction etrange retour bizarre, action de controller melangée
+     * @return type
+     */
     public static function getBiobankInfo() {
         $id = $_SESSION['biobank_id'];
-
         $biobank = Biobank::getBiobank($id);
         if ($biobank != null) {
             $pk = $biobank->vitrine['logo'];
@@ -101,7 +105,9 @@ class CommonTools
             return $id;
         } else {
             Yii::app()->user->setFlash('error', yii::t('common', 'noBiobankFound'));
-            Yii::app()->controller->redirect(Yii::app()->createUrl('site/biobanks'));
+            //Yii::app()->controller->redirect(Yii::app()->createUrl('site/biobanks'));
+            
+            
         }
     }
 

@@ -43,4 +43,14 @@ class Logo extends EMongoGridFS
             $this->addError('filename', 'Biobank_id is not set.');
     }
 
+    /**
+     * display th ecurrent logo into html.
+     * @return html img
+     */
+    public function toHtml() {
+        $splitStringArray = split(".", $this->filename);
+        $extension=end($splitStringArray);
+        $result="<img src=\"".CommonTools::data_uri($this->getBytes(),"image/".$extension)."\"\" alt=\"1 photo\" style=\"height:120px;\"/>";
+        return $result;
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use MongoId;
+
 /**
  * This is the model class for table "Biobank".
  *
@@ -19,8 +21,8 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord
-{
+class Biobank extends LoggableActiveRecord {
+
     public $id;
     public $identifier;
     public $name = 'Non défini';
@@ -31,6 +33,11 @@ class Biobank extends LoggableActiveRecord
     public $folder_done;
     public $passphrase;
     public $contact_id;
+
+    /**
+     * var array 'logo' 'fr' 'en'
+     * @var array 
+     */
     public $vitrine;
 
     /**
@@ -81,7 +88,7 @@ class Biobank extends LoggableActiveRecord
             'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
             'vitrine[fr]' => 'Texte en francais',
-            'vitrine[logo]' => 'Emplacement du logo'
+            'vitrine[logo]' => 'Image logo'
         );
     }
 
@@ -97,7 +104,7 @@ class Biobank extends LoggableActiveRecord
             'folder_done' => Yii::t('common', 'folder_done'),
             'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
-            'vitrine["fr"]' => 'Texte en francais'
+            'vitrine[page_accueil_fr]' => 'Page d\'accueil en français'
         );
     }
 
@@ -224,4 +231,18 @@ class Biobank extends LoggableActiveRecord
             return null;
     }
 
+    /**
+     * 
+     * get the logo object for this biobank, null if not setted
+     * @return Logo
+     */
+    public function getLogo() {
+        $result = null;
+        if (isset($this->vitrine) && isset($this->vitrine['logo'])) {
+            $result = Logo::model()->findByPk(new MongoId($this->vitrine['logo']));
+        }
+        return $result;
+    }
+
+    
 }

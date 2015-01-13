@@ -80,7 +80,7 @@ class MybiobankController extends Controller {
         if (isset($_POST['Biobank'])) {
             $model->attributes = $_POST['Biobank'];
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'les informations de votre biobanque ont été enregistrées avec succès.');
+                Yii::app()->user->setFlash('success', 'Les informations de votre biobanque ont été enregistrées avec succès.');
             }
         }
 

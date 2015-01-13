@@ -82,7 +82,7 @@ class User extends LoggableActiveRecord
     public function getProfil() {
         $result = $this->profil;
         $arr = $this->getArrayProfil();
-        if (!empty($result) && $arr [$result] != null) {
+        if ($result!="" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
             $result = "Not defined";
@@ -96,7 +96,7 @@ class User extends LoggableActiveRecord
     public function getInactif() {
         $result = $this->inactif;
         $arr = $this->getArrayInactif();
-        if (!empty($result)&&$arr [$result] != null) {
+        if ($result!="" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
             $result = "Not defined";
@@ -109,9 +109,9 @@ class User extends LoggableActiveRecord
      */
     public function getArrayProfil() {
         $res = array();
-        $res ["O"] = "standard user";
-        $res ["1"] = "admin systeme";
-        $res ["2"] = "admin de biobanque";
+        $res ['0'] = "standard user";
+        $res ['1'] = "admin systeme";
+        $res ['2'] = "admin de biobanque";
         return $res;
     }
     
@@ -120,8 +120,8 @@ class User extends LoggableActiveRecord
      */
     public function getArrayInactif() {
         $res = array();
-        $res ["O"] = "actif";
-        $res ["1"] = "inactif";
+        $res ['0'] = "actif";
+        $res ['1'] = "inactif";
         return $res;
     }
 

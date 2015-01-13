@@ -33,11 +33,11 @@ class MybiobankController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'search' actions
-                'actions' => array('index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph', 'uploadEchFile'),
+                'actions' => array('index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph', 'uploadEchFile','logImports'),
                 'expression' => '$user->isBiobankAdmin()',
             ),
             array('allow', // allow authenticated user to perform 'search' actions
-                'actions' => array('indexAdmin', 'index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph', 'uploadEchFile'),
+                'actions' => array('indexAdmin', 'index', 'dashboard', 'update', 'echManage', 'bbManage', 'view', 'update', 'delete', 'benchmark', 'detailGraph', 'uploadEchFile','logImports'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -144,6 +144,25 @@ class MybiobankController extends Controller {
 // 		if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('echManage'));
+    }
+    
+    /**
+     * display the log of imported files
+     */
+    public function actionLogImports(){
+        if (Yii::app()->user->isAdmin())
+            $id = $_SESSION['biobank_id'];
+        else
+            $id = Yii::app()->user->biobank_id;
+        $model=new FileImported('search');
+		$model->unsetAttributes();  // clear any default values
+                $model->biobank_id=$id;
+		if(isset($_GET['FileImported']))
+			$model->attributes=$_GET['FileImported'];
+
+		$this->render('log_files_imported',array(
+			'model'=>$model,
+		));
     }
 
     /**

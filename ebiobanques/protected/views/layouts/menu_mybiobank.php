@@ -22,7 +22,7 @@
         $items[] = array('label' => Yii::t("myBiobank", "vitrine"), 'url' => array('/vitrine/admin'), 'template' => '<hr> {menu}');
         $items[] = array('label' => 'Aperçu du site vitrine', 'url' => array('/vitrine/view'), 'template' => '<hr> {menu}');
         $items[] = array('label' => 'Importer un fichier d\'échantillons', 'url' => array('/uploadedFile/admin'), 'template' => '<hr> {menu}');
-
+        $items[] = array('label' => 'Historique des imports', 'url' => array('/mybiobank/logImports'), 'template' => '<hr> {menu}');
         $this->widget('zii.widgets.CMenu', array(
             /* 'type'=>'list', */
             'encodeLabel' => false,

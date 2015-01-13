@@ -50,6 +50,7 @@ class UploadedFileController extends Controller
     }
 
     public function actionAdmin() {
+
         $model = new UploadedFile();
         if (isset($_POST['UploadedFile']['fileUploaded'])) {
             $add = false;
@@ -57,6 +58,7 @@ class UploadedFileController extends Controller
                 $add = true;
             }
             $fileId = $this->uploadEchFile($_FILES['UploadedFile']);
+
             if ($fileId != null) {
                 $file = CommonTools::importFile($this->loadModel($fileId), $add);
             } else {
@@ -96,6 +98,10 @@ class UploadedFileController extends Controller
 
                     if ($model->save()) {
                         $model->filename = $filename;
+
+
+
+
                         if ($model->save()) {
                             Yii::app()->user->setFlash('success', "$filename successfully saved with id $model->_id.");
                             return $model->_id;

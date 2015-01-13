@@ -343,6 +343,8 @@ class Sample extends EMongoDocument
         $res ["LN"] = "Liquid Nitrogen";
         $res ["80"] = "-80°C";
         $res ["RT"] = "Room Temperature";
+        $res["20"] = "-20°C";
+        $res["4"] = "4°C";
         return $res;
     }
 

@@ -49,6 +49,7 @@ return array(
             'fsyncFlag' => true,
             'safeFlag' => true,
             'useCursor' => false,
+            'gridFStemporaryFolder' => '/tmp/mongo'
         ),
         'errorHandler' => array(
             // use 'site/error' action to display errors

@@ -7,8 +7,8 @@
  * @author nicolas
  *
  */
-class MybiobankController extends Controller
-{
+class MybiobankController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -71,16 +71,17 @@ class MybiobankController extends Controller
      * affichage de la page d'update de la biobanque
      */
     public function actionbbManage() {
-        if (Yii::app()->user->isAdmin())
+        if (Yii::app()->user->isAdmin()) {
             $id = $_SESSION['biobank_id'];
-        else
+        } else {
             $id = Yii::app()->user->biobank_id;
+        }
         $model = $this->loadModel($id);
-
         if (isset($_POST['Biobank'])) {
             $model->attributes = $_POST['Biobank'];
-            if ($model->save())
-                $this->redirect(array('index', 'id' => $model->_id));
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'les informations de votre biobanque ont été enregistrées avec succès.');
+            }
         }
 
         $this->render('update', array(
@@ -115,16 +116,12 @@ class MybiobankController extends Controller
     }
 
     /**
-     * Updates a particular model.
+     * Updates my biobank
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
         $model = $this->loadEchModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Sample'])) {
             $model->attributes = $_POST['Sample'];
             if ($model->save())

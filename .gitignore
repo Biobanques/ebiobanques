@@ -9,8 +9,5 @@
 /build/
 /ebiobanques/.htaccess
 /ebiobanques/yii-1.1.15/
-/ebiobanques/protected/extensions/editMe/
-/nbproject/private/
-/tests_selenium/results.html
-/ebiobanques/CommonPropertiesProd.php
 /ebiobanques/protected/extensions/YiiMongoDbSuite_old/
+/ebiobanques/protected/runtime/

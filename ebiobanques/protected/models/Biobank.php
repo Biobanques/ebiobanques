@@ -1,7 +1,5 @@
 <?php
 
-use MongoId;
-
 /**
  * This is the model class for table "Biobank".
  *

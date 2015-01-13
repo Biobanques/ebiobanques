@@ -87,8 +87,7 @@ class VitrineController extends Controller
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView() {
-        $id = CommonTools::getBiobankInfo();
-
+        CommonTools::getBiobankInfo();
         $this->render('view');
     }
 

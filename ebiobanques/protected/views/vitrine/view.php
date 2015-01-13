@@ -1,6 +1,6 @@
 <?php
 
-echo $_SESSION['vitrine']['biobank']->vitrine['fr'];
+echo $_SESSION['vitrine']['biobank']->vitrine['page_accueil_fr'];
 
 
 /*

@@ -59,6 +59,16 @@ div.form label
 	font-size: 0.9em;
 	display: block;
 }
+input[type=radio] + label{ 
+    display:inline !important; 
+}
+
+input[type=radio] + label:after{ 
+    content: ' ';
+    display :block;
+    clear:both;
+    
+}
 
 div.form .row
 {

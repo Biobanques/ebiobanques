@@ -23,11 +23,12 @@
     <div style="float:left;width:750px;padding-left:5px;padding-right:5px;padding-top:10px">
 
 
-        <div class="row">
+        <div class="radio_button_row">
             Sélectionner votre mode d'import de données : <br>
             <?php
             $importType = array('add' => 'Ajout des échantillons à ceux existants.', 'replace' => 'Remplacement des échantillons existants par ceux importés.');
-            echo $form->radioButtonList($model, 'addOrReplace', $importType, array('separator' => ' '));
+
+            echo $form->radioButtonList($model, 'addOrReplace', $importType, array('separator' => ' ', 'container' => 'div',));
             ?>
         </div>
         <div class="row">

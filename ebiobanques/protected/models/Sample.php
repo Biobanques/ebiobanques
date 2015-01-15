@@ -174,7 +174,7 @@ class Sample extends EMongoDocument
     public function attributeExportedLabels() {
 
         return array(
-            'id' => Yii::t('sample', 'id'),
+            '_id' => Yii::t('sample', 'id'),
             'biobank_id' => Yii::t('sample', 'biobank_id'),
             'consent_ethical' => Yii::t('sample', 'consent_ethical'),
             'id_depositor' => Yii::t('sample', 'id_depositor'),
@@ -303,12 +303,16 @@ class Sample extends EMongoDocument
     public function getLiteralStorageCondition() {
         $result = $this->storage_conditions;
         $arr = $this->getArrayStorage();
-        if (empty($result))
-            $result = 'U';
-        if ($arr [$result] != null)
-            $result = $arr [$result];
-        else
-            $result = $arr ['U'];
+        try {
+            if (empty($result))
+                $result = 'U';
+            if (in_array($result, $arr) && $arr [$result] != null)
+                $result = $arr [$result];
+            else
+                $result = $arr ['U'];
+        } catch (Exception $e) {
+
+        }
         return $result;
     }
 

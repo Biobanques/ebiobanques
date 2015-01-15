@@ -30,7 +30,8 @@ Yii::app()->clientScript->registerScript('search', "
  	$('.search-form').toggle();
  	return false;
  });
-		$('.prefs-button').click(function(){
+
+$('.prefs-button').click(function(){
 	$('.prefs-form').toggle();
 	return false;
 });
@@ -180,7 +181,6 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 </div>
 <?php
 $this->endWidget('zii.widgets.jui.CJuiDialog');
-
 
 $columns = array();
 $columns [] = array(

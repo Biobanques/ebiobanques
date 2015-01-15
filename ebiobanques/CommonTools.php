@@ -205,10 +205,15 @@ class CommonTools
                 $model->biobank_id = $biobank_id;
                 $model->file_imported_id = $fileImportedId;
                 foreach ($keysArray as $key2 => $value2) {
-                    if (substr($value2, 0, 5) != 'notes')
-                        $model->$value2 = $data[$key2];
+                    if (substr($value2, 0, 5) != 'notes') {
 
-                    else {
+                        $model->$value2 = $data[$key2];
+                        if (!$model->validate($value2)) {
+
+                            Yii::log("Problem with item" . $model->getAttributeLabel($value2) . ",set to null.", CLogger::LEVEL_ERROR);
+                            $model->$value2 = null;
+                        }
+                    } else {
 
                         $noteKey = end(explode(':', $value2));
                         $note = new Note();

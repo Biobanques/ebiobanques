@@ -183,29 +183,26 @@ class CommonTools
         $keysArray = array();
         $listBadSamples = array();
         $newSamples = array();
-
+        /**
+         * Version 1 : Les champs non repertorés sont ajoutés en notes
+         */
         while (($data = fgetcsv($import, 1000, ",")) !== FALSE) {
             /*
              * Traitement de la ligne d'entete
              */
             if ($row == 1) {
                 foreach ($data as $key => $value) {
-                    if (in_array($value, Sample::model()->attributeNames())) {
+                    if ($value != null && $value != "")
                         $keysArray[$key] = $value;
-                    } elseif (substr($value, 0, 5) == 'notes') {
-                        $keysArray[$key] = $value;
-                    }
                 }
-                /*
-                 * Traitement des lignes de données
-                 */
             } else {
                 $model = new Sample();
                 $model->disableBehavior('LoggableBehavior');
                 $model->biobank_id = $biobank_id;
                 $model->file_imported_id = $fileImportedId;
+
                 foreach ($keysArray as $key2 => $value2) {
-                    if (substr($value2, 0, 5) != 'notes') {
+                    if (in_array($value2, Sample::model()->attributeNames())) {
 
                         $model->$value2 = $data[$key2];
                         if (!$model->validate($value2)) {
@@ -215,9 +212,9 @@ class CommonTools
                         }
                     } else {
 
-                        $noteKey = end(explode(':', $value2));
+
                         $note = new Note();
-                        $note->key = $noteKey;
+                        $note->key = $value2;
                         $note->value = $data[$key2];
                         $model->notes[] = $note;
                     }
@@ -231,6 +228,63 @@ class CommonTools
             }
             $row++;
         }
+
+        /*
+         * Version 2 : seuls nes champs dont la colonne est annotée avec le préfixe 'notes' sont pris en note
+         */
+
+
+//        while (($data = fgetcsv($import, 1000, ",")) !== FALSE) {
+//
+//            /*
+//             * Traitement de la ligne d'entete
+//             */
+//
+//
+//
+//            if ($row == 1) {
+//                foreach ($data as $key => $value) {
+//                    if (in_array($value, Sample::model()->attributeNames())) {
+//                        $keysArray[$key] = $value;
+//                    } elseif (substr($value, 0, 5) == 'notes') {
+//                        $keysArray[$key] = $value;
+//                    }
+//                }
+//                /*
+//                 * Traitement des lignes de données
+//                 */
+//            } else {
+//                $model = new Sample();
+//                $model->disableBehavior('LoggableBehavior');
+//                $model->biobank_id = $biobank_id;
+//                $model->file_imported_id = $fileImportedId;
+//                foreach ($keysArray as $key2 => $value2) {
+//                    if (substr($value2, 0, 5) != 'notes') {
+//
+//                        $model->$value2 = $data[$key2];
+//                        if (!$model->validate($value2)) {
+//
+//                            Yii::log("Problem with item" . $model->getAttributeLabel($value2) . ",set to null.", CLogger::LEVEL_ERROR);
+//                            $model->$value2 = null;
+//                        }
+//                    } else {
+//
+//                        $noteKey = end(explode(':', $value2));
+//                        $note = new Note();
+//                        $note->key = $noteKey;
+//                        $note->value = $data[$key2];
+//                        $model->notes[] = $note;
+//                    }
+//                }
+//
+//                if (!$model->save()) {
+//                    $listBadSamples[] = $row;
+//                } else {
+//                    $newSamples[] = $model->_id;
+//                }
+//            }
+//            $row++;
+//        }
 
 
         fclose($import);

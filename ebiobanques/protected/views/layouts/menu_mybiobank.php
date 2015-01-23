@@ -34,7 +34,7 @@
 </div>
 <!-- Include content pages -->
 
-<div id="content" style="padding-top:10px;background-color: white; width: 100%;min-height: 280px;">
+<div id="content" style="padding-top:10px;background-color: white; width: 95%;min-height: 340px;">
     <?php echo $content; ?>
 </div><!-- content -->
 <?php $this->endContent(); ?>

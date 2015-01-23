@@ -13,5 +13,18 @@ return array(
     'connector' => 'Connecteur',
     'uploadConnector' => 'Ajouter un connecteur',
     'vitrine' => 'Edition de site vitrine',
+    'invalidExtension' => 'Fichier invalide : seuls les fichiers xls et xlsx sont autorisés.',
+    'helpUploadTitle' => 'Comment charger votre fichier sur le serveur ?',
+    'helpUploadContent' =>
+    '<p>Formats des fichiers téléchargeables :'
+    . '<ul>'
+    . '<li>Fichiers excel 2003 (.xls)</li>'
+    . '<li>Fichiers excel 2007 (.xlsx)</li>'
+    . '</ul>'
+    . '<p>Un exemple de fichier est disponible ici : fileBase</p>'
+    . '<p>Les explications sont disponibles ici : fileInfoBase</p>'
+    . '<p>Vous pouvez choisir d\'ajouter les échantillons à ceux existants (par défaut), ou de remplacer les échantillons existants.'
+    . '',
+    'uploadInfo' => 'Comment former mon fichier?',
 );
 ?>

@@ -243,3 +243,49 @@ div.search-form
         max-width:30px;
         height:30px;
 }
+/* Custom help block*/
+.help{
+    margin : 5px;
+    padding: 5px;
+    border: 1px;
+    border-color: blueviolet;
+    border-style: solid;
+    background-color: #D8E4F1;
+
+}
+
+.help>.help-title{
+    display: block;
+    margin-left: 5px;
+    font-weight: bold;
+    
+}
+
+.help>.help-title img{
+
+    padding-right: 10px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+    
+
+.help>.help-content{
+        display: inline-block;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: justify;
+   
+}
+.help>.help-content>p,.help>.help-content>ul{
+    margin-bottom: 0.5em;
+}
+
+.columnValues{
+    width: 20%;
+}
+.columnDescription{
+    width: 60%;
+}
+/*.columnName{
+    width: 20%;
+}*/

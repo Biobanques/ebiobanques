@@ -170,6 +170,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'autoOpen' => false,
         'width' => '220px'
     ),
+        // 'htmlOptions' => array('style' => 'display:none')
 ));
 ?>
 <div class="prefs-form" >

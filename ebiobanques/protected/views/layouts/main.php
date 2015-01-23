@@ -20,7 +20,8 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
         <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
-        <?php Yii::app()->clientScript->registerCoreScript('jquery');
+        <?php
+        Yii::app()->clientScript->registerCoreScript('jquery');
         Yii::app()->clientScript->registerCoreScript('jquery.ui');
         ?>
     </head>
@@ -30,7 +31,7 @@
             <a href="http://www.biobanques.eu" target="_blank"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/logobb.png', 'logo', array('height' => 80, 'width' => 110)); ?></a>
         </div>
         <div style="float:left;">
-<?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/ebiobanques.fr.png', 'nddlogo', array('height' => 60, 'width' => 400)); ?>
+            <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/ebiobanques.fr.png', 'nddlogo', array('height' => 60, 'width' => 400)); ?>
 
         </div>
         <div style="float:right;padding-right:20px;padding-top:20px;">
@@ -53,7 +54,7 @@
                 ?>
             </div>
             <div style="float:right;padding-top:10px;">
-<?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>
+                <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>
             </div>
         </div>
         <div id="mainmenu" style="clear:both;">
@@ -92,11 +93,11 @@
                 }
                 ?>
                 <!-- Include content pages -->
-<?php echo $content; ?>
+                <?php echo $content; ?>
             </div>
         </section>
         <!-- Require the footer -->
-        <div style="width:100%;">
-<?php require_once('tpl_footer.php') ?></div>
+        <div style="width:100%;clear: both ">
+            <?php require_once('tpl_footer.php') ?></div>
     </body>
 </html>

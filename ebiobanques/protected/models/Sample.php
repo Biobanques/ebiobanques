@@ -104,7 +104,7 @@ class Sample extends EMongoDocument
             array(
                 'id_depositor, id_sample, supply, detail_treatment, disease_outcome, authentication_method, tumor_diagnosis',
                 'length',
-                'max' => 45
+                'max' => 120
             ),
             array(
                 'consent_ethical, gender, consent',

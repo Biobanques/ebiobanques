@@ -1,13 +1,6 @@
-<div style="padding: 5px;border:1px solid blueviolet;background-color: #D8E4F1;">
-    <img src="<?php echo Yii::app()->request->baseUrl . '/images/'; ?>information.gif"/><div style="display: inline;margin-left: 5px;"><b><?php echo Yii::t('sample', 'helpSearchTitle') ?></b></div>
-    <div style="margin-left: 5px;">
-
-        <?php
-        echo Yii::t('sample', 'helpSearchContent');
-        ?>
-    </div>
-</div>
-
+<?php
+$this->renderPartial('/site/_help_message', array('title' => Yii::t('sample', 'helpSearchTitle'), 'content' => Yii::t('sample', 'helpSearchContent')));
+?>
 <div class = "wide form">
 
     <?php

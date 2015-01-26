@@ -68,7 +68,7 @@ if (count($biobankStats) > 1) {
             else
                 $datas['global'][] = null;
         }
-        $listWidgets[$attributeName] = array('label' => $attributeName, 'url' => Yii::app()->createUrl('mybiobank/detailGraph'), 'ajax' => array('type' => 'POST', 'update' => '#detailData', 'data' => array('datas' => $datas,
+        $listWidgets[$attributeName] = array('label' => Sample::model()->getAttributeLabel($attributeName), 'url' => Yii::app()->createUrl('mybiobank/detailGraph'), 'ajax' => array('type' => 'POST', 'update' => '#detailData', 'data' => array('datas' => $datas,
                     'attributeName' => $attributeName,
                     'theme' => $theme)));
     }
@@ -82,7 +82,8 @@ if (count($biobankStats) > 1) {
                     'title' => 'Détails',
                 ));
                 $this->widget('ext.AjaxMenu', array(
-                    'items' => $listWidgets,));
+                    'items' => $listWidgets,)
+                );
                 $this->endWidget();
                 ?>
 
@@ -90,7 +91,7 @@ if (count($biobankStats) > 1) {
 
 
 
-        <div id='detailData' style="padding: 5px;display: inline-block">
+        <div id='detailData' style="padding: 5px;display: inline-block; width:500px">
             <?php
             $this->renderPartial('_renderWidget', array('datas' => $listWidgets['id_depositor']['ajax']['data']['datas'], 'attributeName' => $listWidgets['id_depositor']['ajax']['data']['attributeName'], 'theme' => $theme));
             ?>

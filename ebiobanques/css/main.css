@@ -1,29 +1,29 @@
 body
 {
-	margin: 0;
-	padding: 0;
-	color: #555;
-	font: normal 10pt Arial,Helvetica,sans-serif;
-        background-image:url('../images/picture_dna.jpg');
-        background-repeat:no-repeat;
-        background-size:100% 100%;
-        height : 768px;
+    margin: 0;
+    padding: 0;
+    color: #555;
+    font: normal 10pt Arial,Helvetica,sans-serif;
+    background-image:url('../images/picture_dna.jpg');
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    height : 768px;
 }
 #page
 {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border: 1px solid #C9E0ED;
-        opacity:0.95;
-        filter:alpha(opacity=95); /* For IE8 and earlier */
-        height:768px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #C9E0ED;
+    opacity:0.95;
+    filter:alpha(opacity=95); /* For IE8 and earlier */
+    height:768px;
 }
 
 #header
 {
-	margin: 0;
-	padding: 0;
-	border-top: 3px solid #C9E0ED;
+    margin: 0;
+    padding: 0;
+    border-top: 3px solid #C9E0ED;
 }
 
 #content
@@ -33,129 +33,129 @@ body
 
 #sidebar
 {
-	padding: 20px 20px 20px 0;
+    padding: 20px 20px 20px 0;
 }
 
 #footer
 {
-	padding: 10px;
-	margin: 10px 20px;
-	font-size: 0.8em;
-	text-align: center;
-	border-top: 1px solid #C9E0ED;
+    padding: 10px;
+    margin: 10px 20px;
+    font-size: 0.8em;
+    text-align: center;
+    border-top: 1px solid #C9E0ED;
 }
 
 #logo
 {
-	padding: 10px 20px;
-	font-size: 200%;
+    padding: 10px 20px;
+    font-size: 200%;
 }
 
 #mainmenu
 {
-	background:#C96CB6;
+    background:#C96CB6;
 }
 
 #mainmenu ul
 {
-	padding:6px 20px 5px 20px;
-	margin:0px;
+    padding:6px 20px 5px 20px;
+    margin:0px;
 }
 
 #mainmenu ul li
 {
-	display: inline;
-        margin-left:2px;
+    display: inline;
+    margin-left:2px;
 }
 
 #mainmenu ul li a
 {
-	color:#ffffff;
-	background-color:transparent;
-	font-size:15px;
-	font-weight:bold;
-	text-decoration:none;
-	padding:5px 8px;
+    color:#ffffff;
+    background-color:transparent;
+    font-size:15px;
+    font-weight:bold;
+    text-decoration:none;
+    padding:5px 8px;
 }
 
 #mainmenu ul li a:hover, #mainmenu ul li.active a
 {
-	color: #6399cd;
-	background-color:#FFFAE8;
-	text-decoration:none;
+    color: #6399cd;
+    background-color:#FFFAE8;
+    text-decoration:none;
 }
 
 div.flash-error, div.flash-notice, div.flash-success
 {
-	padding:.8em;
-	margin-bottom:1em;
-	border:2px solid #ddd;
+    padding:.8em;
+    margin-bottom:1em;
+    border:2px solid #ddd;
 }
 
 div.flash-error
 {
-	background:#FBE3E4;
-	color:#8a1f11;
-	border-color:#FBC2C4;
+    background:#FBE3E4;
+    color:#8a1f11;
+    border-color:#FBC2C4;
 }
 
 div.flash-notice
 {
-	background:#FFF6BF;
-	color:#514721;
-	border-color:#FFD324;
+    background:#FFF6BF;
+    color:#514721;
+    border-color:#FFD324;
 }
 
 div.flash-success
 {
-	background:#E6EFC2;
-	color:#264409;
-	border-color:#C6D880;
+    background:#E6EFC2;
+    color:#264409;
+    border-color:#C6D880;
 }
 
 div.flash-error a
 {
-	color:#8a1f11;
+    color:#8a1f11;
 }
 
 div.flash-notice a
 {
-	color:#514721;
+    color:#514721;
 }
 
 div.flash-success a
 {
-	color:#264409;
+    color:#264409;
 }
 
 div.form .rememberMe label
 {
-	display: inline;
+    display: inline;
 }
 
 div.view
 {
-	padding: 10px;
-	margin: 10px 0;
-	border: 1px solid #C9E0ED;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #C9E0ED;
 }
 
 div.breadcrumbs
 {
-	font-size: 0.9em;
-	padding: 5px 20px;
+    font-size: 0.9em;
+    padding: 5px 20px;
 }
 
 div.breadcrumbs span
 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 div.search-form
 {
-	padding: 10px;
-	margin: 10px 0;
-	background: #eee;
+    padding: 10px;
+    margin: 10px 0;
+    background: #eee;
 }
 
 .portlet
@@ -165,87 +165,87 @@ div.search-form
 
 .portlet-decoration
 {
-	padding: 3px 8px;
-	background: #D788F1;
-	border-left: 5px solid #4D3056;
+    padding: 3px 8px;
+    background: #D788F1;
+    border-left: 5px solid #4D3056;
 }
 
 .portlet-title
 {
-	font-size: 12px;
-	font-weight: bold;
-	padding: 0;
-	margin: 0;
-	color: white;
-        background: #D788F1;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    color: white;
+    background: #D788F1;
 }
 
 .portlet-content
 {
-	font-size:0.9em;
-	margin: 0 0 15px 0;
-	padding: 5px 8px;
-	background:#EFFDFF;
+    font-size:0.9em;
+    margin: 0 0 15px 0;
+    padding: 5px 8px;
+    background:#EFFDFF;
 }
 
 .portlet-content ul
 {
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-	margin: 0;
-	padding: 0;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
 }
 
 .portlet-content li
 {
-	padding: 2px 0 4px 0px;
+    padding: 2px 0 4px 0px;
 }
 
 .operations
 {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .operations li
 {
-	padding-bottom: 2px;
+    padding-bottom: 2px;
 }
 
 .operations li a
 {
-	font: bold 12px Arial;
-	color: #0066A4;
-	display: block;
-	padding: 2px 0 2px 8px;
-	line-height: 15px;
-	text-decoration: none;
+    font: bold 12px Arial;
+    color: #0066A4;
+    display: block;
+    padding: 2px 0 2px 8px;
+    line-height: 15px;
+    text-decoration: none;
 }
 
 .operations li a:visited
 {
-	color: #0066A4;
+    color: #0066A4;
 }
 
 .operations li a:hover
 {
-	background: #80CFFF;
+    background: #80CFFF;
 }
 
 .faq{
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .image-main-menu{
-	margin: 0px 5px 0px 0px;
-        max-width:30px;
-        height:30px;
+    margin: 0px 5px 0px 0px;
+    max-width:30px;
+    height:30px;
 }
 /* Custom help block*/
 .help{
-    margin : 5px;
+  
     padding: 5px;
     border: 1px;
     border-color: blueviolet;
@@ -258,7 +258,7 @@ div.search-form
     display: block;
     margin-left: 5px;
     font-weight: bold;
-    
+
 }
 
 .help>.help-title img{
@@ -267,14 +267,14 @@ div.search-form
     padding-left: 5px;
     padding-top: 5px;
 }
-    
+
 
 .help>.help-content{
-        display: inline-block;
+    display: inline-block;
     margin-left: 5px;
     margin-top: 5px;
     text-align: justify;
-   
+
 }
 .help>.help-content>p,.help>.help-content>ul{
     margin-bottom: 0.5em;
@@ -285,6 +285,29 @@ div.search-form
 }
 .columnDescription{
     width: 60%;
+}
+
+.left_menu_container{
+    display:block;
+    background-color: white;
+     padding-top:10px;
+     vertical-align: top;
+}
+
+.left_menu_container>.menu{
+    display:inline-block;
+    width:200px;
+    vertical-align: inherit;
+    padding-left:5px;
+    padding-right:5px;
+   
+}
+.left_menu_container>.content{
+    display:inline-block;
+   vertical-align: inherit;
+max-width: 725px;
+width: 100%
+
 }
 /*.columnName{
     width: 20%;

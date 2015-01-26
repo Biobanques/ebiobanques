@@ -72,7 +72,7 @@ $this->renderPartial('/site/_help_message', array('title' => Yii::t('myBiobank',
     ?>
 
     <?php echo $form->errorSummary($model); ?>
-    <div style="float:left;width:700px;padding-left:5px;padding-right:5px;padding-top:10px">
+    <div style="padding-left:5px;padding-right:5px;padding-top:10px">
 
 
         <div class="radio_button_row">

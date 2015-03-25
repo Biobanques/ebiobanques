@@ -41,6 +41,10 @@ return array(
         ),
         'urlManager' => array(
             'urlFormat' => 'path',
+            'rules' => array(
+                // REST patterns ( to ldif exchange with BBMRI)
+                array('api/getBiobanksLDIF', 'verb' => 'GET'),
+            ),
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',

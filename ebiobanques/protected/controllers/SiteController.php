@@ -52,7 +52,6 @@ class SiteController extends Controller
                     'contactus',
                     'captcha', 'recoverPwd',
                     'subscribe',
-                    'test'
                 ),
                 'users' => array(
                     '*'
@@ -488,8 +487,5 @@ class SiteController extends Controller
         );
     }
 
-    public function ActionTest() {
-        $this->render('test');
-    }
 
 }

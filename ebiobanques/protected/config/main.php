@@ -66,6 +66,11 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ),
+                array(
+                    'class'=>'CPhpMailerLogRoute',
+                    'levels'=>'error, warning',
+                    'emails'=>'nicolas.malservet@inserm.fr',
+                ),
             // uncomment the following to show log messages on web pages
             /*
               array(

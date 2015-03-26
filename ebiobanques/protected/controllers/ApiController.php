@@ -6,7 +6,8 @@ class ApiController extends Controller {
      * no layout
      * @var type 
      */
-     public $layout = '';
+    public $layout = '';
+
     // Members
     /**
      * Key which has to be in HTTP USERNAME and PASSWORD headers 
@@ -53,9 +54,11 @@ class ApiController extends Controller {
         $this->_sendResponse(200, $this->getBiobanksLDIF());
     }
 
+    /**
+     * get biobank infos and convert into an LDIF format
+     * @return string
+     */
     private function getBiobanksLDIF() {
-        //get the biobank level
-//convert en ldif format
         $result = "
 dn: c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
 objectClass: country
@@ -69,61 +72,66 @@ c: fr
             $attributes['biobankID'] = "bbmri-eric:ID:FR_" . $biobank->identifier;
             $attributes['biobankName'] = $biobank->name;
             $attributes['biobankJuridicalPerson'] = $biobank->name;
-            $contact=$biobank->getContact();
+            $contact = $biobank->getContact();
+            //TODO info de contact obligatoire lever un warning si pas affectée pour l export
             if ($contact != null) {
                 $attributes['biobankContactFirstName'] = $contact->first_name;
                 $attributes['biobankContactLastName'] = $contact->last_name;
-                $attributes['biobankContactPhone'] = $contact->phone;
+                $attributes['biobankContactPhone'] = $contact->phone;//TODO verifier que format international?
                 $attributes['biobankContactEmail'] = $contact->email;
                 $attributes['biobankContactAddress'] = $contact->adresse;
                 $attributes['biobankContactZIP'] = $contact->code_postal;
                 $attributes['biobankContactCity'] = $contact->ville;
-                $attributes['biobankContactCountry'] = "FR";//TODO get pays avec FR pas integer $contact->pays;
+                $attributes['biobankContactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
+                $attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
+                //$attributes['objectClass'] = "biobankClinical";
+            } else {
+                Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
             }
             $result.="
 dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
 diagnosisAvailable: urn:miriam:icd:D*
-diagnosisAvailable: urn:miriam:icd:C*";
+diagnosisAvailable: urn:miriam:icd:C*"; //TODO recuperer le diagnistique agréger
             foreach ($attributes as $key => $value) {
                 $result.=$key . ": " . $value . "\n";
             }
-            /*$result.="
-biobankContactCountry: CZ
-objectClass: biobankClinical
-biobankMaterialStoredDNA: TRUE
-biobankMaterialStoredcDNAmRNA: FALSE
-biobankMaterialStoredmicroRNA: FALSE
-biobankMaterialStoredWholeBlood: TRUE
-biobankMaterialStoredPBC: FALSE
-biobankMaterialStoredPlasma: FALSE
-biobankMaterialStoredSerum: TRUE
-biobankMaterialStoredTissueCryo: TRUE
-biobankMaterialStoredTissueParaffin: TRUE
-biobankMaterialStoredCellLines: FALSE
-biobankMaterialStoredUrine: FALSE
-biobankMaterialStoredSaliva: FALSE
-biobankMaterialStoredFaeces: FALSE
-biobankMaterialStoredPathogen: FALSE
-biobankMaterialStoredOther: FALSE
-biobankSize: 4
-biobankSampleAccessFee: FALSE
-biobankSampleAccessJointProjects: TRUE
-biobankSampleAccessDescription: Further access details available upon request.
-biobankDataAccessFee: FALSE
-biobankDataAccessJointProjects: TRUE
-biobankDataAccessDescription: Further access details available upon request.
-biobankAvailableMaleSamplesData: TRUE
-biobankAvailableFemaleSamplesData: TRUE
-biobankAvailableBiologicalSamples: TRUE
-biobankAvailableSurveyData: FALSE
-biobankAvailableImagingData: FALSE
-biobankAvailableMedicalRecords: TRUE
-biobankAvailableNationalRegistries: FALSE
-biobankAvailableGenealogicalRecords: FALSE
-biobankAvailablePhysioBiochemMeasurements: TRUE
-biobankAvailableOther: FALSE
-biobankITSupportAvailable: TRUE
-biobankITStaffSize: 0";*/
+            /* $result.="
+              biobankContactCountry: CZ
+              objectClass:
+              biobankMaterialStoredDNA: TRUE
+              biobankMaterialStoredcDNAmRNA: FALSE
+              biobankMaterialStoredmicroRNA: FALSE
+              biobankMaterialStoredWholeBlood: TRUE
+              biobankMaterialStoredPBC: FALSE
+              biobankMaterialStoredPlasma: FALSE
+              biobankMaterialStoredSerum: TRUE
+              biobankMaterialStoredTissueCryo: TRUE
+              biobankMaterialStoredTissueParaffin: TRUE
+              biobankMaterialStoredCellLines: FALSE
+              biobankMaterialStoredUrine: FALSE
+              biobankMaterialStoredSaliva: FALSE
+              biobankMaterialStoredFaeces: FALSE
+              biobankMaterialStoredPathogen: FALSE
+              biobankMaterialStoredOther: FALSE
+              biobankSize: 4
+              biobankSampleAccessFee: FALSE
+              biobankSampleAccessJointProjects: TRUE
+              biobankSampleAccessDescription: Further access details available upon request.
+              biobankDataAccessFee: FALSE
+              biobankDataAccessJointProjects: TRUE
+              biobankDataAccessDescription: Further access details available upon request.
+              biobankAvailableMaleSamplesData: TRUE
+              biobankAvailableFemaleSamplesData: TRUE
+              biobankAvailableBiologicalSamples: TRUE
+              biobankAvailableSurveyData: FALSE
+              biobankAvailableImagingData: FALSE
+              biobankAvailableMedicalRecords: TRUE
+              biobankAvailableNationalRegistries: FALSE
+              biobankAvailableGenealogicalRecords: FALSE
+              biobankAvailablePhysioBiochemMeasurements: TRUE
+              biobankAvailableOther: FALSE
+              biobankITSupportAvailable: TRUE
+              biobankITStaffSize: 0"; */
         }
 
         return $result;

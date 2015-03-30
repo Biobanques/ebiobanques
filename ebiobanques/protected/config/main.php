@@ -41,6 +41,10 @@ return array(
         ),
         'urlManager' => array(
             'urlFormat' => 'path',
+            'rules' => array(
+                // REST patterns ( to ldif exchange with BBMRI)
+                array('api/getBiobanksLDIF', 'verb' => 'GET'),
+            ),
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',
@@ -61,6 +65,11 @@ return array(
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
+                ),
+                array(
+                    'class'=>'CPhpMailerLogRoute',
+                    'levels'=>'error, warning',
+                    'emails'=>'nicolas.malservet@inserm.fr',
                 ),
             // uncomment the following to show log messages on web pages
             /*

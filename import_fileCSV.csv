@@ -1,0 +1,85 @@
+consent_ethical,id_depositor,id_sample,gender,age,collect_date,storage_conditions,consent,supply,max_delay_delivery,detail_treatment,disease_outcome,authentication_method,patient_birth_date,tumor_diagnosis,notes,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Non
+N,63,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,Annotations cliniques 01 : AC07,presence d'imagerie liee : Oui,Sequencage ADN : Non
+N,25,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Oui
+Y,52,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Non
+Y,85,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Oui,Sequencage ADN : Oui
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,300256,F,81,2009-04-27 00:00:00,4,-,-,-,-,-,-,1928-02-02 00:00:00,-,"notes : diagnosis : ADICAP : H446, CIMO : 98233",,
+-,-,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC07,,
+-,-,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+-,-,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 : AC02,,
+-,-,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+-,-,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 : AC02,,
+-,-,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC07,,
+-,-,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+-,-,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 : AC02,,
+-,-,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC07,,
+-,-,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,300254,F,64,2007-02-17 00:00:00,4,-,-,-,-,-,-,1943-02-15 00:00:00,-,notes :,,
+-,-,300256,F,81,2009-04-27 00:00:00,4,-,-,-,-,-,-,1928-02-02 00:00:00,-,"notes : diagnosis : ADICAP : H446, CIMO : 98233",,
+-,-,300258,M,48,2011-12-22 00:00:00,4,-,-,-,-,-,-,1963-04-10 00:00:00,-,notes :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,Annotations cliniques 01 : AC01,presence d'imagerie liee : Oui,Sequencage ADN : Non
+N,12,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,Annotations cliniques 01 : AC02,presence d'imagerie liee : Non,Sequencage ADN : Oui
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,Annotations cliniques 01 : AC01,presence d'imagerie liee : Oui,Sequencage ADN : Non
+N,12,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,Annotations cliniques 01 : AC02,presence d'imagerie liee : Non,Sequencage ADN : Oui
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Non
+N,63,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,Annotations cliniques 01 : AC07,presence d'imagerie liee : Oui,Sequencage ADN : Non
+N,25,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Oui
+Y,52,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Non
+Y,85,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Oui,Sequencage ADN : Oui
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,Annotations cliniques 01 : AC01,presence d'imagerie liee : Oui,Sequencage ADN : Non
+N,12,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,Annotations cliniques 01 : AC02,presence d'imagerie liee : Non,Sequencage ADN : Oui
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Non
+N,63,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,Annotations cliniques 01 : AC07,presence d'imagerie liee : Oui,Sequencage ADN : Non
+N,25,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Oui
+Y,52,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Non,Sequencage ADN : Non
+Y,85,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,Annotations cliniques 01 :,presence d'imagerie liee : Oui,Sequencage ADN : Oui
+-,-,300254,F,64,2007-02-17 00:00:00,4,-,-,-,-,-,-,1943-02-15 00:00:00,-,,,
+-,-,300256,F,81,2009-04-27 00:00:00,4,-,-,-,-,-,-,1928-02-02 00:00:00,-,"diagnosis : ADICAP : H446, CIMO : 98233",,
+-,-,300258,M,48,2011-12-22 00:00:00,4,-,-,-,-,-,-,1963-04-10 00:00:00,-,,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+N,63,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC07,,
+N,25,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 :,,
+Y,52,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,85,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+N,12,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 : AC02,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+N,12,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 : AC02,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+N,63,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC07,,
+N,25,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 :,,
+Y,52,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,85,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 :,,
+Y,1,1,M,32,02/12/14,-,Y,-,60,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC01,,
+N,12,2,M,47,25/06/05,-,Y,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 : AC02,,
+Y,34,3,F,95,17/01/96,-,N,-,45,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+N,63,4,F,54,10/08/86,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 : AC07,,
+N,25,5,H,78,03/03/77,-,N,-,-,-,Remission,-,-,-,notes : Annotations cliniques 01 :,,
+Y,52,6,U,78,25/09/67,-,Y,-,-,-,En ours de traitement,-,-,-,notes : Annotations cliniques 01 :,,
+Y,85,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,300254,F,64,2007-02-17 00:00:00,4,-,-,-,-,-,-,1943-02-15 00:00:00,-,notes :,,
+-,-,300258,M,48,2011-12-22 00:00:00,4,-,-,-,-,-,-,1963-04-10 00:00:00,-,notes :,,
+-,-,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 :,,
+-,-,7,M,66,18/04/58,-,N,-,-,-,Mort,-,-,-,notes : Annotations cliniques 01 :,,

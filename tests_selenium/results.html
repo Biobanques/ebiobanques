@@ -1,0 +1,500 @@
+<html>
+<head><style type='text/css'>
+body, table {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.title {
+    font-style: italic;
+}
+
+.selected {
+    background-color: #ffffcc;
+}
+
+.status_done {
+    background-color: #eeffee;
+}
+
+.status_passed {
+    background-color: #ccffcc;
+}
+
+.status_failed {
+    background-color: #ffcccc;
+}
+
+.breakpoint {
+    background-color: #cccccc;
+    border: 1px solid black;
+}
+</style><title>Test suite results</title></head>
+<body>
+<h1>Test suite results </h1>
+
+<table>
+<tr>
+<td>result:</td>
+<td>passed</td>
+</tr>
+<tr>
+<td>totalTime:</td>
+<td>35</td>
+</tr>
+<tr>
+<td>numTestTotal:</td>
+<td>7</td>
+</tr>
+<tr>
+<td>numTestPasses:</td>
+<td>7</td>
+</tr>
+<tr>
+<td>numTestFailures:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandPasses:</td>
+<td>30</td>
+</tr>
+<tr>
+<td>numCommandFailures:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandErrors:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Selenium Version:</td>
+<td>2.44</td>
+</tr>
+<tr>
+<td>Selenium Revision:</td>
+<td>.0</td>
+</tr>
+<tr>
+<td>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr class="title status_passed"><td><b>Test Suite</b></td></tr>
+<tr class=" status_passed"><td><a href="#testresult0">accueilTestCase</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult1">rechercheEchantillonsSansConnexionTestCase</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult2">questionsFrequentesTestCase</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult3">activitesTestCase</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult4">biobanquesTestCase</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult5">contactsTestCase</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult6">contactUsTestCase</a></td></tr>
+</tbody></table>
+
+
+</td>
+<td>&nbsp;</td>
+</tr>
+</table><table><tr>
+<td><a name="testresult0">accueilTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">accueilTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Accueil</td>
+	<td>Accueil</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Rechercher des échantillons</td>
+	<td>Rechercher des échantillons</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Questions fréquentes</td>
+	<td>Questions fréquentes</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Activités</td>
+	<td>Activités</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Biobanques</td>
+	<td>Biobanques</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Contacts</td>
+	<td>Contacts</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Connexion</td>
+	<td>Connexion</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Nous contacter</td>
+	<td>Nous contacter</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=h3</td>
+	<td>ebiobanques.fr : Améliorer la recherche de matériel biologique</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult1">rechercheEchantillonsSansConnexionTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">rechercheEchantillonsSansConnexionTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Connexion</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>id=LoginForm_username</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>id=LoginForm_password</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>//div[@id='content']/table/tbody/tr/td[2]/div</td>
+	<td>exact:Pas encore de compte sur ebiobanques.fr?</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult2">questionsFrequentesTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">questionsFrequentesTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php/site/login</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Questions fréquentes</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=h3</td>
+	<td>exact:A quoi sert le projet ebiobanques.fr?</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult3">activitesTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">activitesTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php/site/questions</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Activités</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=div.portlet-title</td>
+	<td>Reception de fichiers</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=#yw2 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Biobanques enregistrées</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=#yw4 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Reception d'échantillons</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Localisation des échantillons</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult4">biobanquesTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">biobanquesTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php/site/dashboard</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Biobanques</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Recherche avancée</td>
+	<td>Recherche avancée</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>id=biobanks-grid_c0</td>
+	<td>Identifiant</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr[6]/td[5]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=Voir le site vitrine</td>
+	<td>Voir le site vitrine</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult5">contactsTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">contactsTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php/site/biobanks</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Contacts</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Connexion</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>link=www.biobanques.eu</td>
+	<td>www.biobanques.eu</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult6">contactUsTestCase</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">contactUsTestCase</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>/ebiobanques/index.php/site/contactus</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Nous contacter</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Nous contacter</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=ContactForm_name</td>
+	<td>nicolas</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=ContactForm_email</td>
+	<td>nicolas.malservet@inserm.fr</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=ContactForm_subject</td>
+	<td>test dev contecter nous</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=ContactForm_body</td>
+	<td>message test dev contacter nous</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=ContactForm_verifyCode</td>
+	<td>nicolas</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=yw0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=div.flash-success</td>
+	<td>Thank you for contacting us. We will respond to you as soon as possible.</td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr></table><pre>
+info: Starting test /selenium-server/tests/accueilTestCase
+info: Executing: |open | /ebiobanques/index.php |  |
+info: Executing: |assertText | link=Accueil | Accueil |
+info: Executing: |assertText | link=Rechercher des échantillons | Rechercher des échantillons |
+info: Executing: |assertText | link=Questions fréquentes | Questions fréquentes |
+info: Executing: |assertText | link=Activités | Activités |
+info: Executing: |assertText | link=Biobanques | Biobanques |
+info: Executing: |assertText | link=Contacts | Contacts |
+info: Executing: |assertText | link=Connexion | Connexion |
+info: Executing: |assertText | link=Nous contacter | Nous contacter |
+info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
+info: Executing: |assertText | css=h3 | ebiobanques.fr : Améliorer la recherche de matériel biologique |
+info: Starting test /selenium-server/tests/rechercheEchantillonsSansConnexionTestCase
+info: Executing: |open | /ebiobanques/index.php |  |
+info: Executing: |clickAndWait | link=Rechercher des échantillons |  |
+info: Executing: |assertText | css=h1 | Connexion |
+info: Executing: |assertText | id=LoginForm_username |  |
+info: Executing: |assertText | id=LoginForm_password |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertText | //div[@id=&apos;content&apos;]/table/tbody/tr/td[2]/div | exact:Pas encore de compte sur ebiobanques.fr? |
+info: Starting test /selenium-server/tests/questionsFrequentesTestCase
+info: Executing: |open | /ebiobanques/index.php/site/login |  |
+info: Executing: |clickAndWait | link=Questions fréquentes |  |
+info: Executing: |assertText | css=h3 | exact:A quoi sert le projet ebiobanques.fr? |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
+info: Starting test /selenium-server/tests/activitesTestCase
+info: Executing: |open | /ebiobanques/index.php/site/questions |  |
+info: Executing: |clickAndWait | link=Activités |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertText | css=div.portlet-title | Reception de fichiers |
+info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
+info: Executing: |assertText | css=#yw2 &gt; div.portlet-decoration &gt; div.portlet-title | Biobanques enregistrées |
+info: Executing: |assertText | css=#yw4 &gt; div.portlet-decoration &gt; div.portlet-title | Reception d&apos;échantillons |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertText | css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title | Localisation des échantillons |
+info: Starting test /selenium-server/tests/biobanquesTestCase
+info: Executing: |open | /ebiobanques/index.php/site/dashboard |  |
+info: Executing: |clickAndWait | link=Biobanques |  |
+info: Executing: |assertText | link=Recherche avancée | Recherche avancée |
+info: Executing: |assertText | id=biobanks-grid_c0 | Identifiant |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |click | //div[@id=&apos;biobanks-grid&apos;]/table/tbody/tr[6]/td[5] |  |
+info: Executing: |assertText | link=Voir le site vitrine | Voir le site vitrine |
+info: Starting test /selenium-server/tests/contactsTestCase
+info: Executing: |open | /ebiobanques/index.php/site/biobanks |  |
+info: Executing: |clickAndWait | link=Contacts |  |
+info: Executing: |assertText | css=h1 | Connexion |
+info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
+info: Starting test /selenium-server/tests/contactUsTestCase
+info: Executing: |open | /ebiobanques/index.php/site/contactus |  |
+info: Executing: |clickAndWait | link=Nous contacter |  |
+info: Executing: |assertText | css=h1 | Nous contacter |
+info: Executing: |type | id=ContactForm_name | nicolas |
+info: Executing: |type | id=ContactForm_email | nicolas.malservet@inserm.fr |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=ContactForm_subject | test dev contecter nous |
+info: Executing: |type | id=ContactForm_body | message test dev contacter nous |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=ContactForm_verifyCode | nicolas |
+info: Executing: |verifyElementPresent | id=yw0 |  |
+info: Executing: |click | name=yt0 |  |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Executing: |assertText | css=div.flash-success | Thank you for contacting us. We will respond to you as soon as possible. |
+</pre></body></html>

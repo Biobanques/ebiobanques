@@ -18,31 +18,33 @@ $('.search-form form').submit(function(){
 
 <h1>Gestion des contacts</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+
+<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'contact-grid',
-	 		'dataProvider'=>$model->search(),
-	'columns'=>array(
-		array('name'=>'first_name', 'header'=>$model->getAttributelabel('first_name')),
-array('name'=>'last_name', 'header'=>$model->getAttributelabel('last_name')),
-array('name'=>'email', 'header'=>$model->getAttributelabel('email')),
-array('name'=>'phone', 'header'=>$model->getAttributelabel('phone')),
-array('name'=>'ville', 'header'=>$model->getAttributelabel('ville')),
-array('name'=>'pays', 'header'=>$model->getAttributelabel('pays')),
-array('name'=>'inactive', 'header'=>$model->getAttributelabel('inactive')),
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
+</div>
+<!-- search-form -->
+<br><?php echo CHtml::link('Create new contact', Yii::app()->createUrl('contact/create')) ?>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'contact-grid',
+    'dataProvider' => $model->search(),
+    'columns' => array(
+        array('name' => 'first_name', 'header' => $model->getAttributelabel('first_name')),
+        array('name' => 'last_name', 'header' => $model->getAttributelabel('last_name')),
+        array('name' => 'email', 'header' => $model->getAttributelabel('email')),
+        array('name' => 'phone', 'header' => $model->getAttributelabel('phone')),
+        array('name' => 'ville', 'header' => $model->getAttributelabel('ville')),
+        array('name' => 'pays', 'header' => $model->getAttributelabel('pays')),
+        array('name' => 'inactive', 'header' => $model->getAttributelabel('inactive')),
+        array(
+            'class' => 'CButtonColumn',
+        ),
+    ),
+));
+?>

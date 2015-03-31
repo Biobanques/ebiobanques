@@ -61,14 +61,15 @@ $('.detail-button').click(function(){
         else
             $complete = 0;
         $roundcomplete = round($complete);
+        $uncomplete = 100 - $roundcomplete;
         $data = array(
             array(
                 'Complet : ' . $roundcomplete . '%',
                 $roundcomplete
             ),
             array(
-                'Incomplet',
-                100 - $roundcomplete
+                'Incomplet : ' . $uncomplete . "%",
+                $uncomplete
             )
         );
         $this->beginWidget('zii.widgets.CPortlet', array(
@@ -95,7 +96,7 @@ $('.detail-button').click(function(){
 
 
             foreach ($stats->values as $valueName => $value) {
-                $attributes[] = array('label ' => Sample::model()->getAttributeLabel($valueName), 'value' => $value . '%');
+                $attributes[] = array('label' => Sample::model()->getAttributeLabel($valueName), 'value' => $value . '%');
             }
 
             $this->widget('zii.widgets.CDetailView', array(

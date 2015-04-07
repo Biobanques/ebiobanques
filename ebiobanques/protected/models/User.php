@@ -42,11 +42,11 @@ class User extends LoggableActiveRecord
      */
     public function rules() {
         return array(
-//			array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty'=>!CCaptcha::checkRequirements()),
+            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => !CCaptcha::checkRequirements()),
             array('profil, inactif, biobank_id,gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('gsm, telephone', 'length', 'min' => 8),
-            array('prenom, nom, login, password, email, gsm', 'required'),
+            array('prenom, nom, login, password, email', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login,email', 'EMongoUniqueValidator'),
             array('password', 'pwdStrength'),
@@ -82,29 +82,29 @@ class User extends LoggableActiveRecord
     public function getProfil() {
         $result = $this->profil;
         $arr = $this->getArrayProfil();
-        if ($result!="" && $arr [$result] != null) {
+        if ($result != "" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
             $result = "Not defined";
         }
         return $result;
     }
-    
-        /**
+
+    /**
      * @return type
      */
     public function getInactif() {
         $result = $this->inactif;
         $arr = $this->getArrayInactif();
-        if ($result!="" && $arr [$result] != null) {
+        if ($result != "" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
             $result = "Not defined";
         }
         return $result;
     }
-    
-     /**
+
+    /**
      * get an array of consent used by dropDownLIst.
      */
     public function getArrayProfil() {
@@ -114,8 +114,8 @@ class User extends LoggableActiveRecord
         $res ['2'] = "admin de biobanque";
         return $res;
     }
-    
-      /**
+
+    /**
      * get an array of inactif
      */
     public function getArrayInactif() {

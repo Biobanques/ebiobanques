@@ -87,7 +87,7 @@ class SiteController extends Controller
     public function actions() {
         $captcha = array(
             'class' => 'CaptchaExtendedAction',
-            'mode' => CaptchaExtendedAction::MODE_WORDS,  
+            'mode' => CaptchaExtendedAction::MODE_WORDS,
         );
         //ajout de fixed value si mode de dev
         if (CommonTools::isInDevMode()) {
@@ -486,6 +486,5 @@ class SiteController extends Controller
                 )
         );
     }
-
 
 }

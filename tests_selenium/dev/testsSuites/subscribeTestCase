@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/ebiobanques/" />
+<title>subscribeTestCase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">subscribeTestCase</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php/site/contactus</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.errorMessage</td>
+	<td>Prénom ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr/td[2]/div</td>
+	<td>Nom ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[2]/td/div</td>
+	<td>Nom d'utilisateur ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[2]/td[2]/div</td>
+	<td>Mot de passe ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[3]/td/div</td>
+	<td>Email ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[4]/td[2]/div</td>
+	<td>Au moins un numéro de télephone doit être indiqué.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[5]/td/div</td>
+	<td>Le code de vérification est incorrect.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>P1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_nom</td>
+	<td>N1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_login</td>
+	<td>user11</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>pass</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>matt</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_telephone</td>
+	<td>0101010101</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_verifyCode</td>
+	<td>nico</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.errorMessage</td>
+	<td>Seuls les caractères alphabetiques sont autorisés pour ce champ.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr/td[2]/div</td>
+	<td>Seuls les caractères alphabetiques sont autorisés pour ce champ.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[2]/td[2]/div</td>
+	<td>Le mot de passe doit contenir au minimum 2 chiffres.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[3]/td/div</td>
+	<td>Email n'est pas une adresse email valide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[5]/td/div</td>
+	<td>Le code de vérification est incorrect.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>Prenom</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_nom</td>
+	<td>Nom</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>un Prenom-composé</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>t01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>a.b@c.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_verifyCode</td>
+	<td>nicolas</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/table/tbody/tr[2]/td[2]/div</td>
+	<td>Mot de passe est trop court (minimum : 6 caractères).</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>test01</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.flash-success</td>
+	<td>Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

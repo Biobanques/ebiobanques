@@ -110,6 +110,13 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'noUserWithEmail' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'email \'{badEmail}\'',
     'noUserWithIdentifier' => 'Il n\'y a pas d\'utilisateur dans notre base de données avec l\'identifiant \'{badIdentifier}\'',
     'download' => 'Télécharger \'filename\'',
-    'noBiobankFound' => 'Le site vitrine de la biobanque n\'a pas pu $etre trouvé, merci de choisir dans la liste suivante'
+    'noBiobankFound' => 'Le site vitrine de la biobanque n\'a pas pu $etre trouvé, merci de choisir dans la liste suivante',
+    'subscribeHelpTitle' => 'IMPORTANT : processus d\'inscription',
+    'subscribeHelpContent' => 'L\'inscription au site ebiobanques.fr comporte une étape de validation de votre compte.<br> '
+    . '<b>Votre inscription sera effective une fois votre compte validé par l\'administrateur de la plate-forme.</b> Le délai maximal de validation des comptes est de 24h.<br>'
+    . ' Si vous rencontrez un problème durant cette étape, veuillez contacter le service bioinformatique de l\'infrastructure Biobanques.',
+    'atLeastOneTel' => 'Au moins un numéro de télephone doit être indiqué.',
+    'onlyAlpha' => 'Seuls les caractères alphabetiques sont autorisés pour ce champ.',
+    'onlyAlphaNumeric' => 'Seuls les caractères alphanumériques sont autorisés pour ce champ.',
 );
 ?>

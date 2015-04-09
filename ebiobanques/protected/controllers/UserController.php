@@ -5,8 +5,8 @@
  * Used for admin tasks.
  * Access rights only for admin
  */
-class UserController extends Controller {
-
+class UserController extends Controller
+{
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -31,7 +31,7 @@ class UserController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete', 'validate', 'desactivate'),
+                'actions' => array('create', 'update', 'index', 'admin', 'view', 'delete', 'validate', 'desactivate', 'refuseRegistration'),
                 'expression' => '$user->isAdmin()'
             ),
             array('deny', // deny all users
@@ -168,6 +168,14 @@ class UserController extends Controller {
         $this->redirect(array(
             'admin',
 // 				'id' => $id
+        ));
+    }
+
+    public function actionRefuseRegistration($id) {
+        $model = $this->loadModel($id);
+        CommonMailer::sendUserRegisterRefusedMail($model);
+        $this->redirect(array(
+            'desactivate', 'id' => $id,
         ));
     }
 

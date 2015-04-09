@@ -41,18 +41,24 @@ class User extends LoggableActiveRecord
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        return array(
+        $result = array(
             array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => !CCaptcha::checkRequirements()),
             array('profil, inactif, biobank_id,gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('prenom,nom', 'alphaOnly'),
+            array('login', 'alphaNumericOnly'),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
+            array('gsm', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
             array('prenom, nom, login, password, email', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
-            array('login,email', 'EMongoUniqueValidator'),
+            array('login', 'EMongoUniqueValidator'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, biobank_id', 'safe', 'on' => 'search'),
         );
+        if (!CommonProperties::$DEV_MODE)
+            $result[] = array('email', 'EMongoUniqueValidator');
+        return $result;
     }
 
     /**
@@ -125,6 +131,9 @@ class User extends LoggableActiveRecord
         return $res;
     }
 
+    /**
+     * Custom validation rules
+     */
     public function pwdStrength() {
         $nbDigit = 0;
         $length = strlen($this->password);
@@ -134,6 +143,29 @@ class User extends LoggableActiveRecord
         }
         if ($nbDigit < 2)
             $this->addError('password', Yii::t('common', 'notEnoughDigits'));
+    }
+
+    public function telPresent() {
+        if (in_array($this->telephone, array("", null)) && in_array($this->gsm, array("", null)))
+            $this->addError('gsm', Yii::t('common', 'atLeastOneTel'));
+    }
+
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only.
+     */
+    public function alphaOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->nom))
+            $this->addError('nom', Yii::t('common', 'onlyAlpha'));
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->prenom))
+            $this->addError('prenom', Yii::t('common', 'onlyAlpha'));
+    }
+
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
+     */
+    public function alphaNumericOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->nom))
+            $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
     }
 
 }

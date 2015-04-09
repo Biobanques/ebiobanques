@@ -65,12 +65,16 @@ return array(
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
-                ),
-                array(
-                    'class'=>'CPhpMailerLogRoute',
-                    'levels'=>'error, warning',
-                    'emails'=>'nicolas.malservet@inserm.fr',
-                ),
+                ), CommonProperties::$DEV_MODE ?
+                        array(
+                    'class' => 'CPhpMailerLogRoute',
+                    'levels' => 'error, warning',
+                    'emails' => 'contact@ebiobanques.fr',
+                        ) : array(
+                    'class' => 'CPhpMailerLogRoute',
+                    'levels' => 'error, warning',
+                    'emails' => 'nicolas.malservet@inserm.fr',
+                        ),
             // uncomment the following to show log messages on web pages
             /*
               array(

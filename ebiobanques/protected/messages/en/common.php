@@ -110,5 +110,12 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'noUserWithIdentifier' => 'There is no user in our database with the identifier \'{badIdentifier}\'',
     'download' => 'Download {filename}',
     'noBiobankFound' => 'The biobank website cannot be found, please chose one in the following list',
+    'subscribeHelpTitle' => 'IMPORTANT : registration process',
+    'subscribeHelpContent' => 'Subscription to ebiobanques.fr comprises a step of validation of your account.<br> '
+    . '<b> Your registration will be effective when your account has been validated by the administrator of the platform .</b> The maximum period of account validation is 24 .<br>'
+    . 'If you encounter a problem during this step, please contact the bioinformatics service of Biobanks infrastructure.',
+    'atLeastOneTel' => 'At least one phone number must be specified. ',
+    'onlyAlpha' => 'Only the alphabetic characters are allowed for this field.',
+    'onlyAlphaNumeric' => 'Only the alphanumeric characters are allowed for this field.',
 );
 ?>

@@ -31,6 +31,7 @@ class CommonMailer
                 $mailq->emailto = $to;
             } else {
                 $mailq->emailto = CommonMailer::MAIL_FROM;
+                $subject = "Mail in dev_mod for $to : $subject";
             }
             $mailq->subject = $subject;
             $mailq->body = $body;
@@ -211,8 +212,8 @@ class CommonMailer
 				$user->prenom $user->nom s'est inscrit sur le site ebiobanques.fr.<br>
 						Détails :<br>
 	<ul>$userDetails</ul><br>
-	Vous pouvez valider cet utilisateur en cliquant sur ce lien : <a href=$base/index.php?r=user/validate&id=$user->_id\">Valider l'utilisateur</a>,
-	 ou le retrouver dans <a href=$base/index.php?r=user/admin\">la liste des utilisateurs</a>.
+	Vous pouvez valider cet utilisateur en cliquant sur ce lien : <a href=$base/index.php/user/validate/id/$user->_id\">Valider l'utilisateur</a>, le <a href=$base/index.php/user/refuseRegistration/id/$user->_id\">désactiver</a>
+	 ou le retrouver dans <a href=$base/index.php/user/admin\">la liste des utilisateurs</a>.
 	</body>
 		";
         return CommonMailer::sendMail($to, $subject, $body);
@@ -264,6 +265,26 @@ class CommonMailer
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
+    public static function sendUserRegisterRefusedMail($user) {
+        $to = $user->email;
+        $subject = "Refus de votre inscription sur ebiobanques.fr";
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+		<?xml version=\"1.0\" encoding=\"utf-8\"?>
+		<html><head>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur ebiobanques.fr</title>
+		</head><body>
+		Cher (Chère) $user->prenom $user->nom,<br><br>
+		Merci de vous être intéressé à la plate-forme <a href=\"http://www.ebiobanques.fr/index.php\">ebiobanques.fr</a>.<br>
+		Malheureusement, nous ne pouvons donner suite à votre inscription.<br>
+                Pour toute question, merci de contacter l'administrateur de la plate-forme.<br><br>
+                Cordialement<br>
+                L'équipe ebiobanques
+
+		</body>
+		";
+        return CommonMailer::sendMail($to, $subject, $body);
+    }
+
     public static function sendMailRelanceExport($contact, $lastImportDate, $nbJours) {
         if (Yii::app()->params['mailRelanceExport'] == true) {
             $to = $contact->email;
@@ -275,7 +296,7 @@ class CommonMailer
             $lname = 'ebiobanques.fr';
         }
         $dateFormat = date('d/m/y', strtotime($lastImportDate));
-        $subject = "Mot de passe oublié sur ebiobanques.fr";
+        $subject = "Exportez vos données";
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>

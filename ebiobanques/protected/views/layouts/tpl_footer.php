@@ -1,6 +1,6 @@
 <footer>
     <div style="text-align:center;background-color: white;">
-        Copyright Inserm - Version 1.2 rev. <?php include 'revision_number.php' ?>- Project Biobanques <a href="http://www.biobanques.eu">www.biobanques.eu</a>
+        Copyright Inserm - Version 1.3 rev. <?php include 'revision_number.php' ?>- Project Biobanques <a href="http://www.biobanques.eu">www.biobanques.eu</a>
     </div>
 </footer>
 
@@ -12,7 +12,7 @@
         _gaq.push(['_setAccount', 'UA-44379278-1']);
         _gaq.push(['_trackPageview']);
 
-        (function() {
+        (function () {
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
             ga.async = true;

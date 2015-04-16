@@ -113,7 +113,7 @@ class DemandeController extends Controller
      * @param integer $id
      *        	the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $layout = null) {
         $model = $this->loadModel($id);
         if (isset($_POST ['Demande'])) {
             $model->attributes = $_POST ['Demande'];
@@ -294,7 +294,7 @@ class DemandeController extends Controller
                     'updateAndSend',
                     'id' => $demande->_id), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array()
                 ));
-//               
+//
             }
         }
     }

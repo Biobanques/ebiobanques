@@ -1,19 +1,17 @@
 <?php
 
-class ApiController extends Controller {
-
+class ApiController extends Controller
+{
     /**
      * no layout
-     * @var type 
+     * @var type
      */
     public $layout = '';
-
     // Members
     /**
-     * Key which has to be in HTTP USERNAME and PASSWORD headers 
+     * Key which has to be in HTTP USERNAME and PASSWORD headers
      */
     Const APPLICATION_ID = 'ASCCPE';
-
     /**
      * Default response format
      * either 'json' or 'xml'
@@ -77,7 +75,7 @@ c: fr
             if ($contact != null) {
                 $attributes['biobankContactFirstName'] = $contact->first_name;
                 $attributes['biobankContactLastName'] = $contact->last_name;
-                $attributes['biobankContactPhone'] = $contact->phone;//TODO verifier que format international?
+                $attributes['biobankContactPhone'] = CommonTools::getIntPhone($contact->phone);
                 $attributes['biobankContactEmail'] = $contact->email;
                 $attributes['biobankContactAddress'] = $contact->adresse;
                 $attributes['biobankContactZIP'] = $contact->code_postal;
@@ -172,7 +170,7 @@ diagnosisAvailable: urn:miriam:icd:C*"; //TODO recuperer le diagnistique agrége
                     break;
             }
 
-            // servers don't always have a signature turned on 
+            // servers don't always have a signature turned on
             // (this is an apache directive "ServerSignature On")
             $signature = ($_SERVER['SERVER_SIGNATURE'] == '') ? $_SERVER['SERVER_SOFTWARE'] . ' Server at ' . $_SERVER['SERVER_NAME'] . ' Port ' . $_SERVER['SERVER_PORT'] : $_SERVER['SERVER_SIGNATURE'];
 

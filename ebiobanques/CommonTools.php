@@ -89,7 +89,6 @@ class CommonTools
         return ('data:' . $mime . ';base64,' . $base64);
     }
 
-    
     /**
      * FIXME fonction etrange retour bizarre, action de controller melangée
      * @return type
@@ -106,8 +105,6 @@ class CommonTools
         } else {
             Yii::app()->user->setFlash('error', yii::t('common', 'noBiobankFound'));
             //Yii::app()->controller->redirect(Yii::app()->createUrl('site/biobanks'));
-            
-            
         }
     }
 
@@ -301,6 +298,22 @@ class CommonTools
                 Yii::log($log, CLogger::LEVEL_ERROR);
             }
         }return count($listBadSamples);
+    }
+
+    public static function getIntPhone($phone) {
+        //  echo "$phone - ";
+        $phone = str_replace(" ", "", $phone);
+        //echo "$phone - ";
+        $phone = str_replace(".", "", $phone);
+        //echo "$phone - ";
+        $phone = str_replace("-", "", $phone);
+        //echo "$phone - ";
+        $phone = str_replace("/", "", $phone);
+        //echo "$phone - ";
+        $phone = substr_replace($phone, "+33", 0, 1);
+        //echo "$phone - ";
+        $phone = mb_strcut($phone, 0, 12);
+        return $phone;
     }
 
 }

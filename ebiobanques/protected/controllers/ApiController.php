@@ -1,17 +1,19 @@
 <?php
 
-class ApiController extends Controller
-{
+class ApiController extends Controller {
+
     /**
      * no layout
      * @var type
      */
     public $layout = '';
+
     // Members
     /**
      * Key which has to be in HTTP USERNAME and PASSWORD headers
      */
     Const APPLICATION_ID = 'ASCCPE';
+
     /**
      * Default response format
      * either 'json' or 'xml'
@@ -82,57 +84,79 @@ c: fr
                 $attributes['biobankContactCity'] = $contact->ville;
                 $attributes['biobankContactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
                 $attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
-                //$attributes['objectClass'] = "biobankClinical";
             } else {
                 Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
             }
-            $result.="
-dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
+            $this->checkAttributesComplianceWithBBMRI($attributes);
+            $result.="dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
 diagnosisAvailable: urn:miriam:icd:D*
-diagnosisAvailable: urn:miriam:icd:C*"; //TODO recuperer le diagnistique agréger
+diagnosisAvailable: urn:miriam:icd:C*\n"; //TODO recuperer le diagnistique agréger
             foreach ($attributes as $key => $value) {
                 $result.=$key . ": " . $value . "\n";
             }
-            /* $result.="
-              biobankContactCountry: CZ
-              objectClass:
-              biobankMaterialStoredDNA: TRUE
-              biobankMaterialStoredcDNAmRNA: FALSE
-              biobankMaterialStoredmicroRNA: FALSE
-              biobankMaterialStoredWholeBlood: TRUE
-              biobankMaterialStoredPBC: FALSE
-              biobankMaterialStoredPlasma: FALSE
-              biobankMaterialStoredSerum: TRUE
-              biobankMaterialStoredTissueCryo: TRUE
-              biobankMaterialStoredTissueParaffin: TRUE
-              biobankMaterialStoredCellLines: FALSE
-              biobankMaterialStoredUrine: FALSE
-              biobankMaterialStoredSaliva: FALSE
-              biobankMaterialStoredFaeces: FALSE
-              biobankMaterialStoredPathogen: FALSE
-              biobankMaterialStoredOther: FALSE
-              biobankSize: 4
-              biobankSampleAccessFee: FALSE
-              biobankSampleAccessJointProjects: TRUE
-              biobankSampleAccessDescription: Further access details available upon request.
-              biobankDataAccessFee: FALSE
-              biobankDataAccessJointProjects: TRUE
-              biobankDataAccessDescription: Further access details available upon request.
-              biobankAvailableMaleSamplesData: TRUE
-              biobankAvailableFemaleSamplesData: TRUE
-              biobankAvailableBiologicalSamples: TRUE
-              biobankAvailableSurveyData: FALSE
-              biobankAvailableImagingData: FALSE
-              biobankAvailableMedicalRecords: TRUE
-              biobankAvailableNationalRegistries: FALSE
-              biobankAvailableGenealogicalRecords: FALSE
-              biobankAvailablePhysioBiochemMeasurements: TRUE
-              biobankAvailableOther: FALSE
-              biobankITSupportAvailable: TRUE
-              biobankITStaffSize: 0"; */
         }
 
         return $result;
+    }
+
+    /**
+     * Check the attributes of one biobank according to the BBMRI validation rules
+     * Raise an error log if data needs to be enhanced
+     * @param array $attributes
+     */
+    public function checkAttributesComplianceWithBBMRI($attributes) {
+        $anomalies = array();
+        //Fields mandatory
+        $attributesnotempty = array();
+        $attributesnotempty[] = 'biobankCountry';
+        $attributesnotempty[] = 'biobankContactEmail';
+        $attributesnotempty[] = 'biobankContactAddress';
+        $attributesnotempty[] = 'biobankContactCity';
+        $attributesnotempty[] = 'biobankContactZIP';
+        $attributesnotempty[] = 'biobankContactCountry';
+        $attributesnotempty[] = 'objectClass';
+        $attributesnotempty[] = 'biobankContactPhone';
+        $attributesnotempty[] = 'biobankMaterialStoredDNA';
+        $attributesnotempty[] = 'biobankMaterialStoredcDNAmRNA';
+        $attributesnotempty[] = 'biobankMaterialStoredmicroRNA';
+        $attributesnotempty[] = 'biobankMaterialStoredWholeBlood';
+        $attributesnotempty[] = 'biobankMaterialStoredPBC';
+        $attributesnotempty[] = 'biobankMaterialStoredPlasma';
+        $attributesnotempty[] = 'biobankMaterialStoredSerum';
+        $attributesnotempty[] = 'biobankMaterialStoredTissueCryo';
+        $attributesnotempty[] = 'biobankMaterialStoredTissueParaffin';
+        $attributesnotempty[] = 'biobankMaterialStoredCellLines';
+        $attributesnotempty[] = 'biobankMaterialStoredUrine';
+        $attributesnotempty[] = 'biobankMaterialStoredSaliva';
+        $attributesnotempty[] = 'biobankMaterialStoredFaeces';
+        $attributesnotempty[] = 'biobankMaterialStoredPathogen';
+        $attributesnotempty[] = 'biobankMaterialStoredOther';
+        $attributesnotempty[] = 'biobankPartnerCharterSigned';
+        $attributesnotempty[] = 'biobankSize';
+
+        foreach ($attributesnotempty as $attributenotempty) {
+            if (empty($attributes[$attributenotempty])) {
+                $anomalies[$attributenotempty] = $attributenotempty . " is empty";
+            }
+        }
+        ////check syntax compliance
+        //The phone number needs to be in the +99999999 international format without spaces.
+        if (isset($attributes['biobankContactPhone']))
+            if (!preg_match("/^\+[0-9]{11}$/", $attributes['biobankContactPhone']))
+                $anomalies['biobankContactPhone'] = "biobankContactPhone is in a bad syntax, needed +999999999";
+
+        //check semantic compliance
+        if ($attributes['objectClass'] == "biobankClinical")
+            if (empty($attributes['diagnosisAvailable']))
+                $anomalies['diagnosisAvailable'] = "diagnosis available mandatory if object class biobankClinical";
+        //raise an error log if count >0
+        if (count($anomalies) > 0) {
+            $message = "Biobank with fields in error :" . $attributes['biobankName'];
+            foreach ($anomalies as $key => $value) {
+                $message.=$key . ": " . $value . "\n";
+            }
+            Yii::log($message, CLogger::LEVEL_WARNING, "application");
+        }
     }
 
     private function _sendResponse($status = 200, $body = '', $content_type = 'text/html') {
@@ -232,4 +256,5 @@ diagnosisAvailable: urn:miriam:icd:C*"; //TODO recuperer le diagnistique agrége
     }
 
 }
+
 ?>

@@ -65,22 +65,18 @@ return array(
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
-                ), CommonProperties::$DEV_MODE ?
+                ),  array(
+                    'class' => 'CPhpMailerLogRoute',
+                    'levels' => 'error, warning',
+                    'emails' => CommonProperties::$ADMIN_EMAIL,
+                ),
+                CommonProperties::$DEV_MODE ?
                         array(
                     'class' => 'CWebLogRoute',
                     'levels' => 'error, warning,info',
                         ) :
-                        array(
-                    'class' => 'CPhpMailerLogRoute',
-                    'levels' => 'error, warning',
-                    'emails' => 'contact@ebiobanques.fr',
-                        ),
-            // uncomment the following to show log messages on web pages
-            /*
-              array(
-              'class'=>'CWebLogRoute',
-              ),
-             */
+                        null,
+           
             ),
         ),
         'ePdf' => array(

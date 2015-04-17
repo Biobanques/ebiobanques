@@ -1,7 +1,7 @@
 <?php
 
-class ContactController extends Controller
-{
+class ContactController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -73,13 +73,9 @@ class ContactController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Contact'])) {
             $model->attributes = $_POST['Contact'];
-            if ($model->update())
+            if ($model->save())
                 $this->redirect(array('view', 'id' => $id));
         }
 

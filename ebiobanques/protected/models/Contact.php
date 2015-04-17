@@ -11,7 +11,7 @@
  * @property string $phone
  * @property string $adresse
  * @property string $ville
- * @property integer $pays
+ * @property string $pays
  * @property string $code_postal
  * @property integer $inactive
  */
@@ -27,7 +27,6 @@ class Contact extends LoggableActiveRecord
     public $pays;
     public $code_postal;
     public $inactive;
-    public $biobank_id;
 
     /**
      * Returns the static model of the specified AR class.
@@ -51,14 +50,39 @@ class Contact extends LoggableActiveRecord
     public function rules() {
 
         return array(
-            array('first_name, last_name,email', 'required'),
-            array('pays, inactive, biobank_id,', 'numerical', 'integerOnly' => true),
-            array('first_name, last_name, email, phone', 'length', 'max' => 250),
-            array('adresse', 'length', 'max' => 200),
-            array('ville', 'length', 'max' => 50),
-            array('code_postal', 'length', 'max' => 10),
-            array('id, first_name, last_name, email, phone, adresse, ville, pays, code_postal, inactive', 'safe', 'on' => 'search'),
+            /**
+             * Mandatory attributes
+             */
+            array('first_name, last_name,email,phone,adresse,ville, code_postal,pays,inactive', 'required'),
+            /**
+             * Email validation
+             */
+            array('email', 'CEmailValidator', 'allowEmpty' => false),
+            /**
+             * Alphabetic only, defined in LoggableActiveRecord class
+             */
+            array('first_name, last_name, pays', 'alphaOnly'),
+            array('pays', 'length', 'max' => 2),
+            array('email', 'EMongoUniqueValidator'),
+            array('code_postal', 'numerical', 'integerOnly' => true),
+            array('code_postal', 'length', 'max' => 5),
+            /**
+             * Global custom phone validator, defined in LoggableActiveRecord class
+             */
+            array('phone', 'phoneValidator', 'language' => $this->pays),
         );
+    }
+
+    /**
+     * Custom validation rules
+     */
+
+    /**
+     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
+     */
+    public function alphaNumericOnly() {
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->nom))
+            $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
     }
 
     /**
@@ -106,13 +130,15 @@ class Contact extends LoggableActiveRecord
             $criteria->addCond('ville', '==', new MongoRegex('/' . $this->ville . '*/i'));
         if ($this->pays != null)
             $criteria->addCond('pays', '==', new MongoRegex('/' . $this->pays . '*/i'));
-        if ($this->biobank_id != null) {
-            $biobank = Biobank::model()->findByAttributes(array('id' => $this->biobank_id));
-            $criteria->id = $biobank->contact_id;
+        if ($this->biobank != null && $this->biobank->contact_id != null && $this->biobank->contact_id != "") {
+            // echo $this->biobank;
+            //Yii::log($this->biobank->identifier);
+            $criteria->addCond('_id', '==', $this->biobank->contact_id);
         }
         if ($this->inactive != null) {
             $criteria->addCond('inactive', '==', $this->inactive);
         }
+
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -126,18 +152,33 @@ class Contact extends LoggableActiveRecord
         $res = array();
         $contacts = $this->findAll();
         foreach ($contacts as $row) {
-            $res[$row->id] = $row->first_name . " " . $row->last_name;
+            $res[(string) $row->_id] = $row->first_name . " " . $row->last_name;
         }
         return $res;
     }
 
+//    public function getBiobank() {
+//        $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->_id));
+//
+//        if ($biobank != null)
+//            return $biobank->identifier;
+//        else
+//            return 'Aucune';
+//    }
     public function getBiobank() {
-        $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->id));
 
-        if ($biobank != null)
-            return $biobank->identifier;
+        $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->_id));
+        if ($biobank == null)
+            $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->id));
+
+        return $biobank;
+    }
+
+    public function setBiobank($id) {
+        if ($id != null && $id != "")
+            $this->biobank = Biobank::model()->findByPK($id);
         else
-            return 'Aucune';
+            $this->biobank = null;
     }
 
 }

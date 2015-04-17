@@ -19,22 +19,32 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord {
-
+class Biobank extends LoggableActiveRecord
+{
+    /*
+     * Champs obligatoires
+     */
     public $id;
     public $identifier;
-    public $name = 'Non défini';
-    public $collection_name = 'Non définie';
+    public $name;
+    public $collection_name;
     public $collection_id;
+    public $biobank_class = 'biobankClinical';
+
+    /*
+     * Champs facultatifs
+     */
     public $date_entry;
     public $folder_reception;
     public $folder_done;
     public $passphrase;
     public $contact_id;
-
+    public $diagnosis_available;
+    public $longitude;
+    public $latitude;
     /**
      * var array 'logo' 'fr' 'en'
-     * @var array 
+     * @var array
      */
     public $vitrine;
 
@@ -55,19 +65,56 @@ class Biobank extends LoggableActiveRecord {
     }
 
     /**
+     * Operations sur les attributs obligatoires, pour copie des valeurs si inexistantes
+     * @return boolean
+     */
+    public function beforeValidate() {
+        if ($this->name == null) {
+            Yii::log('Trying to store a biobank without name, operation refused', CLogger::LEVEL_WARNING);
+        } else {
+            if ($this->collection_name == null) {
+                Yii::log('Trying to store a biobank without collection name, attribute set as name.', CLogger::LEVEL_WARNING);
+                $this->collection_name = $this->name;
+            }
+            if ($this->collection_id == null) {
+                Yii::log('Trying to store a biobank without collection id, attribute set as collection name.', CLogger::LEVEL_WARNING);
+                $this->collection_id = $this->collection_name;
+            }
+        } return true;
+    }
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules() {
         return array(
-            array('id, identifier, name, collection_name, folder_reception, folder_done, passphrase,', 'required'),
-            array('id,contact_id', 'numerical', 'integerOnly' => true),
-            array('identifier, name, collection_name, collection_id', 'length', 'max' => 45),
-            array('folder_reception, folder_done, passphrase', 'length', 'max' => 200),
-            array('date_entry', 'safe'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('id, identifier, name, collection_name, collection_id,contact_id, date_entry, folder_reception, folder_done, passphrase,vitrine', 'safe', 'on' => 'search'),
+            /**
+             * mandatory attributes
+             */
+            array('identifier,name,collection_name,collection_id, biobank_class', 'required', 'on' => 'insert,update'),
+            /**
+             * Check unique in db
+             */
+            array('identifier,name', 'EMongoUniqueValidator', 'on' => 'insert,update'),
+            /**
+             * max passphrase length, required by crypt API used
+             */
+            array('passphrase', 'length', 'max' => 8),
+            /**
+             * Custom validator, for validation if some value
+             */
+            array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update')
         );
+    }
+
+    /**
+     * Custom validation rules
+     */
+    public function diagValidator($attributes, $params) {
+        if ($this->biobank_class == 'biobankClinical') {
+            $diagValid = CValidator::createValidator('required', $this, $attributes, $params);
+            $diagValid->validate($this);
+        }
     }
 
     /**
@@ -127,10 +174,20 @@ class Biobank extends LoggableActiveRecord {
 
     public function getContact() {
         if ($this->contact_id != null) {
-            $contact = Contact::model()->findByAttributes(array('id' => $this->contact_id));
+            $contact = Contact::model()->findByPk($this->contact_id);
+            if ($contact == null)
+                $contact = Contact::model()->findByAttributes(array("id" => $this->contact_id));
             return $contact;
         } else
             return null;
+    }
+
+    public function setContact($contact_id) {
+        if ($contact_id != null) {
+            $contact = Contact::model()->findByPk($contact_id);
+            $this->contact = $contact;
+        } else
+            $this->contact = null;
     }
 
     /**
@@ -175,7 +232,8 @@ class Biobank extends LoggableActiveRecord {
         $res = array();
         $biobanks = $this->findAll();
         foreach ($biobanks as $row) {
-            $res[$row->id] = $row->identifier;
+
+            $res[(string) $row->_id] = mb_strcut($row->identifier, 0, 75);
         }
         return $res;
     }
@@ -186,8 +244,8 @@ class Biobank extends LoggableActiveRecord {
      */
     public function getArrayBiobank($idBiobank) {
         $res = array();
-        $biobank = $this->findByAttributes(array('id' => $idBiobank));
-        $res[$biobank->id] = $biobank->identifier;
+        $biobank = $this->findByPK(new MongoId($idBiobank));
+        $res[$biobank->_id] = $biobank->identifier;
 
         return $res;
     }
@@ -198,13 +256,7 @@ class Biobank extends LoggableActiveRecord {
      */
     public function getBiobank($idBiobank) {
         $result = null;
-        $c = new EMongoCriteria;
-        $c->id = $idBiobank;
-        //$c->addCond('id', '==', $idBiobank);
-        $biobanks = Biobank::model()->findAll($c);
-        if (count($biobanks) == 1) {
-            $result = $biobanks[0];
-        }
+        $result = $this->findByPk($idBiobank);
         return $result;
     }
 
@@ -224,13 +276,13 @@ class Biobank extends LoggableActiveRecord {
 
     public function getVitrineLink() {
         if (isset($this->vitrine) && $this->vitrine != null)
-            return Yii::app()->createUrl('vitrine/view', array('id' => $this->id));
+            return Yii::app()->createUrl('vitrine/view', array('id' => $this->_id));
         else
             return null;
     }
 
     /**
-     * 
+     *
      * get the logo object for this biobank, null if not setted
      * @return Logo
      */
@@ -242,5 +294,22 @@ class Biobank extends LoggableActiveRecord {
         return $result;
     }
 
-    
+    public function getAdmin() {
+
+        $result = null;
+        $user = User::model()->findByAttributes(array('biobank_id' => $this->_id));
+        if ($user != null)
+            $result = $user;
+        return $result;
+    }
+
+//
+    public function setAdmin($id) {
+
+        if ($id != null && $id != "")
+            $this->admin = User::model()->findByPK(new MongoId($id));
+        else
+            $this->admin = null;
+    }
+
 }

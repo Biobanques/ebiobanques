@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'phone'); ?>
+		<?php echo $form->labelEx($model,'phone'); ?><p>Format : +33601020304</p>
 		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>250)); ?>
 		<?php echo $form->error($model,'phone'); ?>
 	</div>

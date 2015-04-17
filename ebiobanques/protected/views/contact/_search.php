@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'phone'); ?>
+		<?php echo $form->label($model,'phone'); ?><p>Format : +33601020304</p>
 		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>250)); ?>
 	</div>
 

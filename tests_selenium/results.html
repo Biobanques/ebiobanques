@@ -50,11 +50,11 @@ a {
 <table>
 <tr>
 <td>result:</td>
-<td>passed</td>
+<td>failed</td>
 </tr>
 <tr>
 <td>totalTime:</td>
-<td>35</td>
+<td>69</td>
 </tr>
 <tr>
 <td>numTestTotal:</td>
@@ -62,15 +62,15 @@ a {
 </tr>
 <tr>
 <td>numTestPasses:</td>
-<td>7</td>
+<td>6</td>
 </tr>
 <tr>
 <td>numTestFailures:</td>
-<td>0</td>
+<td>1</td>
 </tr>
 <tr>
 <td>numCommandPasses:</td>
-<td>30</td>
+<td>29</td>
 </tr>
 <tr>
 <td>numCommandFailures:</td>
@@ -78,7 +78,7 @@ a {
 </tr>
 <tr>
 <td>numCommandErrors:</td>
-<td>0</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Selenium Version:</td>
@@ -91,14 +91,14 @@ a {
 <tr>
 <td>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
-<tr class="title status_passed"><td><b>Test Suite</b></td></tr>
+<tr class="title status_failed"><td><b>Test Suite</b></td></tr>
 <tr class=" status_passed"><td><a href="#testresult0">accueilTestCase</a></td></tr>
 <tr class=" status_passed"><td><a href="#testresult1">rechercheEchantillonsSansConnexionTestCase</a></td></tr>
 <tr class=" status_passed"><td><a href="#testresult2">questionsFrequentesTestCase</a></td></tr>
 <tr class=" status_passed"><td><a href="#testresult3">activitesTestCase</a></td></tr>
 <tr class=" status_passed"><td><a href="#testresult4">biobanquesTestCase</a></td></tr>
 <tr class=" status_passed"><td><a href="#testresult5">contactsTestCase</a></td></tr>
-<tr class=" status_passed"><td><a href="#testresult6">contactUsTestCase</a></td></tr>
+<tr class=" status_failed"><td><a href="#testresult6">contactUsTestCase</a></td></tr>
 </tbody></table>
 
 
@@ -364,7 +364,7 @@ a {
 <td><a name="testresult6">contactUsTestCase</a><br/><div>
 <table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr class="title status_passed"><td rowspan="1" colspan="3">contactUsTestCase</td></tr>
+<tr class="title status_failed"><td rowspan="1" colspan="3">contactUsTestCase</td></tr>
 </thead><tbody>
 <tr class=" status_done" style="cursor: pointer;">
 	<td>open</td>
@@ -416,12 +416,12 @@ a {
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-<tr class=" status_done" style="cursor: pointer;">
+<tr class=" status_failed" style="cursor: pointer;">
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
-	<td></td>
+	<td>Element&nbsp;name=yt0&nbsp;not&nbsp;found</td>
 </tr>
-<tr class=" status_passed" style="cursor: pointer;">
+<tr class="" style="cursor: pointer;">
 	<td>assertText</td>
 	<td>css=div.flash-success</td>
 	<td>Thank you for contacting us. We will respond to you as soon as possible.</td>
@@ -442,44 +442,44 @@ info: Executing: |assertText | link=Contacts | Contacts |
 info: Executing: |assertText | link=Connexion | Connexion |
 info: Executing: |assertText | link=Nous contacter | Nous contacter |
 info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | css=h3 | ebiobanques.fr : Améliorer la recherche de matériel biologique |
 info: Starting test /selenium-server/tests/rechercheEchantillonsSansConnexionTestCase
 info: Executing: |open | /ebiobanques/index.php |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |clickAndWait | link=Rechercher des échantillons |  |
 info: Executing: |assertText | css=h1 | Connexion |
 info: Executing: |assertText | id=LoginForm_username |  |
 info: Executing: |assertText | id=LoginForm_password |  |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | //div[@id=&apos;content&apos;]/table/tbody/tr/td[2]/div | exact:Pas encore de compte sur ebiobanques.fr? |
 info: Starting test /selenium-server/tests/questionsFrequentesTestCase
 info: Executing: |open | /ebiobanques/index.php/site/login |  |
 info: Executing: |clickAndWait | link=Questions fréquentes |  |
 info: Executing: |assertText | css=h3 | exact:A quoi sert le projet ebiobanques.fr? |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
 info: Starting test /selenium-server/tests/activitesTestCase
 info: Executing: |open | /ebiobanques/index.php/site/questions |  |
 info: Executing: |clickAndWait | link=Activités |  |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | css=div.portlet-title | Reception de fichiers |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
 info: Executing: |assertText | css=#yw2 &gt; div.portlet-decoration &gt; div.portlet-title | Biobanques enregistrées |
 info: Executing: |assertText | css=#yw4 &gt; div.portlet-decoration &gt; div.portlet-title | Reception d&apos;échantillons |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title | Localisation des échantillons |
 info: Starting test /selenium-server/tests/biobanquesTestCase
 info: Executing: |open | /ebiobanques/index.php/site/dashboard |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |clickAndWait | link=Biobanques |  |
 info: Executing: |assertText | link=Recherche avancée | Recherche avancée |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | id=biobanks-grid_c0 | Identifiant |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |click | //div[@id=&apos;biobanks-grid&apos;]/table/tbody/tr[6]/td[5] |  |
 info: Executing: |assertText | link=Voir le site vitrine | Voir le site vitrine |
 info: Starting test /selenium-server/tests/contactsTestCase
 info: Executing: |open | /ebiobanques/index.php/site/biobanks |  |
 info: Executing: |clickAndWait | link=Contacts |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |assertText | css=h1 | Connexion |
 info: Executing: |assertText | link=www.biobanques.eu | www.biobanques.eu |
 info: Starting test /selenium-server/tests/contactUsTestCase
@@ -487,14 +487,15 @@ info: Executing: |open | /ebiobanques/index.php/site/contactus |  |
 info: Executing: |clickAndWait | link=Nous contacter |  |
 info: Executing: |assertText | css=h1 | Nous contacter |
 info: Executing: |type | id=ContactForm_name | nicolas |
-info: Executing: |type | id=ContactForm_email | nicolas.malservet@inserm.fr |
 info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=ContactForm_email | nicolas.malservet@inserm.fr |
 info: Executing: |type | id=ContactForm_subject | test dev contecter nous |
 info: Executing: |type | id=ContactForm_body | message test dev contacter nous |
-info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
 info: Executing: |type | id=ContactForm_verifyCode | nicolas |
 info: Executing: |verifyElementPresent | id=yw0 |  |
 info: Executing: |click | name=yt0 |  |
 info: Executing: |clickAndWait | name=yt0 |  |
-info: Executing: |assertText | css=div.flash-success | Thank you for contacting us. We will respond to you as soon as possible. |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+error: Element name=yt0 not found
+warn: currentTest.recordFailure: Element name=yt0 not found
 </pre></body></html>

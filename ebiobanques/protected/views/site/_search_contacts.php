@@ -37,10 +37,9 @@ $form = $this->beginWidget ( 'CActiveForm', array (
 			</tr>
 			<tr>
 			<td>
-			<?php $biobank = new Biobank;?>
-			<?php echo $form->label($model,'biobank'); ?>
-		 	<?php
- 			echo $form->dropDownList($model,'biobank_id',$biobank->getArrayBiobanks(),array('prompt' => '----'));
+			<?php //$biobank = new Biobank;?>
+			<?php //echo $form->label($model,'biobank'); ?>
+		 	<?php //echo $form->dropDownList($model,'biobank',$biobank->getArrayBiobanks(),array('prompt' => '----'));
  			?>
 		</td>
 			</tr>

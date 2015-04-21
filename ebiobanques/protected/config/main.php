@@ -37,7 +37,6 @@ return array(
             'allowAutoLogin' => true,
             //tell the application to use your WebUser class instead of the default CWebUser
             'class' => 'WebUser',
-//            'loginUrl' => array_merge(array('site/login'), isset($_SESSION['layout']) ? array('layout' => $_SESSION['layout']) : array('test' => 'tttt')),
         ),
         'urlManager' => array(
             'urlFormat' => 'path',
@@ -65,7 +64,7 @@ return array(
                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
-                ),  array(
+                ), array(
                     'class' => 'CPhpMailerLogRoute',
                     'levels' => 'error, warning',
                     'emails' => CommonProperties::$ADMIN_EMAIL,
@@ -74,9 +73,9 @@ return array(
                         array(
                     'class' => 'CWebLogRoute',
                     'levels' => 'error, warning,info',
-                        ) :
-                        null,
-           
+                        ) : array('class' => 'CWebLogRoute',
+                    'levels' => 'none',
+                        ),
             ),
         ),
         'ePdf' => array(

@@ -146,7 +146,7 @@ diagnosisAvailable: urn:miriam:icd:C*\n"; //TODO recuperer le diagnistique agré
                 $anomalies['biobankContactPhone'] = "biobankContactPhone is in a bad syntax, needed +999999999";
 
         //check semantic compliance
-        if ($attributes['objectClass'] == "biobankClinical")
+        if (isset($attributes['objectClass'])&&$attributes['objectClass'] == "biobankClinical")
             if (empty($attributes['diagnosisAvailable']))
                 $anomalies['diagnosisAvailable'] = "diagnosis available mandatory if object class biobankClinical";
         //raise an error log if count >0

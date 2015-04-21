@@ -5,8 +5,7 @@
  * @author nicolas
  *
  */
-abstract class LoggableActiveRecord extends EMongoSoftDocument
-{
+abstract class LoggableActiveRecord extends EMongoSoftDocument {
 
     /**
      * ajout du comportement pour log audittrail
@@ -40,24 +39,16 @@ abstract class LoggableActiveRecord extends EMongoSoftDocument
             $this->addError($this->$attribute, Yii::t('common', 'onlyAlphaNumeric'));
     }
 
+    /**
+     * phone validator. format : +33010203045
+     * @param type $attribute
+     * @param type $params
+     */
     public function phoneValidator($attribute, $params) {
-        /*
-         * Set default to 'fr'
-         */
-        if (!isset($params['language']))
-            $params['language'] = 'fr';
-        /*
-         * Apply rules depending of country
-         */
-        if ($params['language'] == 'fr') {
-            if (!preg_match("#^\+33[0-9]{9}$#", $this->$attribute))
-                $this->addError($this->$attribute, Yii::t('common', 'InvalidPhoneNumber'));
-        }else {
-            Yii::log("Phone validation pattern not set for this language : $params[language], trying to validate with french pattern", CLogger::LEVEL_WARNING);
-            if (!preg_match("#^\+33[0-9]{9}$#", $this->$attribute))
-                $this->addError($this->$attribute, Yii::t('common', 'InvalidPhoneNumber'));
-        }
+        if (!preg_match("#^\+33[0-9]{9}$#", $this->$attribute))
+            $this->addError($this->$attribute, Yii::t('common', 'InvalidPhoneNumber'));
     }
 
 }
+
 ?>

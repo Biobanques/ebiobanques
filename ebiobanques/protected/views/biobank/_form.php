@@ -75,6 +75,7 @@
                 <?php echo $form->dropDownList($model,'contact_id',Contact::model()->getArrayContacts(),array('prompt' => '----')); ?>
 		<?php echo $form->error($model,'contact_id'); ?>
             <?php $contact = Contact::model()->findByAttributes(array('id' => $model->contact_id));
+            if($contact-=null)
             echo "current value from migration:".$contact->last_name." ".$contact->first_name; ?>
 	</div>
         <div class="row">

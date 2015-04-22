@@ -101,6 +101,9 @@ ajouter la librairie php5-gd à php pour utilisation du systeme de captcha. Vers
 --note specifique mongo : mongo gere les acces au niveau de la base, donc il faut specifier obligatoirement sur quelle base on va se connecter sinon auth fail
 mongo localhost:32020/interop -u ebiobanques -p insermEbb
 
+-- pour utiliser MongId:isValide vous devez installer la librairei 
+PECL mongo >= 1.5.0
+
 
  
 

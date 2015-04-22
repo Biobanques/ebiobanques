@@ -51,10 +51,6 @@ class BiobankController extends Controller
      */
     public function actionCreate() {
         $model = new Biobank;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Biobank'])) {
             $model->attributes = $_POST['Biobank'];
             if ($model->save())

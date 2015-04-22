@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord
-{
+class Biobank extends LoggableActiveRecord {
     /*
      * Champs obligatoires
      */
+
     public $id;
     public $identifier;
     public $name;
@@ -42,6 +42,7 @@ class Biobank extends LoggableActiveRecord
     public $diagnosis_available;
     public $longitude;
     public $latitude;
+
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -91,20 +92,41 @@ class Biobank extends LoggableActiveRecord
             /**
              * mandatory attributes
              */
-            array('identifier,name,collection_name,collection_id, biobank_class', 'required', 'on' => 'insert,update'),
+            array('identifier,name,collection_name,collection_id', 'required', 'on' => 'insert,update'),
             /**
              * Check unique in db
+             * FIXME : EMONgoUniqueValidator doesn t work
              */
-            array('identifier,name', 'EMongoUniqueValidator', 'on' => 'insert,update'),
+            //array('identifier,name', 'EMongoUniqueValidator', 'on' => 'insert,update'),
             /**
              * max passphrase length, required by crypt API used
              */
             array('passphrase', 'length', 'max' => 8),
             /**
+             * max folder length, limited but high
+             */
+            array('folder_reception', 'length', 'max' => 100),
+            array('folder_done', 'length', 'max' => 100),
+            array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
+            /**
              * Custom validator, for validation if some value
              */
             array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update'),
-            );
+            /**
+             * safes attributes : attributes not modified by th eapplication so without validation rule
+             */
+            array('id', 'safe'),
+            /**
+             * contact id must be an id of contact. empty allowed
+             */
+            array('contact_id', 'exist',
+                'allowEmpty' => true,
+                'attributeName' => 'id',
+                'className' => 'Contact',
+                'message' => 'The specified model does not exist.',
+                'skipOnError' => true
+            )
+        );
     }
 
     /**

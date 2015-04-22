@@ -92,7 +92,7 @@ class Biobank extends LoggableActiveRecord {
             /**
              * mandatory attributes
              */
-            array('identifier,name,collection_name,collection_id', 'required', 'on' => 'insert,update'),
+            array('identifier,name,collection_name,collection_id,contact_id', 'required', 'on' => 'insert,update'),
             /**
              * Check unique in db
              * FIXME : EMONgoUniqueValidator doesn t work
@@ -116,16 +116,6 @@ class Biobank extends LoggableActiveRecord {
              * safes attributes : attributes not modified by th eapplication so without validation rule
              */
             array('id', 'safe'),
-            /**
-             * contact id must be an id of contact. empty allowed
-             */
-            array('contact_id', 'exist',
-                'allowEmpty' => true,
-                'attributeName' => 'id',
-                'className' => 'Contact',
-                'message' => 'The specified model does not exist.',
-                'skipOnError' => true
-            )
         );
     }
 
@@ -254,8 +244,7 @@ class Biobank extends LoggableActiveRecord {
         $res = array();
         $biobanks = $this->findAll();
         foreach ($biobanks as $row) {
-
-            $res[(string) $row->_id] = mb_strcut($row->identifier, 0, 75);
+            $res[(string) $row->_id] = mb_strcut($row->identifier." ".$row->name, 0, 75);
         }
         return $res;
     }

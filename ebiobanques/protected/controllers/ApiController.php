@@ -72,6 +72,26 @@ c: fr
             $attributes['biobankID'] = "bbmri-eric:ID:FR_" . $biobank->identifier;
             $attributes['biobankName'] = $biobank->name;
             $attributes['biobankJuridicalPerson'] = $biobank->name;
+            $attributes['biobankMaterialStoredDNA'] = "false";
+            $attributes['biobankMaterialStoredcDNAmRNA'] = "false";
+            $attributes['biobankMaterialStoredmicroRNA'] = "false";
+            $attributes['biobankMaterialStoredWholeBlood'] = "false";
+            $attributes['biobankMaterialStoredPBC'] = "false";
+            $attributes['biobankMaterialStoredPlasma'] = "false";
+            $attributes['biobankMaterialStoredSerum'] = "false";
+            $attributes['biobankMaterialStoredTissueCryo'] = "false";
+            $attributes['biobankMaterialStoredTissueParaffin'] = "false";
+            $attributes['biobankMaterialStoredCellLines'] = "false";
+            $attributes['biobankMaterialStoredUrine'] = "false";
+            $attributes['biobankMaterialStoredSaliva'] = "false";
+            $attributes['biobankMaterialStoredFaeces'] = "false";
+            $attributes['biobankMaterialStoredPathogen'] = "false";
+            $attributes['biobankMaterialStoredOther'] = "false";
+            $attributes['biobankPartnerCharterSigned'] = "false";
+            $attributes['biobankSize'] = "1";
+            $attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
+            $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";
+
             $contact = $biobank->getContact();
             //TODO info de contact obligatoire lever un warning si pas affectée pour l export
             if ($contact != null) {
@@ -83,14 +103,11 @@ c: fr
                 $attributes['biobankContactZIP'] = $contact->code_postal;
                 $attributes['biobankContactCity'] = $contact->ville;
                 $attributes['biobankContactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
-                $attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
             } else {
                 Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
             }
             $this->checkAttributesComplianceWithBBMRI($attributes);
-            $result.="dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
-diagnosisAvailable: urn:miriam:icd:D*
-diagnosisAvailable: urn:miriam:icd:C*\n"; //TODO recuperer le diagnistique agréger
+            $result.="dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n"; //TODO recuperer le diagnistique agréger
             foreach ($attributes as $key => $value) {
                 $result.=$key . ": " . $value . "\n";
             }
@@ -140,18 +157,22 @@ diagnosisAvailable: urn:miriam:icd:C*\n"; //TODO recuperer le diagnistique agré
             }
         }
         ////check syntax compliance
+        //check biobankID only alphabetical without accent, and minimum 3 characters
+        if (isset($attributes['biobankID']))
+            if (!preg_match('/^[a-zA-Z0-9:_ -]{3,}$/', $attributes['biobankID']))
+                $anomalies['biobankID'] = "biobankIDis in a bad syntax, only withou accent:" . $attributes['biobankID'];
         //The phone number needs to be in the +99999999 international format without spaces.
         if (isset($attributes['biobankContactPhone']))
             if (!preg_match("/^\+[0-9]{11}$/", $attributes['biobankContactPhone']))
                 $anomalies['biobankContactPhone'] = "biobankContactPhone is in a bad syntax, needed +999999999";
 
         //check semantic compliance
-        if (isset($attributes['objectClass'])&&$attributes['objectClass'] == "biobankClinical")
+        if (isset($attributes['objectClass']) && $attributes['objectClass'] == "biobankClinical")
             if (empty($attributes['diagnosisAvailable']))
                 $anomalies['diagnosisAvailable'] = "diagnosis available mandatory if object class biobankClinical";
         //raise an error log if count >0
         if (count($anomalies) > 0) {
-            $message = "Biobank with fields in error :" . $attributes['biobankName'];
+            $message = "<b>Biobank with fields in error :" . $attributes['biobankName'] . "</b><br>";
             foreach ($anomalies as $key => $value) {
                 $message.=$key . ": " . $value . "\n";
             }

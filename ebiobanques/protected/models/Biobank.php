@@ -103,8 +103,8 @@ class Biobank extends LoggableActiveRecord
             /**
              * Custom validator, for validation if some value
              */
-            array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update')
-        );
+            array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update'),
+            );
     }
 
     /**

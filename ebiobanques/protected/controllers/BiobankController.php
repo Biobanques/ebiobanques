@@ -73,16 +73,14 @@ class BiobankController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if (isset($_POST['Biobank'])) {
+     if (isset($_POST['Biobank'])) {
             $model->attributes = $_POST['Biobank'];
-            if ($model->save())
+            $model->scenario = 'update';          // custom scenario
+        if ($model->validate()) { 
+            if ($model->update())
                 $this->redirect(array('view', 'id' => $model->_id));
         }
-
+   }
         $this->render('update', array(
             'model' => $model,
         ));

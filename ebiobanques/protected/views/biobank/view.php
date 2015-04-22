@@ -30,5 +30,6 @@ $this->menu=array(
 		'folder_reception',
 		'folder_done',
 		'passphrase',
+            'diagnosis_available'
 	),
 )); ?>

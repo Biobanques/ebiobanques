@@ -21,6 +21,7 @@
 		<?php echo $form->error($model,'id'); ?>
 	</div>
 
+        <div><p>Identifier must be the BRIF Code if possible</p></div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'identifier'); ?>
 		<?php echo $form->textField($model,'identifier',array('size'=>45,'maxlength'=>45)); ?>
@@ -73,6 +74,11 @@
 		<?php echo $form->labelEx($model,'contact_id'); ?>
                 <?php echo $form->dropDownList($model,'contact_id',Contact::model()->getArrayContacts(),array('prompt' => '----')); ?>
 		<?php echo $form->error($model,'contact_id'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'diagnosis_available'); ?>
+		<?php echo $form->textField($model,'diagnosis_available',array('size'=>60,'maxlength'=>200)); ?>
+		<?php echo $form->error($model,'diagnosis_available'); ?>
 	</div>
 
 	<div class="row buttons">

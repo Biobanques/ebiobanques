@@ -15,8 +15,8 @@
  * @property string $code_postal
  * @property integer $inactive
  */
-class Contact extends LoggableActiveRecord
-{
+class Contact extends LoggableActiveRecord {
+
     public $id;
     public $first_name;
     public $last_name;
@@ -27,6 +27,13 @@ class Contact extends LoggableActiveRecord
     public $pays;
     public $code_postal;
     public $inactive;
+
+    /**
+     * biobank attached to this contact
+     * a contact must be attached to a biobank. A biobank must have one main contact
+     * @var type 
+     */
+    public $biobank_id;
 
     /**
      * Returns the static model of the specified AR class.
@@ -53,7 +60,7 @@ class Contact extends LoggableActiveRecord
             /**
              * Mandatory attributes
              */
-            array('first_name, last_name,email,phone,adresse,ville, code_postal,pays,inactive', 'required'),
+            array('first_name, last_name,email,phone,adresse,ville, code_postal,pays,inactive,biobank_id', 'required'),
             /**
              * Email validation
              */
@@ -70,6 +77,10 @@ class Contact extends LoggableActiveRecord
              * Global custom phone validator, defined in LoggableActiveRecord class
              */
             array('phone', 'phoneValidator', 'language' => $this->pays),
+            /**
+             * id is a safe attribute, not to modified by user
+             */
+            array('id','safe'),
         );
     }
 
@@ -101,6 +112,7 @@ class Contact extends LoggableActiveRecord
             'code_postal' => Yii::t('common', 'zipcode'),
             'inactive' => Yii::t('common', 'inactive'),
             'biobank' => Yii::t('common', 'biobanks'),
+            'biobank_id' => Yii::t('common', 'biobanks'),
         );
     }
 
@@ -138,7 +150,8 @@ class Contact extends LoggableActiveRecord
         if ($this->inactive != null) {
             $criteria->addCond('inactive', '==', $this->inactive);
         }
-
+        //always sort with alphabetical order
+        $criteria->sort('last_name', EMongoCriteria::SORT_ASC);
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -157,28 +170,17 @@ class Contact extends LoggableActiveRecord
         return $res;
     }
 
-//    public function getBiobank() {
-//        $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->_id));
-//
-//        if ($biobank != null)
-//            return $biobank->identifier;
-//        else
-//            return 'Aucune';
-//    }
-    public function getBiobank() {
-
-        $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->_id));
-        if ($biobank == null)
-            $biobank = Biobank::model()->findByAttributes(array('contact_id' => $this->id));
-
-        return $biobank;
-    }
-
-    public function setBiobank($id) {
-        if ($id != null && $id != "")
-            $this->biobank = Biobank::model()->findByPK($id);
+    /**
+     * get biobank name of this contact
+     * usefull in view contacts for site
+     * @return type
+     */
+    public function getBiobankName() {
+        $biobank = Biobank::model()->findByPK(new MongoID($this->biobank_id));
+        if (isset($biobank))
+            return $biobank->name;
         else
-            $this->biobank = null;
+            return 'Not defined';
     }
 
 }

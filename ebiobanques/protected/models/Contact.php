@@ -142,11 +142,6 @@ class Contact extends LoggableActiveRecord {
             $criteria->addCond('ville', '==', new MongoRegex('/' . $this->ville . '*/i'));
         if ($this->pays != null)
             $criteria->addCond('pays', '==', new MongoRegex('/' . $this->pays . '*/i'));
-        if ($this->biobank != null && $this->biobank->contact_id != null && $this->biobank->contact_id != "") {
-            // echo $this->biobank;
-            //Yii::log($this->biobank->identifier);
-            $criteria->addCond('_id', '==', $this->biobank->contact_id);
-        }
         if ($this->inactive != null) {
             $criteria->addCond('inactive', '==', $this->inactive);
         }

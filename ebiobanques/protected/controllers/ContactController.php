@@ -51,12 +51,10 @@ class ContactController extends Controller {
      */
     public function actionCreate() {
         $model = new Contact;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Contact'])) {
             $model->attributes = $_POST['Contact'];
+            //last name to upper case automatically /prevent pb to sort and display
+            $model->last_name=strtoupper($model->last_name);
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->_id));
         }
@@ -75,7 +73,9 @@ class ContactController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['Contact'])) {
             $model->attributes = $_POST['Contact'];
-            if ($model->save())
+            //last name to upper case automatically /prevent pb to sort and display
+            $model->last_name=strtoupper($model->last_name);
+            if ($model->update())
                 $this->redirect(array('view', 'id' => $id));
         }
 

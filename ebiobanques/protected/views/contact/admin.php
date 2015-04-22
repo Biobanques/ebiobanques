@@ -35,8 +35,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'contact-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('name' => 'first_name', 'header' => $model->getAttributelabel('first_name')),
         array('name' => 'last_name', 'header' => $model->getAttributelabel('last_name')),
+        array('name' => 'first_name', 'header' => $model->getAttributelabel('first_name')),
+        array('name' => 'biobank', 'value' => '$data->getBiobankName()'),
         array('name' => 'email', 'header' => $model->getAttributelabel('email')),
         array('name' => 'phone', 'header' => $model->getAttributelabel('phone')),
         array('name' => 'ville', 'header' => $model->getAttributelabel('ville')),

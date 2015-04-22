@@ -68,6 +68,12 @@
 		<?php echo $form->textField($model,'inactive'); ?>
 		<?php echo $form->error($model,'inactive'); ?>
 	</div>
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'biobank_id'); ?>
+                <?php echo $form->dropDownList($model,'biobank_id',Biobank::model()->getArrayBiobanks(),array('prompt' => '----')); ?>
+		<?php echo $form->error($model,'biobank_id'); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

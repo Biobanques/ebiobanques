@@ -158,7 +158,7 @@ class Contact extends LoggableActiveRecord {
      */
     public function getArrayContacts() {
         $res = array();
-        $criteria = new EmongoCriteria;
+        $criteria = new EMongoCriteria;
         $criteria->sort('last_name', EMongoCriteria::SORT_ASC);
         $contacts = $this->findAll($criteria);
         foreach ($contacts as $row) {

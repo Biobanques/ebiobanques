@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * This is the model class for table "Biobank".
  *
@@ -185,21 +186,17 @@ class Biobank extends LoggableActiveRecord {
     }
 
     public function getContact() {
-        if ($this->contact_id != null) {
-            $contact = Contact::model()->findByPk($this->contact_id);
-            if ($contact == null)
-                $contact = Contact::model()->findByAttributes(array("id" => $this->contact_id));
-            return $contact;
-        } else
-            return null;
-    }
-
-    public function setContact($contact_id) {
-        if ($contact_id != null) {
-            $contact = Contact::model()->findByPk($contact_id);
-            $this->contact = $contact;
-        } else
-            $this->contact = null;
+        $result =null;
+        //check if the string is a mongo id string
+        if (MongoId::isValid($this->contact_id)) {
+            if ($this->contact_id != null) {
+                $result = Contact::model()->findByPk(new MongoID($this->contact_id));
+                if ($result == null) {
+                    $result = Contact::model()->findByAttributes(array("id" => $this->contact_id));
+                }
+            } 
+        }
+        return $result;
     }
 
     /**

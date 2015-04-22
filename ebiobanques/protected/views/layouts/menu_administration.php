@@ -24,7 +24,7 @@
         ?>
     </div>
 </div>
-<div id="content" style="background-color: white; ">
+<div id="content" style="background-color: white;float:left;">
     <?php echo $content; ?>
 </div><!-- content -->
 <?php $this->endContent(); ?>

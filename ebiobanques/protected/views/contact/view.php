@@ -32,6 +32,7 @@ $this->widget('zii.widgets.CDetailView', array(
         'pays',
         'code_postal',
         'inactive',
+        array("name"=>"biobank","value"=>$model->getBiobankName()),
     ),
 ));
 ?>

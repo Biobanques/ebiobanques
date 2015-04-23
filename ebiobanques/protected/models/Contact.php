@@ -17,6 +17,11 @@
  */
 class Contact extends LoggableActiveRecord {
 
+    /**
+     *id is deprectaed. use _id to store relation with contact
+     * @var type 
+     * @deprecated since version 1.4
+     */
     public $id;
     public $first_name;
     public $last_name;

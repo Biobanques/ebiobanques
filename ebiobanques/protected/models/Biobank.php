@@ -108,6 +108,7 @@ class Biobank extends LoggableActiveRecord
             array('folder_reception', 'length', 'max' => 100),
             array('identifier', 'length', 'max' => 15),
             array('name', 'length', 'max' => 50),
+            array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
             /**
@@ -117,7 +118,7 @@ class Biobank extends LoggableActiveRecord
             /**
              * safes attributes : attributes not modified by th eapplication so without validation rule
              */
-            array('id, long_name', 'safe'),
+            array('id,', 'safe'),
         );
     }
 

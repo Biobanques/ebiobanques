@@ -243,7 +243,7 @@ class Biobank extends LoggableActiveRecord {
         $res = array();
         $biobanks = $this->findAll();
         foreach ($biobanks as $row) {
-            $res[(string) $row->_id] = mb_strcut($row->identifier." ".$row->name, 0, 75);
+            $res[(string) $row->_id] = $row->identifier." ".$row->name;
         }
         return $res;
     }

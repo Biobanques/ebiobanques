@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * This is the model class for table "Biobank".
  *
@@ -20,14 +19,15 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord {
+class Biobank extends LoggableActiveRecord
+{
     /*
      * Champs obligatoires
      */
-
     public $id;
     public $identifier;
     public $name;
+    public $long_name;
     public $collection_name;
     public $collection_id;
     public $biobank_class = 'biobankClinical';
@@ -43,7 +43,6 @@ class Biobank extends LoggableActiveRecord {
     public $diagnosis_available;
     public $longitude;
     public $latitude;
-
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -107,6 +106,8 @@ class Biobank extends LoggableActiveRecord {
              * max folder length, limited but high
              */
             array('folder_reception', 'length', 'max' => 100),
+            array('identifier', 'length', 'max' => 15),
+            array('name', 'length', 'max' => 50),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
             /**
@@ -116,7 +117,7 @@ class Biobank extends LoggableActiveRecord {
             /**
              * safes attributes : attributes not modified by th eapplication so without validation rule
              */
-            array('id', 'safe'),
+            array('id, long_name', 'safe'),
         );
     }
 
@@ -188,7 +189,7 @@ class Biobank extends LoggableActiveRecord {
     }
 
     public function getContact() {
-        $result =null;
+        $result = null;
         //check if the string is a mongo id string
         if (MongoId::isValid($this->contact_id)) {
             if ($this->contact_id != null) {
@@ -196,7 +197,7 @@ class Biobank extends LoggableActiveRecord {
                 if ($result == null) {
                     $result = Contact::model()->findByAttributes(array("id" => $this->contact_id));
                 }
-            } 
+            }
         }
         return $result;
     }
@@ -243,7 +244,7 @@ class Biobank extends LoggableActiveRecord {
         $res = array();
         $biobanks = $this->findAll();
         foreach ($biobanks as $row) {
-            $res[(string) $row->_id] = $row->identifier." ".$row->name;
+            $res[(string) $row->_id] = $row->identifier . " " . $row->name;
         }
         return $res;
     }

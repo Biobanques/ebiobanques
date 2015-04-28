@@ -22,11 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Radio Button - Yii Framework Forum</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>id=UploadedFile_addOrReplace_0</td>
 	<td></td>
@@ -42,16 +37,10 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=UploadedFile_fileUploaded</td>
-	<td>/Users/nicolas/Desktop/text_0.txt</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

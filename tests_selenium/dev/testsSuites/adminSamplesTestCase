@@ -59,7 +59,7 @@
 <tr>
 	<td>assertText</td>
 	<td>css=h1</td>
-	<td>View Echantillon #1_LB07-0567</td>
+	<td>View Sample #1_LB07-0567</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -81,7 +81,6 @@
 	<td>name=yt0</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -21,17 +21,6 @@
 	<td>link=Aperçu du site vitrine</td>
 	<td></td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Ma biobanque</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertNotText</td>
-	<td>css=h2</td>
-	<td>Error 500</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

@@ -59,7 +59,7 @@
 <tr>
 	<td>assertText</td>
 	<td>css=h1</td>
-	<td>View Biobank #1</td>
+	<td>View Biobank #000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -74,7 +74,7 @@
 <tr>
 	<td>assertText</td>
 	<td>css=h1</td>
-	<td>Update Biobank 1</td>
+	<td>Update Biobank 000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -91,7 +91,6 @@
 	<td>css=img[alt=&quot;Supprimer&quot;]</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

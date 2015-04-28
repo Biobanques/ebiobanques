@@ -38,15 +38,14 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='biobanks-grid']/table/tbody/tr[6]/td[5]</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr[1]/td[5]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertNotText</td>
 	<td>link=Voir le site vitrine</td>
 	<td>Voir le site vitrine</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

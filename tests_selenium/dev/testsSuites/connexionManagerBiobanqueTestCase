@@ -24,12 +24,12 @@
 <tr>
 	<td>type</td>
 	<td>id=LoginForm_username</td>
-	<td>tester</td>
+	<td>bbadmin</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=LoginForm_password</td>
-	<td>tester54</td>
+	<td>bbadmin</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -48,10 +48,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Déconnexion (tester)</td>
-	<td>Déconnexion (tester)</td>
+	<td>link=Déconnexion (bbadmin)</td>
+	<td>Déconnexion (bbadmin)</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

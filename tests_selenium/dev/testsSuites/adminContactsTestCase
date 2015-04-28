@@ -27,19 +27,14 @@
 	<td>Gestion des contacts</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>id=contact-grid_c2</td>
-	<td>Email</td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>//div[@id='contact-grid']/table/tbody/tr/td[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='contact-grid']/table/tbody/tr/td[3]</td>
-	<td>hofman.p@chu-nice.fr</td>
+	<td>assertTextPresent</td>
+	<td></td>
+	<td>ACHANBOUN</td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
@@ -91,7 +86,6 @@
 	<td>xpath=(//a[contains(text(),'Contacts')])[2]</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

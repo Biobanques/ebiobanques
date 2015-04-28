@@ -43,8 +43,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='user-grid']/table/tbody/tr/td[3]</td>
-	<td>gdagher</td>
+	<td>//div[@id='user-grid']/table/tbody/tr[2]/td[3]</td>
+	<td>bbadmin</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -69,7 +69,7 @@
 <tr>
 	<td>assertText</td>
 	<td>css=h1</td>
-	<td>View User #52e00281975af51ac91e8412</td>
+	<td>View User # grenoble-manager</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -94,24 +94,8 @@
 <tr>
 	<td>assertText</td>
 	<td>css=h1</td>
-	<td>View User #52e00281975af51ac91e8412</td>
+	<td>View User # grenoble-manager</td>
 </tr>
-<tr>
-	<td>assertText</td>
-	<td>//table[@id='yw0']/tbody/tr[6]/td</td>
-	<td>georges.dagher@inserm.fr</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Users</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

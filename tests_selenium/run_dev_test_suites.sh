@@ -6,14 +6,38 @@
 # in 2014 , google chrome will be the browser most used so we recommand to use it for automated test if selenium grid is not used 
 #rebuild db before and aftere tests
 
-echo "launch tests suite with selenium rc"
-echo "current path is:"$(pwd)
+#script parameters to modified.
+EXTERNAL_DATA_PATH="/Users/nicolas/sync/biobanques/scripts/"
 CURRENTPATH=$(pwd)
+#file to store localhost connection parameters like : --username ebiobanques --password ebiobanques --authenticationDatabase admin
+MONGO_CONNECTION_PARAMETERS=$EXTERNAL_DATA_PATH"/localhost_mongo_parameters.txt"
+#dump file
+DUMP_FILE=$EXTERNAL_DATA_PATH"dumps/dump_interopdb_15-04-23/interop/"
+#host and port
+MONGO_HOST="--host localhost --port 32020"
+#database name
+MONGO_DB="interop"
 
-echo "rebuild db local"
-mongo localhost:32020/interop ./db_init.js
+MONGO_PARAMETERS=$(awk '1' $MONGO_CONNECTION_PARAMETERS)
+echo "launch tests suite with selenium rc"
+echo "current path is:"$CURRENTPATH
 
-java -jar selenium-server-standalone-2.44.0.jar -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/visiteSiteSansConnexionTestSuite.html" $CURRENTPATH"/results.html"
+echo "rebuild db local ( restore from a dump)"
+echo "drop database"
+mongo $MONGO_HOST  $MONGO_PARAMETERS $MONGO_DB --eval "db.dropDatabase()"
+echo "restore a db in prod into new db"
+mongorestore $MONGO_HOST  $MONGO_PARAMETERS --db $MONGO_DB $DUMP_FILE
 
-echo "reset db local"
-mongo localhost:32020/interop ./db_reset.js
+echo "Save - Fin de restauration"
+echo "add data for selenium tests for all"
+
+mongo $MONGO_HOST $MONGO_PARAMETERS $MONGO_DB ./db_init.js
+
+java -jar selenium-server-standalone-2.44.0.jar -log selenium_vsc.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/visiteSiteSansConnexionTestSuite.html" $CURRENTPATH"/results_visite_sans_connexion.html"
+
+java -jar selenium-server-standalone-2.44.0.jar -log selenium_adm.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/administrationTestSuite.html" $CURRENTPATH"/results_administration.html"
+
+java -jar selenium-server-standalone-2.44.0.jar -log selenium_mbb.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/managerBiobankTestSuite.html" $CURRENTPATH"/results_manager_biobanque.html"
+echo "rebuild db local ( restore from a dump)"
+#sh $EXTERNAL_DATA_PATH"restore_mongo_from_dump.sh"
+echo "END SCRIPT"

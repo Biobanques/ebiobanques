@@ -23,25 +23,19 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title</td>
-	<td>Détails</td>
-</tr>
-<tr>
-	<td>verifyElementPresent</td>
 	<td>css=#yw0 &gt; div.portlet-decoration &gt; div.portlet-title</td>
-	<td></td>
+	<td>Réception d'échantillons - Test BioBank</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>css=#yw3 &gt; div.portlet-decoration &gt; div.portlet-title</td>
-	<td>Taux de complétude détaillé : id_depositor</td>
+	<td>css=#yw2 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Taux de complétude des échantillons - Test BioBank</td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>id=am-4</td>
-	<td></td>
+	<td>assertText</td>
+	<td>css=b</td>
+	<td>Détails des taux de complétude.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

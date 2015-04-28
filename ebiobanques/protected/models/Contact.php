@@ -18,7 +18,7 @@
 class Contact extends LoggableActiveRecord {
 
     /**
-     *id is deprectaed. use _id to store relation with contact
+     * id is deprectaed. use _id to store relation with contact
      * @var type 
      * @deprecated since version 1.4
      */
@@ -85,7 +85,7 @@ class Contact extends LoggableActiveRecord {
             /**
              * id is a safe attribute, not to modified by user
              */
-            array('id','safe'),
+            array('id', 'safe'),
         );
     }
 
@@ -167,7 +167,7 @@ class Contact extends LoggableActiveRecord {
         $criteria->sort('last_name', EMongoCriteria::SORT_ASC);
         $contacts = $this->findAll($criteria);
         foreach ($contacts as $row) {
-            $res[(string) $row->_id] = $row->last_name. " ".$row->first_name;
+            $res[(string) $row->_id] = $row->last_name . " " . $row->first_name;
         }
         return $res;
     }
@@ -178,11 +178,14 @@ class Contact extends LoggableActiveRecord {
      * @return type
      */
     public function getBiobankName() {
-        $biobank = Biobank::model()->findByPK(new MongoID($this->biobank_id));
-        if (isset($biobank))
-            return $biobank->name;
-        else
-            return 'Not defined';
+        $result = 'Not defined';
+        if ($this->biobank_id != null && isset($this->biobank_id)) {
+            $biobank = Biobank::model()->findByPK(new MongoID($this->biobank_id));
+            if (isset($biobank)) {
+                $result = $biobank->name;
+            }
+        }
+        return $result;
     }
 
 }

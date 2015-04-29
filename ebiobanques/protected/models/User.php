@@ -42,7 +42,7 @@ class User extends LoggableActiveRecord
      */
     public function rules() {
         $result = array(
-            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => !CCaptcha::checkRequirements(),'on' => 'subscription'),
+            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false,'on' => 'subscribe'),
             array('profil, inactif, biobank_id,gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom,nom', 'alphaOnly'),
             array('login', 'alphaNumericOnly'),

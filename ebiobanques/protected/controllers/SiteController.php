@@ -458,6 +458,7 @@ class SiteController extends Controller
     public function actionSubscribe() {
 
         $model = new User ();
+        $model->setScenario('subscribe');
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
             $model->profil = 0;

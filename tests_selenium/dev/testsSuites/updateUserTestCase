@@ -4,16 +4,16 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/ebiobanques" />
-<title>createUserTestCase</title>
+<title>updateUserTestCase</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">createUserTestCase</td></tr>
+<tr><td rowspan="1" colspan="3">updateUserTestCase</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/ebiobanques/index.php/user/create</td>
+	<td>clickAndWait</td>
+	<td>link=Administration</td>
 	<td></td>
 </tr>
 <tr>
@@ -23,48 +23,33 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Créer un utilisateur</td>
+	<td>css=tr.even &gt; td.button-column &gt; a.update &gt; img[alt=&quot;Mettre à jour&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=User_prenom</td>
-	<td>john</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_nom</td>
-	<td>AAAAstark</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_login</td>
-	<td>jstark</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_password</td>
-	<td>got2015</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_email</td>
-	<td>jstark@gmail.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=User_telephone</td>
-	<td>0647920111</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=User_profil</td>
-	<td>label=standard user</td>
+	<td>johnny</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>id=User_inactif</td>
-	<td>label=actif</td>
+	<td>label=inactif</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_telephone</td>
+	<td>0647920113</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='user-form']/div[3]/label</td>
+	<td>exact:Nom d'utilisateur *</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=User_login</td>
+	<td>jstark</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -72,14 +57,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertNotText</td>
-	<td>css=h1</td>
-	<td>CException</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>css=div.flash-success</td>
 	<td>L'utilisateur a été enregistré avec succès.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=tr.even &gt; td</td>
+	<td>johnny</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@id='yw0']/tbody/tr[10]/td</td>
+	<td>inactif</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//table[@id='yw0']/tbody/tr[7]/td</td>
+	<td>0647920113</td>
 </tr>
 </tbody></table>
 </body>

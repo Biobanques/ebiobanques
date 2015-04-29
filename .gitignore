@@ -13,3 +13,7 @@
 /ebiobanques/protected/runtime/
 /ebiobanques/CommonPropertiesProd.php
 /tests_selenium/results_visite_sans_connexion.html
+/tests_selenium/results_administration.html
+/tests_selenium/results_manager_biobanque.html
+/tests_selenium/selenium_adm.log
+/tests_selenium/selenium_vsc.log

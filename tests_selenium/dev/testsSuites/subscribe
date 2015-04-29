@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/electures/index.php?r=site/inscription" />
+<title>subscribe</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">subscribe</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>S'inscrire</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>stan</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_nom</td>
+	<td>lee</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_login</td>
+	<td>slee</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_password</td>
+	<td>ironman2015</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_email</td>
+	<td>slee@hotmaille.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.errorMessage</td>
+	<td>Au moins un numéro de télephone doit être indiqué.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_gsm</td>
+	<td>0647920111</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.errorSummary &gt; ul &gt; li</td>
+	<td>Le code de vérification est incorrect.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.errorMessage</td>
+	<td>Le code de vérification est incorrect.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.flash-success</td>
+	<td>Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h3</td>
+	<td>ebiobanques.fr : Améliorer la recherche de matériel biologique</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -227,7 +227,7 @@ class SiteController extends Controller
         if (isset($_GET ['Contact'])) {
             $model->attributes = $_GET ['Contact'];
         }
-        $model->inactive = "0";
+        //$model->inactive = "0";
         $this->render('contacts', array(
             'model' => $model
         ));

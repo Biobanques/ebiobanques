@@ -77,9 +77,14 @@
 	<td>Le code de vérification est incorrect.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=div.errorMessage</td>
-	<td>Le code de vérification est incorrect.</td>
+	<td>type</td>
+	<td>id=User_verifyCode</td>
+	<td>nicolas</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -91,12 +96,6 @@
 	<td>css=h3</td>
 	<td>ebiobanques.fr : Améliorer la recherche de matériel biologique</td>
 </tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>name=yt0</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

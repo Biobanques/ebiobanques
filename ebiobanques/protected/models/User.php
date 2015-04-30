@@ -3,8 +3,8 @@
 /**
  * This is the MongoDB Document model class based on table "User".
  */
-class User extends LoggableActiveRecord
-{
+class User extends LoggableActiveRecord {
+
     public $id;
     public $prenom;
     public $nom;
@@ -42,7 +42,7 @@ class User extends LoggableActiveRecord
      */
     public function rules() {
         $result = array(
-            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false,'on' => 'subscribe'),
+            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
             array('profil, inactif, biobank_id,gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom,nom', 'alphaOnly'),
             array('login', 'alphaNumericOnly'),
@@ -51,7 +51,7 @@ class User extends LoggableActiveRecord
             array('gsm, telephone', 'length', 'min' => 8),
             array('prenom, nom, login, password, email', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
-            array('login', 'EMongoUniqueValidator'),
+            array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, biobank_id', 'safe', 'on' => 'search'),
@@ -60,7 +60,7 @@ class User extends LoggableActiveRecord
             $result[] = array('email', 'EMongoUniqueValidator');
         return $result;
     }
-    
+
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -185,6 +185,51 @@ class User extends LoggableActiveRecord
     public function alphaNumericOnly() {
         if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->nom))
             $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
+    }
+
+    protected function beforeSave() {
+        if (parent::beforeSave()) {
+            // something happens here
+            $this->cleanAttributesFormat();
+            return true;
+        } else
+            return false;
+    }
+
+    /**
+     * format attributes of the model to help sort and visibility.
+     */
+    public function cleanAttributesFormat() {
+        $this->cleanNames();
+        $this->cleanPhones();
+    }
+
+    /** clean the attributes names an dfirst name to hamronize
+     */
+    public function cleanNames() {
+        $this->nom = mb_strtoupper($this->nom, "UTF-8");
+        //convertie first name en lower case et mettant les caracteres en utf-8 ( cas possible de bug sur chaines mixtes)
+        $this->prenom = mb_strtolower($this->prenom, "UTF-8");
+    }
+
+    /**
+     * clean teh phones attributes to internationalize
+     */
+    public function cleanPhones() {
+        //phone without withespace, point a 0> +33
+        $this->telephone = $this->cleanPhone($this->telephone);
+        $this->gsm = $this->cleanPhone($this->gsm);
+    }
+
+    public function cleanPhone($phone) {
+        if ($phone != null) {
+            $phoneN = mb_ereg_replace('/\s+/', '', $phone);
+            $phoneN = mb_ereg_replace('/\./', '', $phoneN);
+            //replace first zero and add +33
+            $phoneN = mb_ereg_replace('/^0/', '+33', $phoneN);
+            return $phoneN;
+        } else
+            return null;
     }
 
 }

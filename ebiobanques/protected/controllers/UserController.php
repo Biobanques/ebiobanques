@@ -5,8 +5,8 @@
  * Used for admin tasks.
  * Access rights only for admin
  */
-class UserController extends Controller
-{
+class UserController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -66,6 +66,7 @@ class UserController extends Controller
      */
     public function actionCreate() {
         $model = new User;
+        $model->setScenario('create');
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save()) {
@@ -88,9 +89,11 @@ class UserController extends Controller
         $model = $this->loadModel($id);
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-            if ($model->update()) {
-                Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
-                $this->redirect(array('view', 'id' => $model->_id));
+            if ($model->validate()) {
+                if ($model->update()) {
+                    Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                    $this->redirect(array('view', 'id' => $model->_id));
+                }
             }
         }
         $this->render('update', array(

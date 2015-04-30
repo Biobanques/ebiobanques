@@ -1,6 +1,6 @@
 <footer>
     <div style="text-align:center;background-color: white;">
-        Copyright Inserm - Version 1.3 rev. <?php include 'revision_number.php' ?>- Project Biobanques <a href="http://www.biobanques.eu">www.biobanques.eu</a>
+        Copyright Inserm - Version 1.4 rev. <?php include 'revision_number.php' ?>- Project Biobanques <a href="http://www.biobanques.eu">www.biobanques.eu</a>
     </div>
 </footer>
 

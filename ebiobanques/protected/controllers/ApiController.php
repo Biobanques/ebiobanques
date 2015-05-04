@@ -77,6 +77,7 @@ c: fr
             $attributes['biobankJuridicalPerson'] = $biobank->name;
             //TODO flase in cappital
             $attributes['biobankMaterialStoredDNA'] = "FALSE";
+            $attributes['biobankMaterialStoredRNA'] = "FALSE";
             $attributes['biobankMaterialStoredcDNAmRNA'] = "FALSE";
             $attributes['biobankMaterialStoredmicroRNA'] = "FALSE";
             $attributes['biobankMaterialStoredWholeBlood'] = "FALSE";
@@ -97,17 +98,23 @@ c: fr
             $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";
 
             $contact = $biobank->getContact();
+            
+            $attributes['biobankContactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
             //TODO info de contact obligatoire lever un warning si pas affectée pour l export
             if ($contact != null) {
                 $attributes['biobankContactFirstName'] = $contact->first_name;
                 $attributes['biobankContactLastName'] = $contact->last_name;
                 $attributes['biobankContactPhone'] = CommonTools::getIntPhone($contact->phone);
-                $attributes['biobankContactEmail'] = $contact->email;
                 $attributes['biobankContactAddress'] = $contact->adresse;
                 $attributes['biobankContactZIP'] = $contact->code_postal;
                 $attributes['biobankContactCity'] = $contact->ville;
-                $attributes['biobankContactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
+                //TODO contact email need to be filled
+                if(isset($contact->email))
+                    $attributes['biobankContactEmail'] = $contact->email;
+                else
+                   $attributes['biobankContactEmail'] = $contact->email; 
             } else {
+                $attributes['biobankContactEmail'] = "N/A";
                 Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
             }
             $this->checkAttributesComplianceWithBBMRI($attributes);

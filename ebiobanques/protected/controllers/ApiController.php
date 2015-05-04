@@ -118,10 +118,10 @@ c: fr
                 Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
             }
             $this->checkAttributesComplianceWithBBMRI($attributes);
-            $result.="dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n"; //TODO recuperer le diagnistique agréger
+            $result.="dn: biobankID=" . trim($attributes['biobankID']) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n"; //TODO recuperer le diagnistique agréger
             foreach ($attributes as $key => $value) {
                 if (isset($value))
-                    $result.=$key . ": " . $value . "\n";
+                    $result.=$key . ": " . trim($value) . "\n";
             }
             //FIXME mandatory empty line
             $result.="objectClass: biobank\n\n";

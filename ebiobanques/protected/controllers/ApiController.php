@@ -67,7 +67,7 @@ c: fr
 
 ";
         //FIXME Mandatory empty line here ( TODO use ldif exporter to check syntax)
-        
+
         $biobanks = Biobank::model()->findAll();
         foreach ($biobanks as $biobank) {
             $attributes = array();
@@ -75,22 +75,23 @@ c: fr
             $attributes['biobankID'] = "bbmri-eric:ID:FR_" . $biobank->identifier;
             $attributes['biobankName'] = $biobank->name;
             $attributes['biobankJuridicalPerson'] = $biobank->name;
-            $attributes['biobankMaterialStoredDNA'] = "false";
-            $attributes['biobankMaterialStoredcDNAmRNA'] = "false";
-            $attributes['biobankMaterialStoredmicroRNA'] = "false";
-            $attributes['biobankMaterialStoredWholeBlood'] = "false";
-            $attributes['biobankMaterialStoredPBC'] = "false";
-            $attributes['biobankMaterialStoredPlasma'] = "false";
-            $attributes['biobankMaterialStoredSerum'] = "false";
-            $attributes['biobankMaterialStoredTissueCryo'] = "false";
-            $attributes['biobankMaterialStoredTissueParaffin'] = "false";
-            $attributes['biobankMaterialStoredCellLines'] = "false";
-            $attributes['biobankMaterialStoredUrine'] = "false";
-            $attributes['biobankMaterialStoredSaliva'] = "false";
-            $attributes['biobankMaterialStoredFaeces'] = "false";
-            $attributes['biobankMaterialStoredPathogen'] = "false";
-            $attributes['biobankMaterialStoredOther'] = "false";
-            $attributes['biobankPartnerCharterSigned'] = "false";
+            //TODO flase in cappital
+            $attributes['biobankMaterialStoredDNA'] = "FALSE";
+            $attributes['biobankMaterialStoredcDNAmRNA'] = "FALSE";
+            $attributes['biobankMaterialStoredmicroRNA'] = "FALSE";
+            $attributes['biobankMaterialStoredWholeBlood'] = "FALSE";
+            $attributes['biobankMaterialStoredPBC'] = "FALSE";
+            $attributes['biobankMaterialStoredPlasma'] = "FALSE";
+            $attributes['biobankMaterialStoredSerum'] = "FALSE";
+            $attributes['biobankMaterialStoredTissueCryo'] = "FALSE";
+            $attributes['biobankMaterialStoredTissueParaffin'] = "FALSE";
+            $attributes['biobankMaterialStoredCellLines'] = "FALSE";
+            $attributes['biobankMaterialStoredUrine'] = "FALSE";
+            $attributes['biobankMaterialStoredSaliva'] = "FALSE";
+            $attributes['biobankMaterialStoredFaeces'] = "FALSE";
+            $attributes['biobankMaterialStoredPathogen'] = "FALSE";
+            $attributes['biobankMaterialStoredOther'] = "FALSE";
+            $attributes['biobankPartnerCharterSigned'] = "FALSE";
             $attributes['biobankSize'] = "1";
             $attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
             $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";
@@ -112,7 +113,8 @@ c: fr
             $this->checkAttributesComplianceWithBBMRI($attributes);
             $result.="dn: biobankID=" . $attributes['biobankID'] . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n"; //TODO recuperer le diagnistique agréger
             foreach ($attributes as $key => $value) {
-                $result.=$key . ": " . $value . "\n";
+                if (isset($value))
+                    $result.=$key . ": " . $value . "\n";
             }
             //FIXME mandatory empty line
             $result.="objectClass: biobank\n\n";

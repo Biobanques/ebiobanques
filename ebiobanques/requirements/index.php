@@ -6,74 +6,102 @@
  * This script will check if your system meets the requirements for running
  * Yii-powered Web applications.
  *
- * @author Qiang Xue <qiang.xue@gmail.com>
+ * @author Matthieu PENICAUD <matthieu.penicaud@inserm.fr>
  * @link http://www.yiiframework.com/
  * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  * @package system
  * @since 1.0
  */
+require(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'protected/extensions/phpmailer/JPhpMailer.php');
+require(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'CommonProperties.php');
 /**
  * @var array List of requirements (name, required or not, result, used by, memo)
  */
-require(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'protected/extensions/phpmailer/JPhpMailer.php');
-require(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'CommonProperties.php');
-
 $requirements = array(
+    /*
+     * php version
+     */
     array(
         t('yii', 'PHP version'),
         true,
         version_compare(PHP_VERSION, "5.3.0", ">="),
         '<a href="http://www.yiiframework.com">Yii Framework</a>',
         t('yii', 'PHP 5.1.0 or higher is required.')),
+    /*
+     * PDO extension
+     */
     array(
         t('yii', 'PDO extension'),
         false,
         extension_loaded('pdo'),
         t('yii', 'All <a href="http://www.yiiframework.com/doc/api/#system.db">DB-related classes</a>'),
         ''),
+    /*
+     * Mongo extension
+     */
     array(
         t('yii', 'Mongo'),
         false,
         extension_loaded('mongo'),
         t('yii', 'All <a href="http://www.yiiframework.com/doc/api/#system.db">DB-related classes</a>'),
         ''),
+    /*
+     * Reflexion extension
+     */
     array(
         t('yii', 'Reflection extension'),
         true,
         class_exists('Reflection', false),
         '<a href="http://www.yiiframework.com">Yii Framework</a>',
         ''),
+    /*
+     * PCRE extension
+     */
     array(
         t('yii', 'PCRE extension'),
         true,
         extension_loaded("pcre"),
         '<a href="http://www.yiiframework.com">Yii Framework</a>',
         ''),
+    /*
+     * SPL extension
+     */
     array(
         t('yii', 'SPL extension'),
         true,
         extension_loaded("SPL"),
         '<a href="http://www.yiiframework.com">Yii Framework</a>',
         ''),
+    /*
+     * database connection properties
+     * from Commonproperties.php
+     */
     array(
         t('yii', 'bddConnectionProperties'),
         true,
         checkDbConnectionProperties(),
         'Application',
-        t('yii', 'A Renseigner.')),
+        t('yii', 'dbConnectionProperties')),
+    /*
+     * Database version
+     */
     array(
         t('yii', 'db version'),
         true,
         version_compare(checkDbVersion(), "db.version.v.2.4.0", ">="),
         '<a href="http://www.yiiframework.com">Application</a>',
         t('yii', 'Mongodb 2.4.0 or higher is required.')),
+    /*
+     * Send a test mail to check if mail system properties are correct
+     * from Commonproperties.php
+     */
     array(
         t('yii', 'mail'),
         true,
         sendCheckMail(),
         'Application',
-        t('yii', 'A Renseigner.')),
+        t('yii', "checkMail {email}", array('email' => CommonProperties::$ADMIN_EMAIL))),
     array(
         t('yii', 'assets'),
         true,
@@ -251,9 +279,7 @@ function checkDbConnectionProperties() {
 
 function checkDbVersion() {
     try {
-        $connect = new MongoClient(CommonProperties::$CONNECTION_STRING);
         $result = exec('mongo --version');
-        //echo $result;
     } catch (Exception $e) {
         return false;
     }

@@ -48,5 +48,7 @@ return array(
     'bddConnectionProperties' => "Paramètres de connexion à la base de données",
     'mail' => 'Configuration du serveur mail',
     'db version' => 'Version de la base de données',
-    'Mongodb 2.4.0 or higher is required.' => 'Mongodb 2.4.0 ou supérieur est requis'
+    'Mongodb 2.4.0 or higher is required.' => 'Mongodb 2.4.0 ou supérieur est requis',
+    'checkMail {email}' => 'Un email de test va être envoyé à l\'adresse suivante : email',
+    'dbConnectionProperties' => 'Teste la connexion à la base de données, avec les paramètres fournis dans CommonProperties.php',
 );

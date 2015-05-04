@@ -64,7 +64,10 @@ dn: c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
 objectClass: country
 objectClass: top
 c: fr
+
 ";
+        //FIXME Mandatory empty line here ( TODO use ldif exporter to check syntax)
+        
         $biobanks = Biobank::model()->findAll();
         foreach ($biobanks as $biobank) {
             $attributes = array();
@@ -111,6 +114,8 @@ c: fr
             foreach ($attributes as $key => $value) {
                 $result.=$key . ": " . $value . "\n";
             }
+            //FIXME mandatory empty line
+            $result.="objectClass: biobank\n\n";
         }
 
         return $result;

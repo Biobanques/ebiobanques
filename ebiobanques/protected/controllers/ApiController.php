@@ -69,7 +69,7 @@ c: fr
         foreach ($biobanks as $biobank) {
             $attributes = array();
             $attributes['biobankCountry'] = "FR";
-            $attributes['biobankID'] = "bbmri-eric:ID:FR_" . $biobank->id;
+            $attributes['biobankID'] = "bbmri-eric:ID:FR_" . $biobank->identifier;
             $attributes['biobankName'] = $biobank->name;
             $attributes['biobankJuridicalPerson'] = $biobank->name;
             $attributes['biobankMaterialStoredDNA'] = "false";

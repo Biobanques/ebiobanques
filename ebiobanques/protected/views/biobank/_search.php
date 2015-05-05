@@ -36,26 +36,6 @@
 		<?php echo $form->textField($model,'collection_id',array('size'=>45,'maxlength'=>45)); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'date_entry'); ?>
-		<?php echo $form->textField($model,'date_entry'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'folder_reception'); ?>
-		<?php echo $form->textField($model,'folder_reception',array('size'=>60,'maxlength'=>200)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'folder_done'); ?>
-		<?php echo $form->textField($model,'folder_done',array('size'=>60,'maxlength'=>200)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'passphrase'); ?>
-		<?php echo $form->textField($model,'passphrase',array('size'=>60,'maxlength'=>200)); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

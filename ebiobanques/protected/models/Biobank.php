@@ -177,9 +177,10 @@ class Biobank extends LoggableActiveRecord
         // should not be searched.
         $criteria = new EMongoCriteria;
         if ($this->identifier != null)
-            $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '*/i'));
+            $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '/i'));
+
         if ($this->name != null)
-            $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '*/i'));
+            $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
         if ($this->collection_name != null)
             $criteria->addCond('collection_name', '==', new MongoRegex('/' . $this->collection_name . '*/i'));
         //always sort with alphabetical order

@@ -91,7 +91,9 @@ c: fr
             $attributes['biobankMaterialStoredFaeces'] = "FALSE";
             $attributes['biobankMaterialStoredPathogen'] = "FALSE";
             $attributes['biobankMaterialStoredOther'] = "FALSE";
+            //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
             $attributes['biobankPartnerCharterSigned'] = "FALSE";
+            //nmber of samples 10^n n=number
             $attributes['biobankSize'] = "1";
             $attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
             $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";

@@ -4,38 +4,44 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="wide form">
+<div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
-)); ?>
-<table>
-	<tr>
-		<td>
-		<?php echo $form->label($model,'identifier'); ?>
-		<?php echo $form->textField($model,'identifier',array('size'=>45,'maxlength'=>45)); ?>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<?php echo $form->label($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>45,'maxlength'=>45)); ?>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<?php echo $form->label($model,'collection_id'); ?>
-		<?php echo $form->textField($model,'collection_id',array('size'=>45,'maxlength'=>45)); ?>
-		</td>
-	</tr>
-</table>
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'action' => Yii::app()->createUrl($this->route),
+        'method' => 'get',
+    ));
+    ?>
+    <table>
+        <tr>
+            <td>
+                <?php echo $form->label($model, 'identifier'); ?>
+                <?php echo $form->textField($model, 'identifier', array('size' => 30, 'maxlength' => 45)); ?>
+            </td>
 
- 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('common','search')); ?>
- 	</div>
+            <td>
+                <?php echo $form->label($model, 'name'); ?>
+                <?php echo $form->textField($model, 'name', array('size' => 30, 'maxlength' => 45)); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo $form->label($model, 'collection_name'); ?>
+                <?php echo $form->textField($model, 'collection_name', array('size' => 30, 'maxlength' => 45)); ?>
+            </td>
+
+            <td>
+                <?php echo $form->label($model, 'ville'); ?>
+                <?php echo $form->textField($model, 'ville', array('size' => 30, 'maxlength' => 45)); ?>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row buttons">
+        <?php echo CHtml::submitButton(Yii::t('common', 'search')); ?>
+    </div>
 
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->

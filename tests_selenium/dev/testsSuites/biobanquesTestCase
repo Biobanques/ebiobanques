@@ -42,9 +42,129 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertNotText</td>
 	<td>link=Voir le site vitrine</td>
 	<td>Voir le site vitrine</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=label</td>
+	<td>Identifiant</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='yw0']/table/tbody/tr/td[2]/label</td>
+	<td>Nom</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='yw0']/table/tbody/tr[2]/td/label</td>
+	<td>Nom de la collection</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='yw0']/table/tbody/tr[2]/td[2]/label</td>
+	<td>Ville</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Recherche avancée</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_identifier</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr/td[2]</td>
+	<td>0000_AAA_Biobank for Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_identifier</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_name</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr/td[2]</td>
+	<td>0000_AAA_Biobank for Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_collection_name</td>
+	<td>test collection</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr/td[4]</td>
+	<td>Test collection</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_collection_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_ville</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='biobanks-grid']/table/tbody/tr/td[2]</td>
+	<td>0000_AAA_Biobank for Test</td>
 </tr>
 </tbody></table>
 </body>

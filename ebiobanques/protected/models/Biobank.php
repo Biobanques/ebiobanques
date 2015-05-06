@@ -43,6 +43,7 @@ class Biobank extends LoggableActiveRecord
     public $diagnosis_available;
     public $longitude;
     public $latitude;
+    public $ville;
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -111,6 +112,7 @@ class Biobank extends LoggableActiveRecord
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
+            array('identifier, name,collection_name, ville', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -181,9 +183,21 @@ class Biobank extends LoggableActiveRecord
 
         if ($this->name != null)
             $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
-        if ($this->collection_name != null)
-            $criteria->addCond('collection_name', '==', new MongoRegex('/' . $this->collection_name . '*/i'));
+        if ($this->collection_name != null && $this->collection_name != "") {
+            $listWords = explode(" ", $this->collection_name);
+            $regex = "";
+            foreach ($listWords as $word) {
+                $regex.="$word|";
+            }
+            $regex = substr($regex, 0, -1);
+            $criteria->addCond('collection_name', '==', new MongoRegex("/($regex)/i"));
+        }
+
+
+        if ($this->ville != null)
+            $criteria->addCond('ville', '==', new MongoRegex('/' . $this->ville . '/i'));
         //always sort with alphabetical order
+
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria

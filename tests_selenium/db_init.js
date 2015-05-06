@@ -9,7 +9,8 @@ db.biobank.insert([{
         "folder_reception": "/folder/reception/",
         "folder_done": "/folder/inclusion/",
         "passphrase": "Test",
-        "contact_id": ""}
+        "contact_id": "",
+        "ville":"TestVille"}
 ]);
 
 db.user.insert([

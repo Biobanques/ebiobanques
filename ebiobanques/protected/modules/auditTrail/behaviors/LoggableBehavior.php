@@ -27,8 +27,10 @@ class LoggableBehavior extends CActiveRecordBehavior
         if (!$this->Owner->isNewRecord) {
             // compare old and new
             foreach ($newattributes as $name => $value) {
-                if (!empty($oldattributes)) {
+                if (!empty($oldattributes && isset($oldattributes[$name]))) {
                     $old = $oldattributes[$name];
+                } elseif (!empty($oldattributes && !isset($oldattributes[$name]))) {
+                    $old = 'Undefined : new attribute';
                 } else {
                     $old = '';
                 }

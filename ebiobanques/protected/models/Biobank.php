@@ -89,7 +89,8 @@ class Biobank extends LoggableActiveRecord
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        return array(
+
+        $rules = array(
             /**
              * mandatory attributes
              */
@@ -98,7 +99,7 @@ class Biobank extends LoggableActiveRecord
              * Check unique in db
              * FIXME : EMONgoUniqueValidator doesn t work
              */
-            //array('identifier,name', 'EMongoUniqueValidator', 'on' => 'insert,update'),
+            // array('identifier,name', 'EMongoUniqueValidator', 'on' => 'insert,update'),
             /**
              * max passphrase length, required by crypt API used
              */
@@ -122,6 +123,12 @@ class Biobank extends LoggableActiveRecord
              */
             array('id,', 'safe'),
         );
+        if ($this->scenario == 'insert' || $this->scenario == 'update') {
+            foreach ($this->attributes as $name => $value)
+                $rules[] = array((string) $name, 'safe');
+        }
+
+        return $rules;
     }
 
     /**

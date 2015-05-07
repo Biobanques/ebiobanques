@@ -1,7 +1,7 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
-<div style="float:left;width:200px;padding-left:5px;padding-right:5px;padding-top:10px;">
-    <div class="span-5 last">
+<div class="left_menu_container">
+    <div id ='menu' class='menu'>
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
             'title' => Yii::t('common', 'administration'),
@@ -23,8 +23,9 @@
         $this->endWidget();
         ?>
     </div>
+
+    <div id="content" class='content'style="padding : 0px 5px 5px 5px;">
+        <?php echo $content; ?>
+    </div><!-- content -->
 </div>
-<div id="content" style="background-color: white;float:left;width:700px;">
-    <?php echo $content; ?>
-</div><!-- content -->
 <?php $this->endContent(); ?>

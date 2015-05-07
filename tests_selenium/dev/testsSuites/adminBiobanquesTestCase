@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>name=yt0</td>
+	<td>name=yt1</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,6 +90,316 @@
 	<td>assertText</td>
 	<td>css=img[alt=&quot;Supprimer&quot;]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create biobank</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Create Biobank</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_identifier</td>
+	<td>00-1111-22222</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_name</td>
+	<td>00000_testCreatename</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_collection_name</td>
+	<td>testCreateCollection</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_collection_id</td>
+	<td>Collection de test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_diagnosis_available</td>
+	<td>AA1122.</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Biobank_contact_id</td>
+	<td>label=testContactLN testContact</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Facultatif</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_website</td>
+	<td>www.siteDeTest.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_vitrine</td>
+	<td>Non</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Qualité</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Qualité</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#form_qualite &gt; table &gt; tbody &gt; tr &gt; td &gt; label</td>
+	<td>Cert Iso9001</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='form_qualite']/table/tbody/tr/td[2]/label</td>
+	<td>Cert Nfs96900</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='form_qualite']/table/tbody/tr[2]/td/label</td>
+	<td>Cert Autres</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='form_qualite']/table/tbody/tr[2]/td[2]/label</td>
+	<td>Observations</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Informatique</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Informatique</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#form_info &gt; table &gt; tbody &gt; tr &gt; td &gt; label</td>
+	<td>Gest Software</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=Biobank_gest_software</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Biobank_gest_software</td>
+	<td>label=excel</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='form_info']/table/tbody/tr/td[2]/label</td>
+	<td>Other Software</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='form_info']/table/tbody/tr[2]/td/label</td>
+	<td>Connector Installed</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='form_info']/table/tbody/tr[2]/td[2]/label</td>
+	<td>Connector Version</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Autres</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Autres</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=addButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=addButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#addField &gt; label</td>
+	<td>Field name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='addField']/label[2]</td>
+	<td>Field type</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=input[type=&quot;reset&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#addField &gt; div &gt; input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=newFieldName</td>
+	<td>ChampsTextTest</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#addField &gt; div &gt; input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=newFieldName</td>
+	<td>ChampsAreaTest</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=newFieldType</td>
+	<td>label=Text area</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#addField &gt; div &gt; input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#addField &gt; div &gt; input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>name=Biobank[ChampsTextTest]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=input.removeField</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@value='remove'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//textarea[@name='Biobank[ChampsAreaTest]'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@value='remove'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@value='remove'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xpath=(//textarea[@name='Biobank[ChampsAreaTest]'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xpath=(//input[@value='remove'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=Biobank[ChampsTextTest]</td>
+	<td>test field</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=Biobank[ChampsAreaTest]</td>
+	<td>test area</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=td</td>
+	<td>00-1111-22222</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw1 &gt; tbody &gt; tr.odd &gt; td</td>
+	<td>www.siteDeTest.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Qualité</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Informatique</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Autres</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw4 &gt; tbody &gt; tr.odd &gt; th</td>
+	<td>Champs Text Test</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw4 &gt; tbody &gt; tr.odd &gt; td</td>
+	<td>test field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw4 &gt; tbody &gt; tr.even &gt; th</td>
+	<td>Champs Area Test</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw4 &gt; tbody &gt; tr.even &gt; td</td>
+	<td>test area</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Biobanks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='biobank-grid']/table/tbody/tr/td[2]</td>
+	<td>00-1111-22222</td>
 </tr>
 </tbody></table>
 </body>

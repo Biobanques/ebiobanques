@@ -2,34 +2,134 @@
 /* @var $this BiobankController */
 /* @var $model Biobank */
 
-$this->breadcrumbs=array(
-	'Biobanks'=>array('index'),
-	$model->name,
-);
+Yii::app()->clientScript->registerScript('test', "
 
-$this->menu=array(
-	array('label'=>'List Biobank', 'url'=>array('index')),
-	array('label'=>'Create Biobank', 'url'=>array('create')),
-	array('label'=>'Update Biobank', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Biobank', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Biobank', 'url'=>array('admin')),
-);
+ $('#facult').click(function(){
+ $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_facult').toggle(true);
+ 	return false;
+ });
+ $('#qualite').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_qualite').toggle(true);
+ 	return false;
+ });
+ $('#informatique').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_info').toggle(true);
+ 	return false;
+ });
+ $('#other').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_other').toggle(true);
+ 	return false;
+ });
+
+");
 ?>
 
 <h1>View Biobank #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'identifier',
-		'name',
-		'collection_name',
-		'collection_id',
-		'date_entry',
-		'folder_reception',
-		'folder_done',
-		'passphrase',
-            'diagnosis_available'
-	),
-)); ?>
+<?php
+$attributes_oblig = array(
+    'identifier',
+    'name',
+    'collection_name',
+    'collection_id',
+    'biobank_class',
+    array('name' => 'contact', 'value' => $model->getShortContact()),
+    'diagnosis_available',
+);
+
+$attributes_facult = array(
+    'website',
+    'vitrine',
+    'folder_reception',
+    'folder_done',
+    'date_entry',
+    'passphrase',
+    'longitude',
+    'latitude',
+);
+$attributes_qualite = array(
+    'cert_ISO9001',
+    'cert_NFS96900',
+    'cert_autres',
+    'observations',
+);
+$attributes_info = array(
+    'gest_software',
+    'other_software',
+    'connector_installed',
+    'connector_version',
+);
+
+$attributes_other = array(
+);
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id'));
+$attributes = $model->getAttributes();
+foreach ($attributes as $attributeName => $attributeValue)
+    if (!in_array($attributeName, $definedAttributes)) {
+
+        $attributes_other[] = array('name' => $attributeName, 'value' => $attributeValue);
+    }
+?>
+<div id="biobank_oblig" >
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_oblig
+    ));
+    ?>
+</div>
+<div id="menu">
+    <ul id="onglets">
+        <li class="testonglets active" id="facult"><?php echo CHtml::link('Facultatif', '#', array('class' => 'testonglets')); ?></li>
+        <li class="testonglets" id="qualite"><a href="#"> Qualité </a></li>
+        <li class="testonglets" id="informatique"><a href="#"> Informatique </a></li>
+        <li class="testonglets" id="other"><a href="#"> Autres </a></li>
+    </ul>
+</div>
+<div class="biobank_details" id="biobank_facult" >
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_facult
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_qualite" style="display: none">
+    det03
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_qualite
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_info" style="display: none">
+    det04
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_info
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_other" style="display: none">
+    det05
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_other
+    ));
+    ?>
+</div>

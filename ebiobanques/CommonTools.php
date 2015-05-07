@@ -316,4 +316,27 @@ class CommonTools
         return $phone;
     }
 
+    public static function getSoftwareList() {
+        $listSoftware = array(
+            'cresalys',
+            'msaccess',
+            'filemaker',
+            'excel',
+            'tumorotek',
+            'databiotec',
+            'tdbiobank',
+            'mbiolims'
+        );
+        foreach ($listSoftware as $software)
+            $result[$software] = $software;
+        return $result;
+    }
+
+    public static function getShortValue($initialValue) {
+        if (is_string($initialValue) && mb_strlen($initialValue) >= 75) {
+            return mb_substr($initialValue, 0, 75) . '...';
+        } else
+            return $initialValue;
+    }
+
 }

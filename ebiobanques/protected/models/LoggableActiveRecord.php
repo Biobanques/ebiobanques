@@ -5,7 +5,8 @@
  * @author nicolas
  *
  */
-abstract class LoggableActiveRecord extends EMongoSoftDocument {
+abstract class LoggableActiveRecord extends EMongoSoftDocument
+{
 
     /**
      * ajout du comportement pour log audittrail
@@ -49,6 +50,9 @@ abstract class LoggableActiveRecord extends EMongoSoftDocument {
             $this->addError($this->$attribute, Yii::t('common', 'InvalidPhoneNumber'));
     }
 
-}
+    public function getShortValue($attribute) {
+        return CommonTools::getShortValue($this->$attribute);
+    }
 
+}
 ?>

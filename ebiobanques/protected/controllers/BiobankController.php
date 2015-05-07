@@ -50,9 +50,16 @@ class BiobankController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        $model = new Biobank;
+        $model = new Biobank('insert');
         if (isset($_POST['Biobank'])) {
-            $model->attributes = $_POST['Biobank'];
+            $attributesPost = $_POST['Biobank'];
+            foreach ($attributesPost as $attName => $attValue) {
+                if (!in_array($attName, $model->attributeNames())) {
+                    $model->initSoftAttribute($attName);
+                }
+            }
+            $model->attributes = $attributesPost;
+
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->_id));
         }
@@ -69,14 +76,21 @@ class BiobankController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-     if (isset($_POST['Biobank'])) {
-            $model->attributes = $_POST['Biobank'];
+        if (isset($_POST['Biobank'])) {
             $model->scenario = 'update';          // custom scenario
-        if ($model->validate()) { 
-            if ($model->update())
+
+            $attributesPost = $_POST['Biobank'];
+            foreach ($attributesPost as $attName => $attValue) {
+                if (!in_array($attName, $model->attributeNames())) {
+                    $model->initSoftAttribute($attName);
+                }
+            }
+            $model->attributes = $attributesPost;
+
+            if ($model->save())
                 $this->redirect(array('view', 'id' => $model->_id));
         }
-   }
+
         $this->render('update', array(
             'model' => $model,
         ));
@@ -90,7 +104,7 @@ class BiobankController extends Controller
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

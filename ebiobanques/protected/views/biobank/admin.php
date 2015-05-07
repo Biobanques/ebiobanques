@@ -28,11 +28,9 @@ $('.search-form form').submit(function(){
 
 <h1>Gestion des Biobanques</h1>
 
-<p>
-    You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-    or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
 
+<?php echo CHtml::link('Create biobank', 'create'); ?>
+<br>
 <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
@@ -50,9 +48,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'id',
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
-        array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id')),
+        array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id'), 'value' => '$data->getShortValue("collection_id")'),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name')), array(
+        array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'), array(
             'class' => 'CLinkColumn',
             'label' => Yii::t('myBiobank', 'seeAsAdmin'),
             'urlExpression' => 'Yii::app()->createUrl("mybiobank/index",array("id"=>$data->id))',

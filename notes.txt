@@ -107,6 +107,10 @@ PECL mongo >= 1.5.0
 -- make a password file with this to allow requirements check
 htpasswd -c /usr/local/passwords admebio
 
+-- to check requirements Mongo need to be accessible
+--if you use MacOS X, make this symbolic link, otherwise the check mongo version will failed
+sudo ln -s /usr/local/bin/mongo /usr/bin/mongo
+
 
  
 

@@ -104,6 +104,9 @@ mongo localhost:32020/interop -u ebiobanques -p insermEbb
 -- pour utiliser MongId:isValide vous devez installer la librairei 
 PECL mongo >= 1.5.0
 
+-- make a password file with this to allow requirements check
+htpasswd -c /usr/local/passwords admebio
+
 
  
 

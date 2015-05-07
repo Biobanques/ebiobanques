@@ -1,0 +1,6 @@
+AuthType Basic
+AuthName "Authorization required"
+# (La ligne suivante est facultative)
+AuthBasicProvider file
+AuthUserFile /usr/local/passwords
+Require user admebio 

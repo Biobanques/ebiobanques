@@ -91,7 +91,7 @@ $requirements = array(
         true,
         version_compare(checkDbVersion(), "db.version.v.2.4.0", ">="),
         '<a href="http://www.yiiframework.com">Application</a>',
-        t('yii', 'Mongodb 2.4.0 or higher is required.found:' . checkDbVersion())),
+        t('yii', 'Mongodb 2.4.0 or higher is required.found:'.checkDbVersion())),
     /*
      * Send a test mail to check if mail system properties are correct
      * from Commonproperties.php
@@ -101,7 +101,7 @@ $requirements = array(
         true,
         sendCheckMail(),
         'Application',
-        t('yii', "checkMail {mailAdmin}", array('mailAdmin' => CommonProperties::$ADMIN_EMAIL))),
+        t('yii', "checkMail {email}", array('email' => CommonProperties::$ADMIN_EMAIL))),
     array(
         t('yii', 'assets'),
         true,

@@ -127,11 +127,6 @@
 	<td>AA1122.</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>id=Biobank_contact_id</td>
-	<td>label=testContactLN testContact</td>
-</tr>
-<tr>
 	<td>assertElementPresent</td>
 	<td>link=Facultatif</td>
 	<td></td>
@@ -340,6 +335,11 @@
 	<td>type</td>
 	<td>name=Biobank[ChampsAreaTest]</td>
 	<td>test area</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Biobank_contact_id</td>
+	<td>label=AUDO isabelle</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

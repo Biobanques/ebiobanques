@@ -99,7 +99,8 @@ class Biobank extends LoggableActiveRecord
              * Check unique in db
              * FIXME : EMONgoUniqueValidator doesn t work
              */
-            // array('identifier,name', 'EMongoUniqueValidator', 'on' => 'insert,update'),
+            array('identifier,name', 'CustomMongoUniqueValidator', 'on' => 'insert,update'),
+            array('identifier', 'syntaxIdentifierValidator'),
             /**
              * max passphrase length, required by crypt API used
              */
@@ -113,7 +114,7 @@ class Biobank extends LoggableActiveRecord
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_name, ville', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, ville,contact_id', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -141,6 +142,11 @@ class Biobank extends LoggableActiveRecord
         }
     }
 
+    public function syntaxIdentifierValidator($param) {
+        if (!preg_match("/^[a-zA-Z0-9-]*$/i", $this->$param))
+            $this->addError($param, 'L\'identifiant ne peut être composé que de lettres non accentuées, de chiffres et du signe "-"');
+    }
+
     /**
      * @return array customized attribute labels (name=>label)
      */
@@ -157,7 +163,8 @@ class Biobank extends LoggableActiveRecord
             'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
             'vitrine[fr]' => 'Texte en francais',
-            'vitrine[logo]' => 'Image logo'
+            'vitrine[logo]' => 'Image logo',
+            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable')
         );
     }
 
@@ -173,7 +180,8 @@ class Biobank extends LoggableActiveRecord
             'folder_done' => Yii::t('common', 'folder_done'),
             'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
-            'vitrine[page_accueil_fr]' => 'Page d\'accueil en français'
+            'vitrine[page_accueil_fr]' => 'Page d\'accueil en français',
+            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable')
         );
     }
 
@@ -199,11 +207,30 @@ class Biobank extends LoggableActiveRecord
             $regex = substr($regex, 0, -1);
             $criteria->addCond('collection_name', '==', new MongoRegex("/($regex)/i"));
         }
-
+        if ($this->collection_id != null && $this->collection_id != "") {
+            $listWords = explode(" ", $this->collection_id);
+            $regexId = "";
+            foreach ($listWords as $word) {
+                $regexId.="$word|";
+            }
+            $regexId = substr($regexId, 0, -1);
+            $criteria->addCond('collection_id', '==', new MongoRegex("/($regexId)/i"));
+        }
+        if ($this->diagnosis_available != null && $this->diagnosis_available != "") {
+            $listWords = explode(" ", $this->diagnosis_available);
+            $regexId = "";
+            foreach ($listWords as $word) {
+                $regexId.="$word|";
+            }
+            $regexId = substr($regexId, 0, -1);
+            $criteria->addCond('diagnosis_available', '==', new MongoRegex("/($regexId)/i"));
+        }
+        if ($this->contact_id != null && $this->contact_id != "")
+            $criteria->contact_id = $this->contact_id;
 
         if ($this->ville != null)
             $criteria->addCond('ville', '==', new MongoRegex('/' . $this->ville . '/i'));
-        //always sort with alphabetical order
+        //always sort with alphabetical order on name
 
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
         return new EMongoDocumentDataProvider($this, array(
@@ -263,13 +290,22 @@ class Biobank extends LoggableActiveRecord
      * get an array of biobanks used by dropDownLIst.
      * The first line is blank to allow empty case.
      */
-    public function getArrayBiobanks() {
-        $res = array();
-        $biobanks = $this->findAll();
-        foreach ($biobanks as $row) {
-            $res[(string) $row->_id] = $row->identifier . " " . $row->name;
+    public function getArrayActiveContact() {
+        $result = array();
+        $criteria = new EMongoCriteria;
+        $criteria->select(array('_id', 'contact_id'));
+        $biobankListe = Biobank::model()->findAll($criteria);
+        foreach ($biobankListe as $biobank) {
+            if ($biobank->contact_id != null && $biobank->contact_id != "") {
+                $contactCriteria = new EMongoCriteria;
+                $contactCriteria->_id = new MongoId($biobank->contact_id);
+                $contactCriteria->select(array('_id', 'first_name', 'last_name'));
+                $contact = Contact::model()->find($contactCriteria);
+                $result[(string) $contact->_id] = $contact->last_name . " " . $contact->first_name;
+            }
         }
-        return $res;
+        asort($result);
+        return ($result);
     }
 
     /**

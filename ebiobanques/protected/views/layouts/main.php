@@ -84,14 +84,16 @@
 
         <section class="main-body">
             <div class="container-fluid" style="height:70%; background-color: white">
-                <?php
-                $flashMessages = Yii::app()->user->getFlashes();
-                if ($flashMessages) {
-                    foreach ($flashMessages as $key => $message) {
-                        echo '<br><div class="flash-' . $key . '">' . $message . "</div>";
+                <div id="flashMessages">
+                    <?php
+                    $flashMessages = Yii::app()->user->getFlashes();
+                    if ($flashMessages) {
+                        foreach ($flashMessages as $key => $message) {
+                            echo '<br><div class="flash-' . $key . '">' . $message . "</div>";
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </div>
                 <!-- Include content pages -->
                 <?php echo $content; ?>
             </div>

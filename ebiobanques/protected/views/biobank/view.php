@@ -107,7 +107,7 @@ foreach ($attributes as $attributeName => $attributeValue)
     ?>
 </div>
 <div class="biobank_details" id="biobank_qualite" style="display: none">
-    det03
+
     <?php
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
@@ -116,7 +116,7 @@ foreach ($attributes as $attributeName => $attributeValue)
     ?>
 </div>
 <div class="biobank_details" id="biobank_info" style="display: none">
-    det04
+
     <?php
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
@@ -125,7 +125,7 @@ foreach ($attributes as $attributeName => $attributeValue)
     ?>
 </div>
 <div class="biobank_details" id="biobank_other" style="display: none">
-    det05
+
     <?php
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,

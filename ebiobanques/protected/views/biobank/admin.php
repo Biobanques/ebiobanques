@@ -2,16 +2,7 @@
 /* @var $this BiobankController */
 /* @var $model Biobank */
 
-$this->breadcrumbs = array(
-    'Biobanks' => array('index'),
-    'Manage',
-);
-
-$this->menu = array(
-    array('label' => 'List Biobank', 'url' => array('index')),
-    array('label' => 'Create Biobank', 'url' => array('create')),
-);
-
+$flashRoute = Yii::app()->createAbsoluteUrl('biobank/deleteFlashMsg');
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -23,10 +14,14 @@ $('.search-form form').submit(function(){
 	});
 	return false;
 });
+
+
 ");
 ?>
 
 <h1>Gestion des Biobanques</h1>
+<?php
+?>
 
 
 <?php echo CHtml::link('Create biobank', 'create'); ?>
@@ -44,13 +39,15 @@ $('.search-form form').submit(function(){
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'biobank-grid',
     'dataProvider' => $model->search(),
+    // 'ajaxUpdate' => false,
     'columns' => array(
-        'id',
-        array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
+        array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
         array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id'), 'value' => '$data->getShortValue("collection_id")'),
+        array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'),
+        array('name' => 'diagnosis_available', 'header' => $model->getAttributeLabel('diagnosis_available')),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'), array(
+        array(
             'class' => 'CLinkColumn',
             'label' => Yii::t('myBiobank', 'seeAsAdmin'),
             'urlExpression' => 'Yii::app()->createUrl("mybiobank/index",array("id"=>$data->id))',
@@ -62,10 +59,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'label' => Yii::t('myBiobank', 'uploadConnector'),
             'urlExpression' => 'Yii::app()->createUrl("connecteur/upload",array("biobank_id"=>$data->id))',
             'htmlOptions' => array('style' => "text-align:center"),
-            'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
+            'header' => Yii::t('myBiobank', 'uploadConnectorHeader')
         ),
         array(
             'class' => 'CButtonColumn',
+            'afterDelete' => 'function(link,success,data){$("#flashMessages").html(data)}',
         ),
     ),
 ));

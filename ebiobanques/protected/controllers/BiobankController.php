@@ -26,7 +26,7 @@ class BiobankController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete'),
+                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -45,6 +45,66 @@ class BiobankController extends Controller
         ));
     }
 
+    public function actionDeleteFlashMsg($flashMessages) {
+
+        $messageResult = '';
+//        $flashMessages = Yii::app()->user->getFlashes();
+        if ($flashMessages) {
+            foreach ($flashMessages as $key => $message) {
+                $messageResult.= '<br><div class="flash-' . $key . '">' . $message . "</div>";
+            }
+        }
+        echo $messageResult;
+    }
+
+    /**
+     * Deletes a particular model.
+     * If deletion is successful, the browser will be redirected to the 'admin' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionDelete($id) {
+        $model = $this->loadModel($id);
+        $name = $model->name;
+
+
+        $sampleCount = Sample::model()->countByAttributes(array('biobank_id' => (string) $model->id)) + Sample::model()->countByAttributes(array('biobank_id' => (string) $model->_id));
+        $adminCount = User::model()->countByAttributes(array('biobank_id' => (string) $model->id)) + User::model()->countByAttributes(array('biobank_id' => (string) $model->_id));
+        if ($adminCount == 0 && $sampleCount == 0) {
+
+            try {
+                $model->delete();
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été supprimée.');
+            } catch (Exception $ex) {
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être supprimée : ' . $ex->getMessage());
+            }
+        } else {
+            $message = "Suppression de la biobanque \"$name\" impossible : ";
+            if ($adminCount > 0)
+                $message.="<br> - Il reste $adminCount administrateur(s) lié(s) à la biobanque.";
+            if ($sampleCount > 0)
+                $message.="<br> reste $sampleCount échantillon(s) lié(s) à la biobanque.";
+
+
+            Yii::app()->user->setFlash('error', $message);
+        }
+
+
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        else {
+            $flashMessages = Yii::app()->user->getFlashes();
+            $flashMessagesHtml = '';
+            if ($flashMessages) {
+                foreach ($flashMessages as $key => $message) {
+                    $flashMessagesHtml.= '<br><div class="flash-' . $key . '">' . $message . "</div>";
+                }
+            }
+
+            echo $flashMessagesHtml;
+        }
+    }
+
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -60,8 +120,11 @@ class BiobankController extends Controller
             }
             $model->attributes = $attributesPost;
 
-            if ($model->save())
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été créée.');
                 $this->redirect(array('view', 'id' => $model->_id));
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être enregistrée');
         }
 
         $this->render('create', array(
@@ -87,26 +150,16 @@ class BiobankController extends Controller
             }
             $model->attributes = $attributesPost;
 
-            if ($model->save())
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
                 $this->redirect(array('view', 'id' => $model->_id));
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
         }
 
         $this->render('update', array(
             'model' => $model,
         ));
-    }
-
-    /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionDelete($id) {
-        $this->loadModel($id)->delete();
-
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /**

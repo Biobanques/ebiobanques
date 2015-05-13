@@ -3,8 +3,8 @@
 /**
  * This is the MongoDB Document model class based on table "User".
  */
-class User extends LoggableActiveRecord {
-
+class User extends LoggableActiveRecord
+{
     public $id;
     public $prenom;
     public $nom;
@@ -183,7 +183,7 @@ class User extends LoggableActiveRecord {
      * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
      */
     public function alphaNumericOnly() {
-        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->nom))
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->login))
             $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
     }
 

@@ -2,7 +2,7 @@
 /* @var $this BiobankController */
 /* @var $model Biobank */
 /* @var $form CActiveForm */
-
+$cancelRoute = Yii::app()->createAbsoluteUrl('biobank/admin');
 Yii::app()->clientScript->registerScript('create', "
 
  $('#facult').click(function(){
@@ -61,6 +61,10 @@ $(document).on('click', '.removeField', function() {
     $(this).parent().remove();
 });
 
+$('#resetButton').click(function(){
+window.location.href='$cancelRoute';
+    return false;
+});
 
 
 ");
@@ -354,6 +358,7 @@ foreach ($att as $attributeName => $attributeValue)
     </div>
     <div class="row buttons">
 
+        <?php echo CHtml::resetButton('Cancel', array('id' => 'resetButton')); ?>
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 
     </div>

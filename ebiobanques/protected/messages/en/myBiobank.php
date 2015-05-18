@@ -12,6 +12,7 @@ return array(
     'seeAsAdminHeader' => '"My biobank" views',
     'connector' => 'Connector',
     'uploadConnector' => "Upload connector",
+    'uploadConnectorHeader' => "Connectors",
     'vitrine' => 'showcase',
     'invalidExtension' => 'Invalid file : only xls or xlsx files are allowed here.',
     'helpUploadTitle' => 'How to upload your file',

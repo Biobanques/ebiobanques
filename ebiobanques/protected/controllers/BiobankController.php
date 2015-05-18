@@ -119,7 +119,9 @@ class BiobankController extends Controller
                 }
             }
             $model->attributes = $attributesPost;
-
+            if (isset($_POST['Address'])) {
+                $model->address = $_POST['Address'];
+            }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'La biobanque a bien été créée.');
                 $this->redirect(array('view', 'id' => $model->_id));

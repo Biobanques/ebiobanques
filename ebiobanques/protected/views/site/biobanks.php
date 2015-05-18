@@ -38,6 +38,7 @@ $this->Widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
+        array('name' => 'city', 'header' => $model->address->getAttributeLabel('city'), 'value' => '$data->address->city'),
         array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id')),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
         array(

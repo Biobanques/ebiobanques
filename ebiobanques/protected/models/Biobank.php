@@ -43,7 +43,6 @@ class Biobank extends LoggableActiveRecord
     public $diagnosis_available;
     public $longitude;
     public $latitude;
-    public $ville;
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -57,6 +56,15 @@ class Biobank extends LoggableActiveRecord
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    /**
+     * Embedded adress
+     */
+    public function embeddedDocuments() {
+        return array(
+            'address' => 'Address',
+        );
     }
 
     /**
@@ -114,7 +122,7 @@ class Biobank extends LoggableActiveRecord
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, ville,contact_id', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -228,8 +236,8 @@ class Biobank extends LoggableActiveRecord
         if ($this->contact_id != null && $this->contact_id != "")
             $criteria->contact_id = $this->contact_id;
 
-        if ($this->ville != null)
-            $criteria->addCond('ville', '==', new MongoRegex('/' . $this->ville . '/i'));
+        if (isset($this->address) && $this->address->city != null)
+            $criteria->addCond('address->city', '==', new MongoRegex('/' . $this->address->ville . '/i'));
         //always sort with alphabetical order on name
 
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
@@ -387,13 +395,22 @@ class Biobank extends LoggableActiveRecord
         return $result;
     }
 
-//
     public function setAdmin($id) {
 
         if ($id != null && $id != "")
             $this->admin = User::model()->findByPK(new MongoId($id));
         else
             $this->admin = null;
+    }
+
+    /**
+     *
+     * @return type
+     */
+    public function getShortAddress() {
+        return ( $this->address->street . "\n"
+                . $this->address->zip . " " . $this->address->city . "\n"
+                . Yii::t('listCountries', $this->address->country));
     }
 
 }

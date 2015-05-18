@@ -94,6 +94,7 @@ $attributes_oblig = array(
     'biobank_class',
     'diagnosis_available',
     array('attributeName' => 'contact_id', 'value' => Contact::model()->getArrayContacts()),
+    'address'
 );
 
 $attributes_facult = array(
@@ -166,12 +167,29 @@ $listOnglets['other'] = $attributes_other;
                 echo'<tr><td width="400px">';
 
             if (is_string($attName)) {
-                ?>
+                if (is_object($model->$attName)) {
 
-                <?php echo $form->labelEx($model, $attName); ?>
-                <?php echo $form->textField($model, $attName); ?>
-                <?php
-                echo $form->error($model, $attName);
+                    foreach ($model->$attName->attributeNames() as $emAtt) {
+                        $count++;
+                        if ($count % 2 == 0)
+                            echo' <td>';
+                        else
+                            echo'<tr><td width="400px">';
+                        ?>
+
+                        <?php echo $form->labelEx($model->$attName, $emAtt); ?>
+                        <?php echo $form->textField($model->$attName, $emAtt); ?>
+                        <?php
+                        echo $form->error($model->$attName, $emAtt);
+                    }
+                } else {
+                    ?>
+
+                    <?php echo $form->labelEx($model, $attName); ?>
+                    <?php echo $form->textField($model, $attName); ?>
+                    <?php
+                    echo $form->error($model, $attName);
+                }
             } elseif (is_array($attName)) {
                 if (!isset($model->$attName['attributeName']))
                     $model->initSoftAttribute($attName['attributeName']);
@@ -230,8 +248,10 @@ $listOnglets['other'] = $attributes_other;
                 echo'<tr><td width="400px">';
 
             if (is_string($attName)) {
+
                 if (!isset($model->$attName))
                     $model->initSoftAttribute($attName);
+
                 echo $form->labelEx($model, $attName);
                 echo $form->textField($model, $attName);
                 echo $form->error($model, $attName);

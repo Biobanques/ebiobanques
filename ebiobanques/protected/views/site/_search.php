@@ -31,8 +31,8 @@
             </td>
 
             <td>
-                <?php echo $form->label($model, 'ville'); ?>
-                <?php echo $form->textField($model, 'ville', array('size' => 30, 'maxlength' => 45)); ?>
+                <?php echo $form->label($model->address, 'city'); ?>
+                <?php echo $form->textField($model->address, 'city', array('size' => 30, 'maxlength' => 45)); ?>
             </td>
         </tr>
     </table>

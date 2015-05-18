@@ -11,6 +11,7 @@ return array(
     'seeAsAdmin' => 'Voir',
     'seeAsAdminHeader' => 'Vues "ma biobanque"',
     'connector' => 'Connecteur',
+    'uploadConnectorHeader' => 'Connecteurs',
     'uploadConnector' => 'Ajouter un connecteur',
     'vitrine' => 'Edition de site vitrine',
     'invalidExtension' => 'Fichier invalide : seuls les fichiers xls et xlsx sont autorisés.',

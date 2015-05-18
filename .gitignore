@@ -18,3 +18,6 @@
 /tests_selenium/selenium_adm.log
 /tests_selenium/selenium_vsc.log
 /tests_selenium/selenium_mbb.log
+/ebiobanques/protected/commands/DiversTestCommand.php
+/ebiobanques/protected/commands/SwitchIdsCommand.php
+/tests_selenium/run_partial.sh

@@ -314,8 +314,22 @@ class Biobank extends LoggableActiveRecord
      */
     public function getArrayBiobank($idBiobank) {
         $res = array();
-        $biobank = $this->findByPK(new MongoId($idBiobank));
+        $biobank = $Biobank::model()->findByPK(new MongoId($idBiobank));
         $res[$biobank->_id] = $biobank->identifier;
+
+        return $res;
+    }
+
+    /**
+     * retourne un tableau de biobank avec une seule option.
+     * utile pour les dropdown list, cas d un utilisateur avec droit admin de sa biobanque
+     */
+    public function getArrayBiobanks() {
+        $res = array();
+
+        $biobanks = Biobank::model()->findAll();
+        foreach ($biobanks as $biobank)
+            $res[(string) $biobank->_id] = $biobank->identifier;
 
         return $res;
     }
@@ -326,7 +340,7 @@ class Biobank extends LoggableActiveRecord
      */
     public function getBiobank($idBiobank) {
         $result = null;
-        $result = $this->findByPk($idBiobank);
+        $result = Biobank::model()->findByPk($idBiobank);
         return $result;
     }
 

@@ -24,4 +24,20 @@ db.user.insert([
 db.Demande.insert([
     {"id_user": "1", "date_demande": "2014-01-22 15:38:36", "detail": null, "titre": null, "envoi": 0, "sampleList": []},
 ]);
+db.contact.insert([
+    {
+
+    "id" : "001",
+    "first_name" : "AAAContactTest",
+    "last_name" : "AAAContactTest",
+    "email" : "AAAContactTest@ebiobanques.fr",
+    "phone" : "0102030405",
+    "adresse" : "Hôpital",
+    "ville" : "Capitale",
+    "pays" : "FR",
+    "code_postal" : "99999",
+    "inactive" : "0",
+
+}
+])
 

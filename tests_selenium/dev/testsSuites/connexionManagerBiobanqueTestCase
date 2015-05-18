@@ -37,11 +37,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>name=yt0</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
 	<td></td>

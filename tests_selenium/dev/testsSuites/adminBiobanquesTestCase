@@ -347,11 +347,6 @@
 	<td>label=AUDO isabelle</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>name=yt1</td>
-	<td></td>
-</tr>
-<tr>
 	<td>verifyValue</td>
 	<td>id=Biobank_website</td>
 	<td>www.siteDeTest.com</td>

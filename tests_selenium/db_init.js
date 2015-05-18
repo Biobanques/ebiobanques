@@ -29,7 +29,7 @@ db.contact.insert([
 
     "id" : "001",
     "first_name" : "AAAContactTest",
-    "last_name" : "AAAContactTest",
+    "last_name" : "AAACONTACTTEST",
     "email" : "AAAContactTest@ebiobanques.fr",
     "phone" : "0102030405",
     "adresse" : "Hôpital",

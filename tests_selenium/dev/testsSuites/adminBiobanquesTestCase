@@ -33,12 +33,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>id=biobank-grid_c2</td>
+	<td>id=biobank-grid_c0</td>
 	<td>Nom</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>id=biobank-grid_c5</td>
+	<td>id=biobank-grid_c3</td>
 	<td>Nom de la collection</td>
 </tr>
 <tr>
@@ -129,7 +129,7 @@
 <tr>
 	<td>select</td>
 	<td>id=Biobank_contact_id</td>
-	<td>label=testContactLN testContact</td>
+	<td>label=AAACONTACTTEST AAAContactTest</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -342,18 +342,13 @@
 	<td>test area</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>name=yt1</td>
+	<td>click</td>
+	<td>link=Facultatif</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=td</td>
-	<td>00-1111-22222</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=#yw1 &gt; tbody &gt; tr.odd &gt; td</td>
+	<td>verifyValue</td>
+	<td>id=Biobank_website</td>
 	<td>www.siteDeTest.com</td>
 </tr>
 <tr>
@@ -372,24 +367,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=#yw4 &gt; tbody &gt; tr.odd &gt; th</td>
-	<td>Champs Text Test</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>css=#yw4 &gt; tbody &gt; tr.odd &gt; td</td>
+	<td>verifyValue</td>
+	<td>id=Biobank_ChampsTextTest</td>
 	<td>test field</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=#yw4 &gt; tbody &gt; tr.even &gt; th</td>
-	<td>Champs Area Test</td>
+	<td>assertElementPresent</td>
+	<td>css=div &gt; label</td>
+	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>css=#yw4 &gt; tbody &gt; tr.even &gt; td</td>
+	<td>verifyValue</td>
+	<td>id=Biobank_ChampsTextTest</td>
+	<td>test field</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=input.removeField</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[@id='form_other']/div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=Biobank_ChampsAreaTest</td>
 	<td>test area</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=(//input[@value='remove'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt1</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -398,8 +413,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='biobank-grid']/table/tbody/tr/td[2]</td>
-	<td>00-1111-22222</td>
+	<td>css=td</td>
+	<td>0000_AAA_Biobank for Test</td>
 </tr>
 </tbody></table>
 </body>

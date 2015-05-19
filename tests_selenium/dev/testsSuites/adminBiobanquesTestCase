@@ -403,18 +403,63 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>name=yt1</td>
+	<td>name=yt2</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Biobanks</td>
+	<td>selectWindow</td>
+	<td>null</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>css=td</td>
-	<td>0000_AAA_Biobank for Test</td>
+	<td>css=div.flash-error</td>
+	<td>La biobanque n'a pas pu être enregistrée</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.errorMessage</td>
+	<td>Rue ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='biobank-form']/table/tbody/tr[5]/td[2]/div</td>
+	<td>Code postal ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='biobank-form']/table/tbody/tr[6]/td/div</td>
+	<td>Ville ne peut être vide.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='biobank-form']/table/tbody/tr[6]/td[2]/div</td>
+	<td>Pays ne peut être vide.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Address_street</td>
+	<td>1 rue de la ville</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Address_zip</td>
+	<td>01001</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Address_city</td>
+	<td>LaGrandeVille</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Address_country</td>
+	<td>fr</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt2</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

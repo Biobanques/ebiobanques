@@ -67,8 +67,8 @@ class BiobankController extends Controller
         $name = $model->name;
 
 
-        $sampleCount = Sample::model()->countByAttributes(array('biobank_id' => (string) $model->id)) + Sample::model()->countByAttributes(array('biobank_id' => (string) $model->_id));
-        $adminCount = User::model()->countByAttributes(array('biobank_id' => (string) $model->id)) + User::model()->countByAttributes(array('biobank_id' => (string) $model->_id));
+        $sampleCount = Sample::model()->countByAttributes(array('biobank_id' => (string) $model->id));
+        $adminCount = User::model()->countByAttributes(array('biobank_id' => (string) $model->_id));
         if ($adminCount == 0 && $sampleCount == 0) {
 
             try {
@@ -120,6 +120,7 @@ class BiobankController extends Controller
             }
             $model->attributes = $attributesPost;
             if (isset($_POST['Address'])) {
+                $model->address = new Address('insert');
                 $model->address = $_POST['Address'];
             }
             if ($model->save()) {

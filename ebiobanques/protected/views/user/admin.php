@@ -41,7 +41,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'nom',
         'login',
         array('header' => Yii::t('sample', 'biobank_id'),
-            'value' => 'Biobank::model()->getBiobankName($data->biobank_id)'),
+            'value' => '$data->getBiobankName()'),
         'email',
         array('header' => "Profil",
             'value' => '$data->getProfil()'),

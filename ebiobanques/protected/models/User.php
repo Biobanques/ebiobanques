@@ -43,7 +43,7 @@ class User extends LoggableActiveRecord
     public function rules() {
         $result = array(
             array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
-            array('profil, inactif, biobank_id,gsm, telephone', 'numerical', 'integerOnly' => true),
+            array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom,nom', 'alphaOnly'),
             array('login', 'alphaNumericOnly'),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
@@ -55,6 +55,7 @@ class User extends LoggableActiveRecord
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, biobank_id', 'safe', 'on' => 'search'),
+            array('biobank_id', 'safe'),
         );
         if (!CommonProperties::$DEV_MODE)
             $result[] = array('email', 'EMongoUniqueValidator');
@@ -230,6 +231,15 @@ class User extends LoggableActiveRecord
             return $phoneN;
         } else
             return null;
+    }
+
+    public function getBiobankName() {
+        $result = null;
+        $biobank = Biobank::model()->findByPk(new MongoId($this->biobank_id));
+        if ($biobank != null) {
+            $result = $biobank->name;
+        }
+        return $result;
     }
 
 }

@@ -74,7 +74,12 @@ class LoggableBehavior extends CActiveRecordBehavior
             foreach ($newattributes as $name => $value) {
                 $log = new AuditTrail();
                 $log->old_value = '';
-                $log->new_value = $value;
+                if (is_string($value))
+                    $log->new_value = $value;
+                else {
+
+                    $log->new_value = json_decode(json_encode($value));
+                }
                 $log->action = 'SET';
                 $log->model = get_class($this->Owner);
                 $log->model_id = $this->Owner->getPrimaryKey();

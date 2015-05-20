@@ -210,8 +210,14 @@ class MybiobankController extends Controller {
 //        $this->renderPartial('_renderWidget', array( 'theme' => $theme));
     }
 
-    public function loadModel($id) {
-        $model = Biobank::model()->findByAttributes(array('id' => $id));
+    /**
+     * load a biobank by mongo id
+     * @param type $id
+     * @return type
+     * @throws CHttpException
+     */
+    public function loadModel($mongoId) {
+        $model = Biobank::model()->findByPK(new MongoId($mongoId));
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;

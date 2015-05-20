@@ -197,7 +197,7 @@ class VitrineController extends Controller
         } else {
             $id = Yii::app()->user->biobank_id;
         }
-        $model = Biobank::model()->findByAttributes(array("id" => $id));
+        $model = Biobank::model()->findByPk(new MongoId($id));
         //una
         if (!isset($model->vitrine)) {
             Yii::app()->user->setFlash('warning', 'Le site vitrine est non défini.');

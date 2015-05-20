@@ -314,9 +314,12 @@ class Biobank extends LoggableActiveRecord
      */
     public function getArrayBiobank($idBiobank) {
         $res = array();
-        $biobank = $Biobank::model()->findByPK(new MongoId($idBiobank));
-        $res[$biobank->_id] = $biobank->identifier;
-
+        if ($idBiobank != null) {
+            $biobank = Biobank::model()->findByPK(new MongoId($idBiobank));
+            if ($biobank != null) {
+                $res[(string)$biobank->_id] = $biobank->identifier;
+            }
+        }
         return $res;
     }
 
@@ -335,13 +338,15 @@ class Biobank extends LoggableActiveRecord
     }
 
     /**
-     * retourne le modele de la biobanque fournit par l id
+     * retourne le modele de la biobanque fournit par l id mongo
      * null sinon
      */
-    public function getBiobank($idBiobank) {
-        $result = null;
-        $result = Biobank::model()->findByPk($idBiobank);
-        return $result;
+    public function getBiobank($mongoId) {
+        if ($mongoId != null) {
+            return Biobank::model()->findByPk(new MongoId($mongoId));
+        } else {
+            return null;
+        }
     }
 
     /**

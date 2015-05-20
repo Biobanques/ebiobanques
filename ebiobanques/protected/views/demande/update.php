@@ -11,10 +11,11 @@ if ($prefs == null) {
 }
 
 $prefsNames = Preferences::model()->attributeNames();
-$imageSampleDetail = Yii::app()->baseUrl.'/images/zoom.png';
+$imageSampleDetail = Yii::app()->baseUrl . '/images/zoom.png';
 $columns = array();
-foreach ($prefsNames as $property) {
 
+foreach ($prefsNames as $property) {
+//
     if ($property != 'id_user' && $property != "_id") {
         if ($prefs->$property)
             $visibility = "table_cell";
@@ -40,7 +41,7 @@ foreach ($prefsNames as $property) {
                 'class' => 'DataColumn',
                 'name' => Yii::t('sample', 'biobank_id'),
                 'id' => 'col_' . $property,
-                'value' => 'Biobank::model()->getBiobank($data->biobank_id)->name',
+                'value' => 'Biobank::model()->findByPk(new MongoId($data->biobank_id))->name',
                 'htmlOptions' => array(
                     'class' => "col_$property",
                     'style' => $visibility
@@ -98,7 +99,7 @@ foreach ($prefsNames as $property) {
         }
     }
 }
-
+//
 $columns [] = array(
     'header' => Yii::t('demande', 'sampleDetail'),
 // 		) ), // lien d'affichage de la popup
@@ -122,6 +123,7 @@ $columns [] = array(
     $this->widget('application.extensions.selgridview.SelGridView', array(
         'id' => 'echSelected-grid',
         'dataProvider' => $model->getSamples(),
+//        'dataProvider' => $model->search(),
         'columns' => $columns,
         'selectableRows' => 0,
         'enableHistory' => true,

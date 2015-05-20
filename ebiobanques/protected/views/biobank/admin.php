@@ -50,14 +50,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'class' => 'CLinkColumn',
             'label' => Yii::t('myBiobank', 'seeAsAdmin'),
-            'urlExpression' => 'Yii::app()->createUrl("mybiobank/index",array("id"=>$data->id))',
+            'urlExpression' => 'Yii::app()->createUrl("mybiobank/index",array("id"=>$data->_id))',
             'htmlOptions' => array('style' => "text-align:center"),
             'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
         ),
         array(
             'class' => 'CLinkColumn',
             'label' => Yii::t('myBiobank', 'uploadConnector'),
-            'urlExpression' => 'Yii::app()->createUrl("connecteur/upload",array("biobank_id"=>$data->id))',
+            'urlExpression' => 'Yii::app()->createUrl("connecteur/upload",array("biobank_id"=>$data->_id))',
             'htmlOptions' => array('style' => "text-align:center"),
             'header' => Yii::t('myBiobank', 'uploadConnectorHeader')
         ),

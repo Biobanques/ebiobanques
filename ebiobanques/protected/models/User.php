@@ -235,9 +235,11 @@ class User extends LoggableActiveRecord
 
     public function getBiobankName() {
         $result = null;
-        $biobank = Biobank::model()->findByPk(new MongoId($this->biobank_id));
-        if ($biobank != null) {
-            $result = $biobank->name;
+        if (isset($this->biobank_id) && $this->biobank_id != null && $this->biobank_id != '') {
+            $biobank = Biobank::model()->findByPk(new MongoId($this->biobank_id));
+            if ($biobank != null) {
+                $result = $biobank->name;
+            }
         }
         return $result;
     }

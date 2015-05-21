@@ -287,7 +287,7 @@ class SiteController extends Controller
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
                 $lastDemandRequest = Demande::model()->findByAttributes(array(
-                    'id_user' => Yii::app()->user->id,
+                    'id_user' => (string) Yii::app()->user->id,
                     'envoi' => 0
                         ), array(
                     'order' => 'date_demande desc'
@@ -302,7 +302,7 @@ class SiteController extends Controller
                     );
                 } else {
                     $lastDemandRequest = new Demande ();
-                    $lastDemandRequest->id_user = Yii::app()->user->id;
+                    $lastDemandRequest->id_user = (string) Yii::app()->user->id;
                     $lastDemandRequest->date_demande = date("Y-m-d H:i:s");
                     $lastDemandRequest->envoi = 0;
                     $lastDemandRequest->sampleList = array();

@@ -131,8 +131,10 @@ $columns [] = array(
 
 <?php
 foreach ($arrayBiobank as $biobankId) {
-    $biobank = Biobank::model()->findByAttributes(array('id' => $biobankId));
-    $contact = Contact::model()->findByAttributes(array('id' => $biobank->contact_id));
+    $biobank = Biobank::model()->findByPk(new MongoId($biobankId));
+    if ($biobank != null && $biobank->contact_id != null)
+        $contact = Contact::model()->findByPk(new MongoId($biobank->contact_id));
+    //if (isset($contact) && $contact != null)
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
         'attributes' => array(

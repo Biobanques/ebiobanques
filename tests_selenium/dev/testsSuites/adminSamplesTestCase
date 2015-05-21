@@ -59,7 +59,7 @@
 <tr>
 	<td>assertText</td>
 	<td>css=h1</td>
-	<td>View Sample #1_LB07-0567</td>
+	<td>View Sample #52e00282975af51ac91e8421_LB07-0567</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -79,6 +79,11 @@
 <tr>
 	<td>clickAndWait</td>
 	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>css=div.flash-error</td>
 	<td></td>
 </tr>
 </tbody></table>

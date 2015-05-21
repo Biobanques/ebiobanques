@@ -40,11 +40,7 @@ class ExtractAdressFromBiobanksCommand extends CConsoleCommand
 
 function extract_zipcode($address) {
     $zipcode = preg_match("/([0-9]{5})|([0-9]{2} [0-9]{3})/", $address, $matches);
-    echo isset($matches[0]) ? $matches[0] . "\n" : "null : $address\n";
     return isset($matches[0]) ? $matches[0] : null;
-//    echo $address;
-    //echo $matches[0];
-    // return $matches[0];
 }
 
 ?>

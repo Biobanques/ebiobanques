@@ -107,7 +107,7 @@ $columns [] = array(
     'labelExpression' => '$data->_id',
     'urlExpression' => 'Yii::app()->createUrl("site/view",array("id"=>"$data->_id"))',
     'linkHtmlOptions' => array(
-        'onclick' => 'window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=0, location=no");return false;'
+        'onclick' => 'window.open(this.href,"SampleDetail","left=100,top=100,width=760,height=650,toolbar=0,resizable=0, location=no");return false;'
     ),
     'htmlOptions' => array('style' => 'text-align:center'),
     'imageUrl' => $imageSampleDetail

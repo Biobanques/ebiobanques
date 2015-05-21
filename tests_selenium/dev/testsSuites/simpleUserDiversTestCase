@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/ebiobanques" />
+<title>SimpleUserDiversTestCase</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SimpleUserDiversTestCase</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://localhost/ebiobanques/index.php/demande/updateAndSend/id/dde000000000000000000001</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Questions fréquentes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h3</td>
+	<td>exact:A quoi sert le projet ebiobanques.fr?</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Activités</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.portlet-title</td>
+	<td>Reception de fichiers</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw1 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Localisation des échantillons</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw2 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Biobanques enregistrées</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#yw4 &gt; div.portlet-decoration &gt; div.portlet-title</td>
+	<td>Reception d'échantillons</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Biobanques</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Biobanques</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Recherche avancée</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Recherche avancée</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_identifier</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=tr.odd &gt; td</td>
+	<td>Test BioBank</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Biobank_identifier</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Contacts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Recherche avancée</td>
+	<td>Recherche avancée</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=contact-grid_c0</td>
+	<td>biobanque</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Recherche avancée</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=Contact_first_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_last_name</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='contact-grid']/table/tbody/tr/td[2]</td>
+	<td>AAACONTACTTEST</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Mon compte</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Mise à jour de l'utilisateur : simpleuser AAASIMPLEUSER</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>simpleuserModified</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Mise à jour de l'utilisateur : simpleusermodified AAASIMPLEUSER</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_prenom</td>
+	<td>simpleuser</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

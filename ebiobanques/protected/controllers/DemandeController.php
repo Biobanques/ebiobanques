@@ -228,7 +228,7 @@ class DemandeController extends Controller
      */
     public function actionCreateNewDemand() {
         $demande = new Demande ();
-        $demande->id_user = Yii::app()->user->id;
+        $demande->id_user = (string) Yii::app()->user->id;
         $demande->date_demande = date("Y-m-d H:i:s");
         $demande->save();
 
@@ -254,21 +254,23 @@ class DemandeController extends Controller
                 $demandeSent = false;
                 foreach ($biobankIdList as $biobankId) {
 
-                    $biobank = Biobank::model()->findByAttributes(array('id' => $biobankId));
+                    $biobank = Biobank::model()->findByPk(new MongoId($biobankId));
                     if ($biobank->contact_id != null) {
 
-                        $contact = Contact::model()->findByAttributes(array('id' => $biobank->contact_id));
-                        $concernSamplesList = array();
-                        foreach ($samples as $sample) {
-                            if ($sample->biobank_id == $biobankId)
-                                $concernSamplesList [] = $sample;
+                        $contact = Contact::model()->findByPk(new MongoId($biobank->contact_id));
+                        if ($contact != null) {
+                            $concernSamplesList = array();
+                            foreach ($samples as $sample) {
+                                if ($sample->biobank_id == $biobankId)
+                                    $concernSamplesList [] = $sample;
+                            }
+
+                            // PB si pas envoyer a une biuobank alors pas sauvegarder
+                            if (CommonMailer::sendDemande($contact, $demande->titre . ' : ' . $biobank->identifier, $demande->detail, $concernSamplesList) == 1)
+                                $demandeSent = true;
+                        }else {
+
                         }
-
-                        // PB si pas envoyer a une biuobank alors pas sauvegarder
-                        if (CommonMailer::sendDemande($contact, $demande->titre . ' : ' . $biobank->identifier, $demande->detail, $concernSamplesList) == 1)
-                            $demandeSent = true;
-                    }else {
-
                     }
                 }
                 if ($demandeSent) {

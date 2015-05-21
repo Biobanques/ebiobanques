@@ -15,8 +15,8 @@
  * @property ConcernerEchantillon[] $concernerEchantillons
  * @property User $idUser
  */
-class Demande extends EMongoDocument {
-
+class Demande extends EMongoDocument
+{
     public $id_user;
     public $date_demande;
     public $detail;
@@ -136,7 +136,7 @@ class Demande extends EMongoDocument {
     }
 
     public function searchForCurrentUser() {
-        return $this->searchByUser(Yii::app()->user->id);
+        return $this->searchByUser((string) Yii::app()->user->id);
     }
 
     // Warning: Please modify the following code to remove attributes that

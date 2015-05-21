@@ -97,7 +97,7 @@ class Sample extends EMongoDocument
                 'required'
             ),
             array(
-                'age, max_delay_delivery, biobank_id',
+                'age, max_delay_delivery',
                 'numerical',
                 'integerOnly' => true
             ),

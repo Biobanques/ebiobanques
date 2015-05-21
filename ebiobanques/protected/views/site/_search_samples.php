@@ -17,7 +17,7 @@
                     echo $form->dropDownList($model, 'biobank_id', array($biobank->id => $biobank->identifier));
                 } else {
                     $biobank = new Biobank;
-                    echo $form->dropDownList($model, 'biobank_id', $biobank->getArrayBiobanks(), array('prompt' => '----'));
+                    echo $form->dropDownList($model, 'biobank_id', $biobank->getArrayBiobanks(), array('prompt' => '----', 'style' => 'width:145px'));
                 }
                 ?>
             </td>

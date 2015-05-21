@@ -286,11 +286,11 @@ class Sample extends EMongoDocument
     }
 
     public function getBiobankName() {
-        $biobank = Biobank::model()->findByAttributes(array(
-            'id' => $this->biobank_id
+        $biobank = Biobank::model()->findByPk(new MongoId(
+                $this->biobank_id
         ));
         if ($biobank != null)
-            return $biobank->identifier;
+            return $biobank->name;
         else
             return null;
     }

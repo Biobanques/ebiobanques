@@ -325,7 +325,7 @@ class Biobank extends LoggableActiveRecord
         if ($idBiobank != null) {
             $biobank = Biobank::model()->findByPK(new MongoId($idBiobank));
             if ($biobank != null) {
-                $res[(string)$biobank->_id] = $biobank->identifier;
+                $res[(string) $biobank->_id] = $biobank->identifier;
             }
         }
         return $res;
@@ -340,7 +340,7 @@ class Biobank extends LoggableActiveRecord
 
         $biobanks = Biobank::model()->findAll();
         foreach ($biobanks as $biobank)
-            $res[(string) $biobank->_id] = $biobank->identifier;
+            $res[(string) $biobank->_id] = $biobank->name;
 
         return $res;
     }

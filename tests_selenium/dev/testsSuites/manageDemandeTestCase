@@ -42,7 +42,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>verifyText</td>
 	<td>css=h1</td>
 	<td>demande</td>
 </tr>
@@ -60,6 +60,56 @@
 	<td>assertElementPresent</td>
 	<td>name=yt0</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_gender</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_gender</td>
+	<td>Sexe</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_age</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_age</td>
+	<td>Age</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_storage_conditions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_storage_conditions</td>
+	<td>conditions de stockage</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_biobank_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_biobank_id</td>
+	<td>Biobanque</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_notes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_notes</td>
+	<td>Notes</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -157,6 +207,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>verifyValue</td>
 	<td>id=selectionCB_0</td>
 	<td>off</td>
@@ -177,6 +232,11 @@
 	<td>off</td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>css=img[alt=&quot;Supprimer&quot;]</td>
 	<td></td>
@@ -189,11 +249,6 @@
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>css=img[alt=&quot;Supprimer&quot;]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,6 +67,61 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_gender</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_gender</td>
+	<td>Sexe</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_age</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_age</td>
+	<td>Age</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_storage_conditions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_storage_conditions</td>
+	<td>conditions de stockage</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_biobank_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_biobank_id</td>
+	<td>Biobanque</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=col_notes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=col_notes</td>
+	<td>Notes</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>link=Recherche avancée</td>
 	<td></td>
@@ -84,7 +139,7 @@
 <tr>
 	<td>select</td>
 	<td>id=Sample_biobank_id</td>
-	<td>label=Test BioBank</td>
+	<td>label=0000_AAA_Biobank for Test</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -103,8 +158,8 @@
 </tr>
 <tr>
 	<td>verifyText</td>
-	<td>//div[@id='sample-grid']/table/tbody/tr/td[20]</td>
-	<td>Test Biobank</td>
+	<td>css=td.col_biobank_id</td>
+	<td>0000_AAA_Biobank for Test</td>
 </tr>
 </tbody></table>
 </body>

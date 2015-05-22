@@ -26,6 +26,7 @@ foreach ($prefsNames as $property) {
                 'class' => 'DataColumn',
                 'name' => $property,
                 'id' => 'col_' . $property,
+                'header' => Sample::model()->getAttributeLabel($property),
                 'value' => '$data->getShortNotes()',
                 'htmlOptions' => array(
                     'class' => "col_$property",
@@ -41,6 +42,7 @@ foreach ($prefsNames as $property) {
                 'class' => 'DataColumn',
                 'name' => Yii::t('sample', 'biobank_id'),
                 'id' => 'col_' . $property,
+                'header' => Sample::model()->getAttributeLabel($property),
                 'value' => 'Biobank::model()->findByPk(new MongoId($data->biobank_id))->name',
                 'htmlOptions' => array(
                     'class' => "col_$property",
@@ -56,6 +58,7 @@ foreach ($prefsNames as $property) {
                 'class' => 'DataColumn',
                 'name' => $property,
                 'id' => 'col_' . $property,
+                'header' => Sample::model()->getAttributeLabel($property),
                 'value' => 'CommonTools::toShortDateFR($data->collect_date)',
                 'htmlOptions' => array(
                     'class' => "col_$property",
@@ -71,6 +74,7 @@ foreach ($prefsNames as $property) {
                 'class' => 'DataColumn',
                 'name' => $property,
                 'id' => 'col_' . $property,
+                'header' => Sample::model()->getAttributeLabel($property),
                 'value' => '$data->getLiteralStorageCondition()',
                 'htmlOptions' => array(
                     'class' => "col_$property",
@@ -87,6 +91,7 @@ foreach ($prefsNames as $property) {
                 'name' => $property,
                 'id' => 'col_' . $property,
                 'value' => '$data->' . $property,
+                'header' => Sample::model()->getAttributeLabel($property),
                 'htmlOptions' => array(
                     'class' => "col_$property",
                     'style' => $visibility

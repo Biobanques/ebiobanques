@@ -244,20 +244,7 @@ foreach ($prefsNames as $property) {
         }
     }
 }
-//cas d affichage des colonnes minimales si aucune colonne n est visible
-if ($countDisplayedColumns == 0) {
-    $visibility = "table_cell";
-    $columns [] = addColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
-    $columns [] = addColumn('collect_date', $model->getAttributeLabel('collect_date'), 'CommonTools::toShortDateFR($data->collect_date)', $visibility);
 
-    $property = 'id_sample';
-    $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $property = 'gender';
-    $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $property = 'patient_birth_date';
-    $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->' . $property, $visibility);
-    $columns [] = addColumn('notes', $model->getAttributeLabel('notes'), '$data->getShortNotes()', $visibility);
-}
 //popup de choix des colonnes à afficher
 
 

@@ -25,16 +25,17 @@
  * @property integer $notes
  *
  */
-class Preferences extends LoggableActiveRecord {
+class Preferences extends LoggableActiveRecord
+{
     public $id;
     public $id_user;
     public $id_depositor;
     public $id_sample;
     public $consent_ethical;
-    public $gender;
-    public $age;
+    public $gender = 1;
+    public $age = 1;
     public $collect_date;
-    public $storage_conditions;
+    public $storage_conditions = 1;
     public $consent;
     public $supply;
     public $max_delay_delivery;
@@ -43,8 +44,8 @@ class Preferences extends LoggableActiveRecord {
     public $authentication_method;
     public $patient_birth_date;
     public $tumor_diagnosis;
-    public $biobank_id;
-    public $notes;
+    public $biobank_id = 1;
+    public $notes = 1;
 
     /**
      * Returns the static model of the specified AR class.

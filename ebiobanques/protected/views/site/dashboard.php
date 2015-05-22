@@ -48,7 +48,10 @@ $this->pageTitle = Yii::app()->name;
             'columns' => array(
                 'identifier',
                 'name',
-                'collection_name',
+                array(
+                    'header' => 'collection name',
+                    'value' => 'CommonTools::getShortValue($data->collection_name)'
+                ),
                 array(
                     'header' => 'Main contact',
                     'value' => '$data->getShortContact()'

@@ -3,7 +3,8 @@
 /**
  * classe de statistiques utiles.
  */
-class StatTools {
+class StatTools
+{
 
     /**
      * retourne la reparttion des echantillons par ville
@@ -16,12 +17,13 @@ class StatTools {
         $biobanks = Biobank::model()->findAll();
         foreach ($biobanks as $biobank) {
             $criteria = new EMongoCriteria ();
-            $criteria->biobank_id = "" . $biobank->id . "";
+            $criteria->biobank_id = (string) $biobank->_id;
             $compte = Sample::model()->count($criteria);
-            $result [] = array(
-                $biobank->identifier,
-                $compte
-            );
+            if ($compte != 0)
+                $result [] = array(
+                    $biobank->address->city,
+                    $compte
+                );
         }
         return $result;
     }
@@ -40,12 +42,18 @@ class StatTools {
          * compte des echantillons par fichier et ajoute à la somme
          */
         for ($i = 0; $i < 13; $i ++) {
-            $currentMonth = date("m", strtotime('-' . $i . ' month' . $dateJour));
+//            $currentMonth = date("m", strtotime('-' . $i . ' month' . $dateJour));
+//            $currentYear = date("Y", strtotime('-' . $i . ' month' . $dateJour));
+//            $filterDate = $currentYear . "-" . $currentMonth . "%";
+//            $monthCount = 0;
+//            $fileCriteria = new EMongoCriteria;
+//            $fileCriteria->date_import = new MongoRegex('/' . $filterDate . '*/i');
+            $currentMonth = date("M", strtotime('-' . $i . ' month' . $dateJour));
             $currentYear = date("Y", strtotime('-' . $i . ' month' . $dateJour));
-            $filterDate = $currentYear . "-" . $currentMonth . "%";
-            $monthCount = 0;
+            $regexString = '/[a-z]{3} ' . $currentMonth . ' [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [a-z]{3} ' . $currentYear . '/i';
             $fileCriteria = new EMongoCriteria;
-            $fileCriteria->date_import = new MongoRegex('/' . $filterDate . '*/i');
+            $fileCriteria->date_import = new MongoRegex($regexString);
+            $monthCount = 0;
             $files = FileImported::model()->findAll($fileCriteria);
 
             if ((count($files)) > 0) {
@@ -125,15 +133,21 @@ class StatTools {
          * filtre des fichiers de reception par date<br>
          */
         for ($i = 0; $i < 13; $i ++) {
-            $currentMonth = date("m", strtotime('-' . $i . ' month' . $dateJour));
+//            $currentMonth = date("m", strtotime('-' . $i . ' month' . $dateJour));
+//            $currentYear = date("Y", strtotime('-' . $i . ' month' . $dateJour));
+//            $filterDate = $currentYear . "-" . $currentMonth . "%";
+//            $criteria = new EMongoCriteria;
+//            $criteria->date_import = new MongoRegex('/' . $filterDate . '*/i');
+            $currentMonth = date("M", strtotime('-' . $i . ' month' . $dateJour));
             $currentYear = date("Y", strtotime('-' . $i . ' month' . $dateJour));
             $filterDate = $currentYear . "-" . $currentMonth . "%";
             $criteria = new EMongoCriteria;
-            $criteria->date_import = new MongoRegex('/' . $filterDate . '*/i');
+            $regexString = '/[a-z]{3} ' . $currentMonth . ' [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [a-z]{3} ' . $currentYear . '/i';
+            $criteria->date_import = new MongoRegex($regexString);
 
             $monthCount = FileImported::model()->count($criteria);
             $result [] = array(
-                $currentMonth . "/" . $currentYear,
+                $currentMonth . " " . $currentYear,
                 $monthCount
             );
         }
@@ -215,8 +229,7 @@ class StatTools {
             }
             $rate = $rateCount / ($compte * count($listAttributes));
             return array($rate * 100, $details);
-        }
-        else
+        } else
             return null;
     }
 
@@ -239,8 +252,7 @@ class StatTools {
             $details = $datas[1];
             $biobankStats->values = $details;
             return $biobankStats->save();
-        }
-        else
+        } else
             return 'Pas de données pour cette biobanque.';
     }
 

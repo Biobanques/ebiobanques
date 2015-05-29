@@ -93,7 +93,7 @@ return array(
     'indexContent_p2' => 'Catalog of samples is fed automatically by biobanks and is a valuable source of research information for researchers in medicine and biology. ',
     'faq_t1' => 'What is the ebiobanques.fr project?',
     'faq_c1' => 'ebiobanques.fr facilitates the search oh biological material from biobanks.',
-    'faq_t2' => 'for who is made ebiobanques.fr?',
+    'faq_t2' => 'For who is made ebiobanques.fr?',
     'faq_c2' => 'ebiobanques.fr is util for any researcher in medicine / biology who wishes to acquire biological materials as part of his studies.
 It is also intended for anyone wishing to enhance their biological biobank material.',
     'faq_t3' => 'Who can participate to feed the database?',

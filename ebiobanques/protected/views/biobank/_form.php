@@ -143,6 +143,7 @@ $listOnglets['other'] = $attributes_other;
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank-form',
         'enableAjaxValidation' => false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
     ));
     ?>
 
@@ -153,7 +154,15 @@ $listOnglets['other'] = $attributes_other;
     /**
      * Affichage des attributs obligatoires
      */
+    $logo = new Logo('biobank');
     ?>
+    <div class="row">
+        <?php echo $form->labelEx($logo, 'filename'); ?>
+        <?php echo $form->fileField($logo, 'filename'); ?>
+        <?php echo $form->error($logo, 'filename'); ?>
+    </div>
+
+
 
     <table>
         <?php

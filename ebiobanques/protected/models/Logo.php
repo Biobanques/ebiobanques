@@ -26,8 +26,14 @@ class Logo extends EMongoGridFS
     public function rules() {
         return array(
             array('filename, metadata', 'safe'),
-            array('filename,uploadDate', 'required'),
+            array('filename,uploadDate', 'required', 'except' => 'biobank'),
             array('metadata', 'isBiobankDefined'),
+        );
+    }
+
+    public function attributeLabels() {
+        return array(
+            'filename' => 'Upload a logo'
         );
     }
 
@@ -49,8 +55,9 @@ class Logo extends EMongoGridFS
      */
     public function toHtml() {
         $splitStringArray = split(".", $this->filename);
-        $extension=end($splitStringArray);
-        $result="<img src=\"".CommonTools::data_uri($this->getBytes(),"image/".$extension)."\"\" alt=\"1 photo\" style=\"height:120px;\"/>";
+        $extension = end($splitStringArray);
+        $result = "<img src=\"" . CommonTools::data_uri($this->getBytes(), "image/" . $extension) . "\"\" alt=\"1 photo\" style=\"height:120px;\"/>";
         return $result;
     }
+
 }

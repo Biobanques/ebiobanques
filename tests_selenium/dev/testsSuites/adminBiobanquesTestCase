@@ -57,6 +57,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>css=h1</td>
 	<td>View Biobank #000</td>
@@ -75,6 +80,11 @@
 	<td>assertText</td>
 	<td>css=h1</td>
 	<td>Update Biobank 000</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=Logo_filename</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -100,6 +110,16 @@
 	<td>assertText</td>
 	<td>css=h1</td>
 	<td>Create Biobank</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=Logo_filename</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Logo_filename</td>
+	<td>/var/www/ebiobanques/ebiobanques/images/logobb.png</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -457,8 +477,18 @@
 	<td>fr</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=Logo_filename</td>
+	<td>/var/www/ebiobanques/ebiobanques/images/logobb.png</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>name=yt2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=img[alt=&quot;1 photo&quot;]</td>
 	<td></td>
 </tr>
 </tbody></table>

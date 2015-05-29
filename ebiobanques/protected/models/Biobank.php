@@ -418,4 +418,8 @@ class Biobank extends LoggableActiveRecord
                 . Yii::t('listCountries', $this->address->country));
     }
 
+    public function getIdentifierAndName() {
+        return "$this->identifier - $this->name";
+    }
+
 }

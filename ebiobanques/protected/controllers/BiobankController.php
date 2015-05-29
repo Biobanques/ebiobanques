@@ -119,6 +119,11 @@ class BiobankController extends Controller
                 }
             }
             $model->attributes = $attributesPost;
+            if (isset($_FILES['Logo'])) {
+
+                $model->initSoftAttribute('activeLogo');
+                $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
+            }
             if (isset($_POST['Address'])) {
                 $model->address = new Address('insert');
                 $model->address = $_POST['Address'];
@@ -142,6 +147,8 @@ class BiobankController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+
+
         if (isset($_POST['Biobank'])) {
             $model->scenario = 'update';          // custom scenario
 
@@ -152,10 +159,18 @@ class BiobankController extends Controller
                 }
             }
             $model->attributes = $attributesPost;
+            if (isset($_FILES['Logo'])) {
 
+                $model->initSoftAttribute('activeLogo');
+                $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
+            }
+            if (isset($_POST['Address'])) {
+
+                $model->address = $_POST['Address'];
+            }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
-                $this->redirect(array('view', 'id' => $model->_id));
+                // $this->redirect(array('view', 'id' => $model->_id));
             } else
                 Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
         }
@@ -163,6 +178,31 @@ class BiobankController extends Controller
         $this->render('update', array(
             'model' => $model,
         ));
+    }
+
+    private function storeLogo($logo, $biobank) {
+        //  print_r($logo);
+        $model = new Logo();
+        $tempFilename = $logo["tmp_name"]['filename'];
+        //$fileName = $logo["name"]['filename'];
+        $ext = pathinfo($logo['name']['filename'], PATHINFO_EXTENSION);
+
+        if (in_array($ext, array('jpg', 'png', 'jpeg'))) {
+            $model->filename = $tempFilename;
+            $model->metadata['biobank_id'] = (string) $biobank->_id;
+
+            $model->uploadDate = new MongoDate();
+
+            if ($model->save()) {
+                $model->filename = 'logo' . $biobank->identifier . ".$ext";
+                if ($model->save()) {
+                    echo 'saved';
+                    return $model->_id;
+                } else
+                    echo 'not save second';
+            } else
+                echo'not saved first';
+        }
     }
 
     /**

@@ -366,3 +366,20 @@ width: 100%
         border-bottom : 1px solid #9EA0A1;
         padding-bottom : 25px;
 }
+
+.logoHeader{
+   text-align: justify;  
+}
+
+.logoHeader>h1, .logoHeader>.logo{
+    display: inline-block ;vertical-align:top;
+}
+
+.logoHeader:after{
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 0;
+    font-size:0;
+    line-height:0;
+}

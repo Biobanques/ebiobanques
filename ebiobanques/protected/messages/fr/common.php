@@ -91,7 +91,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr : Améliorer la recherche de matériel biologique',
     'indexContent_p1' => 'ebiobanques.fr est une application conçue par les biobanques pour les biobanques afin de valoriser le matériel biologique.',
-    'indexContent_p2' => 'Le catalogue d\'échantillons ets alimenté automatiquement par les biobanques et est une source précieuse de recherche d\'informations pour les chercheurs en médecine et biologie.',
+    'indexContent_p2' => 'Le catalogue d\'échantillons est alimenté automatiquement par les biobanques et est une source précieuse de recherche d\'informations pour les chercheurs en médecine et biologie.',
     'faq_t1' => 'A quoi sert le projet ebiobanques.fr?',
     'faq_c1' => 'ebiobanques.fr permet de faciliter la recherche de matériel biologique issues des biobanques.',
     'faq_t2' => 'A qui est destiné ebiobanques.fr?',
@@ -100,7 +100,7 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'faq_t3' => 'Qui peut participer pour alimenter la base de données?',
     'faq_c3' => 'La base de données ebiobanques.fr est alimentée automatiquement par les biobanques qui souhaitent valoriser leur matériel biologique dans un catalogue ouvert aux chercheurs.',
     'faq_t4' => 'Comment est maintenu ce système?',
-    'faq_c4' => '>La base de données ainsi que le site web ebiobanques.fr sont maintenus par l\'infrastructure nationale française  Biobanques.
+    'faq_c4' => 'La base de données ainsi que le site web ebiobanques.fr sont maintenus par l\'infrastructure nationale française  Biobanques.
     Les biobanques participantes au projet possèdent leurs propres outils de gestion de collections d\'échantillons biologiques, pour lesquelles un outil d\'export automatisé est conçu.
     Pour participer à l\'alimentation de ce système, une simple demande auprès de l\'infrastructure Biobanques suffit, ensuite un connecteur est adapté au logiciel de la biobanque pour lui permettre d\'exporter automatiquement ces informations utiles et autorisées.',
     'forgotedPwd' => 'Mot de passe oublié',

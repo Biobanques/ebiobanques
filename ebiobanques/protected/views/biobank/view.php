@@ -34,9 +34,18 @@ Yii::app()->clientScript->registerScript('test', "
  });
 
 ");
+$logo = isset($model->activeLogo) ? Logo::model()->findByPk(new MongoId($model->activeLogo)) : null;
 ?>
-
-<h1>View Biobank #<?php echo $model->id; ?></h1>
+<div class="logoHeader">
+    <h1>View Biobank #<?php echo $model->id; ?></h1>
+    <div class="logo">
+        <?php
+        if ($logo != null) {
+            echo $logo->toHtml();
+        }
+        ?>
+    </div>
+</div>
 
 <?php
 $attributes_oblig = array(

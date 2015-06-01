@@ -6,11 +6,11 @@
  * @author nicolas malservet
  * @since version 0.1
  */
-class CommonTools {
+class CommonTools
+{
     /*
      * FORMAT DATE
      */
-
     const MYSQL_DATE_FORMAT = "Y-m-d H:i:s";
     const MYSQL_DATE_DAY_FORMAT = "Y-m-d 00:00:00";
     const FRENCH_DATE_FORMAT = "H:i:s d/m/Y";
@@ -97,9 +97,8 @@ class CommonTools {
         $id = $_SESSION['biobank_id'];
         $biobank = Biobank::getBiobank($id);
         if ($biobank != null) {
-            if (isset($biobank->vitrine)) {
-                $pk = $biobank->vitrine['logo'];
-                $logo = Logo::model()->findByPk(new MongoId($pk));
+            if (isset($biobank->logo) && $biobank->logo != null) {
+                $logo = ($biobank->logo);
                 $_SESSION['vitrine'] = array('biobank' => $biobank, 'biobankLogo' => $logo);
             }
             return $id;

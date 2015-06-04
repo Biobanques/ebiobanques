@@ -12,12 +12,22 @@
 <tr><td rowspan="1" colspan="3">displaySiteVitrineTestCase</td></tr>
 </thead><tbody>
 <tr>
+	<td>verifyElementPresent</td>
+	<td>link=Edition de site vitrine</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/ebiobanques/index.php/mybiobank/index</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>verifyElementPresent</td>
+	<td>link=Edition de site vitrine</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
 	<td>link=Aperçu du site vitrine</td>
 	<td></td>
 </tr>

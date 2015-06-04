@@ -118,11 +118,6 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=Logo_filename</td>
-	<td>/var/www/ebiobanques/ebiobanques/images/logobb.png</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>id=Biobank_identifier</td>
 	<td>00-1111-22222</td>
 </tr>
@@ -160,11 +155,6 @@
 	<td>type</td>
 	<td>id=Biobank_website</td>
 	<td>www.siteDeTest.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=Biobank_vitrine</td>
-	<td>Non</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -477,18 +467,8 @@
 	<td>fr</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Logo_filename</td>
-	<td>/var/www/ebiobanques/ebiobanques/images/logobb.png</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
 	<td>name=yt2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>css=img[alt=&quot;1 photo&quot;]</td>
 	<td></td>
 </tr>
 </tbody></table>

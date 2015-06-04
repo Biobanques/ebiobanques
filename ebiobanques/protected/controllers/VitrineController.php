@@ -200,15 +200,14 @@ class VitrineController extends Controller
         $model = Biobank::model()->findByPk(new MongoId($id));
         //una
         if (!isset($model->vitrine)) {
-            Yii::app()->user->setFlash('warning', 'Le site vitrine est non défini.');
+            Yii::app()->user->setFlash('notice', 'Le site vitrine est non défini.');
             $model->vitrine = array();
         }
         if (isset($_POST['Biobank'])) {
             //NB ne pas reallouer generiquement les attributs car sinon si pas d image, alors input vide donc bug $model->attributes = $_POST['Biobank'];
             $model->vitrine['page_accueil_fr'] = $_POST['Biobank']['vitrine']['page_accueil_fr'];
-            if (isset($_FILES['Biobank'])&&isset($_POST['Biobank']['vitrine']['logo'])&&!empty($_FILES["Biobank"]["name"]['vitrine']['logo'])) {
-                    $model->vitrine['logo'] = $this->logoUpload($_FILES['Biobank']);
-                
+            if (isset($_FILES['Biobank']) && isset($_POST['Biobank']['vitrine']['logo']) && !empty($_FILES["Biobank"]["name"]['vitrine']['logo'])) {
+                $model->vitrine['logo'] = $this->logoUpload($_FILES['Biobank']);
             }
             if (!$model->save()) {
                 Yii::app()->user->setFlash('error', 'Probleme de sauvegarde');

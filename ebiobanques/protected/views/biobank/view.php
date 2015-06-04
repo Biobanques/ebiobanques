@@ -34,7 +34,12 @@ Yii::app()->clientScript->registerScript('test', "
  });
 
 ");
-$logo = isset($model->activeLogo) ? Logo::model()->findByPk(new MongoId($model->activeLogo)) : null;
+try {
+    $logo = isset($model->activeLogo) && $model->activeLogo != null && $model->activeLogo != "" ? Logo::model()->findByPk(new MongoId($model->activeLogo)) : null;
+} catch (Exception $ex) {
+    $logo = null;
+    Yii::app()->user->setFlash('error', 'An error occured with logo, unable to display it');
+}
 ?>
 <div class="logoHeader">
     <h1>View Biobank #<?php echo $model->id; ?></h1>
@@ -61,7 +66,7 @@ $attributes_oblig = array(
 
 $attributes_facult = array(
     'website',
-    'vitrine',
+    //'vitrine',
     'folder_reception',
     'folder_done',
     'date_entry',
@@ -84,7 +89,7 @@ $attributes_info = array(
 
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address', 'vitrine'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {

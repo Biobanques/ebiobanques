@@ -204,10 +204,7 @@ class MybiobankController extends Controller
         $datas = $_POST['datas'];
         $attributeName = $_POST['attributeName'];
         $theme = $_POST['theme'];
-        // echo $attributeName . $datas[2] . $theme;
         $this->renderPartial('_renderWidget', array('datas' => $datas, 'attributeName' => $attributeName, 'theme' => $theme));
-//        $this->renderPartial('_renderWidget', array( 'attributeName' => $attributeName ));
-//        $this->renderPartial('_renderWidget', array( 'theme' => $theme));
     }
 
     /**
@@ -238,7 +235,6 @@ class MybiobankController extends Controller
         $args = array();
         $args['diffJours'] = $diffJours;
         if (Yii::app()->getLocale()->id == "fr")
-//            $args['lastImportDate'] = date('d/m/y', strtotime($lastImportDate));
             $args['lastImportDate'] = CommonTools::toShortDateFR($lastImportDate);
         else if (Yii::app()->getLocale()->id == "en")
             $args['lastImportDate'] = CommonTools::toShortDateEN($lastImportDate);

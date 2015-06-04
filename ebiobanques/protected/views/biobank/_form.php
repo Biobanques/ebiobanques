@@ -99,7 +99,7 @@ $attributes_oblig = array(
 
 $attributes_facult = array(
     'website',
-    'vitrine',
+    // 'vitrine',
     'folder_reception',
     'folder_done',
     'date_entry',
@@ -128,7 +128,7 @@ $listOnglets['info'] = $attributes_info;
 
 
 $attributes_other = array();
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'gest_software', 'connector_installed'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine'));
 $att = $model->getAttributes();
 
 foreach ($att as $attributeName => $attributeValue)

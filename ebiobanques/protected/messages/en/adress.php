@@ -7,6 +7,7 @@
  */
 
 return array(
+    'address' => 'Adress',
     'zip' => 'Zip code',
     'street' => 'street',
     'city' => 'City',

@@ -178,18 +178,13 @@ class Biobank extends LoggableActiveRecord
 
     public function attributeExportedLabels() {
         return array(
-            'id' => 'ID',
+            '_id' => 'ID',
             'identifier' => Yii::t('common', 'identifier'),
             'name' => Yii::t('common', 'name'),
             'collection_name' => Yii::t('common', 'collection_name'),
-            'collection_id' => Yii::t('common', 'collection_id'),
-            'date_entry' => Yii::t('common', 'date_entry'),
-            'folder_reception' => Yii::t('common', 'folder_reception'),
-            'folder_done' => Yii::t('common', 'folder_done'),
-            'passphrase' => Yii::t('common', 'passphrase'),
             'contact_id' => 'Contact',
-            'vitrine[page_accueil_fr]' => 'Page d\'accueil en français',
-            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable')
+            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
+            'website' => Yii::t('common', 'website'),
         );
     }
 
@@ -412,7 +407,7 @@ class Biobank extends LoggableActiveRecord
      *
      * @return type
      */
-    public function getShortAddress() {
+    public function getAddress() {
         return ( $this->address->street . "\n"
                 . $this->address->zip . " " . $this->address->city . "\n"
                 . Yii::t('listCountries', $this->address->country));

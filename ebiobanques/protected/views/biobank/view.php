@@ -61,7 +61,7 @@ $attributes_oblig = array(
     'biobank_class',
     array('name' => 'contact', 'value' => $model->getShortContact()),
     'diagnosis_available',
-    array('name' => 'address', 'value' => nl2br($model->getShortAddress()), 'type' => 'raw',)
+    array('name' => 'address', 'value' => nl2br($model->getAddress()), 'type' => 'raw',)
 );
 
 $attributes_facult = array(

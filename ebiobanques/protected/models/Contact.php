@@ -15,11 +15,11 @@
  * @property string $code_postal
  * @property integer $inactive
  */
-class Contact extends LoggableActiveRecord {
-
+class Contact extends LoggableActiveRecord
+{
     /**
      * id is deprectaed. use _id to store relation with contact
-     * @var type 
+     * @var type
      * @deprecated since version 1.4
      */
     public $id;
@@ -32,11 +32,10 @@ class Contact extends LoggableActiveRecord {
     public $pays;
     public $code_postal;
     public $inactive;
-
     /**
      * biobank attached to this contact
      * a contact must be attached to a biobank. A biobank must have one main contact
-     * @var type 
+     * @var type
      */
     public $biobank_id;
 
@@ -123,13 +122,13 @@ class Contact extends LoggableActiveRecord {
 
     public function attributeExportedLabels() {
         return array(
-            'id' => 'ID',
+            '_id' => 'ID',
             'first_name' => Yii::t('common', 'firstname'),
             'last_name' => Yii::t('common', 'lastname'),
             'email' => Yii::t('common', 'email'),
             'phone' => Yii::t('common', 'phone'),
-            'adresse' => Yii::t('common', 'adress'),
-            'biobank' => Yii::t('common', 'biobanks'),
+            'fullAddress' => Yii::t('common', 'adress'),
+            'biobankName' => Yii::t('common', 'biobanks'),
         );
     }
 
@@ -186,6 +185,10 @@ class Contact extends LoggableActiveRecord {
             }
         }
         return $result;
+    }
+
+    public function getFullAddress() {
+        return $this->adresse != null ? CHtml::encode($this->adresse) . ' - ' . CHtml::encode($this->code_postal) . ' ' . CHtml::encode($this->ville) : "";
     }
 
 }

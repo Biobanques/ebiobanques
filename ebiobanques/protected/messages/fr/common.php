@@ -119,5 +119,6 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'onlyAlpha' => 'Seuls les caractères alphabetiques sont autorisés pour ce champ.',
     'onlyAlphaNumeric' => 'Seuls les caractères alphanumériques sont autorisés pour ce champ.',
     'diagnosisAvailable' => 'Diagnostic disponible',
+    'website' => 'Site Internet',
 );
 ?>

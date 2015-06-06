@@ -118,5 +118,6 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'onlyAlpha' => 'Only the alphabetic characters are allowed for this field.',
     'onlyAlphaNumeric' => 'Only the alphanumeric characters are allowed for this field.',
     'diagnosisAvailable' => 'Diagnosis available',
+    'website' => 'Web site',
 );
 ?>

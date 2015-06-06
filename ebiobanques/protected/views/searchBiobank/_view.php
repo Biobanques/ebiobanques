@@ -3,19 +3,34 @@
 /* @var $data Biobank */
 ?>
 <div class='view'>
-<?php 
-foreach(Biobank::Model()->attributeExportedLabels() as $attribute=>$value){
-?>
-<b><?php echo CHtml::encode($data->getAttributeLabel($attribute)); ?>:</b>
-<?php 
-if($attribute=='contact_id'){
-		echo $data->contact_id!=null&&!empty($data->contact_id)?CHtml::encode($data->getShortContact()).'<br>'.CHtml::encode($data->getEmailContact()).'<br>'.CHtml::encode($data->getPhoneContact()):""; ?>
+    <?php
+    foreach (Biobank::Model()->attributeExportedLabels() as $attribute => $value) {
+        if (isset($data->$attribute)) {
+            ?>
+            <b><?php echo CHtml::encode($data->getAttributeLabel($attribute)); ?>:</b>
+            <?php
+            switch ($attribute) {
+                case 'contact_id':
+                    echo $data->contact_id != null && !empty($data->contact_id) ? CHtml::encode($data->getShortContact()) . '<br>' . CHtml::encode($data->getEmailContact()) . '<br>' . CHtml::encode($data->getPhoneContact()) : "";
+                    break;
 
-		<?php 
-		}else
-echo CHtml::encode($data->$attribute); ?>
-<br />
-<?php }?>
-		<br />
-		<br />
+                case 'address':
+                    echo nl2br($data->getAddress());
+                    break;
+                case 'website':
+                    echo CHtml::link($data->website, 'http://' . $data->website, array('target' => 'blank'));
+                    break;
+
+                default:
+                    echo CHtml::encode($data->$attribute);
+                    break;
+            }
+            ?>
+            <br />
+            <?php
+        }
+    }
+    ?>
+    <br />
+    <br />
 </div>

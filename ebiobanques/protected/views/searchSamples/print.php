@@ -20,6 +20,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'sample-grid',
     'dataProvider' => $dataProvider,
     'enablePagination' => false,
-    'columns' => $columns,
+    'columns' => $columns
 ));
 ?>

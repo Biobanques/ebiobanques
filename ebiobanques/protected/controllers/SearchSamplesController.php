@@ -63,28 +63,49 @@ class SearchSamplesController extends Controller
         if (isset($_GET ['Sample']))
             $model->attributes = $_GET ['Sample'];
         // reprend les critères de la dernière recherche
-        $dataProvider = new EMongoDocumentDataProvider('Sample', array(
-            'criteria' => $_SESSION ['criteria'],
-            'pagination' => array('pageSize' => CommonTools::XLS_EXPORT_NB)
-        ));
-        echo $dataProvider->totalItemCount;
-        $datas = $dataProvider->getData();
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        $criteria->limit(200);
+        $models = Sample::model()->findAll($criteria);
+        $dataProvider = array();
+        $listAttributes = array();
+        foreach ($models as $model) {
+//récuperation de la liste totale des attributs
+            foreach ($model->attributes as $attributeName => $attributeValue) {
+                $listAttributes[$attributeName] = $attributeName;
+            }
+        }
 
+        foreach ($models as $model) {
+            $datas = array();
+            foreach ($listAttributes as $attribute) {
+                if (isset($model->$attribute)) {
+                    if (is_array($model->$attribute)) {
+                        if ($attribute == 'notes')
+                            $datas[$attribute] = $model->getShortNotes();
+                    } else if (!is_object($model->$attribute)) {
+                        $datas[$attribute] = $model->$attribute;
+                    }
+                } else {
+                    $datas[$attribute] = "";
+                }
+            }
+            $dataProvider[] = $datas;
+        }
         $filename = 'samples_list.csv';
-        $csv = new ECSVExport_extended($datas);
+        $csv = new ECSVExport($dataProvider);
         $toExclude = array();
         $toExport = $model->attributeExportedLabels();
+        foreach ($listAttributes as $attribute) {
 
-        foreach ($model->attributeLabels() as $attribute => $value) {
-
-            if (!isset($toExport [$attribute]))
-                $toExclude [] = $attribute;
+            if (!isset($toExport[$attribute]))
+                $toExclude[] = $attribute;
         }
-        $csv->setHeaders($toExport);
         $csv->setExclude($toExclude);
-
-        //$csv->exportCurrentPageOnly();
-        // echo $csv->toCSV();
+        // $csv->exportCurrentPageOnly();
         Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/csv", false);
     }
 
@@ -111,7 +132,7 @@ class SearchSamplesController extends Controller
      * export pdf avec mpdf et liste d'index : Technique HTML to PDF
      */
     public function actionExportPdf() {
-        set_time_limit(120);
+
 
         $model = new Sample;
         $columns = array();
@@ -132,42 +153,21 @@ class SearchSamplesController extends Controller
         }
 
 
-        $criteria = $_SESSION['criteria'];
-//        $criteria->limit(300);
-        $mPDF1 = Yii::app()->ePdf->mpdf();
-//        $dataProvider = new EMongoDocumentDataProvider('Sample'
-//        );
-        $pageSize = 100;
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        $criteria->limit(200);
         $dataProvider = new EMongoDocumentDataProvider('Sample', array(
             'criteria' => $criteria,
-//            'criteria' => $_SESSION ['criteria'],
-            'pagination' => false
-//            'pagination' => array('pageSize' => 0)
+            'pagination' => false,
         ));
-        $dataCount = $dataProvider->getTotalItemCount();
-        $pageCount = ceil($dataCount / $pageSize);
 
-        $datas = $dataProvider->getData();
+        $mPDF1 = Yii::app()->ePdf->mpdf();
 
-        $mPDF1->writeHTML('ceci est un test');
-
-        for ($i = 0; $i < $pageCount; $i++) {
-            $partialDatas = Array();
-            for ($j = 0; $j < $pageSize; $j++) {
-                if (isset($datas[$i * $pageSize + $j]) && $datas[$i * $pageSize + $j] != null)
-                    $partialDatas[] = $datas[$i * $pageSize + $j];
-                $mPDF1->WriteHTML($i * $pageSize + $j . ', ');
-            }
-            $mPDF1->WriteHTML($this->renderPartial('print', array(
-                        'dataProvider' => new CArrayDataProvider($partialDatas, array('pagination' => array('pageSize' => $pageSize))),
-                        'columns' => $columns
-                            ), true));
-        }
-//        $mPDF1->WriteHTML($this->renderPartial('print', array(
-//                    'dataProvider' => $dataProvider,
-//                    'columns' => $columns
-//                        ), true));
-        $mPDF1->Output('sample_list.pdf', 'D');
+        $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider, 'columns' => $columns), true));
+        $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 
     /**
@@ -223,11 +223,35 @@ class SearchSamplesController extends Controller
      */
     public function actionPrint() {
         // $model = new Sample('search');
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        $criteria->limit(200);
         $dataProvider = new EMongoDocumentDataProvider('Sample', array(
-            'criteria' => $_SESSION ['criteria']
+            'criteria' => $criteria,
+            'pagination' => false,
         ));
+        $columns = array();
+        foreach (Sample::model()->attributeExportedLabels() as $key => $value) {
+            if ($key == 'notes') {
+                $columns [] = $this->addColumn($key, $value, '$data->getShortNotes()');
+            } elseif ($key == 'biobank_id') {
+                $columns [] = $this->addColumn('biobank_id', $value, '$data->getBiobankName()');
+            } elseif ($key == 'collect_date') {
+                $columns [] = $this->addColumn('collect_date', $value, '$data->collect_date');
+                //TODO normaliser les dates de collecte avant d activer cette feature
+                // $columns [] = getArrayColumn('collect_date', $value, 'CommonTools::toShortDateFR($data->collect_date)');
+            } elseif ($key == 'storage_conditions') {
+                $columns [] = $this->addColumn('storage_conditions', $value, '$data->getLiteralStorageCondition()');
+            } else {
+                $columns [] = $this->addColumn($key, $value, '$data->' . $key);
+            }
+        }
         $this->render('print', array(
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'columns' => $columns
         ));
     }
 

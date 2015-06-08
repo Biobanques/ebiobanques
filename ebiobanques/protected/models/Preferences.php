@@ -46,6 +46,8 @@ class Preferences extends LoggableActiveRecord
     public $tumor_diagnosis;
     public $biobank_id = 1;
     public $notes = 1;
+    public $collection_name = 1;
+    public $collection_id;
 
     /**
      * Returns the static model of the specified AR class.
@@ -82,14 +84,16 @@ class Preferences extends LoggableActiveRecord
             ),
             array('id_depositor,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
  ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
- ,biobank_id,notes', 'length', 'max' => 1
+ ,biobank_id,notes,
+ collection_name, collection_id', 'length', 'max' => 1
             ),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array(
                 'id_user ,id_depositor,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
  ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
- ,biobank_id ,notes,',
+ ,biobank_id ,notes,
+ collection_name, collection_id',
                 'safe',
                 'on' => 'search'
             )
@@ -123,6 +127,7 @@ class Preferences extends LoggableActiveRecord
             'tumor_diagnosis' => Yii::t('sample', 'tumor_diagnosis'),
             'file_imported_id' => Yii::t('sample', 'file_imported_id'),
             'notes' => Yii::t('sample', 'notes'),
+            'collection_name' => 'collection_name',
         );
     }
 

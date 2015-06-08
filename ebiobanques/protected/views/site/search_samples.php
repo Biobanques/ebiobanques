@@ -233,6 +233,10 @@ foreach ($prefsNames as $property) {
             $columns [] = addColumn($property, $model->getAttributeLabel($property), '$data->getShortNotes()', $visibility);
         } elseif ($property == 'biobank_id') {
             $columns [] = addColumn('biobank_id', $model->getAttributeLabel('biobank_id'), '$data->getBiobankName()', $visibility);
+        } elseif ($property == 'collection_name') {
+            $columns [] = addColumn('collection_name', $model->getAttributeLabel('collection_name'), '$data->biobank->collection_name', $visibility);
+        } elseif ($property == 'collection_id') {
+            $columns [] = addColumn('collection_id', $model->getAttributeLabel('collection_id'), '$data->biobank->collection_id', $visibility);
         } elseif ($property == 'collect_date') {
             $columns [] = addColumn('collect_date', $model->getAttributeLabel('collect_date'), '$data->collect_date', $visibility);
             //TODO normaliser les dates de collecte avant d activer cette feature

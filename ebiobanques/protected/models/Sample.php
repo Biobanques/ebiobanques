@@ -305,6 +305,16 @@ class Sample extends EMongoDocument
             return null;
     }
 
+    public function getBiobank() {
+        $biobank = Biobank::model()->findByPk(new MongoId(
+                $this->biobank_id
+        ));
+        if ($biobank != null)
+            return $biobank;
+        else
+            return null;
+    }
+
     /**
      * return teh literal value of storage condition
      * if 80 then -80°C etc.

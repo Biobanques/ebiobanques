@@ -236,6 +236,7 @@ class Biobank extends LoggableActiveRecord
         //always sort with alphabetical order on name
 
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
+        Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));

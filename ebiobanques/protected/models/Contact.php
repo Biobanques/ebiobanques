@@ -151,6 +151,7 @@ class Contact extends LoggableActiveRecord
         }
         //always sort with alphabetical order
         $criteria->sort('last_name', EMongoCriteria::SORT_ASC);
+        Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria,
         ));

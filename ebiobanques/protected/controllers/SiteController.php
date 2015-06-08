@@ -258,7 +258,11 @@ class SiteController extends Controller
         $model->unsetAttributes(); // clear any default values
         if (isset($_GET ['Biobank']))
             $model->attributes = $_GET ['Biobank'];
+        if (isset($_GET ['Address'])) {
 
+            $model->address = new Address('search');
+            $model->address = $_GET['Address'];
+        }
         $this->render('biobanks', array(
             'model' => $model
         ));

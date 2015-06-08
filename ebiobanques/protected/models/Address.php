@@ -32,7 +32,8 @@ class Address extends EMongoSoftEmbeddedDocument
     // We may define rules for embedded document too
     public function rules() {
         return array(
-            array('street,city,zip,country', 'required'),
+            array('street,city,zip,country', 'required', 'on' => 'create, update'),
+            array('street,city,zip,country', 'safe', 'on' => 'search'),
         );
     }
 

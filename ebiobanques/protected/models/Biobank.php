@@ -122,7 +122,7 @@ class Biobank extends LoggableActiveRecord
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -232,7 +232,7 @@ class Biobank extends LoggableActiveRecord
             $criteria->contact_id = $this->contact_id;
 
         if (isset($this->address) && $this->address->city != null)
-            $criteria->addCond('address->city', '==', new MongoRegex('/' . $this->address->ville . '/i'));
+            $criteria->addCond('address.city', '==', new MongoRegex('/' . $this->address->city . '/i'));
         //always sort with alphabetical order on name
 
         $criteria->sort('name', EMongoCriteria::SORT_ASC);

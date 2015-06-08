@@ -158,9 +158,56 @@ class SiteController extends Controller
         }
         if (isset($_GET ['Sample'])) {
             $model->attributes = $_GET ['Sample'];
+
+
+
+//Used to search terms in model->biobank->collection_id and model->biobank->collection_name
+            $arrayOfBiobanks = array();
+            if (!empty($_GET['collection_id'])) {
+                $criteria = new EMongoCriteria;
+                $listWords = explode(",", $_GET['collection_id']);
+                $regexId = "";
+                foreach ($listWords as $word) {
+                    $regexId.="$word|";
+                }
+                $regexId = substr($regexId, 0, -1);
+                $criteria->addCond('collection_id', '==', new MongoRegex("/($regexId)/i"));
+                $criteria->select(array('_id'));
+                $biobanks = Biobank::model()->findAll($criteria);
+                foreach ($biobanks as $biobank) {
+                    $arrayOfBiobanks[(string) $biobank->_id] = (string) $biobank->_id;
+                }
+            }
+
+            if (!empty($_GET['collection_name'])) {
+                $criteria = new EMongoCriteria;
+                $listWords = explode(",", $_GET['collection_name']);
+                $regexId = "";
+                foreach ($listWords as $word) {
+                    $regexId.="$word|";
+                }
+                $regexId = substr($regexId, 0, -1);
+                $criteria->addCond('collection_name', '==', new MongoRegex("/($regexId)/i"));
+                $criteria->select(array('_id'));
+                $biobanks = Biobank::model()->findAll($criteria);
+                foreach ($biobanks as $biobank) {
+                    $arrayOfBiobanks[(string) $biobank->_id] = (string) $biobank->_id;
+                }
+            }
+
+            if (!empty($arrayOfBiobanks)) {
+                $model->arrayOfBiobanks;
+                $model->arrayOfBiobanks = $arrayOfBiobanks;
+            }
+
+
             $content = '';
             foreach ($_GET ['Sample'] as $key => $value) {
-
+                if (is_array($value)) {
+                    foreach ($value as $vkey => $vval) {
+                        $content = $content . (string) $vkey . '=' . str_replace(';', ',', (string) $vval) . ';';
+                    }
+                } else
                 if ($value != null && !empty($value) && (string) $value != '0') {
                     $content = $content . (string) $key . '=' . str_replace(';', ',', (string) $value) . ';';
                 }

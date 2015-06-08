@@ -92,6 +92,7 @@ class Sample extends EMongoDocument
 
     public function rules() {
         return array(
+            array('arrayOfBiobanks', 'unsafe', 'on' => 'update'),
             array(
                 'id_sample, biobank_id, file_imported_id',
                 'required'
@@ -210,7 +211,15 @@ class Sample extends EMongoDocument
      */
     public function searchWithNotes() {
         $criteria = new EMongoCriteria ();
-        if (isset($this->biobank_id) && !empty($this->biobank_id)) {
+
+        /*
+         * arrayOfBiobanks defined in search action controller, in case of collection_id and collection_name biobank search
+         * Has the priority on biobank selection box
+         */
+
+        if (isset($this->arrayOfBiobanks) && !empty($this->arrayOfBiobanks)) {
+            $criteria->addCond('biobank_id', 'in', $this->arrayOfBiobanks);
+        } else if (isset($this->biobank_id) && !empty($this->biobank_id)) {
             $criteria->biobank_id = "" . $this->biobank_id . "";
         }
 
@@ -253,6 +262,7 @@ class Sample extends EMongoDocument
         if (isset($this->field_age_max) && !empty($this->field_age_max)) {
             $criteria->addcond('age', '<=', strval($this->field_age_max));
         }
+
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria

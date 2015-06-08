@@ -1,7 +1,6 @@
 <div class="wide form">
 
     <?php
-    echo $this->route;
     $form = $this->beginWidget('CActiveForm', array(
         'action' => Yii::app()->createUrl($this->route),
     ));
@@ -41,7 +40,7 @@
             </td>
             <td>
                 <?php echo $form->label($model, 'gender'); ?>
-                <?php echo $form->dropDownList($model, 'gender', $model->getArrayGender(), array('prompt' => '----')); ?>
+                <?php echo $form->dropDownList($model, 'gender', $model->getArrayGender(), array('prompt' => '----', 'style' => 'width:145px')); ?>
             </td>
         </tr>
         <tr>
@@ -51,7 +50,7 @@
             </td>
             <td>
                 <?php echo $form->label($model, 'consent'); ?>
-                <?php echo $form->dropDownList($model, 'consent', $model->getArrayConsent(), array('prompt' => '----')); ?>
+                <?php echo $form->dropDownList($model, 'consent', $model->getArrayConsent(), array('prompt' => '----', 'style' => 'width:145px')); ?>
             </td>
             <td>
                 <?php echo $form->label($model, 'max_delay_delivery'); ?>
@@ -75,6 +74,25 @@
                 <?php echo $form->label($model, 'tumor_diagnosis'); ?>
                 <?php echo $form->textField($model, 'tumor_diagnosis', array('size' => 10, 'maxlength' => 20)); ?>
             </td>
+        </tr>
+        <tr>
+
+            <td>
+                <?php echo CHtml::label('collection_id', 'collection_id'); ?>
+                <?php echo CHtml::textArea('collection_id', '', array('cols' => 18)); ?>
+            </td><td rowspan="2" colspan ="2">
+                <?php
+                $this->renderPartial('/site/_help_message', array('title' => 'Conseils pour la recherche par collection', 'content' => 'Séparez les expressions recherchées par des virgules.'));
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo CHtml::label('collection_name', 'collection_name'); ?>
+                <?php echo CHtml::textArea('collection_name', '', array('cols' => 18)); ?>
+            </td>
+
+
         </tr>
         <tr>
             <td colspan="3">

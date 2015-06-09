@@ -68,11 +68,14 @@ class Sample extends EMongoDocument
      * @var type
      */
     public $field_age_max;
-    
     /**
      * array of biobanks is an attribute to store arrays of biobanks selected into the search list
      */
-    public $arrayOfBiobanks;
+    protected $arrayOfBiobanks;
+
+    public function setArrayOfBiobanks($array) {
+        $this->arrayOfBiobanks = $array;
+    }
 
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -221,11 +224,7 @@ class Sample extends EMongoDocument
          * Has the priority on biobank selection box
          */
 
-        if (isset($this->arrayOfBiobanks) && !empty($this->arrayOfBiobanks)) {
-            $criteria->addCond('biobank_id', 'in', $this->arrayOfBiobanks);
-        } else if (isset($this->biobank_id) && !empty($this->biobank_id)) {
-            $criteria->biobank_id = "" . $this->biobank_id . "";
-        }
+
 
         if (isset($this->gender) && !empty($this->gender) && $this->gender != "U") {
             $criteria->gender = "" . $this->gender . "";
@@ -266,7 +265,11 @@ class Sample extends EMongoDocument
         if (isset($this->field_age_max) && !empty($this->field_age_max)) {
             $criteria->addcond('age', '<=', strval($this->field_age_max));
         }
-
+        if (isset($this->arrayOfBiobanks) && is_array($this->arrayOfBiobanks) && !empty($this->arrayOfBiobanks)) {
+            $criteria->addCond('biobank_id', 'in', $this->arrayOfBiobanks);
+        } else if (isset($this->biobank_id) && !empty($this->biobank_id)) {
+            $criteria->biobank_id = "" . $this->biobank_id . "";
+        }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria

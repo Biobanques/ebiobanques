@@ -191,13 +191,13 @@ class SiteController extends Controller
                 $criteria->select(array('_id'));
                 $biobanks = Biobank::model()->findAll($criteria);
                 foreach ($biobanks as $biobank) {
-                    $arrayOfBiobanks[(string) $biobank->_id] = (string) $biobank->_id;
+                    $arrayOfBiobanks[$biobank->_id] = (string) $biobank->_id;
                 }
             }
 
             if (!empty($arrayOfBiobanks)) {
-                $model->arrayOfBiobanks;
-                $model->arrayOfBiobanks = $arrayOfBiobanks;
+                //     $model->arrayOfBiobanks;
+                $model->setArrayOfBiobanks(array_values($arrayOfBiobanks));
             }
 
 

@@ -68,6 +68,11 @@ class Sample extends EMongoDocument
      * @var type
      */
     public $field_age_max;
+    
+    /**
+     * array of biobanks is an attribute to store arrays of biobanks selected into the search list
+     */
+    public $arrayOfBiobanks;
 
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
@@ -92,7 +97,6 @@ class Sample extends EMongoDocument
 
     public function rules() {
         return array(
-            array('arrayOfBiobanks', 'unsafe', 'on' => 'update'),
             array(
                 'id_sample, biobank_id, file_imported_id',
                 'required'

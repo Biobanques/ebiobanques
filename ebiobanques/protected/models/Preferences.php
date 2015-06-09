@@ -127,7 +127,8 @@ class Preferences extends LoggableActiveRecord
             'tumor_diagnosis' => Yii::t('sample', 'tumor_diagnosis'),
             'file_imported_id' => Yii::t('sample', 'file_imported_id'),
             'notes' => Yii::t('sample', 'notes'),
-            'collection_name' => 'collection_name',
+            'collection_name' => Biobank::model()->getAttributeLabel('collection_name'),
+            'collection_id' => Biobank::model()->getAttributeLabel('collection_id'),
         );
     }
 

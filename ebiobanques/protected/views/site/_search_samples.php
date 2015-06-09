@@ -78,7 +78,7 @@
         <tr>
 
             <td>
-                <?php echo CHtml::label('collection_id', 'collection_id'); ?>
+                <?php echo CHtml::label(Biobank::model()->getAttributeLabel('collection_id'), 'collection_id') ?>
                 <?php echo CHtml::textArea('collection_id', '', array('cols' => 18)); ?>
             </td><td rowspan="2" colspan ="2">
                 <?php
@@ -88,7 +88,7 @@
         </tr>
         <tr>
             <td>
-                <?php echo CHtml::label('collection_name', 'collection_name'); ?>
+                <?php echo CHtml::label(Biobank::model()->getAttributeLabel('collection_name'), 'collection_name'); ?>
                 <?php echo CHtml::textArea('collection_name', '', array('cols' => 18)); ?>
             </td>
 

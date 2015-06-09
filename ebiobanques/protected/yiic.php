@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Europe/Paris'); 
 //include common properties
 include dirname(__FILE__) . '/../CommonProperties.php';
 

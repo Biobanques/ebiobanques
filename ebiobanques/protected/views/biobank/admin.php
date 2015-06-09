@@ -26,6 +26,8 @@ $('.search-form form').submit(function(){
 
 <?php echo CHtml::link('Create biobank', 'create'); ?>
 <br>
+<?php echo CHtml::link('Manage fields of biobanks directory', array('/uploadForm/uploadAll')); ?>
+<br>
 <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php

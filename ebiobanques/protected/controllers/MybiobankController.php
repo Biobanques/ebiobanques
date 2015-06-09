@@ -58,13 +58,15 @@ class MybiobankController extends Controller
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-
-        if (Yii::app()->user->isAdmin() && isset($_GET['id']))
-            $id = $_GET['id'];
-        elseif (Yii::app()->user->isBiobankAdmin())
-            $id = Yii::app()->user->biobank_id;
-        $_SESSION['biobank_id'] = $id;
-        $this->indexForBiobank($id);
+        if (!isset($_SESSION['biobank_id'])) {
+            if (Yii::app()->user->isAdmin() && isset($_GET['id'])) {
+                $id = $_GET['id'];
+            } elseif (Yii::app()->user->isBiobankAdmin()) {
+                $id = Yii::app()->user->biobank_id;
+            }
+            $_SESSION['biobank_id'] = $id;
+        }
+        $this->indexForBiobank($_SESSION['biobank_id']);
     }
 
     /**

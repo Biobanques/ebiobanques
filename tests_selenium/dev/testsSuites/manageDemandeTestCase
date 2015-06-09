@@ -112,11 +112,6 @@
 	<td>Notes</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>id=echSelected-grid_c18</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>css=img[alt=&quot;ec0000000000000000000001&quot;]</td>
 	<td></td>

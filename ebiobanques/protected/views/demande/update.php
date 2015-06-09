@@ -85,6 +85,10 @@ foreach ($prefsNames as $property) {
                     'style' => $visibility
                 )
             );
+        } elseif ($property == 'collection_name') {
+            $columns [] = addColumn('collection_name', Biobank::model()->getAttributeLabel('collection_name'), '$data->biobank->collection_name', $visibility);
+        } elseif ($property == 'collection_id') {
+            $columns [] = addColumn('collection_id', Biobank::model()->getAttributeLabel('collection_id'), '$data->biobank->collection_id', $visibility);
         } else {
             $columns [] = array(
                 'class' => 'DataColumn',
@@ -135,3 +139,26 @@ $columns [] = array(
     ));
     ?>
 </div>
+<?php
+
+/**
+ * fonction pour preparer une colonne a ajouter dans le grid des colonnes
+ */
+function addColumn($property, $header, $value, $visibility) {
+    return array(
+        'class' => 'DataColumn',
+        'name' => $property,
+        'id' => 'col_' . $property,
+        'value' => $value,
+        'header' => $header,
+        'htmlOptions' => array(
+            'class' => "col_$property",
+            'style' => $visibility
+        ),
+        'headerHtmlOptions' => array(
+            'class' => "col_$property",
+            'style' => $visibility
+        )
+    );
+}
+?>

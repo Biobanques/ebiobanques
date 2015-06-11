@@ -21,3 +21,4 @@
 /ebiobanques/protected/commands/DiversTestCommand.php
 /ebiobanques/protected/commands/SwitchIdsCommand.php
 /tests_selenium/run_partial.sh
+/tests_selenium/results_simple_user.html

@@ -60,6 +60,7 @@ class SiteController extends Controller
             array(
                 'allow', // allow authenticated user to perform 'search' actions
                 'actions' => array(
+                    'catalog',
                     'search',
                     'contacts',
                     'view',
@@ -264,6 +265,22 @@ class SiteController extends Controller
             $model->address = $_GET['Address'];
         }
         $this->render('biobanks', array(
+            'model' => $model
+        ));
+    }
+    
+    /**
+     * display catalog of biobanks with contacts and agregated infos
+     */
+    public function actionCatalog() {
+        $model = new Biobank('search');
+        $model->unsetAttributes(); // clear any default values
+        if (isset($_GET ['Biobank']))
+            $model->attributes = $_GET ['Biobank'];
+        //make the search
+        
+        //render the biobanks
+        $this->render('catalog', array(
             'model' => $model
         ));
     }

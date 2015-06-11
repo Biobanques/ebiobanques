@@ -43,6 +43,7 @@ class Biobank extends LoggableActiveRecord
     public $diagnosis_available;
     public $longitude;
     public $latitude;
+    public $keywords_MeSH;
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -122,7 +123,7 @@ class Biobank extends LoggableActiveRecord
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,keywords_MeSH', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -172,7 +173,8 @@ class Biobank extends LoggableActiveRecord
             'contact_id' => 'Contact',
             'vitrine[fr]' => 'Texte en francais',
             'vitrine[logo]' => 'Image logo',
-            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable')
+            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
+            'keywords_MeSH'=>'keywords MeSH',
         );
     }
 
@@ -227,6 +229,15 @@ class Biobank extends LoggableActiveRecord
             }
             $regexId = substr($regexId, 0, -1);
             $criteria->addCond('diagnosis_available', '==', new MongoRegex("/($regexId)/i"));
+        }
+        if ($this->keywords_MeSH != null && $this->keywords_MeSH != "") {
+            $listWords = explode(" ", $this->keywords_MeSH);
+            $regexId = "";
+            foreach ($listWords as $word) {
+                $regexId.="$word|";
+            }
+            $regexId = substr($regexId, 0, -1);
+            $criteria->addCond('keywords_MeSH', '==', new MongoRegex("/($regexId)/i"));
         }
         if ($this->contact_id != null && $this->contact_id != "")
             $criteria->contact_id = $this->contact_id;

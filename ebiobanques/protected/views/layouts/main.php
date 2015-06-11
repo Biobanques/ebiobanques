@@ -65,6 +65,7 @@
                 'htmlOptions' => array('class' => 'mainMenu last'),
                 'items' => array(
                     array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
+                    array('label' => Yii::t('common', 'catalog'), 'url' => array('/catalog/search')),
                     array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search'),
                         'itemOptions' => array('class' => 'visited'),
                         'linkOptions' => array('class' => 'bar')),

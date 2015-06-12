@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord
-{
+class Biobank extends LoggableActiveRecord {
     /*
      * Champs obligatoires
      */
+
     public $id;
     public $identifier;
     public $name;
@@ -44,11 +44,61 @@ class Biobank extends LoggableActiveRecord
     public $longitude;
     public $latitude;
     public $keywords_MeSH;
+
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
      */
     public $vitrine;
+    /**
+     * fields agregated related to the sampling activity
+     */
+
+    /**
+     * values fixed: general population, disease
+     * @var type 
+     */
+    public $sampling_practice;
+
+    /**
+     * free text
+     * @var type 
+     */
+    public $sampling_disease_group;
+    public $sampling_disease_group_code;
+
+    /**
+     * fields agregated relatives to the number of samples.
+     * NBS : acronym of Number of Biological Samples
+     * Default vallue is "empty". O indicate that there is no sample
+     */
+    public $nbs_dna_samples_affected;
+    public $nbs_dna_samples_relatives;
+    public $nbs_cdna_samples_affected;
+    public $nbs_cdna_samples_relatives;
+    public $nbs_wholeblood_samples_affected;
+    public $nbs_wholeblood_samples_relatives;
+    public $nbs_bloodcellisolates_samples_affected;
+    public $nbs_bloodcellisolates_samples_relatives;
+    public $nbs_serum_samples_affected;
+    public $nbs_serum_samples_relatives;
+    public $nbs_plasma_samples_affected;
+    public $nbs_plasma_samples_relatives;
+    public $nbs_fluids_samples_affected;
+    public $nbs_fluids_samples_relatives;
+    public $nbs_tissuescryopreserved_samples_affected;
+    public $nbs_tissuescryopreserved_samples_relatives;
+    public $nbs_tissuesparaffinembedded_samples_affected;
+    public $nbs_tissuesparaffinembedded_samples_relatives;
+    public $nbs_celllines_samples_affected;
+    public $nbs_celllines_samples_relatives;
+    public $nbs_other_samples_affected;
+    public $nbs_other_samples_relatives;
+
+    /**
+     * specify the type of samples if other. Free text.
+     */
+    public $nbs_other_specification;
 
     /**
      * Returns the static model of the specified AR class.
@@ -122,6 +172,31 @@ class Biobank extends LoggableActiveRecord
             array('name', 'length', 'max' => 50),
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
+            /*
+             * sampling data agregated
+             */
+            array('sampling_disease_group,sampling_disease_group_code
+    ,nbs_dna_samples_affected,nbs_dna_samples_relatives,nbs_cdna_samples_affected
+    ,nbs_cdna_samples_relatives,nbs_wholeblood_samples_affected
+    ,nbs_wholeblood_samples_relatives
+    ,nbs_bloodcellisolates_samples_affected
+    ,nbs_bloodcellisolates_samples_relatives
+    ,nbs_serum_samples_affected
+    ,nbs_serum_samples_relatives
+    ,nbs_plasma_samples_affected
+    ,nbs_plasma_samples_relatives
+    ,nbs_fluids_samples_affected
+    ,nbs_fluids_samples_relatives
+    ,nbs_tissuescryopreserved_samples_affected
+    ,nbs_tissuescryopreserved_samples_relatives
+    ,nbs_tissuesparaffinembedded_samples_affected
+    ,nbs_tissuesparaffinembedded_samples_relatives
+    ,nbs_celllines_samples_affected
+    ,nbs_celllines_samples_relatives
+    ,nbs_other_samples_affected
+    ,nbs_other_samples_relatives', 'length', 'max' => 10),
+            array('sampling_practice', 'length', 'max' => 2),
+            array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
             array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,keywords_MeSH', 'safe', 'on' => 'search'),
             /**
@@ -174,7 +249,7 @@ class Biobank extends LoggableActiveRecord
             'vitrine[fr]' => 'Texte en francais',
             'vitrine[logo]' => 'Image logo',
             'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
-            'keywords_MeSH'=>'keywords MeSH',
+            'keywords_MeSH' => 'keywords MeSH',
         );
     }
 
@@ -427,6 +502,17 @@ class Biobank extends LoggableActiveRecord
 
     public function getIdentifierAndName() {
         return "$this->identifier - $this->name";
+    }
+
+    /**
+     * get an array of consent used by dropDownLIst.
+     */
+    public function getArraySamplingPractice() {
+        $res = array();
+        $res ['0'] = "general population";
+        $res ['1'] = "disease";
+        $res ['2'] = "general population and disease";
+        return $res;
     }
 
 }

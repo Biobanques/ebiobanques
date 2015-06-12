@@ -62,7 +62,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         <label for="newFieldName"> Field name </label>
         <input id="newFieldName" type="text" name="fieldName" />
         <label for="newFieldType"> Field type </label>
-        <select id="newFieldType" type="" name="fieldType" >
+        <select id="newFieldType"  name="fieldType" >
             <option value="text">Text field</option>
             <option value="textarea">Text area</option>
         </select>
@@ -125,16 +125,45 @@ $attributes_info = array(
 );
 $listOnglets['info'] = $attributes_info;
 
+$attributes_sampling = array(
+    array('attributeName' => 'sampling_practice', 'value' => Biobank::model()->getArraySamplingPractice()),
+    'sampling_disease_group',
+    'sampling_disease_group_code',
+    'nbs_dna_samples_affected',
+    'nbs_dna_samples_relatives',
+    'nbs_cdna_samples_affected',
+    'nbs_cdna_samples_relatives',
+    'nbs_wholeblood_samples_affected',
+    'nbs_wholeblood_samples_relatives',
+    'nbs_bloodcellisolates_samples_affected',
+    'nbs_bloodcellisolates_samples_relatives'
+    , 'nbs_serum_samples_affected'
+    , 'nbs_serum_samples_relatives'
+    , 'nbs_plasma_samples_affected'
+    , 'nbs_plasma_samples_relatives'
+    , 'nbs_fluids_samples_affected'
+    , 'nbs_fluids_samples_relatives'
+    , 'nbs_tissuescryopreserved_samples_affected'
+    , 'nbs_tissuescryopreserved_samples_relatives'
+    , 'nbs_tissuesparaffinembedded_samples_affected'
+    , 'nbs_tissuesparaffinembedded_samples_relatives'
+    , 'nbs_celllines_samples_affected'
+    , 'nbs_celllines_samples_relatives'
+    , 'nbs_other_samples_affected'
+    , 'nbs_other_samples_relatives', 'nbs_other_specification'
+);
+$listOnglets['sampling'] = $attributes_sampling;
 
-
+//make array of attributes stored but not defined in the common model
 $attributes_other = array();
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine'));
-$att = $model->getAttributes();
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice'));
 
-foreach ($att as $attributeName => $attributeValue)
+$att = $model->getAttributes();
+foreach ($att as $attributeName => $attributeValue) {
     if (!in_array($attributeName, $definedAttributes)) {
         $attributes_other[] = $attributeName;
     }
+}
 $listOnglets['other'] = $attributes_other;
 ?>
 

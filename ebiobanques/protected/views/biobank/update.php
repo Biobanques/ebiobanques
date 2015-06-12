@@ -5,7 +5,7 @@ $logo = isset($model->activeLogo) && $model->activeLogo != null ? Logo::model()-
 ?>
 
 <div class="logoHeader">
-    <h1>Update Biobank <?php echo $model->id; ?></h1>
+    <h1>Update Biobank <?php echo $model->name; ?></h1>
     <div class="logo">
         <?php
         if ($logo != null) {

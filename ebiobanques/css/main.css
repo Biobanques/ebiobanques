@@ -383,3 +383,27 @@ width: 100%
     font-size:0;
     line-height:0;
 }
+.grid-nbs{
+    width:300px;
+    height:20px;
+    border-right:1px solid black;
+    border-bottom:1px solid black;
+    padding-left:3px;
+    margin-right:2px;
+    margin-top:2px;
+    float:left;
+    }
+    .grid-nbs-nb{
+    width:100px;
+    height:20px;
+    border-right:1px solid black;
+    border-bottom:1px solid black;
+    padding-left:3px;
+    margin-right:2px;
+    margin-top:2px;
+    float:left;
+    text-align:right;
+    display: table-cell;
+    padding-right:3px;
+    
+    }

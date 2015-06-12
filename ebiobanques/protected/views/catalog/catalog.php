@@ -55,7 +55,7 @@ $this->Widget('zii.widgets.grid.CGridView', array(
             'buttons' => array(
                 'view' => array(
                     'url' => 'Yii::app()->createUrl("catalog/view",array("id"=>"$data->_id", "asDialog"=>1))',
-                    'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=1, location=no");return false;}'
+                    'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=yes, scrollbars=yes, resizable=yes", location=no");return false;}'
                 ),
             ),
         ))

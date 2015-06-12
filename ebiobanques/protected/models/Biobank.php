@@ -250,6 +250,31 @@ class Biobank extends LoggableActiveRecord {
             'vitrine[logo]' => 'Image logo',
             'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
             'keywords_MeSH' => 'keywords MeSH',
+            'sampling_disease_group' => 'Disease group',
+            'sampling_disease_group_code' => 'Disease groupe code',
+            'nbs_dna_samples_affected' => 'DNA samples affected',
+            'nbs_dna_samples_relatives' => 'DNA samples relatives',
+            'nbs_cdna_samples_affected' => 'cDNA samples affected',
+            'nbs_cdna_samples_relatives' => 'cDNA samples relatives',
+            'nbs_wholeblood_samples_affected' => 'whole blood samples affected',
+            'nbs_wholeblood_samples_relatives' => 'whole blood samples relatives',
+            'nbs_bloodcellisolates_samples_affected' => 'blood cell isolates samples affected',
+            'nbs_bloodcellisolates_samples_relatives' => 'blood cell isolates samples relatives',
+            'nbs_serum_samples_affected' => 'serum samples affected',
+            'nbs_serum_samples_relatives' => 'serum samples relatives',
+            'nbs_plasma_samples_affected' => 'Plasma samples affected',
+            'nbs_plasma_samples_relatives' => 'Plasma samples relatives',
+            'nbs_fluids_samples_affected' => 'Fluids samples affected',
+            'nbs_fluids_samples_relatives' => 'Fluids samples relatives',
+            'nbs_tissuescryopreserved_samples_affected' => 'Tissues cryopreserved samples affected',
+            'nbs_tissuescryopreserved_samples_relatives' => 'Tissues cryopreserved samples related',
+            'nbs_tissuesparaffinembedded_samples_affected' => 'Tissues paraffin embedded samples affected',
+            'nbs_tissuesparaffinembedded_samples_relatives' => 'Tissues paraffin embedded samples relatives',
+            'nbs_celllines_samples_affected' => 'Cell lines samples affected',
+            'nbs_celllines_samples_relatives' => 'Cell lines samples relatives',
+            'nbs_other_samples_affected' => 'Other samples affected',
+            'nbs_other_samples_relatives' => 'Other samples relatives',
+            'sampling_practice' => 'General sampling practice',
         );
     }
 
@@ -513,6 +538,21 @@ class Biobank extends LoggableActiveRecord {
         $res ['1'] = "disease";
         $res ['2'] = "general population and disease";
         return $res;
+    }
+
+    /**
+     * get the literal sampling practice
+     * Not defined if null
+     */
+    public function getSamplingPractice() {
+         $result = $this->sampling_practice;
+        $arr = $this->getArraySamplingPractice();
+        if ($result != "" && $arr [$result] != null) {
+            $result = $arr [$result];
+        } else {
+            $result = "Not defined";
+        }
+            return $result;
     }
 
 }

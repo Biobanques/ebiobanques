@@ -61,7 +61,18 @@ $attributes_diagnostic = array(
     'Q00-Q99',
     'R00-Z99'
 );
-$attributes_samples = array('keywords_MeSH');
+$attributes_samples = array('sampling_disease_group','sampling_disease_group_code','keywords_MeSH');
+$attributes_samples_nbs = array('nbs_dna_samples_affected',
+    'nbs_dna_samples_relatives',
+    'nbs_cdna_samples_affected',
+    'nbs_cdna_samples_relatives', 'nbs_wholeblood_samples_affected'
+    , 'nbs_wholeblood_samples_relatives', 'nbs_bloodcellisolates_samples_affected', 'nbs_bloodcellisolates_samples_relatives'
+    , 'nbs_serum_samples_affected', 'nbs_serum_samples_relatives'
+    , 'nbs_plasma_samples_affected', 'nbs_plasma_samples_relatives', 'nbs_fluids_samples_affected'
+    , 'nbs_fluids_samples_relatives', 'nbs_tissuescryopreserved_samples_affected', 'nbs_tissuescryopreserved_samples_relatives'
+    , 'nbs_tissuesparaffinembedded_samples_affected', 'nbs_tissuesparaffinembedded_samples_relatives'
+    , 'nbs_celllines_samples_affected', 'nbs_celllines_samples_relatives', 'nbs_other_samples_affected'
+    , 'nbs_other_samples_relatives');
 $attributes_diagnostic_availables = array();
 $attributes_samples_availables = array();
 $attributes = $model->getAttributes();
@@ -71,6 +82,9 @@ foreach ($attributes as $attributeName => $attributeValue) {
     }
     if (in_array($attributeName, $attributes_samples)) {
         $attributes_samples_availables[] = array('name' => $attributeName, 'value' => $attributeValue);
+    }
+    if (in_array($attributeName, $attributes_samples_nbs)) {
+        $attributes_samples_nbs_availables[] = array('name' => $attributeName, 'value' => $attributeValue);
     }
 }
 ?>
@@ -144,19 +158,41 @@ foreach ($attributes as $attributeName => $attributeValue) {
         if ($i == $cut)
             echo "<div style=\"clear:both;\"></div>";
     }
-echo "<div style=\"clear:both;\"></div>";
-    /* $this->widget('zii.widgets.CDetailView', array(
-      'data' => $model,
-      'attributes' => $attributes_diagnostic_availables
-      )); */
+    echo "<div style=\"clear:both;\"></div>";
     ?>
 </div>
 <div id="biobank_other">
     <h3>Résumé des échantillons biologiques</h3>
+    <h4>Généralités</h4>
     <?php
+    $attributes_samples_availables[]=array('name' => 'sampling_practice', 'value' => $model->getSamplingPractice());
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
         'attributes' => $attributes_samples_availables
     ));
+    ?>
+    <div><br></div>
+    <h4>Nombre d'échantillons collectés</h4>
+    <div class="grid-nbs"><b>Types</b></div><div class="grid-nbs-nb"><b>Affected</b></div><div class="grid-nbs-nb"><b>Relatives</b></div>
+    <div style="clear:both;"></div>
+    <?php
+    foreach ($attributes_samples_nbs_availables as $attNbs) {
+        //si suffixe = affected on ecrit sur la ligne de titre sinon on skip
+        if (!strpos($attNbs['name'], "affected") == false) {
+            $name= str_replace ( "affected" , "" ,$model->attributeLabels()[$attNbs['name']] );
+            echo "<div class=\"grid-nbs\"><b>" .
+            $name. "</b></div>";
+        }
+        echo "<div class=\"grid-nbs-nb\">";
+        if (isset($attNbs['value']) && $attNbs != "") {
+            echo number_format(intval($attNbs['value']), 0, ',', ' ');
+        } else {
+            echo "-";
+        }
+        echo "</div>";
+        if (strpos($attNbs['name'], "affected") == false) {
+            echo "<div style=\"clear:both;\"></div>";
+        }
+    }
     ?>
 </div>

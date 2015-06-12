@@ -179,7 +179,8 @@ foreach ($attributes as $attributeName => $attributeValue) {
     foreach ($attributes_samples_nbs_availables as $attNbs) {
         //si suffixe = affected on ecrit sur la ligne de titre sinon on skip
         if (!strpos($attNbs['name'], "affected") == false) {
-            $name= str_replace ( "affected" , "" ,$model->attributeLabels()[$attNbs['name']] );
+            $ar=$model->attributeLabels();
+            $name= str_replace ( "affected" , "" ,$ar[$attNbs['name']] );
             echo "<div class=\"grid-nbs\"><b>" .
             $name. "</b></div>";
         }

@@ -59,6 +59,14 @@ div.form label
 	font-size: 0.9em;
 	display: block;
 }
+div.form .aligned label
+{
+	font-weight: bold;
+	font-size: 0.9em;
+	display: inline-block;
+        margin-left: 2px;
+        margin-right: 7px;
+}
 input[type=radio] + label{ 
     display:inline !important; 
 }
@@ -171,4 +179,62 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 {
 	clear: left;
 	padding-left: 110px;
+}
+
+.biocapWindow{
+    display: inline-block; 
+    border: solid 1px #0A246A;
+    margin: 1px;
+    padding: 5px;
+    vertical-align: top;
+    min-height: 225px; 
+}
+.biocapWindow>.title{
+    font-weight: bold;
+    background-color: #0066A4;
+    color: #FEE;
+    display: block;
+}
+
+.biocapWindow .group{
+    display:block;
+    border-bottom: black solid 1px;
+    width:100%;
+
+}
+
+
+.biocapWindow .group>.title{
+        width: 15%;
+    font-weight: bold;
+    color: #0A246A;
+}
+.biocapWindow .group div{
+    display:inline-block;
+width: 15%;
+vertical-align: top;
+    
+}
+.biocapWindow .group .radiobtns div{
+    display:inline-block;
+width: 24%;
+    
+}
+.biocapWindow .group label{
+font-weight: bold;  
+
+}
+.biocapWindow .group .aligned{
+display:block;
+}
+
+.biocapWindow .group .radiobtns{
+    display: inline-block;
+    width: 68%;
+}
+
+input[type=checkbox] + label{ 
+    display:inline !important; 
+    padding-left: 2px;
+
 }

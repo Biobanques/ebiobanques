@@ -57,7 +57,8 @@ div.form label
 {
 	font-weight: bold;
 	font-size: 0.9em;
-	display: block;
+display: block;
+text-align: center;
 }
 
 div.form .row
@@ -161,4 +162,8 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 {
 	clear: left;
 	padding-left: 110px;
+}
+
+#biocapForm_age label {
+    display: inline-block;
 }

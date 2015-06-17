@@ -28,12 +28,12 @@
 
     <body class="container" id="page" >
         <div style="float:left;">
-            <a href="http://www.biobanques.eu" target="_blank"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/logobb.png', 'logo', array('height' => 80, 'width' => 110)); ?></a>
+            <a href="http://rnce.inserm.fr/" target="_blank"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/logo_BIOCAP.jpg', 'logo', array('height' => 50)); ?></a>
         </div>
-        <div style="float:left;">
-            <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/ebiobanques.fr.png', 'nddlogo', array('height' => 60, 'width' => 400)); ?>
+        <!--<div style="float:left;">-->
+        <?php //echo CHtml::image(Yii::app()->request->baseUrl . '/images/ebiobanques.fr.png', 'nddlogo', array('height' => 60, 'width' => 400)); ?>
 
-        </div>
+        <!--</div>-->
         <div style="float:right;padding-right:20px;padding-top:20px;">
             <div >
                 <?php
@@ -69,9 +69,9 @@
                         'itemOptions' => array('class' => 'visited'),
                         'linkOptions' => array('class' => 'bar')),
                     array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
-                    array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
-                    array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
-                    array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
+                    // array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
+                    // array('label' => Yii::t('common', 'biobanks'), 'url' => array('/site/biobanks')),
+                    // array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
                     array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),
                     array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),

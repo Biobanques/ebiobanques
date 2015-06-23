@@ -62,8 +62,8 @@ class BiocapForm extends CFormModel
     /*
      * CONSENTEMENT SUBBLOCK
      */
-    public $consent_rech;
-    public $consent_RGC;
+    public $consent_rech = 'inconnu';
+    public $consent_RGC = 'inconnu';
 
     public function rules() {
         $result = array(
@@ -115,10 +115,12 @@ class BiocapForm extends CFormModel
             'type_prelev[tissu]' => 'Tissu',
             'type_prelev[moelle]' => 'Moëlle',
             'type_prelev[sang]' => 'Sang',
+            'type_prelev[autre]' => 'Autre',
             'mode_prelev' => 'Mode de prélèvement',
             'mode_prelev[biopsie]' => 'Biopsie',
             'mode_prelev[pieceOp]' => 'Pièce opératoire',
             'mode_prelev[ponction]' => 'Ponction',
+            'mode_prelev[autre]' => 'Autre / Inconnu',
             'ETL[tum_prim]' => 'Tumeur primitive',
             'ETL[metastase]' => 'Métastase',
             'ETL[tissu_cong]' => 'Tissu congelé',

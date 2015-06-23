@@ -6,20 +6,28 @@
 Yii::app()->clientScript->registerScript('search', "
 
 $('.search-form form').submit(function(){
+
+
+
 	$('#result-grid').yiiGridView('update', {
-		data: $(this).serialize()
+       // type : 'post',
+	data: $(this).serialize()
 	});
+
+
 	return false;
 });
+
 ");
 ?>
+
 <div class="search-form">
     <?php
     $this->renderPartial('_searchForm', array('model' => $model));
     ?>
 </div>
 <?php
-$this->renderPartial('_display', array('model' => $data));
+$this->renderPartial('_display', array('dataProvider' => $dataProvider));
 /*
 $conn = Yii::app()->mongodb->getConnection();
 $db = $conn->biocap;

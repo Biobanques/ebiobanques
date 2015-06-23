@@ -9,12 +9,16 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'search-form',
-        'enableClientValidation' => true,
-        'clientOptions' => array(
-            'validateOnSubmit' => true,
-        ),
+//        'enableClientValidation' => true,
+//        'clientOptions' => array(
+//            'validateOnSubmit' => true,
+//        ),
+            // 'method' => 'POST'
     ));
     ?>
+
+
+
     <div style="display: flex">
         <div class ="biocapWindow" style="width:65%;">
             <div class='title'>DIAGNOSTIC</div>
@@ -304,6 +308,12 @@
                     echo $form::label($model, 'type_prelev[sang]');
                     ?>
                 </div>
+                <div>
+                    <?php
+                    echo $form->checkBox($model, 'type_prelev[autre]', array('value' => 'Autre', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form::label($model, 'type_prelev[autre]');
+                    ?>
+                </div>
             </div>
             <div>
             </div>
@@ -313,12 +323,6 @@
                 ?>
             </div>
             <div class ='radiobtns'>
-                <!--<div>-->
-                <?php
-//                    echo $form->checkBox($model, 'mode_prelev', array('id' => 'modePrelRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' '));
-//                    echo CHtml::label('Indifférent', 'modePrelRB1');
-                ?>
-                <!--</div>-->
                 <div>
                     <?php
                     echo $form->checkBox($model, 'mode_prelev[biopsie]', array('value' => 'biopsie', 'display' => 'inline-block', 'separator' => ' '));
@@ -335,6 +339,12 @@
                     <?php
                     echo $form->checkBox($model, 'mode_prelev[ponction]', array('value' => 'ponction', 'display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'mode_prelev[ponction]');
+                    ?>
+                </div>
+                <div>
+                    <?php
+                    echo $form->checkBox($model, 'mode_prelev[autre]', array('value' => 'autre', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form::label($model, 'mode_prelev[autre]');
                     ?>
                 </div>
             </div>
@@ -367,7 +377,7 @@
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[tissu_cong]', array('value' => 'tissu_cong', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ETL[tissu_cong]', array('value' => 'tissu_cong', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ETL[tissu_cong]');
                     ?>
                 </div>
@@ -419,13 +429,13 @@
             <div class ='radiobtns'>
                 <div style="width: 48%; padding-right: 4px">
                     <?php
-                    echo $form->checkBox($model, 'ENTA[tissu_sain_org_tumeur]', array('value' => 'tissu_sain_org_tumeur', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[tissu_sain_org_tumeur]', array('value' => 'tissu_sain_org_tumeur', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[tissu_sain_org_tumeur]');
                     ?>
                 </div>
                 <div style="width: 48%; padding-right: 4px">
                     <?php
-                    echo $form->checkBox($model, 'ENTA[moelle_sang_rem]', array('value' => 'moelle_sang_rem', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[moelle_sang_rem]', array('value' => 'moelle_sang_rem', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[moelle_sang_rem]');
                     ?>
                 </div>
@@ -435,7 +445,7 @@
             <div class="radiobtns">
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ENTA[tissu_sain_autre_org]', array('value' => 'tissu_sain_autre_org', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[tissu_sain_autre_org]', array('value' => 'tissu_sain_autre_org', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[tissu_sain_autre_org]');
                     ?>
                 </div>
@@ -448,13 +458,13 @@
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ENTA[lymphocyte]', array('value' => 'lymphocyte', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[lymphocyte]', array('value' => 'lymphocyte', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[lymphocyte]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ENTA[salive]', array('value' => 'salive', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[salive]', array('value' => 'salive', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[salive]');
                     ?>
                 </div>
@@ -464,13 +474,13 @@
             <div class="radiobtns">
                 <div style="width: 48%; padding-right: 4px">
                     <?php
-                    echo $form->checkBox($model, 'ENTA[adn_const]', array('value' => 'adn_const', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[adn_const]', array('value' => 'adn_const', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[adn_const]');
                     ?>
                 </div>
                 <div style="width: 48%; padding-right: 4px">
                     <?php
-                    echo $form->checkBox($model, 'ENTA[arn_const]', array('value' => 'arn_const', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[arn_const]', array('value' => 'arn_const', 'display' => 'inline-block', 'separator' => ' ', 'disabled' => true));
                     echo $form::label($model, 'ENTA[arn_const]');
                     ?>
                 </div>
@@ -499,18 +509,47 @@
             <div class="title">
                 Consentement
             </div>
-            <div></div>
+            <div><?php echo $form::label($model, 'consent_rech'); ?></div>
             <div class ='radiobtns'>
-                <div style="width: 48%; padding-right: 4px">
+                <div>
                     <?php
-                    echo $form->checkBox($model, 'consent_rech', array('value' => 'consent_rech', 'display' => 'inline-block', 'separator' => ' '));
-                    echo $form::label($model, 'consent_rech');
+                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' '));
+                    echo CHtml::label('Indifférent', 'CRRB1');
                     ?>
                 </div>
-                <div style="width: 48%; padding-right: 4px">
+                <div>
                     <?php
-                    echo $form->checkBox($model, 'consent_RGC', array('value' => 'consent_RGC', 'display' => 'inline-block', 'separator' => ' '));
-                    echo $form::label($model, 'consent_RGC');
+                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' '));
+                    echo CHtml::label('Oui', 'CRRB2');
+                    ?>
+                </div>
+                <div>
+                    <?php
+                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' '));
+                    echo CHtml::label('Non', 'CRRB3');
+                    ?>
+                </div>
+            </div>
+            <div></div>
+
+            <div><?php echo $form::label($model, 'consent_RGC'); ?></div>
+            <div class ='radiobtns'>
+                <div>
+                    <?php
+                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' '));
+                    echo CHtml::label('Indifférent', 'CRGCRB1');
+                    ?>
+                </div>
+                <div>
+                    <?php
+                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' '));
+                    echo CHtml::label('Oui', 'CRGCRB2');
+                    ?>
+                </div>
+                <div>
+                    <?php
+                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' '));
+                    echo CHtml::label('Non', 'CRGCRB3');
                     ?>
                 </div>
             </div>
@@ -524,3 +563,78 @@
     $this->endWidget();
     ?>
 </div>
+<script>
+    document.getElementById("BiocapForm_iccc_group1").disabled = false;
+    document.getElementById("BiocapForm_iccc_group2").disabled = true;
+    document.getElementById("BiocapForm_iccc_group3").disabled = true;
+    var iccc1 = document.getElementById("BiocapForm_iccc_group1");
+    var iccc2 = document.getElementById("BiocapForm_iccc_group2");
+    var iccc3 = document.getElementById("BiocapForm_iccc_group3");
+    iccc1.onkeyup = function () {
+        if (this.value != "" || this.value.length > 0) {
+            iccc2.disabled = false;
+
+        } else {
+            iccc2.disabled = true;
+            iccc3.disabled = true;
+        }
+    }
+    iccc2.onkeyup = function () {
+        if (this.value != "" || this.value.length > 0) {
+            iccc3.disabled = false;
+        } else {
+            //  document.getElementById("dis_per").value='';
+            iccc3.disabled = true;
+        }
+    }
+</script>
+<script>
+    document.getElementById("BiocapForm_topoOrganeField1").disabled = false;
+    document.getElementById("BiocapForm_topoOrganeField2").disabled = true;
+    document.getElementById("BiocapForm_topoOrganeField3").disabled = true;
+    var tof1 = document.getElementById("BiocapForm_topoOrganeField1");
+    var tof2 = document.getElementById("BiocapForm_topoOrganeField2");
+    var tof3 = document.getElementById("BiocapForm_topoOrganeField3");
+    tof1.onkeyup = function () {
+        if (this.value != "" || this.value.length > 0) {
+            tof2.disabled = false;
+
+        } else {
+            tof2.disabled = true;
+            tof3.disabled = true;
+        }
+    }
+    tof2.onkeyup = function () {
+        if (this.value != "" || this.value.length > 0) {
+            tof3.disabled = false;
+        } else {
+            //  document.getElementById("dis_per").value='';
+            tof3.disabled = true;
+        }
+    }
+</script>
+<script>
+    document.getElementById("BiocapForm_morphoHistoField1").disabled = false;
+    document.getElementById("BiocapForm_morphoHistoField2").disabled = true;
+    document.getElementById("BiocapForm_morphoHistoField3").disabled = true;
+    var mhf1 = document.getElementById("BiocapForm_morphoHistoField1");
+    var mhf2 = document.getElementById("BiocapForm_morphoHistoField2");
+    var mhf3 = document.getElementById("BiocapForm_morphoHistoField3");
+    mhf1.onkeyup = function () {
+        if (this.value != "" || this.value.length > 0) {
+            mhf2.disabled = false;
+
+        } else {
+            mhf2.disabled = true;
+            mhf3.disabled = true;
+        }
+    }
+    mhf2.onkeyup = function () {
+        if (this.value != "" || this.value.length > 0) {
+            mhf3.disabled = false;
+        } else {
+            //  document.getElementById("dis_per").value='';
+            mhf3.disabled = true;
+        }
+    }
+</script>

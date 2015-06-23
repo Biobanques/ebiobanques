@@ -339,4 +339,19 @@ class CommonTools
             return $initialValue;
     }
 
+    public static function getAgeFromDates($date0, $date1) {
+        $date_0 = date_create_from_format(CommonTools::FRENCH_SHORT_DATE_FORMAT, $date0);
+        //    $d0 = new DateTime($date_0);
+        $date_1 = date_create_from_format(CommonTools::FRENCH_SHORT_DATE_FORMAT, $date1);
+        //  $d1 = new DateTime($date_1);
+
+        if ($date_0 != null && $date_1 != null) {
+
+
+            $diff = $date_0->diff($date_1);
+            return $diff->y;
+        }
+        return null;
+    }
+
 }

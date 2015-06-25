@@ -347,6 +347,38 @@ class MainController extends Controller
             } else if (!empty($modePrel))
                 $criteria->addCond('Type_prlvt', 'in', $modePrel); //type_echant NOT a typo, error in data source
         }
+        /* ECHANTILLON TUMORAL CRITERIA
+         *
+         */
+
+
+
+        if (isset($form->ETL['adn_der']) && $form->ETL['adn_der'] == 1) {
+
+            $criteria->ADN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+        }
+        if (isset($form->ETL['arn_der']) && $form->ETL['arn_der'] == 1) {
+
+            $criteria->ARN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+        }
+        /*
+         * ECHNATILLON NON TUMORAL
+         */
+        if (isset($form->ENTA['sang_tot_cong']) && $form->ENTA['sang_tot_cong'] == 1) {
+
+            $criteria->Sang_total = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+        }
+        if (isset($form->ENTA['serum']) && $form->ENTA['serum'] == 1) {
+
+            $criteria->Serum = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+        }
+        if (isset($form->ENTA['plasma']) && $form->ENTA['plasma'] == 1) {
+
+            $criteria->Plasma = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+        }
+        /*
+         * CONSENTEMENT Criteria
+         */
         switch ($form->consent_rech) {
             case 'oui':
                 $criteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('obtenu') . "/i");

@@ -408,13 +408,13 @@
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[adn_der]', array('value' => 'adn_der', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ETL[adn_der]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'ETL[adn_der]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[arn_der]', array('value' => 'arn_der', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ETL[arn_der]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'ETL[arn_der]');
                     ?>
 
@@ -452,7 +452,7 @@
 
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ENTA[sang_tot_cong]', array('value' => 'sang_tot_cong', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[sang_tot_cong]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'ENTA[sang_tot_cong]');
                     ?>
                 </div>
@@ -490,13 +490,13 @@
             <div class="radiobtns">
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ENTA[serum]', array('value' => 'serum', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[serum]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'ENTA[serum]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ENTA[plasma]', array('value' => 'plasma', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'ENTA[plasma]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'ENTA[plasma]');
                     ?>
                 </div>
@@ -552,7 +552,7 @@
                     echo CHtml::label('Non', 'CRGCRB3');
                     ?>
                 </div>
-            </div>          
+            </div>
 
         </div>
     </div>

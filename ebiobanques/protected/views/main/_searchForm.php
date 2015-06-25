@@ -292,25 +292,25 @@
                 <!--</div>-->
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'type_prelev[tissu]', array('value' => 'tissu', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'type_prelev[tissu]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'type_prelev[tissu]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'type_prelev[moelle]', array('value' => 'moelle', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'type_prelev[moelle]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'type_prelev[moelle]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'type_prelev[sang]', array('value' => 'sang', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'type_prelev[sang]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'type_prelev[sang]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'type_prelev[autre]', array('value' => 'Autre', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'type_prelev[autre]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'type_prelev[autre]');
                     ?>
                 </div>
@@ -325,25 +325,25 @@
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'mode_prelev[biopsie]', array('value' => 'biopsie', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'mode_prelev[biopsie]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'mode_prelev[biopsie]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'mode_prelev[pieceOp]', array('value' => 'pieceOp', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'mode_prelev[pieceOp]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'mode_prelev[pieceOp]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'mode_prelev[ponction]', array('value' => 'ponction', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'mode_prelev[ponction]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'mode_prelev[ponction]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'mode_prelev[autre]', array('value' => 'autre', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->checkBox($model, 'mode_prelev[autre]', array('display' => 'inline-block', 'separator' => ' '));
                     echo $form::label($model, 'mode_prelev[autre]');
                     ?>
                 </div>
@@ -513,19 +513,19 @@
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Indifférent', 'CRRB1');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Oui', 'CRRB2');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'consent_rech', array('id' => 'CRRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Non', 'CRRB3');
                     ?>
                 </div>
@@ -536,23 +536,24 @@
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Indifférent', 'CRGCRB1');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Oui', 'CRGCRB2');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'consent_RGC', array('id' => 'CRGCRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Non', 'CRGCRB3');
                     ?>
                 </div>
-            </div>
+            </div>          
+
         </div>
     </div>
 

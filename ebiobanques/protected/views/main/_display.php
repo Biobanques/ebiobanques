@@ -15,10 +15,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         array('header' => 'groupe ICCC', 'value' => '$data["Type_lesionnel1_litteral"] != null ? $data["Type_lesionnel1_litteral"] : "Inconnu"')
         ,
-        'total',
-        'CR',
-        'IE',
+        array('name' => 'total', 'header' => 'Total'),
+        array('name' => 'CR', 'header' => 'Consentement recheche', 'value' => '$data["CR"].", soit ".round($data["CR"]/$data["total"]*100,2) ."%"'),
+        array('name' => 'IE', 'header' => 'Inclus dans une étude', 'value' => '$data["IE"].", soit ".round($data["IE"]/$data["total"]*100,2) ."%"'),
         array(
+            'header' => 'Détails',
             'class' => 'CButtonColumn',
             'template' => '{details}',
             'buttons' => array
@@ -28,9 +29,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => 'View',
                     'imageUrl' => Yii::app()->request->baseUrl . '/images/zoom.png',
                     'url' => 'Yii::app()->createUrl("main/details", array("iccc"=>$data["Type_lesionnel1_litteral"]))',
-                    'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=960px,height=650,toolbar=0,resizable=1, location=no");return false;}'
+                    'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=960px,height=650,toolbar=0,resizable=1, location=no");return false;}',
                 )
-            )
+            ),
+//            'visible' => Yii::app()->user->isAdmin()
         )
     )
         )

@@ -42,11 +42,14 @@ class MainController extends Controller
                 'allow', // allow all users to perform 'index' and 'dashboard' actions
                 'actions' => array(
                     'search',
-                    'details'
                 ),
                 'users' => array(
                     '*'
                 )
+            ),
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('details'),
+                'expression' => '$user->isAdmin()',
             ),
             array(
                 'allow', // allow authenticated user to perform 'search' actions
@@ -219,22 +222,31 @@ class MainController extends Controller
         /*
          * PATIENT criteria
          */
+        switch ($form->sexe) {
+            case 'f':
+                $criteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('feminin') . "/i");
+                break;
+            case 'm';
+                $criteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('masculin') . "/i");
+                break;
+            case 'inconnu':
+            default:
+                break;
+        }
+        switch ($form->stat_vital) {
+            case 'vivant':
+                $criteria->Statut_vital = new MongoRegex("/" . StringUtils::accentToRegex('vivant') . "/i");
+                break;
+            case 'decede';
+                $criteria->Statut_vital = new MongoRegex("/" . StringUtils::accentToRegex('decede') . "/i");
+                break;
+            case 'inconnu':
+            default:
+                break;
+        }
 
-        if ($form->sexe == 'f') {
-            $criteria->Sexe = 'Féminin';
-        }
-        if ($form->sexe == 'm') {
-            $criteria->Sexe = 'Masculin';
-        }
-        if ($form->stat_vital == 'vivant') {
-            $criteria->Statut_vital = 'Vivant';
-        }
-        if ($form->stat_vital == 'decede') {
-            $criteria->Statut_vital = 'Décédé';
-        }
-        //$criteria->addCond('age', '==', 14);
-//        $criteria->addCond('age', 'or', 0);
-//        $criteria->addCond('age', 'or', 5);
+
+
         /*
          * create 'age' crteria
          */
@@ -278,20 +290,81 @@ class MainController extends Controller
 
         if (!empty($age))
             $criteria->addCond('age', 'in', $age);
-        //$criteria->addCond('age', 'in', array(0, 1, 2));
         /*
          * PRELEVEMENT-ECHANTILLON criteria
          */
+
+        /**
+         * Mécanisme pour prendre en charge les choix 'autres' des cases à cocher
+         */
+        if (isset($form->type_prelev)) {
+            $typePrel = array();
+            $typesAvailable = array(
+                'tissu' => new MongoRegex("/" . StringUtils::accentToRegex('tissu') . "/i"),
+                'moelle' => new MongoRegex("/" . StringUtils::accentToRegex('moelle') . "/i"),
+                'sang' => new MongoRegex("/" . StringUtils::accentToRegex('sang') . "/i"));
+            if (isset($form->type_prelev['tissu']) && $form->type_prelev['tissu'] == 1) {
+                unset($typesAvailable['tissu']);
+                $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('tissu') . "/i");
+            }
+            if (isset($form->type_prelev['moelle']) && $form->type_prelev['moelle'] == 1) {
+                unset($typesAvailable['moelle']);
+                $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('moelle') . "/i");
+            }
+            if (isset($form->type_prelev['sang']) && $form->type_prelev['sang'] == 1) {
+                unset($typesAvailable['sang']);
+                $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('sang') . "/i");
+            }
+            if (isset($form->type_prelev['autre']) && $form->type_prelev['autre'] == 1) {
+                $criteria->addCond('Type_echant', 'notin', array_values($typesAvailable)); //type_echant NOT a typo, error in data source
+            } else if (!empty($typePrel))
+                $criteria->addCond('Type_echant', 'in', $typePrel); //type_echant NOT a typo, error in data source
+        }
+
+        /**
+         * Mécanisme pour prendre en charge les choix 'autres' des cases à cocher
+         */
+        if (isset($form->mode_prelev)) {
+            $modePrel = array();
+            $modesAvailable = array(
+                'biopsie' => new MongoRegex("/" . StringUtils::accentToRegex('biopsie') . "/i"),
+                'pieceOp' => new MongoRegex("/" . StringUtils::accentToRegex('pièce opératoire') . "/i"),
+                'ponction' => new MongoRegex("/" . StringUtils::accentToRegex('ponction') . "/i"));
+            if (isset($form->mode_prelev['biopsie']) && $form->mode_prelev['biopsie'] == 1) {
+                unset($modesAvailable['biopsie']);
+                $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('biopsie') . "/i");
+            }
+            if (isset($form->mode_prelev['pieceOp']) && $form->mode_prelev['pieceOp'] == 1) {
+                unset($modesAvailable['pieceOp']);
+                $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('pièce opératoire') . "/i");
+            }
+            if (isset($form->mode_prelev['ponction']) && $form->mode_prelev['ponction'] == 1) {
+                unset($modesAvailable['sang']);
+                $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('ponction') . "/i");
+            }
+            if (isset($form->mode_prelev['autre']) && $form->mode_prelev['autre'] == 1) {
+                $criteria->addCond('Type_prlvt', 'notin', array_values($modesAvailable)); //type_echant NOT a typo, error in data source
+            } else if (!empty($modePrel))
+                $criteria->addCond('Type_prlvt', 'in', $modePrel); //type_echant NOT a typo, error in data source
+        }
+        switch ($form->consent_rech) {
+            case 'oui':
+                $criteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('obtenu') . "/i");
+                break;
+            case 'non';
+                $criteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('refus') . "/i");
+                break;
+            case 'inconnu':
+            default:
+                break;
+        }
+
 
         return $criteria;
     }
 
     public function createDataProvider(EMongoCriteria $criteria) {
         $searchedField = "Type_lesionnel1_litteral";
-//        $critArray = '';
-//        foreach ($criteria->getConditions() as $condition) {
-//            $critArray.="res.criteria.push($condition);";
-//        }
 
         $reduce = new MongoCode("function(doc,res){res.total+=1;"
                 . "if(doc.Statut_juridique=='Obtenu'){"
@@ -300,14 +373,9 @@ class MainController extends Controller
                 . "if(doc.Inclusion_protoc_rech=='oui'){"
                 . "res.IE+=1;"
                 . "}"
-
-                //. "var obj={};"
-                //  . "obj['$searchedField']=doc.$searchedField;"
-                //. "res.criteria.push(obj);"
                 . "}"
         );
-        //$cond = $criteria->getConditions();
-//        $criteria->addCond($searchedField, '==', 'test');
+
         $result = SampleCollected::model()->getCollection()->group(
                 array($searchedField => true), array('total' => 0, 'CR' => 0, 'IE' => 0), $reduce
                 , $criteria->getConditions()

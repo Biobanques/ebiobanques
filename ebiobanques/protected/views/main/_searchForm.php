@@ -4,16 +4,98 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/*
+ * JQUERY scripts for disabling textfields
+ */
+
+Yii::app()->clientScript->registerScript('disabling', "
+    //init function : enabled first field, disable others
+
+$(function() {
+  $('#BiocapForm_iccc_group1').prop('disabled',false);
+  $('#BiocapForm_iccc_group2').prop('disabled',true);
+  $('#BiocapForm_iccc_group3').prop('disabled',true);
+
+  $('#BiocapForm_topoOrganeField1').prop('disabled',false);
+  $('#BiocapForm_topoOrganeField2').prop('disabled',true);
+  $('#BiocapForm_topoOrganeField3').prop('disabled',true);
+
+  $('#BiocapForm_morphoHistoField1').prop('disabled',false);
+  $('#BiocapForm_morphoHistoField2').prop('disabled',true);
+  $('#BiocapForm_morphoHistoField3').prop('disabled',true);
+});
+
+
+//iccc fields
+$('#BiocapForm_iccc_group1').keyup(function(){
+       if($('#BiocapForm_iccc_group1').val().length>0){
+           $('#BiocapForm_iccc_group2').prop('disabled',false);
+    }else{
+         $('#BiocapForm_iccc_group2').prop('disabled',true);
+  $('#BiocapForm_iccc_group3').prop('disabled',true);
+}
+return false;
+});
+$('#BiocapForm_iccc_group2').keyup(function(){
+       if($('#BiocapForm_iccc_group2').val().length>0){
+           $('#BiocapForm_iccc_group3').prop('disabled',false);
+    }else{
+         $('#BiocapForm_iccc_group3').prop('disabled',true);
+
+}
+return false;
+});
+
+//topoOrgane
+$('#BiocapForm_topoOrganeField1').keyup(function(){
+       if($('#BiocapForm_topoOrganeField1').val().length>0){
+           $('#BiocapForm_topoOrganeField2').prop('disabled',false);
+    }else{
+         $('#BiocapForm_topoOrganeField2').prop('disabled',true);
+  $('#BiocapForm_topoOrganeField3').prop('disabled',true);
+}
+return false;
+});
+$('#BiocapForm_topoOrganeField2').keyup(function(){
+       if($('#BiocapForm_topoOrganeField2').val().length>0){
+           $('#BiocapForm_topoOrganeField3').prop('disabled',false);
+    }else{
+         $('#BiocapForm_topoOrganeField3').prop('disabled',true);
+
+}
+return false;
+});
+
+//morphoHisto
+$('#BiocapForm_morphoHistoField1').keyup(function(){
+       if($('#BiocapForm_morphoHistoField1').val().length>0){
+           $('#BiocapForm_morphoHistoField2').prop('disabled',false);
+    }else{
+         $('#BiocapForm_morphoHistoField2').prop('disabled',true);
+  $('#BiocapForm_morphoHistoField3').prop('disabled',true);
+}
+return false;
+});
+$('#BiocapForm_morphoHistoField2').keyup(function(){
+       if($('#BiocapForm_morphoHistoField2').val().length>0){
+           $('#BiocapForm_morphoHistoField3').prop('disabled',false);
+    }else{
+         $('#BiocapForm_morphoHistoField3').prop('disabled',true);
+
+}
+return false;
+});
+
+");
 ?>
 <div class="form" >
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'search-form',
-//        'enableClientValidation' => true,
-//        'clientOptions' => array(
-//            'validateOnSubmit' => true,
-//        ),
-            // 'method' => 'POST'
+        'htmlOptions' => array(
+            'autocomplete' => 'off'
+        )
     ));
     ?>
 
@@ -564,78 +646,3 @@
     $this->endWidget();
     ?>
 </div>
-<script>
-    document.getElementById("BiocapForm_iccc_group1").disabled = false;
-    document.getElementById("BiocapForm_iccc_group2").disabled = true;
-    document.getElementById("BiocapForm_iccc_group3").disabled = true;
-    var iccc1 = document.getElementById("BiocapForm_iccc_group1");
-    var iccc2 = document.getElementById("BiocapForm_iccc_group2");
-    var iccc3 = document.getElementById("BiocapForm_iccc_group3");
-    iccc1.onkeyup = function () {
-        if (this.value != "" || this.value.length > 0) {
-            iccc2.disabled = false;
-
-        } else {
-            iccc2.disabled = true;
-            iccc3.disabled = true;
-        }
-    }
-    iccc2.onkeyup = function () {
-        if (this.value != "" || this.value.length > 0) {
-            iccc3.disabled = false;
-        } else {
-            //  document.getElementById("dis_per").value='';
-            iccc3.disabled = true;
-        }
-    }
-</script>
-<script>
-    document.getElementById("BiocapForm_topoOrganeField1").disabled = false;
-    document.getElementById("BiocapForm_topoOrganeField2").disabled = true;
-    document.getElementById("BiocapForm_topoOrganeField3").disabled = true;
-    var tof1 = document.getElementById("BiocapForm_topoOrganeField1");
-    var tof2 = document.getElementById("BiocapForm_topoOrganeField2");
-    var tof3 = document.getElementById("BiocapForm_topoOrganeField3");
-    tof1.onkeyup = function () {
-        if (this.value != "" || this.value.length > 0) {
-            tof2.disabled = false;
-
-        } else {
-            tof2.disabled = true;
-            tof3.disabled = true;
-        }
-    }
-    tof2.onkeyup = function () {
-        if (this.value != "" || this.value.length > 0) {
-            tof3.disabled = false;
-        } else {
-            //  document.getElementById("dis_per").value='';
-            tof3.disabled = true;
-        }
-    }
-</script>
-<script>
-    document.getElementById("BiocapForm_morphoHistoField1").disabled = false;
-    document.getElementById("BiocapForm_morphoHistoField2").disabled = true;
-    document.getElementById("BiocapForm_morphoHistoField3").disabled = true;
-    var mhf1 = document.getElementById("BiocapForm_morphoHistoField1");
-    var mhf2 = document.getElementById("BiocapForm_morphoHistoField2");
-    var mhf3 = document.getElementById("BiocapForm_morphoHistoField3");
-    mhf1.onkeyup = function () {
-        if (this.value != "" || this.value.length > 0) {
-            mhf2.disabled = false;
-
-        } else {
-            mhf2.disabled = true;
-            mhf3.disabled = true;
-        }
-    }
-    mhf2.onkeyup = function () {
-        if (this.value != "" || this.value.length > 0) {
-            mhf3.disabled = false;
-        } else {
-            //  document.getElementById("dis_per").value='';
-            mhf3.disabled = true;
-        }
-    }
-</script>

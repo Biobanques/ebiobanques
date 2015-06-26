@@ -7,8 +7,8 @@
  * @author nicolas
  *
  */
-class ConnecteurController extends Controller
-{
+class ConnecteurController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -75,13 +75,22 @@ class ConnecteurController extends Controller
 
     public function actionDownload() {
 
-        $id = $_GET['id'];
-        $file = Logo::model()->findByPk(new MongoId($id));
-        $splitStringArray = split("/", $file->filename);
-        $fileName = end($splitStringArray);
-        header('Content-Type: application/java-archive');
-        header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        echo $file->getBytes();
+        if (Yii::app()->user->isAdmin())
+            $id = $_SESSION['biobank_id'];
+        else
+            $id = Yii::app()->user->biobank_id;
+        
+        $file = Connecteur::model()->findByAttributes(array('metadata.biobank_id' => $id));
+        if ($file == null) {
+            Yii::app()->user->setFlash('error', " file error on the server for id:$id. Contact the admin.");
+            $this->redirect(array('connecteur/index'));
+        } else {
+            $splitStringArray = split("/", $file->filename);
+            $fileName = end($splitStringArray);
+            header('Content-Type: application/java-archive');
+            header('Content-Disposition: attachment; filename="' . $fileName . '"');
+            echo $file->getBytes();
+        }
     }
 
     public function actionUpload() {

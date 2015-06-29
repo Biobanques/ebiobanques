@@ -19,9 +19,11 @@ class ImportJsonCommand extends CConsoleCommand
         /*
          * List folder files
          */
+        $i=0;
         while ($file = readdir($folder)) {
             if ($file != "." && $file != "..")
-                $filesList[filectime($ImportFolder . $file)] = $file;
+                $filesList[$i] = $file;
+            $i++;
         }
         if (!empty($filesList)) {
             /*

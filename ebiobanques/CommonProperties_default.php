@@ -37,4 +37,12 @@ public static $SMTP_SENDER_PORT='';
 public static $SMTP_SENDER_USERNAME='';
 public static $SMTP_SENDER_PASSWORD='';
 public static $SMTP_SENDER_FROM_EMAIL='';
+
+/**
+ * import folder. Need a / at the end
+ * format attendu :  export_biocap_json_%AAAAMMDD_HH%h%mm%.json
+ * exemple export_biocap_json_20150629_12h34.json
+ * @var type 
+ */
+public static $IMPORTFOLDER = "/Users/nicolas/sync/biobanques/projets/biocap/data/";
 }

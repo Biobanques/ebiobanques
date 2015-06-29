@@ -3,6 +3,9 @@
  * $this = mainController
  * $model = BiocapForm
  */
+
+
+
 Yii::app()->clientScript->registerScript('search', "
 
 $('.search-form form').submit(function(){
@@ -13,8 +16,14 @@ $('.search-form form').submit(function(){
        // type : 'post',
 	data: $(this).serialize()
 	});
+$('.test').load('" . Yii::app()->createUrl('main/getSummarySearch') . "',
+     $(this).serialize(),
+     function(data) {
+          $('.test').html(data);
+          return false;
+     }
 
-
+   );
 	return false;
 });
 
@@ -26,6 +35,22 @@ $('.search-form form').submit(function(){
     $this->renderPartial('_searchForm', array('model' => $model));
     ?>
 </div>
+<div class='test'>
+    Vos critères de recherche :
+    <ul>
+        <?php
+//        if (!empty($_SESSION['criteria']->getConditions()))
+//            foreach ($_SESSION['criteria']->getConditions()as $condition) {
+//                echo '<li>';
+//                //print_r($condition);
+//                echo 'cond1';
+//                echo '</li>';
+//            }
+        ?>
+    </ul>
+
+</div>
+
 <?php
 $this->renderPartial('_display', array('dataProvider' => $dataProvider));
 /*

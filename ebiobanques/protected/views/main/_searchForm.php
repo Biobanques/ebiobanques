@@ -341,19 +341,19 @@ return false;
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'avantChimio', array('id' => 'avChRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'avantChimio', array('id' => 'avChRB1', 'value' => 'inconnu', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Indifférent', 'avChRB1');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'avantChimio', array('id' => 'avChRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'avantChimio', array('id' => 'avChRB2', 'value' => 'oui', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Oui', 'avChRB2');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->radioButton($model, 'avantChimio', array('id' => 'avChRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' '));
+                    echo $form->radioButton($model, 'avantChimio', array('id' => 'avChRB3', 'value' => 'non', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo CHtml::label('Non', 'avChRB3');
                     ?>
                 </div>

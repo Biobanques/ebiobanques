@@ -42,6 +42,7 @@ class MainController extends Controller
                 'allow', // allow all users to perform 'index' and 'dashboard' actions
                 'actions' => array(
                     'search',
+                    'getSummarySearch'
                 ),
                 'users' => array(
                     '*'
@@ -100,7 +101,7 @@ class MainController extends Controller
         $model = new BiocapForm;
         // $dataProvider = array();
         //  $dataProvider = SampleCollected::model()->findAll();
-        $dataProvider = new EMongoDocumentDataProvider('SampleCollected');
+        //$dataProvider = new EMongoDocumentDataProvider('SampleCollected');
         $criteria = new EMongoCriteria;
         if (isset($_GET['BiocapForm'])) {
 //        if (isset($_POST['BiocapForm'])) {
@@ -110,6 +111,9 @@ class MainController extends Controller
             $criteria = $this->createCriteria($model);
         }
         $dataProvider = $this->createDataProvider($criteria);
+        //  $summarySearch = $this->getSummarySearch($model);
+
+
         Yii::app()->session['criteria'] = $criteria;
         $this->render('searchForm', array('model' => $model, 'dataProvider' => $dataProvider));
     }
@@ -427,6 +431,26 @@ class MainController extends Controller
 
         $dataProvider->setCriteria($criteria);
         $this->render('details', array('dataProvider' => $dataProvider));
+    }
+
+    public function actionGetSummarySearch() {
+        $model = new BiocapForm;
+        $model->unsetAttributes();
+        // $dataProvider = array();
+        //  $dataProvider = SampleCollected::model()->findAll();
+        //$dataProvider = new EMongoDocumentDataProvider('SampleCollected');
+
+        if (isset($_GET['BiocapForm'])) {
+            $model->attributes = $_GET['BiocapForm'];
+        }
+
+        echo "Résultat de votre recherche :<br>";
+        echo '<ul>';
+        foreach ($model->attributes as $attributeName => $attributeValue) {
+            if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu')
+                echo "<li>" . $model->getAttributeLabel($attributeName) . " : $attributeValue ,</li>";
+        }
+        echo '</ul>';
     }
 
 }

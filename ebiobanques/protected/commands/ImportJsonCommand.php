@@ -14,6 +14,8 @@ class ImportJsonCommand extends CConsoleCommand
      */
 
     public function run($args) {
+        //increase memory limit on the fly  only for this command
+        ini_set('memory_limit', '-1');
         $ImportFolder = CommonProperties::$IMPORTFOLDER;
         $folder = opendir($ImportFolder);
         /*

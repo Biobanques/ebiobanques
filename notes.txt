@@ -87,19 +87,12 @@ Ajouter la ligne auth=true
 mongod -f /etc/mongodb.conf --fork 
 ----------------------------------------------------------
 
---pour créer un utilisateur sur la base interop
--se connecter en administarteur : 
-mongo HOST:PORT/admin -u <username> -p <password>
-use interop
-db.addUser({user:'ebiobanques', pwd:'insermEbb', roles:['readWrite']})
 ----------------------------------------------------------
 
 
 --CAPTCHA :
 ajouter la librairie php5-gd à php pour utilisation du systeme de captcha. Version à jour sur le serveur.
 
---note specifique mongo : mongo gere les acces au niveau de la base, donc il faut specifier obligatoirement sur quelle base on va se connecter sinon auth fail
-mongo localhost:32020/interop -u ebiobanques -p insermEbb
 
 -- pour utiliser MongId:isValide vous devez installer la librairei 
 PECL mongo >= 1.5.0
@@ -110,6 +103,7 @@ htpasswd -c /usr/local/passwords admebio
 -- to check requirements Mongo need to be accessible
 --if you use MacOS X, make this symbolic link, otherwise the check mongo version will failed
 sudo ln -s /usr/local/bin/mongo /usr/bin/mongo
+
 
 
  

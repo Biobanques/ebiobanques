@@ -97,7 +97,7 @@ class MainController extends Controller
     }
 
     public function actionSearch() {
-
+        $searchedField = "Type_lesionnel1_litteral";
         $model = new BiocapForm;
         // $dataProvider = array();
         //  $dataProvider = SampleCollected::model()->findAll();
@@ -110,12 +110,13 @@ class MainController extends Controller
 //            $model->attributes = $_POST['BiocapForm'];
             $criteria = $this->createCriteria($model);
         }
-        $dataProvider = $this->createDataProvider($criteria);
+        $result = $this->createDataProvider($criteria);
+        $dataProvider = new CArrayDataProvider($result['retval'], array('keyField' => $searchedField));
         //  $summarySearch = $this->getSummarySearch($model);
 
 
         Yii::app()->session['criteria'] = $criteria;
-        $this->render('searchForm', array('model' => $model, 'dataProvider' => $dataProvider));
+        $this->render('searchForm', array('model' => $model, 'dataProvider' => $dataProvider, 'totalResult' => $result['count']));
     }
 
     public function createCriteria($form) {
@@ -418,7 +419,7 @@ class MainController extends Controller
         );
 
 
-        return new CArrayDataProvider($result['retval'], array('keyField' => $searchedField));
+        return $result;
     }
 
     public function actionDetails() {
@@ -436,6 +437,7 @@ class MainController extends Controller
     public function actionGetSummarySearch() {
         $model = new BiocapForm;
         $model->unsetAttributes();
+
         // $dataProvider = array();
         //  $dataProvider = SampleCollected::model()->findAll();
         //$dataProvider = new EMongoDocumentDataProvider('SampleCollected');
@@ -444,11 +446,56 @@ class MainController extends Controller
             $model->attributes = $_GET['BiocapForm'];
         }
 
-        echo "Résultat de votre recherche :<br>";
+        echo "Vos critères de recherche :<br>";
         echo '<ul>';
         foreach ($model->attributes as $attributeName => $attributeValue) {
-            if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu')
-                echo "<li>" . $model->getAttributeLabel($attributeName) . " : $attributeValue ,</li>";
+            if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu') {
+                switch ($attributeName) {
+                    case 'topoOrganeType':
+                        if ($model->topoOrganeField1 != null && $model->topoOrganeField1 != "")
+                            echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                        break;
+                    case 'topoOrganeField1':
+                        $value = $model->topoOrganeField1;
+                        if ($model->topoOrganeField2 != null && $model->topoOrganeField2 != "")
+                            $value.=" ou $model->topoOrganeField2";
+                        if ($model->topoOrganeField3 != null && $model->topoOrganeField3 != "")
+                            $value.=" ou $model->topoOrganeField3";
+                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
+                        break;
+                    case 'topoOrganeField2':
+                        break;
+                    case 'topoOrganeField3':
+                        break;
+
+                    case 'morphoHistoType':
+                        if ($model->morphoHistoField1 != null && $model->morphoHistoField1 != "")
+                            echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                        break;
+                    case 'morphoHistoField1':
+                        $value = $model->morphoHistoField1;
+                        if ($model->morphoHistoField2 != null && $model->morphoHistoField2 != "")
+                            $value.=" ou $model->morphoHistoField2";
+                        if ($model->morphoHistoField3 != null && $model->morphoHistoField3 != "")
+                            $value.=" ou $model->morphoHistoField3";
+                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
+                        break;
+                    case 'morphoHistoField2':
+                        break;
+                    case 'morphoHistoField3':
+                        break;
+                    default:
+                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                        break;
+                }
+            }elseif (is_array($attributeValue)) {
+                echo "<li>" . $model->getAttributeLabel($attributeName) . " : <ul>";
+                foreach ($attributeValue as $arrName => $arrVal) {
+
+                    echo "<li>" . $model->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
+                }
+                echo '</ul></li>';
+            }
         }
         echo '</ul>';
     }

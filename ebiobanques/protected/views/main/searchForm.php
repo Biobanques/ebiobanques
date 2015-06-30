@@ -16,13 +16,8 @@ $('.search-form form').submit(function(){
        // type : 'post',
 	data: $(this).serialize()
 	});
-$('.test').load('" . Yii::app()->createUrl('main/getSummarySearch') . "',
-     $(this).serialize(),
-     function(data) {
-          $('.test').html(data);
-          return false;
-     }
-
+$('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
+     $(this).serialize()
    );
 	return false;
 });
@@ -35,40 +30,66 @@ $('.test').load('" . Yii::app()->createUrl('main/getSummarySearch') . "',
     $this->renderPartial('_searchForm', array('model' => $model));
     ?>
 </div>
-<div class='test'>
-    Vos critères de recherche :
-    <ul>
-        <?php
-//        if (!empty($_SESSION['criteria']->getConditions()))
-//            foreach ($_SESSION['criteria']->getConditions()as $condition) {
-//                echo '<li>';
-//                //print_r($condition);
-//                echo 'cond1';
-//                echo '</li>';
-//            }
-        ?>
-    </ul>
 
+<div id='summary'>
+
+    <?php
+    echo $totalResult > 0 ? "Au total, $totalResult échantillons ont été trouvés avec les critères de recherche suivants : " : "Aucun échantillon trouvé avec ces critères, merci de les modifier : " . "<br>";
+    echo '<ul>';
+
+    foreach ($model->attributes as $attributeName => $attributeValue) {
+        if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu') {
+            switch ($attributeName) {
+                case 'topoOrganeType':
+                    if ($model->topoOrganeField1 != null && $model->topoOrganeField1 != "")
+                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    break;
+                case 'topoOrganeField1':
+                    $value = $model->topoOrganeField1;
+                    if ($model->topoOrganeField2 != null && $model->topoOrganeField2 != "")
+                        $value.=" ou $model->topoOrganeField2";
+                    if ($model->topoOrganeField3 != null && $model->topoOrganeField3 != "")
+                        $value.=" ou $model->topoOrganeField3";
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
+                    break;
+                case 'topoOrganeField2':
+                    break;
+                case 'topoOrganeField3':
+                    break;
+
+                case 'morphoHistoType':
+                    if ($model->morphoHistoField1 != null && $model->morphoHistoField1 != "")
+                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    break;
+                case 'morphoHistoField1':
+                    $value = $model->morphoHistoField1;
+                    if ($model->morphoHistoField2 != null && $model->morphoHistoField2 != "")
+                        $value.=" ou $model->morphoHistoField2";
+                    if ($model->morphoHistoField3 != null && $model->morphoHistoField3 != "")
+                        $value.=" ou $model->morphoHistoField3";
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
+                    break;
+                case 'morphoHistoField2':
+                    break;
+                case 'morphoHistoField3':
+                    break;
+                default:
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    break;
+            }
+        }elseif (is_array($attributeValue)) {
+            echo "<li>" . $model->getAttributeLabel($attributeName) . " : <ul>";
+            foreach ($attributeValue as $arrName => $arrVal) {
+
+                echo "<li>" . $model->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
+            }
+            echo '</ul></li>';
+        }
+    }
+
+    echo '</ul>';
+    ?>
 </div>
 
 <?php
 $this->renderPartial('_display', array('dataProvider' => $dataProvider));
-/*
-$conn = Yii::app()->mongodb->getConnection();
-$db = $conn->biocap;
-$db->sampleCollected->createIndex(array('$**' => 'text'));
-$result = $db->command(
-        array(
-            'text' => 'sampleCollected', //this is the name of the collection where we are searching
-            'search' => 'vivant Ostéosarcome', //the string to search
-            'limit' => 155, //the number of results, by default is 1000
-//            'project' => Array(//the fields to retrieve from db
-//                'Sexe' => 1,
-//                'Type_echant' => 0,
-//                'Date_prlvt' => 0,
-//                'Statut_vital' => 0,
-//            )
-        )
-);
-print_r($result);
-*/

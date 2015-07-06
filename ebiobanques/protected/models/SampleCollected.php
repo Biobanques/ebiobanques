@@ -55,12 +55,15 @@ class SampleCollected extends LoggableActiveRecord
     public function attributeLabels() {
 
         return array(
+            'age' => 'Age',
+            'diagPpal' => 'Diagnostic principal'
         );
     }
 
     public function attributeExportedLabels() {
-
         return array(
+            'age' => 'Age',
+            'diagPpal' => 'Diagnostic principal'
         );
     }
 
@@ -71,6 +74,19 @@ class SampleCollected extends LoggableActiveRecord
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
+    }
+
+    public function getGroupList() {
+        $values = $this->getCollection()->distinct('RNCE_Lib2_GroupeICCC');
+        $result = array();
+        foreach ($values as $value)
+            if ($value != "")
+                $result[$value] = $value;
+        return $result;
+    }
+
+    public function getDiagPpal() {
+        return "$this->RNCE_Lib2_GroupeICCC - $this->RNCE_Lib_SousGroupeICCC";
     }
 
 }

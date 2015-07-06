@@ -42,7 +42,8 @@ class MainController extends Controller
                 'allow', // allow all users to perform 'index' and 'dashboard' actions
                 'actions' => array(
                     'search',
-                    'getSummarySearch'
+                    'getSummarySearch',
+                    'getSousGroupList'
                 ),
                 'users' => array(
                     '*'
@@ -97,7 +98,7 @@ class MainController extends Controller
     }
 
     public function actionSearch() {
-        $searchedField = "Type_lesionnel1_litteral";
+        $searchedField = CommonTools::AGGREGATEDFIELD1;
         $model = new BiocapForm;
         // $dataProvider = array();
         //  $dataProvider = SampleCollected::model()->findAll();
@@ -111,12 +112,13 @@ class MainController extends Controller
             $criteria = $this->createCriteria($model);
         }
         $result = $this->createDataProvider($criteria);
-        $dataProvider = new CArrayDataProvider($result['retval'], array('keyField' => $searchedField));
+        $dataProvider = new CArrayDataProvider($result['retval'], array('keyField' => $searchedField, 'sort' => array('attributes' => array('group_iccc', 'total', 'CR', 'IE'))));
+
         //  $summarySearch = $this->getSummarySearch($model);
 
 
         Yii::app()->session['criteria'] = $criteria;
-        $this->render('searchForm', array('model' => $model, 'dataProvider' => $dataProvider, 'totalResult' => $result['count']));
+        $this->render('searchForm', array('model' => $model, 'dataProvider' => $dataProvider, 'totalPatient' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap')), 'totalPatientSelected' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap', $criteria->getConditions()))));
     }
 
     public function createCriteria($form) {
@@ -129,19 +131,19 @@ class MainController extends Controller
         /*
          * Regex for iccc_group fields
          */
-        $form->iccc_group = "";
-        if (isset($form->iccc_group1) && $form->iccc_group1 != null && $form->iccc_group1 != "") {
-            $form->iccc_group .= "$form->iccc_group1|";
-            if (isset($form->iccc_group2) && $form->iccc_group2 != null && $form->iccc_group2 != "") {
-                $form->iccc_group .= "$form->iccc_group2|";
-                if (isset($form->iccc_group3) && $form->iccc_group3 != null && $form->iccc_group3 != "") {
-                    $form->iccc_group .= "$form->iccc_group3|";
+        $form->iccc_sousgroup = "";
+        if (isset($form->iccc_sousgroup1) && $form->iccc_sousgroup1 != null && $form->iccc_sousgroup1 != "") {
+            $form->iccc_sousgroup .= "$form->iccc_sousgroup1|";
+            if (isset($form->iccc_sousgroup2) && $form->iccc_sousgroup2 != null && $form->iccc_sousgroup2 != "") {
+                $form->iccc_sousgroup .= "$form->iccc_sousgroup2|";
+                if (isset($form->iccc_sousgroup3) && $form->iccc_sousgroup3 != null && $form->iccc_sousgroup3 != "") {
+                    $form->iccc_sousgroup .= "$form->iccc_sousgroup3|";
                 }
             }
         }
-        if ($form->iccc_group != "") {
-            $form->iccc_group = substr($form->iccc_group, 0, -1);
-            //   $criteria->addCond('<attribute_name>', '==', new MongoRegex("/($form->iccc_group)/i"));
+        if ($form->iccc_sousgroup != "") {
+            $form->iccc_sousgroup = substr($form->iccc_sousgroup, 0, -1);
+            $criteria->addCond('RNCE_Lib2_SousGroupeICCC', '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_sousgroup) . "/i"));
         }
 
         /*
@@ -191,10 +193,10 @@ class MainController extends Controller
 
         switch ($form->metastasique) {
             case 'oui':
-
+                $criteria->addCond('RNCE_Meta', '==', 1);
                 break;
             case 'non';
-
+                $criteria->addCond('RNCE_Meta', '==', 0);
                 break;
             case 'inconnu':
             default:
@@ -202,10 +204,10 @@ class MainController extends Controller
         }
         switch ($form->cr_anapath_dispo) {
             case 'oui':
-
+                $criteria->addCond('RNCE_CR_ana_disp', '==', 1);
                 break;
             case 'non';
-
+                $criteria->addCond('RNCE_CR_ana_disp', '==', 0);
                 break;
             case 'inconnu':
             default:
@@ -213,10 +215,10 @@ class MainController extends Controller
         }
         switch ($form->donCliInBase) {
             case 'oui':
-
+                $criteria->addCond('RNCE_DonneesCliniques', '==', 1);
                 break;
             case 'non';
-
+                $criteria->addCond('RNCE_DonneesCliniques', '==', 0);
                 break;
             case 'inconnu':
             default:
@@ -228,22 +230,34 @@ class MainController extends Controller
          * PATIENT criteria
          */
         switch ($form->sexe) {
-            case 'f':
+            case 'Féminin':
                 $criteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('feminin') . "/i");
                 break;
-            case 'm';
+            case 'Masculin';
                 $criteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('masculin') . "/i");
                 break;
             case 'inconnu':
             default:
                 break;
         }
+
         switch ($form->stat_vital) {
             case 'vivant':
-                $criteria->Statut_vital = new MongoRegex("/" . StringUtils::accentToRegex('vivant') . "/i");
+                $criteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
                 break;
             case 'decede';
-                $criteria->Statut_vital = new MongoRegex("/" . StringUtils::accentToRegex('decede') . "/i");
+                $criteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
+                break;
+            case 'inconnu':
+            default:
+                break;
+        }
+        switch ($form->ano_chrom_constit) {
+            case 'oui':
+                $criteria->addCond('RNCE_AnoChrConst', '==', 1);
+                break;
+            case 'non';
+                $criteria->addCond('RNCE_AnoChrConst', '==', 0);
                 break;
             case 'inconnu':
             default:
@@ -299,6 +313,19 @@ class MainController extends Controller
          * PRELEVEMENT-ECHANTILLON criteria
          */
 
+        /*
+         * Diag initial
+         */
+        $evenement = array();
+        if (isset($form->evenement['diag_init']) && $form->evenement['diag_init'] == 'diagnotic initial')
+            $evenement[] = 'diagnostic';
+        if (isset($form->evenement['rechute']) && $form->evenement['rechute'] == 'rechute')
+            $evenement[] = 'rechute';
+        if (isset($form->evenement['sec_cancer']) && $form->evenement['sec_cancer'] == 'second cancer')
+            $evenement[] = 'Second cancer';
+
+        $regex = implode("|", $evenement);
+        $criteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
         /**
          * Mécanisme pour prendre en charge les choix 'autres' des cases à cocher
          */
@@ -308,22 +335,22 @@ class MainController extends Controller
                 'tissu' => new MongoRegex("/" . StringUtils::accentToRegex('tissu') . "/i"),
                 'moelle' => new MongoRegex("/" . StringUtils::accentToRegex('moelle') . "/i"),
                 'sang' => new MongoRegex("/" . StringUtils::accentToRegex('sang') . "/i"));
-            if (isset($form->type_prelev['tissu']) && $form->type_prelev['tissu'] == 1) {
+            if (isset($form->type_prelev['tissu']) && $form->type_prelev['tissu'] == 'tissu') {
                 unset($typesAvailable['tissu']);
                 $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('tissu') . "/i");
             }
-            if (isset($form->type_prelev['moelle']) && $form->type_prelev['moelle'] == 1) {
+            if (isset($form->type_prelev['moelle']) && $form->type_prelev['moelle'] == 'moelle') {
                 unset($typesAvailable['moelle']);
                 $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('moelle') . "/i");
             }
-            if (isset($form->type_prelev['sang']) && $form->type_prelev['sang'] == 1) {
+            if (isset($form->type_prelev['sang']) && $form->type_prelev['sang'] == 'sang') {
                 unset($typesAvailable['sang']);
                 $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('sang') . "/i");
             }
-            if (isset($form->type_prelev['autre']) && $form->type_prelev['autre'] == 1) {
-                $criteria->addCond('Type_echant', 'notin', array_values($typesAvailable)); //type_echant NOT a typo, error in data source
+            if (isset($form->type_prelev['autre']) && $form->type_prelev['autre'] == 'autre') {
+                $criteria->addCond('Type_prlvt', 'notin', array_values($typesAvailable)); //type_echant NOT a typo, error in data source
             } else if (!empty($typePrel))
-                $criteria->addCond('Type_echant', 'in', $typePrel); //type_echant NOT a typo, error in data source
+                $criteria->addCond('Type_prlvt', 'in', $typePrel); //type_echant NOT a typo, error in data source
         }
 
         /**
@@ -335,22 +362,22 @@ class MainController extends Controller
                 'biopsie' => new MongoRegex("/" . StringUtils::accentToRegex('biopsie') . "/i"),
                 'pieceOp' => new MongoRegex("/" . StringUtils::accentToRegex('pièce opératoire') . "/i"),
                 'ponction' => new MongoRegex("/" . StringUtils::accentToRegex('ponction') . "/i"));
-            if (isset($form->mode_prelev['biopsie']) && $form->mode_prelev['biopsie'] == 1) {
+            if (isset($form->mode_prelev['biopsie']) && $form->mode_prelev['biopsie'] == 'biopsie') {
                 unset($modesAvailable['biopsie']);
                 $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('biopsie') . "/i");
             }
-            if (isset($form->mode_prelev['pieceOp']) && $form->mode_prelev['pieceOp'] == 1) {
+            if (isset($form->mode_prelev['pieceOp']) && $form->mode_prelev['pieceOp'] == 'pièce opératoire') {
                 unset($modesAvailable['pieceOp']);
                 $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('pièce opératoire') . "/i");
             }
-            if (isset($form->mode_prelev['ponction']) && $form->mode_prelev['ponction'] == 1) {
+            if (isset($form->mode_prelev['ponction']) && $form->mode_prelev['ponction'] == 'ponction') {
                 unset($modesAvailable['sang']);
                 $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('ponction') . "/i");
             }
-            if (isset($form->mode_prelev['autre']) && $form->mode_prelev['autre'] == 1) {
-                $criteria->addCond('Type_prlvt', 'notin', array_values($modesAvailable)); //type_echant NOT a typo, error in data source
+            if (isset($form->mode_prelev['autre']) && $form->mode_prelev['autre'] == 'autre') {
+                $criteria->addCond('Mode_prlvt', 'notin', array_values($modesAvailable)); //type_echant NOT a typo, error in data source
             } else if (!empty($modePrel))
-                $criteria->addCond('Type_prlvt', 'in', $modePrel); //type_echant NOT a typo, error in data source
+                $criteria->addCond('Mode_prlvt', 'in', $modePrel); //type_echant NOT a typo, error in data source
         }
         /* ECHANTILLON TUMORAL CRITERIA
          *
@@ -362,6 +389,7 @@ class MainController extends Controller
 
             $criteria->ADN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
         }
+
         if (isset($form->ETL['arn_der']) && $form->ETL['arn_der'] == 1) {
 
             $criteria->ARN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
@@ -373,6 +401,8 @@ class MainController extends Controller
 
             $criteria->Sang_total = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
         }
+
+
         if (isset($form->ENTA['serum']) && $form->ENTA['serum'] == 1) {
 
             $criteria->Serum = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
@@ -381,6 +411,7 @@ class MainController extends Controller
 
             $criteria->Plasma = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
         }
+
         /*
          * CONSENTEMENT Criteria
          */
@@ -401,21 +432,58 @@ class MainController extends Controller
     }
 
     public function createDataProvider(EMongoCriteria $criteria) {
-        $searchedField = "Type_lesionnel1_litteral";
+        $searchedField1 = CommonTools::AGGREGATEDFIELD1;
+        $searchedField2 = CommonTools::AGGREGATEDFIELD2;
 
-        $reduce = new MongoCode("function(doc,res){res.total+=1;"
-                . "if(doc.Statut_juridique=='Obtenu'){"
-                . "res.CR+=1;"
+//        $reduce = new MongoCode("function(doc,res){"
+//                . "res.ids[doc.ident_pat_biocap]=1;"
+//                . "res.total+=1;"
+//                . "if(doc.Statut_juridique=='Obtenu'){"
+//                . "res.CR+=1;"
+//                . "}"
+//                . "if(doc.Inclusion_protoc_rech=='oui'){"
+//                . "res.IE+=1;"
+//                . "}"
+//                . "}"
+//        );
+
+        $reduce = new MongoCode("function(doc,res){"
+                . "res.ids[doc.ident_pat_biocap]=Array();"
+                . "res.ids[doc.ident_pat_biocap]['CR']=0;"
+                . "res.ids[doc.ident_pat_biocap]['IE']=0;"
+                . "res.total+=1;"
+                . "if(doc.Statut_juridique=='Obtenu'&&res.ids[doc.ident_pat_biocap]['CR']!=2){"
+                . "res.ids[doc.ident_pat_biocap]['CR']=1;"
+                . "}"
+                . "if(doc.Statut_juridique=='Refus'){"
+                . "res.ids[doc.ident_pat_biocap]['CR']=2;"
                 . "}"
                 . "if(doc.Inclusion_protoc_rech=='oui'){"
-                . "res.IE+=1;"
+                . "res.ids[doc.ident_pat_biocap]['IE']=1;"
                 . "}"
                 . "}"
         );
 
+        $finalize = new MongoCode("function(res){"
+                . "res.loginList = Object.keys(res.ids);"
+                . "res.patientPartialTotal = res.loginList.length;"
+                . "if(Array.isArray(res.ids)){"
+                . "Object.keys(res.ids).forEach(function(id){"
+                . "if(res.ids[id].CR!=2){"
+                . "res.CR+=res.ids[id].CR;"
+                . "}"
+                . "res.IE+=res.ids[id].IE;"
+                . "})}"
+                . "}"
+        );
+
+
         $result = SampleCollected::model()->getCollection()->group(
-                array($searchedField => true), array('total' => 0, 'CR' => 0, 'IE' => 0), $reduce
-                , $criteria->getConditions()
+                array($searchedField1 => true, $searchedField2 => true), array('total' => 0, 'CR' => 0, 'IE' => 0, 'patientPartialTotal' => 0, 'ids' => array()), $reduce
+                , array(
+            'condition' => $criteria->getConditions(),
+            'finalize' => $finalize
+                )
         );
 
 
@@ -423,81 +491,46 @@ class MainController extends Controller
     }
 
     public function actionDetails() {
+
         $this->layout = '//layouts/detailview';
         $criteria = Yii::app()->session['criteria'];
+
         if (isset($_GET['iccc']))
-            $criteria->addCond('Type_lesionnel1_litteral', '==', $_GET['iccc']);
+            $criteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', $_GET['iccc']);
+        $criteria->sort('ident_pat_biocap', EMongoCriteria::SORT_ASC);
         $dataProvider = new EMongoDocumentDataProvider('SampleCollected');
 
 
         $dataProvider->setCriteria($criteria);
+
         $this->render('details', array('dataProvider' => $dataProvider));
     }
 
-    public function actionGetSummarySearch() {
-        $model = new BiocapForm;
-        $model->unsetAttributes();
+    public function actionGetSousGroupList() {
 
-        // $dataProvider = array();
-        //  $dataProvider = SampleCollected::model()->findAll();
-        //$dataProvider = new EMongoDocumentDataProvider('SampleCollected');
 
-        if (isset($_GET['BiocapForm'])) {
-            $model->attributes = $_GET['BiocapForm'];
-        }
-
-        echo "Vos critères de recherche :<br>";
-        echo '<ul>';
-        foreach ($model->attributes as $attributeName => $attributeValue) {
-            if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu') {
-                switch ($attributeName) {
-                    case 'topoOrganeType':
-                        if ($model->topoOrganeField1 != null && $model->topoOrganeField1 != "")
-                            echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
-                        break;
-                    case 'topoOrganeField1':
-                        $value = $model->topoOrganeField1;
-                        if ($model->topoOrganeField2 != null && $model->topoOrganeField2 != "")
-                            $value.=" ou $model->topoOrganeField2";
-                        if ($model->topoOrganeField3 != null && $model->topoOrganeField3 != "")
-                            $value.=" ou $model->topoOrganeField3";
-                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
-                        break;
-                    case 'topoOrganeField2':
-                        break;
-                    case 'topoOrganeField3':
-                        break;
-
-                    case 'morphoHistoType':
-                        if ($model->morphoHistoField1 != null && $model->morphoHistoField1 != "")
-                            echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
-                        break;
-                    case 'morphoHistoField1':
-                        $value = $model->morphoHistoField1;
-                        if ($model->morphoHistoField2 != null && $model->morphoHistoField2 != "")
-                            $value.=" ou $model->morphoHistoField2";
-                        if ($model->morphoHistoField3 != null && $model->morphoHistoField3 != "")
-                            $value.=" ou $model->morphoHistoField3";
-                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
-                        break;
-                    case 'morphoHistoField2':
-                        break;
-                    case 'morphoHistoField3':
-                        break;
-                    default:
-                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
-                        break;
-                }
-            }elseif (is_array($attributeValue)) {
-                echo "<li>" . $model->getAttributeLabel($attributeName) . " : <ul>";
-                foreach ($attributeValue as $arrName => $arrVal) {
-
-                    echo "<li>" . $model->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
-                }
-                echo '</ul></li>';
+        if (isset($_GET['BiocapForm']['iccc_group1'])) {
+            $values = SampleCollected::model()->getCollection()->distinct('RNCE_Lib2_SousGroupeICCC', array('RNCE_Lib2_GroupeICCC' => $_GET['BiocapForm']['iccc_group1']));
+            echo '<select display="inline-block" separator=" " name="BiocapForm[iccc_sousgroup1]" id="BiocapForm_iccc_sousgroup1" style="width:150px">';
+            foreach ($values as $value) {
+                echo '<option value="' . $value . '">' . $value . '</option>';
             }
+            echo '</select>';
+        } else if (isset($_GET['BiocapForm']['iccc_group2'])) {
+            $values = SampleCollected::model()->getCollection()->distinct('RNCE_Lib2_SousGroupeICCC', array('RNCE_Lib2_GroupeICCC' => $_GET['BiocapForm']['iccc_group2']));
+            echo '<select display="inline-block" separator=" " name="BiocapForm[iccc_sousgroup2]" id="BiocapForm_iccc_sousgroup2" style="width:150px">';
+            foreach ($values as $value) {
+                echo '<option value="' . $value . '">' . $value . '</option>';
+            }
+            echo '</select>';
+        } else if (isset($_GET['BiocapForm']['iccc_group3'])) {
+            $values = SampleCollected::model()->getCollection()->distinct('RNCE_Lib2_SousGroupeICCC', array('RNCE_Lib2_GroupeICCC' => $_GET['BiocapForm']['iccc_group3']));
+            echo '<select display="inline-block" separator=" " name="BiocapForm[iccc_sousgroup3]" id="BiocapForm_iccc_sousgroup3" style="width:150px">';
+            foreach ($values as $value) {
+                echo '<option value="' . $value . '">' . $value . '</option>';
+            }
+            echo '</select>';
         }
-        echo '</ul>';
     }
 
 }

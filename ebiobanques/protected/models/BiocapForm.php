@@ -12,9 +12,13 @@ class BiocapForm extends CFormModel
      * DIAGNOSTIC BLOCK
      */
     public $iccc_group;
+    public $iccc_sousgroup;
     public $iccc_group1;
     public $iccc_group2;
     public $iccc_group3;
+    public $iccc_sousgroup1;
+    public $iccc_sousgroup2;
+    public $iccc_sousgroup3;
     public $topoOrganeType = 'cimo';
     public $topoOrganeField;
     public $topoOrganeField1;
@@ -85,6 +89,12 @@ class BiocapForm extends CFormModel
              * DIAGNOSTIC
              */
             'iccc_group' => 'Groupe ICCC',
+            'iccc_group1' => 'Groupe ICCC',
+            'iccc_group2' => 'Groupe ICCC',
+            'iccc_group3' => 'Groupe ICCC',
+            'iccc_sousgroup1' => 'Sous groupe ICCC',
+            'iccc_sousgroup2' => 'Sous groupe ICCC',
+            'iccc_sousgroup3' => 'Sous groupe ICCC',
             'topoOrganeField' => 'Topo / organe',
             'topoOrganeField1' => 'Topo / organe',
             'morphoHistoField' => 'Morpho / histo',
@@ -103,7 +113,7 @@ class BiocapForm extends CFormModel
             'age[15+]' => '&ge;15 ans',
             'sexe' => 'Sexe',
             'stat_vital' => 'Statut vital',
-            'ano_chrom_constit' => 'Anomalie chromosomique constituante',
+            'ano_chrom_constit' => 'Anomalie chromosomique constitutionnelle',
             'affect_gen' => 'Affection génétique',
             /*
              * PRELEVEMENT-ECHANTILLON
@@ -115,7 +125,7 @@ class BiocapForm extends CFormModel
             'avantChimio' => 'Avant chimio',
             'type_prelev' => 'Type de prélèvement',
             'type_prelev[tissu]' => 'Tissu',
-            'type_prelev[moelle]' => 'Moëlle',
+            'type_prelev[moelle]' => 'Moelle',
             'type_prelev[sang]' => 'Sang',
             'type_prelev[autre]' => 'Autre',
             'mode_prelev' => 'Mode de prélèvement',

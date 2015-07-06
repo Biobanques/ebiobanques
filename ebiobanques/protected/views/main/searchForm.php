@@ -34,7 +34,8 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
 <div id='summary'>
 
     <?php
-    echo $totalResult > 0 ? "Au total, $totalResult échantillons ont été trouvés avec les critères de recherche suivants : " : "Aucun échantillon trouvé avec ces critères, merci de les modifier : " . "<br>";
+    echo $totalPatientSelected > 0 ?
+            "Au total, $totalPatientSelected patients ont été trouvés avec les critères de recherche suivants, sur les $totalPatient présents en base : " : "Aucun patient trouvé avec ces critères, merci de les modifier : " . "<br>";
     echo '<ul>';
 
     foreach ($model->attributes as $attributeName => $attributeValue) {
@@ -73,17 +74,49 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     break;
                 case 'morphoHistoField3':
                     break;
+
+                case 'iccc_group1':
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $model->getAttributeLabel('iccc_sousgroup1') . " : " . $model->iccc_sousgroup1 . ",</li>";
+                    break;
+                case 'iccc_group2':
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $model->getAttributeLabel('iccc_sousgroup2') . " : " . $model->iccc_sousgroup2 . ",</li>";
+                    break;
+                case 'iccc_group3':
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $model->getAttributeLabel('iccc_sousgroup3') . " : " . $model->iccc_sousgroup3 . ",</li>";
+                    break;
+                case 'iccc_group':
+                    break;
+                case 'iccc_sousgroup1':
+                    break;
+                case 'iccc_sousgroup2':
+                    break;
+                case 'iccc_sousgroup3':
+                    break;
+
                 default:
                     echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
                     break;
             }
         }elseif (is_array($attributeValue)) {
-            echo "<li>" . $model->getAttributeLabel($attributeName) . " : <ul>";
-            foreach ($attributeValue as $arrName => $arrVal) {
+            switch ($attributeName) {
+                case 'evenement':
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . implode(' ou ', $model->evenement), ",</li>";
+                    break;
+                case 'mode_prelev':
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . implode(' ou ', $model->mode_prelev), ",</li>";
+                    break;
+                case 'type_prelev':
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . implode(' ou ', $model->type_prelev), ",</li>";
 
-                echo "<li>" . $model->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
+                    break;
+                default:
+                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : <ul>";
+                    foreach ($attributeValue as $arrName => $arrVal) {
+
+                        echo "<li>" . $model->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
+                    }
+                    echo '</ul></li>';
             }
-            echo '</ul></li>';
         }
     }
 

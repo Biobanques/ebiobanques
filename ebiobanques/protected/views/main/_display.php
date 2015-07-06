@@ -21,11 +21,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'result-grid',
     'dataProvider' => $dataProvider,
     'columns' => array(
-        array('header' => 'groupe ICCC', 'value' => '$data["Type_lesionnel1_litteral"] != null ? $data["Type_lesionnel1_litteral"] : "Inconnu"')
+        array('header' => 'Groupe ICCC', 'value' => '$data[CommonTools::AGGREGATEDFIELD1] != null ? $data[CommonTools::AGGREGATEDFIELD1] : "Inconnu"'),
+        array('header' => 'Sous groupe ICCC', 'value' => '$data[CommonTools::AGGREGATEDFIELD2] != null ? $data[CommonTools::AGGREGATEDFIELD2] : "Inconnu"')
         ,
-        array('name' => 'total', 'header' => 'Total'),
-        array('name' => 'CR', 'header' => 'Consentement recheche', 'value' => '$data["CR"].", soit ".round($data["CR"]/$data["total"]*100,2) ."%"'),
-        array('name' => 'IE', 'header' => 'Inclus dans une étude', 'value' => '$data["IE"].", soit ".round($data["IE"]/$data["total"]*100,2) ."%"'),
+        array('name' => 'patientPartialTotal', 'header' => 'Nombre de patients'),
+        array('name' => 'CR', 'header' => 'Consentement recheche'),
+        array('name' => 'IE', 'header' => 'Inclus dans une étude'),
         array(
             'header' => 'Détails',
             'class' => 'CButtonColumn',
@@ -36,11 +37,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     (
                     'label' => 'View',
                     'imageUrl' => Yii::app()->request->baseUrl . '/images/zoom.png',
-                    'url' => 'Yii::app()->createUrl("main/details", array("iccc"=>$data["Type_lesionnel1_litteral"]))',
+                    'url' => 'Yii::app()->createUrl("main/details", array("iccc"=>$data[CommonTools::AGGREGATEDFIELD2]))',
                     'click' => 'popupdetails',
                 )
             ),
-        //  'visible' => Yii::app()->user->isAdmin()
+            'visible' => Yii::app()->user->isAdmin()
         )
     )
         )

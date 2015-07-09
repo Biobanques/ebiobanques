@@ -141,15 +141,9 @@ $('#BiocapForm_morphoHistoField2').keyup(function(){
 return false;
 });
 
-
- var resetFormFunction=function(){
- $('#search-form')[0].reset();
- };
-
-$('#resetBtn').click(resetFormFunction);
 ");
 ?>
-<div class="form" >
+<div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'search-form',
@@ -539,13 +533,13 @@ $('#resetBtn').click(resetFormFunction);
             <div class ='radiobtns'>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[tum_prim]', array('value' => 'tum_prim', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->checkBox($model, 'ETL[tum_prim]', array('value' => 'Tumeur primaire', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null, 'disabled' => true));
                     echo $form::label($model, 'ETL[tum_prim]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[metastase]', array('value' => 'metastase', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->checkBox($model, 'ETL[metastase]', array('value' => 'metastase', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null, 'disabled' => true));
                     echo $form::label($model, 'ETL[metastase]');
                     ?>
                 </div>
@@ -565,19 +559,19 @@ $('#resetBtn').click(resetFormFunction);
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[bloc_para]', array('value' => 'bloc_para', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->checkBox($model, 'ETL[bloc_para]', array('value' => 'bloc_para', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null, 'disabled' => true));
                     echo $form::label($model, 'ETL[bloc_para]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[cell_DMSO]', array('value' => 'cell_DMSO', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->checkBox($model, 'ETL[cell_DMSO]', array('value' => 'cell_DMSO', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null, 'disabled' => true));
                     echo $form::label($model, 'ETL[cell_DMSO]');
                     ?>
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETL[cell_CS]', array('value' => 'cell_CS', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->checkBox($model, 'ETL[cell_CS]', array('value' => 'cell_CS', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null, 'disabled' => true));
                     echo $form::label($model, 'ETL[cell_CS]');
                     ?>
                 </div>

@@ -77,7 +77,8 @@ class SampleCollected extends LoggableActiveRecord
     }
 
     public function getGroupList() {
-        $values = $this->getCollection()->distinct('RNCE_Lib2_GroupeICCC');
+        $values = $this->getCollection()->distinct(CommonTools::AGGREGATEDFIELD1);
+        natcasesort($values);
         $result = array();
         foreach ($values as $value)
             if ($value != "")
@@ -86,7 +87,7 @@ class SampleCollected extends LoggableActiveRecord
     }
 
     public function getDiagPpal() {
-        return "$this->RNCE_Lib2_GroupeICCC - $this->RNCE_Lib_SousGroupeICCC";
+        return "$this->CommonTools::AGGREGATEDFIELD1 - $this->CommonTools::AGGREGATEDFIELD2";
     }
 
 }

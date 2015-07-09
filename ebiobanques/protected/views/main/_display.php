@@ -21,8 +21,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'result-grid',
     'dataProvider' => $dataProvider,
     'columns' => array(
-        array('header' => 'Groupe ICCC', 'value' => '$data[CommonTools::AGGREGATEDFIELD1] != null ? $data[CommonTools::AGGREGATEDFIELD1] : "Inconnu"'),
-        array('header' => 'Sous groupe ICCC', 'value' => '$data[CommonTools::AGGREGATEDFIELD2] != null ? $data[CommonTools::AGGREGATEDFIELD2] : "Inconnu"')
+        array('header' => 'Groupe ICCC', 'name' => 'group_iccc', 'value' => '$data[CommonTools::AGGREGATEDFIELD1] != null ? $data[CommonTools::AGGREGATEDFIELD1] : "Inconnu"'),
+        array('header' => 'Sous groupe ICCC', 'name' => 'sous_group_iccc', 'value' => '$data[CommonTools::AGGREGATEDFIELD2] != null ? $data[CommonTools::AGGREGATEDFIELD2] : "Inconnu"')
         ,
         array('name' => 'patientPartialTotal', 'header' => 'Nombre de patients'),
         array('name' => 'CR', 'header' => 'Consentement recheche'),

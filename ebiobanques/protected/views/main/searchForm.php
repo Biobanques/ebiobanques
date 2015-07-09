@@ -7,7 +7,14 @@
 
 
 Yii::app()->clientScript->registerScript('search', "
-
+$('#SwitchLinkLF').click(function(){
+$('#detailled_form').toggle();
+$('#light_form').toggle();
+});
+$('#SwitchLinkAF').click(function(){
+$('#detailled_form').toggle();
+$('#light_form').toggle();
+});
 $('.search-form form').submit(function(){
 
 
@@ -25,8 +32,16 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
 ");
 ?>
 
-<div class="search-form">
+<div class="search-form"  id="light_form">
     <?php
+    echo "<p>" . CHtml::link("Utiliser le formulaire de recherche avancé", "#", array('id' => 'SwitchLinkLF')) . "<p>";
+
+    $this->renderPartial('_lightSearchForm', array('model' => $lightModel));
+    ?>
+</div>
+<div class="search-form" id="detailled_form" style="display: none ">
+    <?php
+    echo "<p>" . CHtml::link("Utiliser le formulaire de recherche simplifié", "#", array('id' => 'SwitchLinkAF')) . "<p>";
     $this->renderPartial('_searchForm', array('model' => $model));
     ?>
 </div>
@@ -37,21 +52,26 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
     echo $totalPatientSelected > 0 ?
             "Au total, $totalPatientSelected patients ont été trouvés avec les critères de recherche suivants, sur les $totalPatient présents en base : " : "Aucun patient trouvé avec ces critères, merci de les modifier : " . "<br>";
     echo '<ul>';
-
-    foreach ($model->attributes as $attributeName => $attributeValue) {
+    if ($flag == 0)
+        $summaryModel = $model;
+    if ($flag == 1)
+        $summaryModel = $lightModel;
+    foreach ($summaryModel->attributes as $attributeName => $attributeValue) {
         if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu') {
             switch ($attributeName) {
                 case 'topoOrganeType':
-                    if ($model->topoOrganeField1 != null && $model->topoOrganeField1 != "")
-                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    if ($summaryModel->topoOrganeField1 != null && $summaryModel->topoOrganeField1 != "")
+                        echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    break;
+                case 'topoOrganeField':
                     break;
                 case 'topoOrganeField1':
-                    $value = $model->topoOrganeField1;
-                    if ($model->topoOrganeField2 != null && $model->topoOrganeField2 != "")
-                        $value.=" ou $model->topoOrganeField2";
-                    if ($model->topoOrganeField3 != null && $model->topoOrganeField3 != "")
-                        $value.=" ou $model->topoOrganeField3";
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
+                    $value = $summaryModel->topoOrganeField1;
+                    if ($summaryModel->topoOrganeField2 != null && $summaryModel->topoOrganeField2 != "")
+                        $value.=" ou $summaryModel->topoOrganeField2";
+                    if ($summaryModel->topoOrganeField3 != null && $summaryModel->topoOrganeField3 != "")
+                        $value.=" ou $summaryModel->topoOrganeField3";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
                     break;
                 case 'topoOrganeField2':
                     break;
@@ -59,16 +79,18 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     break;
 
                 case 'morphoHistoType':
-                    if ($model->morphoHistoField1 != null && $model->morphoHistoField1 != "")
-                        echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    if ($summaryModel->morphoHistoField1 != null && $summaryModel->morphoHistoField1 != "")
+                        echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
                     break;
                 case 'morphoHistoField1':
-                    $value = $model->morphoHistoField1;
-                    if ($model->morphoHistoField2 != null && $model->morphoHistoField2 != "")
-                        $value.=" ou $model->morphoHistoField2";
-                    if ($model->morphoHistoField3 != null && $model->morphoHistoField3 != "")
-                        $value.=" ou $model->morphoHistoField3";
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
+                    break;
+                case 'morphoHistoField1':
+                    $value = $summaryModel->morphoHistoField1;
+                    if ($summaryModel->morphoHistoField2 != null && $summaryModel->morphoHistoField2 != "")
+                        $value.=" ou $summaryModel->morphoHistoField2";
+                    if ($summaryModel->morphoHistoField3 != null && $summaryModel->morphoHistoField3 != "")
+                        $value.=" ou $summaryModel->morphoHistoField3";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $value, ",</li>";
                     break;
                 case 'morphoHistoField2':
                     break;
@@ -76,15 +98,17 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     break;
 
                 case 'iccc_group1':
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $model->getAttributeLabel('iccc_sousgroup1') . " : " . $model->iccc_sousgroup1 . ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup1') . " : " . $summaryModel->iccc_sousgroup1 . ",</li>";
                     break;
                 case 'iccc_group2':
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $model->getAttributeLabel('iccc_sousgroup2') . " : " . $model->iccc_sousgroup2 . ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup2') . " : " . $summaryModel->iccc_sousgroup2 . ",</li>";
                     break;
                 case 'iccc_group3':
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $model->getAttributeLabel('iccc_sousgroup3') . " : " . $model->iccc_sousgroup3 . ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup3') . " : " . $summaryModel->iccc_sousgroup3 . ",</li>";
                     break;
                 case 'iccc_group':
+                    break;
+                case 'iccc_sousgroup':
                     break;
                 case 'iccc_sousgroup1':
                     break;
@@ -94,26 +118,26 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     break;
 
                 default:
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
                     break;
             }
         }elseif (is_array($attributeValue)) {
             switch ($attributeName) {
                 case 'evenement':
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . implode(' ou ', $model->evenement), ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->evenement), ",</li>";
                     break;
                 case 'mode_prelev':
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . implode(' ou ', $model->mode_prelev), ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->mode_prelev), ",</li>";
                     break;
                 case 'type_prelev':
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : " . implode(' ou ', $model->type_prelev), ",</li>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->type_prelev), ",</li>";
 
                     break;
                 default:
-                    echo "<li>" . $model->getAttributeLabel($attributeName) . " : <ul>";
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : <ul>";
                     foreach ($attributeValue as $arrName => $arrVal) {
 
-                        echo "<li>" . $model->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
+                        echo "<li>" . $summaryModel->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
                     }
                     echo '</ul></li>';
             }

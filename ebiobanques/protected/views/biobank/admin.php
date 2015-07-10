@@ -28,7 +28,9 @@ $('.search-form form').submit(function(){
 <br>
 <?php echo CHtml::link('Manage fields of biobanks directory', array('/uploadForm/uploadAll')); ?>
 <br>
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<?php
+$this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'biobank', 'searchable' => true));
+?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

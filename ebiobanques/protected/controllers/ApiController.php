@@ -1,19 +1,17 @@
 <?php
 
-class ApiController extends Controller {
-
+class ApiController extends Controller
+{
     /**
      * no layout
      * @var type
      */
     public $layout = '';
-
     // Members
     /**
      * Key which has to be in HTTP USERNAME and PASSWORD headers
      */
     Const APPLICATION_ID = 'ASCCPE';
-
     /**
      * Default response format
      * either 'json' or 'xml'
@@ -53,6 +51,7 @@ class ApiController extends Controller {
     public function actionGetBiobanksLDIF() {
         $this->_sendResponse(200, $this->getBiobanksLDIF());
     }
+
     /**
      * get biobank infos and convert into an LDIF format
      * @return string
@@ -77,19 +76,24 @@ c: fr
             //TODO flase in cappital
             $attributes['biobankMaterialStoredDNA'] = "FALSE";
             $attributes['biobankMaterialStoredRNA'] = "FALSE";
-            $attributes['biobankMaterialStoredcDNAmRNA'] = "FALSE";
-            $attributes['biobankMaterialStoredmicroRNA'] = "FALSE";
-            $attributes['biobankMaterialStoredWholeBlood'] = "FALSE";
-            $attributes['biobankMaterialStoredPBC'] = "FALSE";
+            // $attributes['biobankMaterialStoredcDNAmRNA'] = "FALSE";
+            // $attributes['biobankMaterialStoredmicroRNA'] = "FALSE";
+            //   $attributes['biobankMaterialStoredWholeBlood'] = "FALSE";
+            //  $attributes['biobankMaterialStoredPBC'] = "FALSE";
+            $attributes['biobankMaterialStoredBlood'] = "FALSE";
             $attributes['biobankMaterialStoredPlasma'] = "FALSE";
             $attributes['biobankMaterialStoredSerum'] = "FALSE";
-            $attributes['biobankMaterialStoredTissueCryo'] = "FALSE";
-            $attributes['biobankMaterialStoredTissueParaffin'] = "FALSE";
-            $attributes['biobankMaterialStoredCellLines'] = "FALSE";
+//            $attributes['biobankMaterialStoredTissueCryo'] = "FALSE";
+            $attributes['biobankMaterialStoredTissueFrozen'] = "FALSE";
+//            $attributes['biobankMaterialStoredTissueParaffin'] = "FALSE";
+            $attributes['biobankMaterialStoredTissueFFPE'] = "FALSE";
+//            $attributes['biobankMaterialStoredCellLines'] = "FALSE";
+            $attributes['biobankMaterialStoredImmortalizedCellLines'] = "FALSE";
             $attributes['biobankMaterialStoredUrine'] = "FALSE";
             $attributes['biobankMaterialStoredSaliva'] = "FALSE";
             $attributes['biobankMaterialStoredFaeces'] = "FALSE";
-            $attributes['biobankMaterialStoredPathogen'] = "FALSE";
+//            $attributes['biobankMaterialStoredPathogen'] = "FALSE";
+            $attributes['biobankMaterialStoredIsolatedPathogen'] = "FALSE";
             $attributes['biobankMaterialStoredOther'] = "FALSE";
             //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
             $attributes['biobankPartnerCharterSigned'] = "FALSE";
@@ -99,7 +103,7 @@ c: fr
             $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";
 
             $contact = $biobank->getContact();
-            
+
             $attributes['biobankContactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
             //TODO info de contact obligatoire lever un warning si pas affectée pour l export
             if ($contact != null) {
@@ -110,10 +114,10 @@ c: fr
                 $attributes['biobankContactZIP'] = $contact->code_postal;
                 $attributes['biobankContactCity'] = $contact->ville;
                 //TODO contact email need to be filled
-                if(isset($contact->email))
+                if (isset($contact->email))
                     $attributes['biobankContactEmail'] = $contact->email;
                 else
-                   $attributes['biobankContactEmail'] = $contact->email; 
+                    $attributes['biobankContactEmail'] = $contact->email;
             } else {
                 $attributes['biobankContactEmail'] = "N/A";
                 Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
@@ -175,7 +179,7 @@ c: fr
         //check biobankID only alphabetical without accent, and minimum 3 characters
         if (isset($attributes['biobankID']))
             if (!preg_match('/^[a-zA-Z0-9:_ -]{3,}$/', $attributes['biobankID']))
-                $anomalies['biobankID'] = "biobankIDis in a bad syntax, only withou accent:" . $attributes['biobankID'];
+                $anomalies['biobankID'] = "biobankIDis in a bad syntax, only without accent:" . $attributes['biobankID'];
         //The phone number needs to be in the +99999999 international format without spaces.
         if (isset($attributes['biobankContactPhone']))
             if (!preg_match("/^\+[0-9]{11}$/", $attributes['biobankContactPhone']))
@@ -292,5 +296,4 @@ c: fr
     }
 
 }
-
 ?>

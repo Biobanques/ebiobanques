@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord {
+class Biobank extends LoggableActiveRecord
+{
     /*
      * Champs obligatoires
      */
-
     public $id;
     public $identifier;
     public $name;
@@ -44,7 +44,6 @@ class Biobank extends LoggableActiveRecord {
     public $longitude;
     public $latitude;
     public $keywords_MeSH;
-
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -53,20 +52,17 @@ class Biobank extends LoggableActiveRecord {
     /**
      * fields agregated related to the sampling activity
      */
-
     /**
      * values fixed: general population, disease
-     * @var type 
+     * @var type
      */
     public $sampling_practice;
-
     /**
      * free text
-     * @var type 
+     * @var type
      */
     public $sampling_disease_group;
     public $sampling_disease_group_code;
-
     /**
      * fields agregated relatives to the number of samples.
      * NBS : acronym of Number of Biological Samples
@@ -94,7 +90,6 @@ class Biobank extends LoggableActiveRecord {
     public $nbs_celllines_samples_relatives;
     public $nbs_other_samples_affected;
     public $nbs_other_samples_relatives;
-
     /**
      * specify the type of samples if other. Free text.
      */
@@ -287,6 +282,12 @@ class Biobank extends LoggableActiveRecord {
             'contact_id' => 'Contact',
             'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
             'website' => Yii::t('common', 'website'),
+            'presentation' => Yii::t('common', 'presentation'),
+            'thematiques' => Yii::t('common', 'thematiques'),
+            'publications' => Yii::t('common', 'publications'),
+            'reseaux' => Yii::t('common', 'reseaux'),
+            'qualite' => Yii::t('common', 'qualite'),
+            'projetRecherche' => Yii::t('common', 'projetRecherche'),
         );
     }
 
@@ -545,14 +546,14 @@ class Biobank extends LoggableActiveRecord {
      * Not defined if null
      */
     public function getSamplingPractice() {
-         $result = $this->sampling_practice;
+        $result = $this->sampling_practice;
         $arr = $this->getArraySamplingPractice();
         if ($result != "" && $arr [$result] != null) {
             $result = $arr [$result];
         } else {
             $result = "Not defined";
         }
-            return $result;
+        return $result;
     }
 
 }

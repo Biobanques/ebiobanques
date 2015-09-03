@@ -42,7 +42,8 @@ class MainController extends Controller
                 'allow', // allow all users to perform 'index' and 'dashboard' actions
                 'actions' => array(
                     'getSummarySearch',
-                    'getSousGroupList'
+                    'getSousGroupList',
+                // 'ourTeam',
                 ),
                 'users' => array(
                     '*'
@@ -97,6 +98,10 @@ class MainController extends Controller
         );
     }
 
+    public function actionOurTeam() {
+        $this->render('ourTeam');
+    }
+
     public function actionSearch() {
         $searchedField = CommonTools::AGGREGATEDFIELD1;
         $model = new BiocapForm;
@@ -118,6 +123,7 @@ class MainController extends Controller
         }
         $result = $this->createDataProvider($criteria);
 
+
         $dataProvider = new CArrayDataProvider($result['retval'], array('keyField' => $searchedField, 'sort' => array('defaultOrder' => 'sous_group_iccc ' . CSort::SORT_DESC, 'attributes' => array('group_iccc', 'sous_group_iccc', 'patientPartialTotal', 'total', 'CR', 'IE'))));
 
 
@@ -126,7 +132,13 @@ class MainController extends Controller
     }
 
     public function createCriteria($form) {
-        $criteria = new EMongoCriteria;
+
+        $diagCriteria = new EMongoCriteria;
+        $patCriteria = new EMongoCriteria;
+        $prelCriteria = new EMongoCriteria;
+        $echTCriteria = new EMongoCriteria;
+        $echNTCriteria = new EMongoCriteria;
+        $consCriteria = new EMongoCriteria;
 
         /*
          * DIAGNOSTIC criteria
@@ -147,7 +159,7 @@ class MainController extends Controller
         }
         if ($form->iccc_sousgroup != "") {
             $form->iccc_sousgroup = substr($form->iccc_sousgroup, 0, -1);
-            $criteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_sousgroup) . "/i"));
+            $diagCriteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_sousgroup) . "/i"));
         }
 
         /*
@@ -170,7 +182,7 @@ class MainController extends Controller
                 $attribute = 'Code_organe1_ADICAP';
             else
                 $attribute = 'Code_organe1_CIMO3';
-            $criteria->addCond($attribute, '==', new MongoRegex("/($form->topoOrganeField)/i"));
+            $diagCriteria->addCond($attribute, '==', new MongoRegex("/($form->topoOrganeField)/i"));
         }
         /*
          * Regex for morpho / histo fields
@@ -192,15 +204,15 @@ class MainController extends Controller
                 $attribute = 'Type_lesionnel1_ADICAP';
             else
                 $attribute = 'Type_lesionnel1_CIMO3';
-            $criteria->addCond($attribute, '==', new MongoRegex("/($form->morphoHistoField)/i"));
+            $diagCriteria->addCond($attribute, '==', new MongoRegex("/($form->morphoHistoField)/i"));
         }
         if (isset($form->metastasique))
             switch ($form->metastasique) {
                 case 'oui':
-                    $criteria->addCond('RNCE_Meta', '==', 1);
+                    $diagCriteria->addCond('RNCE_Meta', '==', 1);
                     break;
                 case 'non';
-                    $criteria->addCond('RNCE_Meta', '==', 0);
+                    $diagCriteria->addCond('RNCE_Meta', '==', 0);
                     break;
                 case 'inconnu':
                 default:
@@ -209,10 +221,10 @@ class MainController extends Controller
         if (isset($form->cr_anapath_dispo))
             switch ($form->cr_anapath_dispo) {
                 case 'oui':
-                    $criteria->addCond('RNCE_CR_ana_disp', '==', 1);
+                    $diagCriteria->addCond('RNCE_CR_ana_disp', '==', 1);
                     break;
                 case 'non';
-                    $criteria->addCond('RNCE_CR_ana_disp', '==', 0);
+                    $diagCriteria->addCond('RNCE_CR_ana_disp', '==', 0);
                     break;
                 case 'inconnu':
                 default:
@@ -221,10 +233,10 @@ class MainController extends Controller
         if (isset($form->donCliInBase))
             switch ($form->donCliInBase) {
                 case 'oui':
-                    $criteria->addCond('RNCE_DonneesCliniques', '==', 1);
+                    $diagCriteria->addCond('RNCE_DonneesCliniques', '==', 1);
                     break;
                 case 'non';
-                    $criteria->addCond('RNCE_DonneesCliniques', '==', 0);
+                    $diagCriteria->addCond('RNCE_DonneesCliniques', '==', 0);
                     break;
                 case 'inconnu':
                 default:
@@ -238,10 +250,10 @@ class MainController extends Controller
         if (isset($form->sexe))
             switch ($form->sexe) {
                 case 'Féminin':
-                    $criteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('feminin') . "/i");
+                    $patCriteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('feminin') . "/i");
                     break;
                 case 'Masculin';
-                    $criteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('masculin') . "/i");
+                    $patCriteria->Sexe = new MongoRegex("/" . StringUtils::accentToRegex('masculin') . "/i");
                     break;
                 case 'inconnu':
                 default:
@@ -250,10 +262,10 @@ class MainController extends Controller
         if (isset($form->stat_vital))
             switch ($form->stat_vital) {
                 case 'vivant':
-                    $criteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
+                    $patCriteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
                     break;
                 case 'decede';
-                    $criteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
+                    $patCriteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
                     break;
                 case 'inconnu':
                 default:
@@ -263,10 +275,10 @@ class MainController extends Controller
         if (isset($form->ano_chrom_constit))
             switch ($form->ano_chrom_constit) {
                 case 'oui':
-                    $criteria->addCond('RNCE_AnoChrConst', '==', 1);
+                    $patCriteria->addCond('RNCE_AnoChrConst', '==', 1);
                     break;
                 case 'non';
-                    $criteria->addCond('RNCE_AnoChrConst', '==', 0);
+                    $patCriteria->addCond('RNCE_AnoChrConst', '==', 0);
                     break;
                 case 'inconnu':
                 default:
@@ -317,7 +329,7 @@ class MainController extends Controller
         }
 
         if (!empty($age))
-            $criteria->addCond('age', 'in', $age);
+            $patCriteria->addCond('age', 'in', $age);
         /*
          * PRELEVEMENT-ECHANTILLON criteria
          */
@@ -334,7 +346,7 @@ class MainController extends Controller
             $evenement[] = 'Second cancer';
 
         $regex = implode("|", $evenement);
-        $criteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
+        $prelCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
         /**
          * Mécanisme pour prendre en charge les choix 'autres' des cases à cocher
          */
@@ -357,9 +369,9 @@ class MainController extends Controller
                 $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('sang') . "/i");
             }
             if (isset($form->type_prelev['autre']) && $form->type_prelev['autre'] == 'autre') {
-                $criteria->addCond('Type_prlvt', 'notin', array_values($typesAvailable)); //type_echant NOT a typo, error in data source
+                $prelCriteria->addCond('Type_prlvt', 'notin', array_values($typesAvailable)); //type_echant NOT a typo, error in data source
             } else if (!empty($typePrel))
-                $criteria->addCond('Type_prlvt', 'in', $typePrel); //type_echant NOT a typo, error in data source
+                $prelCriteria->addCond('Type_prlvt', 'in', $typePrel); //type_echant NOT a typo, error in data source
         }
 
         /**
@@ -384,9 +396,9 @@ class MainController extends Controller
                 $modePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('ponction') . "/i");
             }
             if (isset($form->mode_prelev['autre']) && $form->mode_prelev['autre'] == 'autre') {
-                $criteria->addCond('Mode_prlvt', 'notin', array_values($modesAvailable)); //type_echant NOT a typo, error in data source
+                $prelCriteria->addCond('Mode_prlvt', 'notin', array_values($modesAvailable)); //type_echant NOT a typo, error in data source
             } else if (!empty($modePrel))
-                $criteria->addCond('Mode_prlvt', 'in', $modePrel); //type_echant NOT a typo, error in data source
+                $prelCriteria->addCond('Mode_prlvt', 'in', $modePrel); //type_echant NOT a typo, error in data source
         }
         /* ECHANTILLON TUMORAL CRITERIA
          *
@@ -401,16 +413,16 @@ class MainController extends Controller
 
 
             $regex = implode("|", $nat_ech);
-            //$criteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
+            //$echTCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
 
             if (isset($form->ETL['adn_der']) && $form->ETL['adn_der'] == 1) {
 
-                $criteria->ADN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echTCriteria->ADN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
 
             if (isset($form->ETL['arn_der']) && $form->ETL['arn_der'] == 1) {
 
-                $criteria->ARN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echTCriteria->ARN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
         }
         /*
@@ -419,17 +431,17 @@ class MainController extends Controller
         if (isset($form->ENTA)) {
             if (isset($form->ENTA['sang_tot_cong']) && $form->ENTA['sang_tot_cong'] == 1) {
 
-                $criteria->Sang_total = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echNTCriteria->Sang_total = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
 
 
             if (isset($form->ENTA['serum']) && $form->ENTA['serum'] == 1) {
 
-                $criteria->Serum = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echNTCriteria->Serum = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
             if (isset($form->ENTA['plasma']) && $form->ENTA['plasma'] == 1) {
 
-                $criteria->Plasma = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echNTCriteria->Plasma = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
         }
         /*
@@ -438,35 +450,34 @@ class MainController extends Controller
         if (isset($form->consent_rech))
             switch ($form->consent_rech) {
                 case 'oui':
-                    $criteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('obtenu') . "/i");
+                    $consCriteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('obtenu') . "/i");
                     break;
                 case 'non';
-                    $criteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('refus') . "/i");
+                    $consCriteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('refus') . "/i");
                     break;
                 case 'inconnu':
                 default:
                     break;
             }
-
-
-        return $criteria;
+        $globalCriteria = new EMongoCriteria;
+//        $globalCriteria->setConditions(array(
+//            '$or' => array(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $echTCriteria->getConditions(), $consCriteria->getConditions()), array_merge(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $echNTCriteria->getConditions(), $consCriteria->getConditions()))
+//        )));
+        $echCriteria = new EMongoCriteria;
+        if (count($echTCriteria->getConditions()) > 0 && count($echNTCriteria->getConditions()) > 0)
+            $echCriteria->setConditions(array('$or' => array($echTCriteria->getConditions(), $echNTCriteria->getConditions())));
+        else if (count($echTCriteria->getConditions()) > 0 && count($echNTCriteria->getConditions()) == 0)
+            $echCriteria = $echTCriteria;
+        else if (count($echTCriteria->getConditions()) == 0 && count($echNTCriteria->getConditions()) > 0)
+            $echCriteria = $echNTCriteria;
+        $globalCriteria->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
+        return $globalCriteria;
     }
 
     public function createDataProvider(EMongoCriteria $criteria) {
         $searchedField1 = CommonTools::AGGREGATEDFIELD1;
         $searchedField2 = CommonTools::AGGREGATEDFIELD2;
 
-//        $reduce = new MongoCode("function(doc,res){"
-//                . "res.ids[doc.ident_pat_biocap]=1;"
-//                . "res.total+=1;"
-//                . "if(doc.Statut_juridique=='Obtenu'){"
-//                . "res.CR+=1;"
-//                . "}"
-//                . "if(doc.Inclusion_protoc_rech=='oui'){"
-//                . "res.IE+=1;"
-//                . "}"
-//                . "}"
-//        );
 
         $reduce = new MongoCode("function(doc,res){"
                 . "if(!(doc.ident_pat_biocap in res.ids))"
@@ -509,7 +520,68 @@ class MainController extends Controller
             'finalize' => $finalize
                 )
         );
+        /*
+          $db = SampleCollected::model()->getDb();
+          $result = $db->command(array(
+          //  $result = SampleCollected::model()->getDb()->command(array(
+          'mapreduce' => "sampleCollected",
+          //'query' => criteria,
+          'map' => new MongoCode('function(){
+          var pat ={};
+          pat.patients=[];
+          var patient = {};
+          patient.id = this.ident_pat_biocap;
+          patient.samples=[];
+          patient.samples.push(this);
+          pat.patients.push(patient);
 
+          emit(
+          this.RNCE_Lib_SousGroupeICCC!=""?this.RNCE_Lib_SousGroupeICCC:"Inconnu",
+          pat
+          ) }'),
+          'reduce' => new MongoCode('function(key, vals){
+          var result =  {};
+
+          result.patients=[];
+
+          for(var val in vals){
+          pats = vals[val].patients;
+          for(pat in pats){
+          result.patients.push(pats[pat]);
+          }}
+          return result;
+          }'),
+          'finalize' => new MongoCode('function(key,value){
+          var partialResult = {};
+          partialResult.patients={};
+          var pats = value.patients;
+
+          for(pat in pats){
+          var idPat = pats[pat].id;
+          var samps = pats[pat].samples;
+          if(typeof partialResult.patients[idPat] == "undefined"){
+          partialResult.patients[idPat]=[];
+          }
+          for(samp in samps){
+
+          partialResult.patients[idPat].push(samps[samp]);
+          }
+          }
+
+          var result={};
+          result.patients=[];
+          for(partPat in partialResult.patients){
+          var patient={};
+          patient.id=partPat;
+          patient.samples=partialResult.patients[partPat];
+          result.patients.push(patient);
+          }
+          return result;
+          }'),
+          //            'out' => new MongoCode('{inline:1}')
+          'out' => Array("inline" => TRUE)
+          ));
+         */
 
         return $result;
     }

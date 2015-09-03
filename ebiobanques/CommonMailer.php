@@ -30,7 +30,8 @@ class CommonMailer
             if (!CommonTools::isInDevMode()) {
                 $mailq->emailto = $to;
             } else {
-                $mailq->emailto = CommonMailer::MAIL_FROM;
+//                $mailq->emailto = CommonMailer::MAIL_FROM;
+                $mailq->emailto = CommonProperties::$ADMIN_EMAIL;
                 $subject = "Mail in dev_mod for $to : $subject";
             }
             $mailq->subject = $subject;

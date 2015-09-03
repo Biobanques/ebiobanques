@@ -9,7 +9,7 @@ Yii::app()->clientScript->registerScript('popupdetails', "
 function popupdetails(){
 window.open(this.href,
 '_blank',
-'left=100,top=100,width=960px,height=650,toolbar=0,resizable=1,location=no'
+'left=100,top=100,width=1024px,height=768,toolbar=0,resizable=1,location=no'
 );
 return false;
 

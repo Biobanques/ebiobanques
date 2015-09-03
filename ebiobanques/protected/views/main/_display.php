@@ -21,12 +21,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'result-grid',
     'dataProvider' => $dataProvider,
     'columns' => array(
-        array('header' => 'Groupe ICCC', 'name' => 'group_iccc', 'value' => '$data[CommonTools::AGGREGATEDFIELD1] != null ? $data[CommonTools::AGGREGATEDFIELD1] : "Inconnu"'),
-        array('header' => 'Sous groupe ICCC', 'name' => 'sous_group_iccc', 'value' => '$data[CommonTools::AGGREGATEDFIELD2] != null ? $data[CommonTools::AGGREGATEDFIELD2] : "Inconnu"')
+        array('header' => 'Groupe ICCC', 'name' => 'group_iccc', 'value' => '$data["_id"]["' . CommonTools::AGGREGATEDFIELD1 . '"] != null ? $data["_id"]["' . CommonTools::AGGREGATEDFIELD1 . '"] : "Inconnu"'),
+        array('header' => 'Sous groupe ICCC', 'name' => 'sous_group_iccc', 'value' => '$data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"] != null ? $data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"] : "Inconnu"')
         ,
-        array('name' => 'patientPartialTotal', 'header' => 'Nombre de patients'),
-        array('name' => 'CR', 'header' => 'Consentement recheche'),
-        array('name' => 'IE', 'header' => 'Inclus dans une étude'),
+        array('name' => 'patientPartialTotal', 'header' => 'Nombre de patients', 'value' => '$data["value"]["patientPartialTotal"]'),
+        array('name' => 'CR', 'header' => 'Consentement recheche', 'value' => '$data["value"]["CR"]'),
+        array('name' => 'IE', 'header' => 'Inclus dans une étude', 'value' => '$data["value"]["IE"]'),
         array(
             'header' => 'Détails',
             'class' => 'CButtonColumn',
@@ -37,7 +37,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     (
                     'label' => 'View',
                     'imageUrl' => Yii::app()->request->baseUrl . '/images/zoom.png',
-                    'url' => 'Yii::app()->createUrl("main/details", array("iccc"=>$data[CommonTools::AGGREGATEDFIELD2]))',
+                    'url' => 'Yii::app()->createUrl("main/details", array("iccc"=>$data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"]))',
                     'click' => 'popupdetails',
                 )
             ),

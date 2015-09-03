@@ -98,10 +98,6 @@ class MainController extends Controller
         );
     }
 
-    public function actionOurTeam() {
-        $this->render('ourTeam');
-    }
-
     public function actionSearch() {
         $searchedField = CommonTools::AGGREGATEDFIELD1;
         $model = new BiocapForm;
@@ -124,7 +120,7 @@ class MainController extends Controller
         $result = $this->createDataProvider($criteria);
 
 
-        $dataProvider = new CArrayDataProvider($result['retval'], array('keyField' => $searchedField, 'sort' => array('defaultOrder' => 'sous_group_iccc ' . CSort::SORT_DESC, 'attributes' => array('group_iccc', 'sous_group_iccc', 'patientPartialTotal', 'total', 'CR', 'IE'))));
+        $dataProvider = new CArrayDataProvider($result['results'], array('keyField' => false/* '_id' */, 'sort' => array('defaultOrder' => 'sous_group_iccc ' . CSort::SORT_DESC, 'attributes' => array('group_iccc', 'sous_group_iccc', 'patientPartialTotal', 'total', 'CR', 'IE'))));
 
 
         Yii::app()->session['criteria'] = $criteria;
@@ -477,69 +473,98 @@ class MainController extends Controller
     public function createDataProvider(EMongoCriteria $criteria) {
         $searchedField1 = CommonTools::AGGREGATEDFIELD1;
         $searchedField2 = CommonTools::AGGREGATEDFIELD2;
+        /**
+         *
+         */
+        /**
+          $reduce = new MongoCode("function(doc,res){"
+          . "if(!(doc.ident_pat_biocap in res.ids))"
+          . "res.ids[doc.ident_pat_biocap]=Array();"
+          . "if(!('CR' in res.ids[doc.ident_pat_biocap]))"
+          . "res.ids[doc.ident_pat_biocap]['CR']=0;"
+          . "if(!('IE' in res.ids[doc.ident_pat_biocap]))"
+          . "res.ids[doc.ident_pat_biocap]['IE']=0;"
+          . "res.total+=1;"
+          . "if(doc.Statut_juridique=='Obtenu'&&res.ids[doc.ident_pat_biocap]['CR']!=2){"
+          . "res.ids[doc.ident_pat_biocap]['CR']=1;"
+          . "}"
+          . "if(doc.Statut_juridique=='Refus'){"
+          . "res.ids[doc.ident_pat_biocap]['CR']=2;"
+          . "}"
+          . "if(doc.Inclusion_protoc_rech=='oui'){"
+          . "res.ids[doc.ident_pat_biocap]['IE']=1;"
+          . "}"
+          . "}"
+          );
 
+          $finalize = new MongoCode("function(res){"
+          . "res.loginList = Object.keys(res.ids);"
+          . "res.patientPartialTotal = res.loginList.length;"
+          . "if(Array.isArray(res.ids)){"
+          . "Object.keys(res.ids).forEach(function(id){"
+          . "if(res.ids[id].CR!=2){"
+          . "res.CR+=res.ids[id].CR;"
+          . "}"
+          . "res.IE+=res.ids[id].IE;"
+          . "})}"
+          . "}"
+          );
 
-        $reduce = new MongoCode("function(doc,res){"
-                . "if(!(doc.ident_pat_biocap in res.ids))"
-                . "res.ids[doc.ident_pat_biocap]=Array();"
-                . "if(!('CR' in res.ids[doc.ident_pat_biocap]))"
-                . "res.ids[doc.ident_pat_biocap]['CR']=0;"
-                . "if(!('IE' in res.ids[doc.ident_pat_biocap]))"
-                . "res.ids[doc.ident_pat_biocap]['IE']=0;"
-                . "res.total+=1;"
-                . "if(doc.Statut_juridique=='Obtenu'&&res.ids[doc.ident_pat_biocap]['CR']!=2){"
-                . "res.ids[doc.ident_pat_biocap]['CR']=1;"
-                . "}"
-                . "if(doc.Statut_juridique=='Refus'){"
-                . "res.ids[doc.ident_pat_biocap]['CR']=2;"
-                . "}"
-                . "if(doc.Inclusion_protoc_rech=='oui'){"
-                . "res.ids[doc.ident_pat_biocap]['IE']=1;"
-                . "}"
-                . "}"
-        );
-
-        $finalize = new MongoCode("function(res){"
-                . "res.loginList = Object.keys(res.ids);"
-                . "res.patientPartialTotal = res.loginList.length;"
-                . "if(Array.isArray(res.ids)){"
-                . "Object.keys(res.ids).forEach(function(id){"
-                . "if(res.ids[id].CR!=2){"
-                . "res.CR+=res.ids[id].CR;"
-                . "}"
-                . "res.IE+=res.ids[id].IE;"
-                . "})}"
-                . "}"
-        );
-
-
-        $result = SampleCollected::model()->getCollection()->group(
-                array($searchedField1 => true, $searchedField2 => true), array('total' => 0, 'CR' => 0, 'IE' => 0, 'patientPartialTotal' => 0, 'ids' => array()), $reduce
-                , array(
-            'condition' => $criteria->getConditions(),
-            'finalize' => $finalize
-                )
-        );
-        /*
-          $db = SampleCollected::model()->getDb();
-          $result = $db->command(array(
-          //  $result = SampleCollected::model()->getDb()->command(array(
-          'mapreduce' => "sampleCollected",
-          //'query' => criteria,
-          'map' => new MongoCode('function(){
+          /*
+          $result = SampleCollected::model()->getCollection()->group(
+          array($searchedField1 => true, $searchedField2 => true), array('total' => 0, 'CR' => 0, 'IE' => 0, 'patientPartialTotal' => 0, 'ids' => array()), $reduce
+          , array(
+          'condition' => $criteria->getConditions(),
+          'finalize' => $finalize
+          )
+          );
+         */$query = count($criteria->getConditions()) != 0 ? $criteria->getConditions() : null;
+        $db = SampleCollected::model()->getDb();
+        $result = $db->command(array(
+            //  $result = SampleCollected::model()->getDb()->command(array(
+            'mapreduce' => "sampleCollected",
+            'query' => $query,
+            'map' => new MongoCode('function(){
           var pat ={};
           pat.patients=[];
           var patient = {};
           patient.id = this.ident_pat_biocap;
+          /*
+          Methode temporaire pour determiner l aspect tumoral ou non de l echantillon
+          */
+var arrayValues=["",null];
+    if( arrayValues.indexOf(this.ADN_derive)>-1
+        &&arrayValues.indexOf(this.ARN_derive)>-1
+    &&arrayValues.indexOf(this.Plasma)>-1
+    &&arrayValues.indexOf(this.Serum)>-1
+    &&arrayValues.indexOf(this.Sang_total)>-1
+    )   {
+        this.isTumoral=2;
+            }else if( arrayValues.indexOf(this.ADN_derive)>-1
+        &&arrayValues.indexOf(this.ARN_derive)>-1
+    )   {
+        this.isTumoral=0;
+            }else if(
+    arrayValues.indexOf(this.Plasma)>-1
+    &&arrayValues.indexOf(this.Serum)>-1
+    &&arrayValues.indexOf(this.Sang_total)>-1
+    )   {
+        this.isTumoral=1;
+            }
+
+
+
           patient.samples=[];
           patient.samples.push(this);
           pat.patients.push(patient);
 
-          emit(
-          this.RNCE_Lib_SousGroupeICCC!=""?this.RNCE_Lib_SousGroupeICCC:"Inconnu",
-          pat
-          ) }'),
-          'reduce' => new MongoCode('function(key, vals){
+           emit(
+   {       RNCE_Lib_GroupeICCC:this.RNCE_Lib_GroupeICCC!=""?this.RNCE_Lib_GroupeICCC:"Inconnu",
+       RNCE_Lib_SousGroupeICCC:this.RNCE_Lib_SousGroupeICCC!=""?this.RNCE_Lib_SousGroupeICCC:"Inconnu"
+       },
+     pat
+     ) }'),
+            'reduce' => new MongoCode('function(key, vals){
           var result =  {};
 
           result.patients=[];
@@ -551,37 +576,70 @@ class MainController extends Controller
           }}
           return result;
           }'),
-          'finalize' => new MongoCode('function(key,value){
-          var partialResult = {};
-          partialResult.patients={};
-          var pats = value.patients;
+            'finalize' => new MongoCode("function(key,value){
+            var partialResult = {};
+            partialResult.patients={};
+            var pats = value.patients;
 
-          for(pat in pats){
-          var idPat = pats[pat].id;
-          var samps = pats[pat].samples;
-          if(typeof partialResult.patients[idPat] == "undefined"){
-          partialResult.patients[idPat]=[];
-          }
-          for(samp in samps){
+        for(pat in pats){
+        var idPat = pats[pat].id;
+            var samps = pats[pat].samples;
+             if(typeof partialResult.patients[idPat] == 'undefined'){
+        partialResult.patients[idPat]=[];
+             }
+         for(samp in samps){
 
-          partialResult.patients[idPat].push(samps[samp]);
-          }
-          }
+            partialResult.patients[idPat].push(samps[samp]);
+            }
+            }
 
-          var result={};
-          result.patients=[];
-          for(partPat in partialResult.patients){
-          var patient={};
-          patient.id=partPat;
-          patient.samples=partialResult.patients[partPat];
-          result.patients.push(patient);
-          }
-          return result;
-          }'),
-          //            'out' => new MongoCode('{inline:1}')
-          'out' => Array("inline" => TRUE)
-          ));
-         */
+            var partialResult2={};
+            partialResult2.patients=[];
+            for(partPat in partialResult.patients){
+            var patient={};
+            patient.id=partPat;
+            patient.samples=partialResult.patients[partPat];
+            patient.consentement=0;
+            patient.inclusion=0;
+
+            for(var sample in patient.samples){
+                if(patient.samples[sample].Statut_juridique=='Refus'){
+                    patient.consentement=2;
+                }else if(patient.samples[sample].Statut_juridique=='Obtenu'&&patient.consentement!=2){
+                patient.consentement=1;
+                }
+               if(patient.samples[sample].Inclusion_protoc_rech=='oui'){
+                patient.inclusion=1;
+                                }
+                }
+
+
+
+
+            partialResult2.patients.push(patient);
+        }
+            var result={};
+            result.patientPartialTotal=partialResult2.patients.length;
+            //result.patients=partialResult2.patients;
+            result.CR=0;
+            result.IE=0;
+            for(finalPats in partialResult2.patients){
+               if(partialResult2.patients[finalPats].consentement==1){
+                   result.CR++;
+               }
+                              if(partialResult2.patients[finalPats].inclusion==1){
+                   result.IE++;
+               }
+            }
+
+
+
+            return result;
+        }"),
+            //place le resultat en memoire
+            'out' => Array("inline" => TRUE)
+        ));
+
 
         return $result;
     }

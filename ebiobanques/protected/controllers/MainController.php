@@ -104,30 +104,34 @@ class MainController extends Controller
         $lightModel = new LightBiocapForm();
         $flag = 1;
         $criteria = new EMongoCriteria;
+        $mode_request = '1';
         if (isset($_GET['BiocapForm'])) {
             $flag = 0;
             $model->unsetAttributes();
             $model->attributes = $_GET['BiocapForm'];
-
+            $mode_request = $model->mode_request;
             $criteria = $this->createCriteria($model);
         }
         if (isset($_GET['LightBiocapForm'])) {
             $flag = 1;
             $lightModel->unsetAttributes();
             $lightModel->attributes = $_GET['LightBiocapForm'];
+            $mode_request = $lightModel->mode_request;
             $criteria = $this->createCriteria($lightModel);
         }
-        $result = $this->createDataProvider($criteria);
+        $result = $this->createDataProvider($criteria, $mode_request);
 
 
         $dataProvider = new CArrayDataProvider($result['results'], array('keyField' => false/* '_id' */, 'sort' => array('defaultOrder' => 'sous_group_iccc ' . CSort::SORT_DESC, 'attributes' => array('group_iccc', 'sous_group_iccc', 'patientPartialTotal', 'total', 'CR', 'IE'))));
 
 
         Yii::app()->session['criteria'] = $criteria;
-        $this->render('searchForm', array('flag' => $flag, 'model' => $model, 'lightModel' => $lightModel, 'dataProvider' => $dataProvider, 'totalPatient' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap')), 'totalPatientSelected' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap', $criteria->getConditions()))));
+        $this->render('searchForm', array('flag' => $flag, 'model' => $model, 'lightModel' => $lightModel, 'dataProvider' => $dataProvider, 'totalPatient' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap')), 'totalPatientSelected' => $result['total']));
     }
 
     public function createCriteria($form) {
+        $mode_request = $form->mode_request;
+
 
         $diagCriteria = new EMongoCriteria;
         $patCriteria = new EMongoCriteria;
@@ -455,192 +459,39 @@ class MainController extends Controller
                 default:
                     break;
             }
-        $globalCriteria = new EMongoCriteria;
-//        $globalCriteria->setConditions(array(
-//            '$or' => array(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $echTCriteria->getConditions(), $consCriteria->getConditions()), array_merge(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $echNTCriteria->getConditions(), $consCriteria->getConditions()))
-//        )));
-        $echCriteria = new EMongoCriteria;
-        if (count($echTCriteria->getConditions()) > 0 && count($echNTCriteria->getConditions()) > 0)
-            $echCriteria->setConditions(array('$or' => array($echTCriteria->getConditions(), $echNTCriteria->getConditions())));
-        else if (count($echTCriteria->getConditions()) > 0 && count($echNTCriteria->getConditions()) == 0)
-            $echCriteria = $echTCriteria;
-        else if (count($echTCriteria->getConditions()) == 0 && count($echNTCriteria->getConditions()) > 0)
-            $echCriteria = $echNTCriteria;
-        $globalCriteria->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
-        return $globalCriteria;
+
+        return RequestTools::getRequestCriteria($mode_request, $diagCriteria, $patCriteria, $prelCriteria, $echTCriteria, $echNTCriteria, $consCriteria);
     }
 
-    public function createDataProvider(EMongoCriteria $criteria) {
+    public function createDataProvider(EMongoCriteria $criteria, $mode_request) {
         $searchedField1 = CommonTools::AGGREGATEDFIELD1;
         $searchedField2 = CommonTools::AGGREGATEDFIELD2;
-        /**
-         *
-         */
-        /**
-          $reduce = new MongoCode("function(doc,res){"
-          . "if(!(doc.ident_pat_biocap in res.ids))"
-          . "res.ids[doc.ident_pat_biocap]=Array();"
-          . "if(!('CR' in res.ids[doc.ident_pat_biocap]))"
-          . "res.ids[doc.ident_pat_biocap]['CR']=0;"
-          . "if(!('IE' in res.ids[doc.ident_pat_biocap]))"
-          . "res.ids[doc.ident_pat_biocap]['IE']=0;"
-          . "res.total+=1;"
-          . "if(doc.Statut_juridique=='Obtenu'&&res.ids[doc.ident_pat_biocap]['CR']!=2){"
-          . "res.ids[doc.ident_pat_biocap]['CR']=1;"
-          . "}"
-          . "if(doc.Statut_juridique=='Refus'){"
-          . "res.ids[doc.ident_pat_biocap]['CR']=2;"
-          . "}"
-          . "if(doc.Inclusion_protoc_rech=='oui'){"
-          . "res.ids[doc.ident_pat_biocap]['IE']=1;"
-          . "}"
-          . "}"
-          );
-
-          $finalize = new MongoCode("function(res){"
-          . "res.loginList = Object.keys(res.ids);"
-          . "res.patientPartialTotal = res.loginList.length;"
-          . "if(Array.isArray(res.ids)){"
-          . "Object.keys(res.ids).forEach(function(id){"
-          . "if(res.ids[id].CR!=2){"
-          . "res.CR+=res.ids[id].CR;"
-          . "}"
-          . "res.IE+=res.ids[id].IE;"
-          . "})}"
-          . "}"
-          );
-
-          /*
-          $result = SampleCollected::model()->getCollection()->group(
-          array($searchedField1 => true, $searchedField2 => true), array('total' => 0, 'CR' => 0, 'IE' => 0, 'patientPartialTotal' => 0, 'ids' => array()), $reduce
-          , array(
-          'condition' => $criteria->getConditions(),
-          'finalize' => $finalize
-          )
-          );
-         */$query = count($criteria->getConditions()) != 0 ? $criteria->getConditions() : null;
+        $query = count($criteria->getConditions()) != 0 ? $criteria->getConditions() : null;
         $db = SampleCollected::model()->getDb();
-        $result = $db->command(array(
-            //  $result = SampleCollected::model()->getDb()->command(array(
-            'mapreduce' => "sampleCollected",
-            'query' => $query,
-            'map' => new MongoCode('function(){
-          var pat ={};
-          pat.patients=[];
-          var patient = {};
-          patient.id = this.ident_pat_biocap;
-          /*
-          Methode temporaire pour determiner l aspect tumoral ou non de l echantillon
-          */
-var arrayValues=["",null];
-    if( arrayValues.indexOf(this.ADN_derive)>-1
-        &&arrayValues.indexOf(this.ARN_derive)>-1
-    &&arrayValues.indexOf(this.Plasma)>-1
-    &&arrayValues.indexOf(this.Serum)>-1
-    &&arrayValues.indexOf(this.Sang_total)>-1
-    )   {
-        this.isTumoral=2;
-            }else if( arrayValues.indexOf(this.ADN_derive)>-1
-        &&arrayValues.indexOf(this.ARN_derive)>-1
-    )   {
-        this.isTumoral=0;
-            }else if(
-    arrayValues.indexOf(this.Plasma)>-1
-    &&arrayValues.indexOf(this.Serum)>-1
-    &&arrayValues.indexOf(this.Sang_total)>-1
-    )   {
-        this.isTumoral=1;
-            }
 
+        $requestElements = RequestTools::getRequest($mode_request);
 
+        switch ($mode_request) {
+            case "2":
+            case "1":
+                $map = $requestElements['map'];
+                $reduce = $requestElements['reduce'];
+                $finalize = $requestElements['finalize'];
 
-          patient.samples=[];
-          patient.samples.push(this);
-          pat.patients.push(patient);
+                $queryResult = $db->command(array(
+                    'mapreduce' => "sampleCollected",
+                    'query' => $query,
+                    'map' => $map,
+                    'reduce' => $reduce,
+                    'finalize' => $finalize,
+                    //place le resultat en memoire
+                    'out' => Array("inline" => TRUE)
+                ));
 
-           emit(
-   {       RNCE_Lib_GroupeICCC:this.RNCE_Lib_GroupeICCC!=""?this.RNCE_Lib_GroupeICCC:"Inconnu",
-       RNCE_Lib_SousGroupeICCC:this.RNCE_Lib_SousGroupeICCC!=""?this.RNCE_Lib_SousGroupeICCC:"Inconnu"
-       },
-     pat
-     ) }'),
-            'reduce' => new MongoCode('function(key, vals){
-          var result =  {};
-
-          result.patients=[];
-
-          for(var val in vals){
-          pats = vals[val].patients;
-          for(pat in pats){
-          result.patients.push(pats[pat]);
-          }}
-          return result;
-          }'),
-            'finalize' => new MongoCode("function(key,value){
-            var partialResult = {};
-            partialResult.patients={};
-            var pats = value.patients;
-
-        for(pat in pats){
-        var idPat = pats[pat].id;
-            var samps = pats[pat].samples;
-             if(typeof partialResult.patients[idPat] == 'undefined'){
-        partialResult.patients[idPat]=[];
-             }
-         for(samp in samps){
-
-            partialResult.patients[idPat].push(samps[samp]);
-            }
-            }
-
-            var partialResult2={};
-            partialResult2.patients=[];
-            for(partPat in partialResult.patients){
-            var patient={};
-            patient.id=partPat;
-            patient.samples=partialResult.patients[partPat];
-            patient.consentement=0;
-            patient.inclusion=0;
-
-            for(var sample in patient.samples){
-                if(patient.samples[sample].Statut_juridique=='Refus'){
-                    patient.consentement=2;
-                }else if(patient.samples[sample].Statut_juridique=='Obtenu'&&patient.consentement!=2){
-                patient.consentement=1;
-                }
-               if(patient.samples[sample].Inclusion_protoc_rech=='oui'){
-                patient.inclusion=1;
-                                }
-                }
-
-
-
-
-            partialResult2.patients.push(patient);
+                break;
+            default:
         }
-            var result={};
-            result.patientPartialTotal=partialResult2.patients.length;
-            //result.patients=partialResult2.patients;
-            result.CR=0;
-            result.IE=0;
-            for(finalPats in partialResult2.patients){
-               if(partialResult2.patients[finalPats].consentement==1){
-                   result.CR++;
-               }
-                              if(partialResult2.patients[finalPats].inclusion==1){
-                   result.IE++;
-               }
-            }
-
-
-
-            return result;
-        }"),
-            //place le resultat en memoire
-            'out' => Array("inline" => TRUE)
-        ));
-
-
+        $result = RequestTools::filterResult($mode_request, $queryResult);
         return $result;
     }
 

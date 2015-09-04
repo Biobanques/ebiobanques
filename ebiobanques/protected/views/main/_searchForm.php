@@ -154,7 +154,12 @@ return false;
     ?>
 
 
-
+    <div>
+        <?php
+        echo $form->label($model, 'mode_request');
+        echo $form->dropDownList($model, 'mode_request', RequestTools::getModesList());
+        ?>
+    </div>
     <div style="display: flex">
         <div class ="biocapWindow" style="width:65%;">
             <div class='title'>DIAGNOSTIC</div>

@@ -9,6 +9,10 @@
 class LightBiocapForm extends CFormModel
 {
     /*
+     * Mode de requete choisi
+     */
+    public $mode_request = 0;
+    /*
      * DIAGNOSTIC BLOCK
      */
     public $iccc_group;
@@ -66,6 +70,7 @@ class LightBiocapForm extends CFormModel
      */
     public function attributeLabels() {
         return array(
+            'mode_request' => 'Mode de requête',
             /*
              * DIAGNOSTIC
              */

@@ -9,6 +9,10 @@
 class BiocapForm extends CFormModel
 {
     /*
+     * Mode de requete choisi
+     */
+    public $mode_request = 0;
+    /*
      * DIAGNOSTIC BLOCK
      */
     public $iccc_group;

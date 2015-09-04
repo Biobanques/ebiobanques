@@ -134,36 +134,18 @@ Yii::app()->clientScript->registerScript('disablingLF', "
     ?>
 
 
-
+    <div>
+        <?php
+        echo $form->label($model, 'mode_request');
+        echo $form->dropDownList($model, 'mode_request', RequestTools::getModesList());
+        ?>
+    </div>
     <div style="display: flex">
+
         <div class ="biocapWindow" style="width:65%;">
             <div class='title'>DIAGNOSTIC</div>
 
             <div class = "row" style="text-align: right;">
-                <?php
-//                echo $form->label($model, 'iccc_group', array('style' => 'display:inline-block;float:left'));
-                ?>
-
-                <?php
-//                echo $form->textField($model, 'iccc_group1', array('size' => '5'));
-                ?>
-                <?php
-//                echo $form->error($model, 'iccc_group1');
-                ?>
-                <?php
-//                echo $form->textField($model, 'iccc_group2', array('size' => '5'));
-                ?>
-                <?php
-//                echo $form->error($model, 'iccc_group2');
-                ?>
-                <?php
-//                echo $form->textField($model, 'iccc_group3', array('size' => '5'));
-                ?>
-                <?php
-//                echo $form->error($model, 'iccc_group3');
-                ?>
-
-
 
                 <div style='display: inline-block;  vertical-align: top;float: left'>
                     <?php

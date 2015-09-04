@@ -7,17 +7,31 @@
 
 
 Yii::app()->clientScript->registerScript('search', "
+
+
 $('#SwitchLinkLF').click(function(){
-$('#detailled_form').toggle();
+
 $('#light_form').toggle();
+$('#detailled_form').toggle();
+
 });
 $('#SwitchLinkAF').click(function(){
-$('#detailled_form').toggle();
+
 $('#light_form').toggle();
+$('#detailled_form').toggle();
 });
-$('.search-form form').submit(function(){
+$('#light_form form').submit(function(){
 
-
+	$('#result-grid').yiiGridView('update', {
+       // type : 'post',
+	data: $(this).serialize()
+	});
+$('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
+     $(this).serialize()
+   );
+	return false;
+});
+$('#detailled_form form').submit(function(){
 
 	$('#result-grid').yiiGridView('update', {
        // type : 'post',

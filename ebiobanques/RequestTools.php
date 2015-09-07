@@ -12,8 +12,12 @@ class RequestTools
     public function getRequestCriteria($mode_request, $diagCriteria, $patCriteria, $prelCriteria, $echTCriteria, $echNTCriteria, $consCriteria) {
         $result = new EMongoCriteria;
         switch ($mode_request) {
-            case 2:
+            case '2':
+                $echCriteria = new EMongoCriteria;
+                $echCriteria->setConditions(array('$or' => array(array_merge($echTCriteria->getConditions(), array('isTumoral' => 1)), array_merge($echNTCriteria->getConditions(), array('isTumoral' => 0)))));
+                $result->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
                 break;
+
 
 
             case '1':

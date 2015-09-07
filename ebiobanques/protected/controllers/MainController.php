@@ -82,16 +82,16 @@ class MainController extends Controller
             'class' => 'CaptchaExtendedAction',
             'mode' => CaptchaExtendedAction::MODE_WORDS,
         );
-        //ajout de fixed value si mode de dev
+//ajout de fixed value si mode de dev
         if (CommonTools::isInDevMode()) {
             $captchaplus = array('fixedVerifyCode' => "nicolas");
             $captcha = array_merge($captcha, $captchaplus);
         }
         return array(
-            // captcha action renders the CAPTCHA image displayed on the contact page
+// captcha action renders the CAPTCHA image displayed on the contact page
             'captcha' => $captcha,
             // page action renders "static" pages stored under 'protected/views/site/pages'
-            // They can be accessed via: index.php?r=site/page&view=FileName
+// They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
                 'class' => 'CViewAction'
             )
@@ -123,9 +123,16 @@ class MainController extends Controller
 
 
         $dataProvider = new CArrayDataProvider($result['results'], array('keyField' => false/* '_id' */, 'sort' => array('defaultOrder' => 'sous_group_iccc ' . CSort::SORT_DESC, 'attributes' => array('group_iccc', 'sous_group_iccc', 'patientPartialTotal', 'total', 'CR', 'IE'))));
-
-
-        Yii::app()->session['criteria'] = $criteria;
+        $samplesList = array();
+        foreach ($result["results"] as $res) {
+            $value = $res['value'];
+            foreach ($value['patients'] as $patient)
+                foreach ($patient['samples'] as $sample)
+                    $samplesList[] = $sample['_id'];
+        }
+        $storedCriteria = new EMongoCriteria;
+        $storedCriteria->addCond('_id', 'in', $samplesList);
+        Yii::app()->session['criteria'] = $storedCriteria;
         $this->render('searchForm', array('flag' => $flag, 'model' => $model, 'lightModel' => $lightModel, 'dataProvider' => $dataProvider, 'totalPatient' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap')), 'totalPatientSelected' => $result['total']));
     }
 
@@ -413,7 +420,7 @@ class MainController extends Controller
 
 
             $regex = implode("|", $nat_ech);
-            //$echTCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
+//$echTCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
 
             if (isset($form->ETL['adn_der']) && $form->ETL['adn_der'] == 1) {
 
@@ -471,26 +478,20 @@ class MainController extends Controller
 
         $requestElements = RequestTools::getRequest($mode_request);
 
-        switch ($mode_request) {
-            case "2":
-            case "1":
-                $map = $requestElements['map'];
-                $reduce = $requestElements['reduce'];
-                $finalize = $requestElements['finalize'];
+        $map = $requestElements['map'];
+        $reduce = $requestElements['reduce'];
+        $finalize = $requestElements['finalize'];
 
-                $queryResult = $db->command(array(
-                    'mapreduce' => "sampleCollected",
-                    'query' => $query,
-                    'map' => $map,
-                    'reduce' => $reduce,
-                    'finalize' => $finalize,
-                    //place le resultat en memoire
-                    'out' => Array("inline" => TRUE)
-                ));
+        $queryResult = $db->command(array(
+            'mapreduce' => "sampleCollected",
+            'query' => $query,
+            'map' => $map,
+            'reduce' => $reduce,
+            'finalize' => $finalize,
+            //place le resultat en memoire
+            'out' => Array("inline" => TRUE)
+        ));
 
-                break;
-            default:
-        }
         $result = RequestTools::filterResult($mode_request, $queryResult);
         return $result;
     }

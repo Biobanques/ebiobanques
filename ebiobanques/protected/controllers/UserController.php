@@ -5,8 +5,8 @@
  * Used for admin tasks.
  * Access rights only for admin
  */
-class UserController extends Controller {
-
+class UserController extends Controller
+{
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -54,7 +54,8 @@ class UserController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView() {
+        $id = $_GET['userId'];
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -85,7 +86,8 @@ class UserController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate() {
+        $id = $_GET['userId'];
         $model = $this->loadModel($id);
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
@@ -106,7 +108,8 @@ class UserController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete() {
+        $id = $_GET['userId'];
         $this->loadModel($id)->delete();
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
@@ -155,7 +158,8 @@ class UserController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionValidate($id) {
+    public function actionValidate() {
+        $id = $_GET['userId'];
         $model = $this->loadModel($id);
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
@@ -174,7 +178,8 @@ class UserController extends Controller {
         ));
     }
 
-    public function actionRefuseRegistration($id) {
+    public function actionRefuseRegistration() {
+        $id = $_GET['userId'];
         $model = $this->loadModel($id);
         CommonMailer::sendUserRegisterRefusedMail($model);
         $this->redirect(array(
@@ -182,7 +187,8 @@ class UserController extends Controller {
         ));
     }
 
-    public function actionDesactivate($id) {
+    public function actionDesactivate() {
+        $id = $_GET['userId'];
         $model = $this->loadModel($id);
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);

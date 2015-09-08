@@ -158,7 +158,8 @@ class BiocapForm extends CFormModel
             'ENTA[serum]' => 'Sérum',
             'ENTA[plasma]' => 'Plasma',
             'consent_rech' => 'Consentement recherche',
-            'consent_RGC' => 'Consentement recherche génétique constitutionnelle'
+            'consent_RGC' => 'Consentement recherche génétique constitutionnelle',
+            'mode_request' => "Mode de requête",
         );
     }
 

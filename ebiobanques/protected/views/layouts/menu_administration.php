@@ -12,11 +12,11 @@
         $this->widget('zii.widgets.CMenu', array(
             'encodeLabel' => false,
             'items' => array(
-                array('label' => 'Biobanks', 'url' => array('/biobank/admin')),
-                array('label' => 'Files ', 'url' => array('/fileImported/admin')),
-                array('label' => 'Samples', 'url' => array('/echantillon/admin')),
+                // array('label' => 'Biobanks', 'url' => array('/biobank/admin')),
+                // array('label' => 'Files ', 'url' => array('/fileImported/admin')),
+                // array('label' => 'Samples', 'url' => array('/echantillon/admin')),
                 array('label' => 'Users', 'url' => array('/user/admin')),
-                array('label' => 'Contacts', 'url' => array('/contact/admin')),
+                //  array('label' => 'Contacts', 'url' => array('/contact/admin')),
                 array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
             ),
         ));

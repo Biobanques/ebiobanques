@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/ebiobanques/index.php" />
+<title>testUserConnection</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">testUserConnection</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://localhost/ebiobanques/index.php/site/login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LoginForm_username</td>
+	<td>user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LoginForm_password</td>
+	<td>user</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Déconnexion (user)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=SwitchLinkLF</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#light_search-form &gt; div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=BiocapForm_iccc_group1</td>
+	<td>label=IV. Tumeurs du système nerveux sympathique</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#BiocapForm_iccc_group1 &gt; option[value=&quot;IV. Tumeurs du système nerveux sympathique&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_sousgroup1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_group2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=BiocapForm_iccc_group2</td>
+	<td>label=IX. Sarcomes des tissus mous et extra-osseux</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#BiocapForm_iccc_group2 &gt; option[value=&quot;IX. Sarcomes des tissus mous et extra-osseux&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_sousgroup2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_group3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=BiocapForm_iccc_group3</td>
+	<td>label=VI. Tumeurs rénales</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#BiocapForm_iccc_group3 &gt; option[value=&quot;VI. Tumeurs rénales&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_sousgroup3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=BiocapForm_mode_request</td>
+	<td>label=Patients qui ont des échantillons tumoraux ET non tumoraux</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=BiocapForm_ETL_adn_der</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=BiocapForm_ENTA_serum</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=BiocapForm_mode_request</td>
+	<td>label=Patients qui ont des échantillons tumoraux OU non tumoraux</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=SwitchLinkAF</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=LightBiocapForm_iccc_group1</td>
+	<td>label=II. Lymphomes et néoplasmes réticulo-endothéliaux</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=option[value=&quot;II. Lymphomes et néoplasmes réticulo-endothéliaux&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=LightBiocapForm_iccc_sousgroup1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=LightBiocapForm_iccc_group2</td>
+	<td>label=II. Lymphomes et néoplasmes réticulo-endothéliaux</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#LightBiocapForm_iccc_group2 &gt; option[value=&quot;II. Lymphomes et néoplasmes réticulo-endothéliaux&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=LightBiocapForm_iccc_sousgroup2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=LightBiocapForm_iccc_group3</td>
+	<td>label=VII. Tumeurs hépatiques</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#LightBiocapForm_iccc_group3 &gt; option[value=&quot;VII. Tumeurs hépatiques&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=result-grid</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=LightBiocapForm_age_10-14</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=LightBiocapForm_age_2-4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Déconnexion (user)</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

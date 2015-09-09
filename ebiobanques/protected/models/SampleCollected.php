@@ -5,31 +5,20 @@
  * TODO declarere mieux les proprietes de recherche pour eviter dans les logs les usafe attribute
  * NB : Les champs sont stockés sous la form e destring, même pour le svaleurs numériques.
  * L'affectation d'uen valeur numérique pour la recherche peut entrainer des surprises, convertir le svaleurs numériques via strval() pemret d 'eviter certains écueils.
- *  * @property integer $id
- * @property string $id_depositor
- * @property string $id_sample
- * @property string $consent_ethical
- * format stocké M, F, U pour male female, unkown
- * @property string $gender
  *
- * @property int $age
- * @property string $collect_date
- * @property string $storage_conditions
- * @property string $consent
- * @property string $supply
- * @property integer $max_delay_delivery
- * @property string $detail_treatment
- * @property string $disease_outcome
- * @property string $authentication_method
- * @property string $patient_birth_date
- * @property string $tumor_diagnosis
- * @property integer $biobank_id
- * @property integer $file_imported_id
  * @author nicolas
  *
  */
 class SampleCollected extends LoggableActiveRecord
 {
+
+    public function afterConstruct() {
+        foreach ($this->getKeys() as $key) {
+
+            $this::initSoftAttribute($key);
+        }
+        parent::afterConstruct();
+    }
 
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -69,7 +58,11 @@ class SampleCollected extends LoggableActiveRecord
 
     public function search($caseSensitive = false) {
         $criteria = new EMongoCriteria ();
-
+        foreach ($this->getSoftAttributeNames() as $key) {
+            $value = $this->$key;
+            if ($value != '' && $value != null)
+                $criteria->addCond($key, "==", new MongoRegex("/" . StringUtils::accentToRegex($this->$key) . "/i"));
+        }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
@@ -88,6 +81,11 @@ class SampleCollected extends LoggableActiveRecord
 
     public function getDiagPpal() {
         return "$this->CommonTools::AGGREGATEDFIELD1 - $this->CommonTools::AGGREGATEDFIELD2";
+    }
+
+    public function getKeys() {
+
+        return array_keys($this->find()->getAttributes());
     }
 
 }

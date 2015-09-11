@@ -1,0 +1,894 @@
+<html>
+<head><style type='text/css'>
+body, table {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.title {
+    font-style: italic;
+}
+
+.selected {
+    background-color: #ffffcc;
+}
+
+.status_done {
+    background-color: #eeffee;
+}
+
+.status_passed {
+    background-color: #ccffcc;
+}
+
+.status_failed {
+    background-color: #ffcccc;
+}
+
+.breakpoint {
+    background-color: #cccccc;
+    border: 1px solid black;
+}
+</style><title>Test suite results</title></head>
+<body>
+<h1>Test suite results </h1>
+
+<table>
+<tr>
+<td>result:</td>
+<td>passed</td>
+</tr>
+<tr>
+<td>totalTime:</td>
+<td>148</td>
+</tr>
+<tr>
+<td>numTestTotal:</td>
+<td>3</td>
+</tr>
+<tr>
+<td>numTestPasses:</td>
+<td>3</td>
+</tr>
+<tr>
+<td>numTestFailures:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandPasses:</td>
+<td>66</td>
+</tr>
+<tr>
+<td>numCommandFailures:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>numCommandErrors:</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Selenium Version:</td>
+<td>2.44</td>
+</tr>
+<tr>
+<td>Selenium Revision:</td>
+<td>.0</td>
+</tr>
+<tr>
+<td>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr class="title status_passed"><td><b>Test Suite</b></td></tr>
+<tr class=" status_passed"><td><a href="#testresult0">testNotConnected</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult1">testUserConnection</a></td></tr>
+<tr class=" status_passed"><td><a href="#testresult2">testAdminConnection</a></td></tr>
+</tbody></table>
+
+
+</td>
+<td>&nbsp;</td>
+</tr>
+</table><table><tr>
+<td><a name="testresult0">notConnected</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">testNotConnected</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>http://localhost/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>link=Accueil</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=LoginForm_username</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=LoginForm_password</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=yt1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>id=yt1</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_prenom</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_nom</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_login</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_password</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_email</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_telephone</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_gsm</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>id=User_verifyCode</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyElementPresent</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=div.flash-error</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=div.errorMessage</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>//form[@id='user-form']/table/tbody/tr/td[2]/div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>//form[@id='user-form']/table/tbody/tr[2]/td/div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>//form[@id='user-form']/table/tbody/tr[2]/td[2]/div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>//form[@id='user-form']/table/tbody/tr[3]/td/div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>//form[@id='user-form']/table/tbody/tr[4]/td[2]/div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>//form[@id='user-form']/table/tbody/tr[5]/td/div</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=LoginForm_username_em_</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=LoginForm_password_em_</td>
+	<td></td>
+</tr>
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult1">userConnected</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">testUserConnection</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>http://localhost/ebiobanques/index.php/site/login</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=LoginForm_username</td>
+	<td>user</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=LoginForm_password</td>
+	<td>user</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Déconnexion (user)</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=SwitchLinkLF</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=#light_search-form &gt; div</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=BiocapForm_iccc_group1</td>
+	<td>label=IV. Tumeurs du système nerveux sympathique</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>css=#BiocapForm_iccc_group1 &gt; option[value="IV. Tumeurs du système nerveux sympathique"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_sousgroup1</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_group2</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=BiocapForm_iccc_group2</td>
+	<td>label=IX. Sarcomes des tissus mous et extra-osseux</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>css=#BiocapForm_iccc_group2 &gt; option[value="IX. Sarcomes des tissus mous et extra-osseux"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_sousgroup2</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_group3</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=BiocapForm_iccc_group3</td>
+	<td>label=VI. Tumeurs rénales</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>css=#BiocapForm_iccc_group3 &gt; option[value="VI. Tumeurs rénales"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=BiocapForm_iccc_sousgroup3</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=BiocapForm_mode_request</td>
+	<td>label=Patients qui ont des échantillons tumoraux ET non tumoraux</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=BiocapForm_ETL_adn_der</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=BiocapForm_ENTA_serum</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=BiocapForm_mode_request</td>
+	<td>label=Patients qui ont des échantillons tumoraux OU non tumoraux</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=SwitchLinkAF</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=LightBiocapForm_iccc_group1</td>
+	<td>label=II. Lymphomes et néoplasmes réticulo-endothéliaux</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>css=option[value="II. Lymphomes et néoplasmes réticulo-endothéliaux"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=LightBiocapForm_iccc_sousgroup1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=LightBiocapForm_iccc_group2</td>
+	<td>label=II. Lymphomes et néoplasmes réticulo-endothéliaux</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>css=#LightBiocapForm_iccc_group2 &gt; option[value="II. Lymphomes et néoplasmes réticulo-endothéliaux"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=LightBiocapForm_iccc_sousgroup2</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>select</td>
+	<td>id=LightBiocapForm_iccc_group3</td>
+	<td>label=VII. Tumeurs hépatiques</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>css=#LightBiocapForm_iccc_group3 &gt; option[value="VII. Tumeurs hépatiques"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=result-grid</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=LightBiocapForm_age_10-14</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=LightBiocapForm_age_2-4</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Déconnexion (user)</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td><a name="testresult2">adminConnected</a><br/><div>
+<table xmlns="http://www.w3.org/1999/xhtml" cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr class="title status_passed"><td rowspan="1" colspan="3">testAdminConnection</td></tr>
+</thead><tbody>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>open</td>
+	<td>http://localhost/ebiobanques/index.php</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Connexion</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=LoginForm_password</td>
+	<td>adm_BCApp</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>type</td>
+	<td>id=LoginForm_username</td>
+	<td>admin</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Administration</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Déconnexion (admin)</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Administration</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Log système</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Advanced Search</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Créer un utilisateur</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Désactiver</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=tr.even &gt; td.button-column &gt; a.view &gt; img[alt="Voir"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=img[alt="Mettre à jour"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=img[alt="Supprimer"]</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Log système</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>Suivi des actions sur la base</td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Samples</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Administration des échantillons</td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>link=Advanced Search</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>link=Advanced Search</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=img[alt="Voir"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=img[alt="Mettre à jour"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=img[alt="Supprimer"]</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>css=img[alt="Voir"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=h1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Samples</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>css=img[alt="Mettre à jour"]</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=h1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>name=yt0</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=div.flash-success</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=h1</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Rechercher des échantillons</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=SwitchLinkLF</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=#light_search-form &gt; div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=result-grid</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>click</td>
+	<td>id=SwitchLinkLF</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=SwitchLinkAF</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=#light_search-form &gt; div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=#light_search-form &gt; div</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>id=result-grid</td>
+	<td></td>
+</tr>
+<tr class=" status_passed" style="cursor: pointer;">
+	<td>assertElementPresent</td>
+	<td>css=img[alt="View"]</td>
+	<td></td>
+</tr>
+<tr class=" status_done" style="cursor: pointer;">
+	<td>clickAndWait</td>
+	<td>link=Déconnexion (admin)</td>
+	<td></td>
+</tr>
+</tbody></table>
+</div></td>
+<td>&nbsp;</td>
+</tr></table><pre>
+info: Starting test /selenium-server/tests/notConnected
+info: Executing: |open | http://localhost/ebiobanques/index.php |  |
+info: Executing: |verifyElementPresent | link=Accueil |  |
+info: Executing: |verifyElementPresent | link=Connexion |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |clickAndWait | link=Connexion |  |
+info: Executing: |verifyElementPresent | id=LoginForm_username |  |
+info: Executing: |verifyElementPresent | id=LoginForm_password |  |
+info: Executing: |verifyElementPresent | id=yt1 |  |
+info: Executing: |clickAndWait | id=yt1 |  |
+info: Executing: |verifyElementPresent | id=User_prenom |  |
+info: Executing: |verifyElementPresent | id=User_nom |  |
+info: Executing: |verifyElementPresent | id=User_login |  |
+info: Executing: |verifyElementPresent | id=User_password |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |verifyElementPresent | id=User_email |  |
+info: Executing: |verifyElementPresent | id=User_telephone |  |
+info: Executing: |verifyElementPresent | id=User_gsm |  |
+info: Executing: |verifyElementPresent | id=User_verifyCode |  |
+info: Executing: |verifyElementPresent | name=yt0 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |selectWindow | null |  |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | css=div.flash-error |  |
+info: Executing: |assertElementPresent | css=div.errorMessage |  |
+info: Executing: |assertElementPresent | //form[@id=&apos;user-form&apos;]/table/tbody/tr/td[2]/div |  |
+info: Executing: |assertElementPresent | //form[@id=&apos;user-form&apos;]/table/tbody/tr[2]/td/div |  |
+info: Executing: |assertElementPresent | //form[@id=&apos;user-form&apos;]/table/tbody/tr[2]/td[2]/div |  |
+info: Executing: |assertElementPresent | //form[@id=&apos;user-form&apos;]/table/tbody/tr[3]/td/div |  |
+info: Executing: |assertElementPresent | //form[@id=&apos;user-form&apos;]/table/tbody/tr[4]/td[2]/div |  |
+info: Executing: |assertElementPresent | //form[@id=&apos;user-form&apos;]/table/tbody/tr[5]/td/div |  |
+info: Executing: |clickAndWait | link=Connexion |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |click | name=yt0 |  |
+info: Executing: |assertElementPresent | id=LoginForm_username_em_ |  |
+info: Executing: |assertElementPresent | id=LoginForm_password_em_ |  |
+info: Starting test /selenium-server/tests/userConnected
+info: Executing: |open | http://localhost/ebiobanques/index.php/site/login |  |
+info: Executing: |clickAndWait | link=Connexion |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=LoginForm_username | user |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |type | id=LoginForm_password | user |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Executing: |clickAndWait | link=Rechercher des échantillons |  |
+info: Executing: |assertElementPresent | link=Rechercher des échantillons |  |
+info: Executing: |assertElementPresent | link=Déconnexion (user) |  |
+info: Executing: |clickAndWait | link=Rechercher des échantillons |  |
+info: Executing: |assertElementPresent | id=SwitchLinkLF |  |
+info: Executing: |assertElementPresent | css=#light_search-form &gt; div |  |
+info: Executing: |select | id=BiocapForm_iccc_group1 | label=IV. Tumeurs du système nerveux sympathique |
+info: Executing: |click | css=#BiocapForm_iccc_group1 &gt; option[value=&quot;IV. Tumeurs du système nerveux sympathique&quot;] |  |
+info: Executing: |assertElementPresent | id=BiocapForm_iccc_sousgroup1 |  |
+info: Executing: |assertElementPresent | id=BiocapForm_iccc_group2 |  |
+info: Executing: |select | id=BiocapForm_iccc_group2 | label=IX. Sarcomes des tissus mous et extra-osseux |
+info: Executing: |click | css=#BiocapForm_iccc_group2 &gt; option[value=&quot;IX. Sarcomes des tissus mous et extra-osseux&quot;] |  |
+info: Executing: |assertElementPresent | id=BiocapForm_iccc_sousgroup2 |  |
+info: Executing: |assertElementPresent | id=BiocapForm_iccc_group3 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |select | id=BiocapForm_iccc_group3 | label=VI. Tumeurs rénales |
+info: Executing: |click | css=#BiocapForm_iccc_group3 &gt; option[value=&quot;VI. Tumeurs rénales&quot;] |  |
+info: Executing: |assertElementPresent | id=BiocapForm_iccc_sousgroup3 |  |
+info: Executing: |click | name=yt1 |  |
+info: Executing: |select | id=BiocapForm_mode_request | label=Patients qui ont des échantillons tumoraux ET non tumoraux |
+info: Executing: |click | name=yt1 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |click | id=BiocapForm_ETL_adn_der |  |
+info: Executing: |click | id=BiocapForm_ENTA_serum |  |
+info: Executing: |select | id=BiocapForm_mode_request | label=Patients qui ont des échantillons tumoraux OU non tumoraux |
+info: Executing: |click | name=yt1 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |click | id=SwitchLinkAF |  |
+info: Executing: |select | id=LightBiocapForm_iccc_group1 | label=II. Lymphomes et néoplasmes réticulo-endothéliaux |
+info: Executing: |click | css=option[value=&quot;II. Lymphomes et néoplasmes réticulo-endothéliaux&quot;] |  |
+info: Executing: |assertElementPresent | id=LightBiocapForm_iccc_sousgroup1 |  |
+info: Executing: |select | id=LightBiocapForm_iccc_group2 | label=II. Lymphomes et néoplasmes réticulo-endothéliaux |
+info: Executing: |click | css=#LightBiocapForm_iccc_group2 &gt; option[value=&quot;II. Lymphomes et néoplasmes réticulo-endothéliaux&quot;] |  |
+info: Executing: |assertElementPresent | id=LightBiocapForm_iccc_sousgroup2 |  |
+info: Executing: |select | id=LightBiocapForm_iccc_group3 | label=VII. Tumeurs hépatiques |
+info: Executing: |click | css=#LightBiocapForm_iccc_group3 &gt; option[value=&quot;VII. Tumeurs hépatiques&quot;] |  |
+info: Executing: |assertElementPresent | id=result-grid |  |
+info: Executing: |click | id=LightBiocapForm_age_10-14 |  |
+info: Executing: |click | name=yt0 |  |
+info: Executing: |click | id=LightBiocapForm_age_2-4 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |click | name=yt0 |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |clickAndWait | link=Déconnexion (user) |  |
+info: Starting test /selenium-server/tests/adminConnected
+info: Executing: |open | http://localhost/ebiobanques/index.php |  |
+info: Executing: |clickAndWait | link=Connexion |  |
+info: Executing: |type | id=LoginForm_password | adm_BCApp |
+info: Executing: |type | id=LoginForm_username | admin |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Executing: |assertElementPresent | link=Rechercher des échantillons |  |
+info: Executing: |assertElementPresent | link=Administration |  |
+info: Executing: |assertElementPresent | link=Déconnexion (admin) |  |
+info: Executing: |clickAndWait | link=Administration |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | link=Users |  |
+info: Executing: |assertElementPresent | link=Log système |  |
+info: Executing: |clickAndWait | link=Users |  |
+info: Executing: |assertElementPresent | link=Advanced Search |  |
+info: Executing: |assertElementPresent | link=Créer un utilisateur |  |
+info: Executing: |assertElementPresent | link=Désactiver |  |
+info: Executing: |assertElementPresent | css=tr.even &gt; td.button-column &gt; a.view &gt; img[alt=&quot;Voir&quot;] |  |
+info: Executing: |assertElementPresent | css=img[alt=&quot;Mettre à jour&quot;] |  |
+info: Executing: |assertElementPresent | css=img[alt=&quot;Supprimer&quot;] |  |
+info: Executing: |clickAndWait | link=Log système |  |
+info: Executing: |assertText | css=h1 | Suivi des actions sur la base |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |selectWindow | null |  |
+info: Executing: |clickAndWait | link=Samples |  |
+info: Executing: |verifyText | css=h1 | Administration des échantillons |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | link=Advanced Search |  |
+info: Executing: |click | link=Advanced Search |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | name=yt0 |  |
+info: Executing: |assertElementPresent | css=img[alt=&quot;Voir&quot;] |  |
+info: Executing: |assertElementPresent | css=img[alt=&quot;Mettre à jour&quot;] |  |
+info: Executing: |assertElementPresent | css=img[alt=&quot;Supprimer&quot;] |  |
+info: Executing: |clickAndWait | css=img[alt=&quot;Voir&quot;] |  |
+info: Executing: |assertElementPresent | css=h1 |  |
+info: Executing: |clickAndWait | link=Samples |  |
+info: Executing: |clickAndWait | css=img[alt=&quot;Mettre à jour&quot;] |  |
+info: Executing: |assertElementPresent | css=h1 |  |
+info: Executing: |clickAndWait | name=yt0 |  |
+info: Executing: |assertElementPresent | css=div.flash-success |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | css=h1 |  |
+info: Executing: |clickAndWait | link=Rechercher des échantillons |  |
+info: Executing: |assertElementPresent | id=SwitchLinkLF |  |
+info: Executing: |assertElementPresent | css=#light_search-form &gt; div |  |
+info: Executing: |assertElementPresent | id=result-grid |  |
+info: Executing: |click | id=SwitchLinkLF |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | id=SwitchLinkAF |  |
+info: Executing: |assertElementPresent | css=#light_search-form &gt; div |  |
+info: Executing: |assertElementPresent | css=#light_search-form &gt; div |  |
+info: Selenium 1.0 (Core, RC, etc) is no longer under active development. Please update to WebDriver ASAP
+info: Executing: |assertElementPresent | id=result-grid |  |
+info: Executing: |assertElementPresent | css=img[alt=&quot;View&quot;] |  |
+info: Executing: |clickAndWait | link=Déconnexion (admin) |  |
+</pre></body></html>

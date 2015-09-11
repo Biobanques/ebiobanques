@@ -15,20 +15,22 @@
 
         <?php
         foreach ($model->attributes as $nameAtt => $valueAtt) {
-            ?>
-            <div style="float: left; width: 24%">
-                <?php echo $form->labelEx($model, $nameAtt); ?>
-                <?php echo $form->textField($model, $nameAtt, array('size' => 5, 'maxlength' => 45)); ?>
-                <?php echo $form->error($model, $nameAtt); ?>
-            </div>
-            <?php
+            if ($nameAtt != "_id") {
+                ?>
+                <div style="float: left; width: 24%">
+                    <?php echo $form->labelEx($model, $nameAtt); ?>
+                    <?php echo $form->textField($model, $nameAtt, array('size' => 5, 'maxlength' => 45)); ?>
+                    <?php echo $form->error($model, $nameAtt); ?>
+                </div>
+                <?php
+            }
         }
         ?>
     </div>
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
-    <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 
 </div><!-- form -->

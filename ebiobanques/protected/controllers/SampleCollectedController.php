@@ -52,13 +52,17 @@ class SampleCollectedController extends Controller
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate() {
+
         $id = $_GET['sampleId'];
         $model = $this->loadModel($id);
+        $model->setScenario('update');
         if (isset($_POST['SampleCollected'])) {
-            $model->attributes = $_POST['SampleCollected'];
+
+            $model->setAttributes($_POST['SampleCollected']);
+
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'the sample has been successfully updated.');
-                $this->redirect(array('view', 'id' => $model->_id));
+                $this->redirect(array('view', 'sampleId' => $model->_id));
             } else {
                 Yii::app()->user->setFlash('error', 'a problem occured to save the sample.');
             }

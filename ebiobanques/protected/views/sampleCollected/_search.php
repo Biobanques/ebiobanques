@@ -1,6 +1,6 @@
 <?php
 /* @var $this EchantillonController */
-/* @var $model Echantillon */
+/* @var $model SampleCollected */
 /* @var $form CActiveForm */
 ?>
 
@@ -14,21 +14,27 @@
     ?>
     <?php
     foreach ($model->attributes as $nameAtt => $valueAtt) {
-        ?>
-        <div style="float: left">
-        <?php echo $form->label($model, $nameAtt); ?>
-        <?php echo $form->textField($model, $nameAtt); ?>
-        </div>
+        if ($nameAtt != "_id") {
+            ?>
+            <div style="float: left">
+                <?php
+                echo $form->label($model, $nameAtt);
+                ?>
+                <?php
+                echo $form->textField($model, $nameAtt);
+                ?>
+            </div>
 
             <?php
         }
-        ?>
+    }
+    ?>
 
 
     <div class="row buttons">
-    <?php echo CHtml::submitButton('Search'); ?>
+<?php echo CHtml::submitButton('Search'); ?>
     </div>
 
-        <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 
 </div><!-- search-form -->

@@ -13,6 +13,8 @@ class SampleCollected extends LoggableActiveRecord
 {
 
     public function afterConstruct() {
+
+
         foreach ($this->getKeys() as $key) {
 
             $this::initSoftAttribute($key);
@@ -37,8 +39,12 @@ class SampleCollected extends LoggableActiveRecord
     }
 
     public function rules() {
-        return array(
-        );
+        $rules = array();
+        if ($this->scenario == 'insert' || $this->scenario == 'update') {
+            foreach ($this->attributes as $name => $value)
+                $rules[] = array((string) $name, 'safe');
+        }
+        return $rules;
     }
 
     public function attributeLabels() {

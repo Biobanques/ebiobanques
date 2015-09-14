@@ -73,6 +73,10 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
     foreach ($summaryModel->attributes as $attributeName => $attributeValue) {
         if (is_string($attributeValue) && $attributeValue != "" && $attributeValue != 'inconnu') {
             switch ($attributeName) {
+
+                case 'mode_request':
+                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . RequestTools::getModesList()[$attributeValue] . ",</li>";
+                    break;
                 case 'topoOrganeType':
                     if ($summaryModel->topoOrganeField1 != null && $summaryModel->topoOrganeField1 != "")
                         echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";

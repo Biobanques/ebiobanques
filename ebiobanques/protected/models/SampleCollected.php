@@ -77,11 +77,23 @@ class SampleCollected extends LoggableActiveRecord
 
     public function getGroupList() {
         $values = $this->getCollection()->distinct(CommonTools::AGGREGATEDFIELD1);
-        natcasesort($values);
+
+        //natcasesort($values);
+        $partialResult = array();
         $result = array();
+
+
+        $partialResult[0] = 'Selectionnez un groupe';
         foreach ($values as $value)
-            if ($value != "")
-                $result[$value] = $value;
+            if ($value != "") {
+                $romanNumber = explode(".", $value)[0];
+                $index = CommonTools::toNumber($romanNumber);
+                $partialResult[$index] = $value;
+            }
+        ksort($partialResult);
+        foreach ($partialResult as $res) {
+            $result[$res] = $res;
+        }
         return $result;
     }
 

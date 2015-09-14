@@ -157,7 +157,9 @@ Yii::app()->clientScript->registerScript('disablingLF', "
 
 
                     <?php
-                    echo $form->dropDownList($model, 'iccc_group1', SampleCollected::model()->getGroupList(), array('prompt' => 'Selectionner un groupe', 'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->dropDownList($model, 'iccc_group1', SampleCollected::model()->getGroupList(), array(
+                        //'prompt' => 'Selectionner un groupe',
+                        'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                     ?>
                     <div id="LFssgroup1">
 
@@ -167,7 +169,9 @@ Yii::app()->clientScript->registerScript('disablingLF', "
 
 
                     <?php
-                    echo $form->dropDownList($model, 'iccc_group2', SampleCollected::model()->getGroupList(), array('prompt' => 'Selectionner un groupe', 'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->dropDownList($model, 'iccc_group2', SampleCollected::model()->getGroupList(), array(
+                        //'prompt' => 'Selectionner un groupe',
+                        'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                     ?>
                     <div id="LFssgroup2">
 
@@ -177,7 +181,9 @@ Yii::app()->clientScript->registerScript('disablingLF', "
 
 
                     <?php
-                    echo $form->dropDownList($model, 'iccc_group3', SampleCollected::model()->getGroupList(), array('prompt' => 'Selectionner un groupe', 'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form->dropDownList($model, 'iccc_group3', SampleCollected::model()->getGroupList(), array(
+                        // 'prompt' => 'Selectionner un groupe',
+                        'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                     ?>
                     <div id="LFssgroup3">
 

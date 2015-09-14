@@ -42,15 +42,15 @@
                  */
                 $controler = Yii::app()->getController()->getId();
                 $action = Yii::app()->getController()->getAction()->getId();
-                echo CHtml::link(
-                        CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "fr"))
-                        )
-//                        ,                      $htmlOptions
-                );
-                echo CHtml::link(
-                        CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "en")))
-                        , array('style' => "padding-left: 10px;")
-                );
+//                echo CHtml::link(
+//                        CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "fr"))
+//                        )
+////                        ,                      $htmlOptions
+//                );
+//                echo CHtml::link(
+//                        CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'), Yii::app()->createUrl("$controler/$action", array_merge($_GET, array('lang' => "en")))
+//                        , array('style' => "padding-left: 10px;")
+//                );
                 ?>
             </div>
             <div style="float:right;padding-top:10px;">

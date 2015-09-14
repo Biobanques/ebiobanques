@@ -17,7 +17,7 @@ class AuditTrail extends EMongoDocument
      * @var integer $user_id
      * @var string $model_id
      */
-    public $id;
+    // public $id;
     public $new_value;
     public $old_value;
     public $action;
@@ -53,7 +53,7 @@ class AuditTrail extends EMongoDocument
             array('field', 'length', 'max' => 255),
             array('model_id', 'length', 'max' => 255),
             array('user_id', 'length', 'max' => 255),
-            array('id, new_value, old_value, action, model, field, stamp, user_id, model_id', 'safe', 'on' => 'search'),
+            array('new_value, old_value, action, model, field, stamp, user_id, model_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -88,8 +88,24 @@ class AuditTrail extends EMongoDocument
      */
     public function search($options = array()) {
         $criteria = new EMongoCriteria;
+        foreach ($this->attributes as $attrName => $attrValue) {
+            if ($attrValue != null && $attrValue != "") {
+                $criteria->addCond($attrName, '==', new MongoRegex("/" . StringUtils::accentToRegex($attrValue) . "/i"));
+            }
+        }
+
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'sort' => array('attributes' => array(
+                    'old_value',
+                    'new_value',
+                    'action',
+                    'model',
+                    'field',
+                    'stamp',
+                    'user_id',
+                    'model_id',
+                ))
         ));
     }
 

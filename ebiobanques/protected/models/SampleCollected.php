@@ -83,7 +83,7 @@ class SampleCollected extends LoggableActiveRecord
         $result = array();
 
 
-        //$partialResult[0] = 'Selectionnez un groupe';
+
         foreach ($values as $value)
             if ($value != "") {
                 $romanNumber = explode(".", $value)[0];

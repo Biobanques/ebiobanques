@@ -83,11 +83,11 @@ class SampleCollected extends LoggableActiveRecord
         $result = array();
 
 
-        $partialResult[0] = 'Selectionnez un groupe';
+        //$partialResult[0] = 'Selectionnez un groupe';
         foreach ($values as $value)
             if ($value != "") {
                 $romanNumber = explode(".", $value)[0];
-                $index = CommonTools::toNumber($romanNumber);
+                $index = CommonTools::toNumber($romanNumber) - 1;
                 $partialResult[$index] = $value;
             }
         ksort($partialResult);

@@ -105,17 +105,19 @@ class MainController extends Controller
         $flag = 1;
         $criteria = new EMongoCriteria;
         $mode_request = '1';
-        if (isset($_GET['BiocapForm'])) {
+        if (isset($_GET['type']) && $_GET['type'] == 'advanced') {
             $flag = 0;
             $model->unsetAttributes();
             $model->attributes = $_GET['BiocapForm'];
+
             $mode_request = $model->mode_request;
             $criteria = $this->createCriteria($model);
         }
-        if (isset($_GET['LightBiocapForm'])) {
+        if (isset($_GET['type']) && $_GET['type'] == 'light') {
             $flag = 1;
             $lightModel->unsetAttributes();
             $lightModel->attributes = $_GET['LightBiocapForm'];
+
             $mode_request = $lightModel->mode_request;
             $criteria = $this->createCriteria($lightModel);
         }

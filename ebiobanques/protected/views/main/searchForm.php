@@ -20,14 +20,23 @@ $('#SwitchLinkAF').click(function(){
 $('#light_form').toggle();
 $('#detailled_form').toggle();
 });
+
+$('#LSFSubmit').click(function(){
+$('#light_search-form').submit();
+return false;
+});
+$('#SFSubmit').click(function(){
+$('#search-form').submit();
+return false;
+});
 $('#light_form form').submit(function(){
 
 	$('#result-grid').yiiGridView('update', {
        // type : 'post',
-	data: $(this).serialize()
+	data: $('#light_search-form').serialize()+'&type=light'
 	});
 $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
-     $(this).serialize()
+     $('#light_search-form').serialize()+'&type=light'
    );
 	return false;
 });
@@ -35,10 +44,10 @@ $('#detailled_form form').submit(function(){
 
 	$('#result-grid').yiiGridView('update', {
        // type : 'post',
-	data: $(this).serialize()
+	data: $('#search-form').serialize()+'&type=advanced'
 	});
 $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
-     $(this).serialize()
+     $('#search-form').serialize()+'&type=advanced'
    );
 	return false;
 });

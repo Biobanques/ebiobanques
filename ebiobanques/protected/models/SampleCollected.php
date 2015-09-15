@@ -71,7 +71,8 @@ class SampleCollected extends LoggableActiveRecord
         }
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'sort' => array('attributes' => $this->attributeNames())
         ));
     }
 

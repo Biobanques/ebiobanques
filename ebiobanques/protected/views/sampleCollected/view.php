@@ -3,7 +3,7 @@
 /* @var $model Echantillon */
 ?>
 
-<h1>View Sample #<?php echo $model->_id ?></h1>
+<h1>Echantillon #<?php echo $model->_id ?></h1>
 
 <?php
 $this->widget('zii.widgets.CDetailView', array(

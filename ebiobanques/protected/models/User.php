@@ -77,7 +77,8 @@ class User extends LoggableActiveRecord
         //always sort with alphabetical order
         $criteria->sort('nom', EMongoCriteria::SORT_ASC);
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'sort' => array('attributes' => $this->attributeNames())
         ));
     }
 

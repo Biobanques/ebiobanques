@@ -14,10 +14,10 @@
             'items' => array(
                 // array('label' => 'Biobanks', 'url' => array('/biobank/admin')),
                 // array('label' => 'Files ', 'url' => array('/fileImported/admin')),
-                array('label' => 'Samples', 'url' => array('/sampleCollected/admin')),
-                array('label' => 'Users', 'url' => array('/user/admin')),
+                array('label' => 'Echantillons', 'url' => array('/sampleCollected/admin')),
+                array('label' => 'Utilisateurs', 'url' => array('/user/admin')),
                 //  array('label' => 'Contacts', 'url' => array('/contact/admin')),
-                array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
+                array('label' => 'Logs système', 'url' => array('/auditTrail/admin')),
             ),
         ));
         $this->endWidget();

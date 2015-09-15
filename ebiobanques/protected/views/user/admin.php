@@ -19,9 +19,18 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1>Gestion des utilisateurs</h1>
+<div class='help'>
+    <div class="help-title">
+        Gestion des utilisateurs de l'application
+    </div>
+    <div class="help-content">
+        <p> Vous pouvez ici ajouter, modifier ou supprimer les utilisateurs de l'application, ainsi que les activer ou les désactiver. </p>
+        <p>Vous pouvez faire une recherche précise sur les utilisateurs, ou filtrer et trier directement dans le tableau de résultats.
+        </p>
+    </div>
+</div>
 
-
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -36,12 +45,13 @@ echo CHtml::link('Créer un utilisateur', Yii::app()->createUrl('user/create'));
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
+    'filter' => $model,
     'columns' => array(
         'prenom',
         'nom',
         'login',
-        array('header' => Yii::t('sample', 'biobank_id'),
-            'value' => '$data->getBiobankName()'),
+//        array('header' => Yii::t('sample', 'biobank_id'),
+//            'value' => '$data->getBiobankName()'),
         'email',
         array('header' => "Profil",
             'value' => '$data->getProfil()'),

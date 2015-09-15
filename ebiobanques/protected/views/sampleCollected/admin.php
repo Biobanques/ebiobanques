@@ -19,12 +19,18 @@ $('.search-form form').submit(function(){
 
 <h1>Administration des échantillons</h1>
 
-<p>
-    You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-    or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<div class='help'>
+    <div class="help-title">
+        Gestion des echantillons
+    </div>
+    <div class="help-content">
+        <p> Vous pouvez ici ajouter, modifier ou supprimer des échantillons dans la base de données.</p>
+        <p><b>ATTENTION : toute modification sera annulée lors du prochain import de données</b></p>
+        <p>Vous pouvez faire une recherche précise sur les échantillons, ou filtrer et trier directement dans le tableau de résultats.
+        </p>
+    </div>
+</div>
+<?php echo CHtml::link(Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

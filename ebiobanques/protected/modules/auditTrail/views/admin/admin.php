@@ -15,9 +15,18 @@ $('.search-form form').submit(function(){
 
 <h1>Suivi des actions sur la base</h1>
 
+<div class='help'>
+    <div class="help-title">
+        Suivi des actions effectuées par les utilisateurs sur la base de données
+    </div>
+    <div class="help-content">
+        <p> Vous pourrez ici suivre les actions effectuées par les utilisateurs sur la base de données. </p>
+        <p>Vous pouvez faire une recherche précise sur les logs, ou filtrer et trier directement dans le tableau de résultats.
+        </p>
+    </div>
+</div>
 
-
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

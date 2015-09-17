@@ -45,4 +45,13 @@ class Controller extends CController
         ));
     }
 
+    public function beforeAction($action) {
+
+
+        if (Yii::app()->params['maintenance'] == true) {
+            throw new CHttpException(403, 'Site under Maintenance');
+        } else
+            return parent::beforeAction($action);
+    }
+
 }

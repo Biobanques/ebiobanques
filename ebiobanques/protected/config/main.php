@@ -99,6 +99,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => CommonProperties::$ADMIN_EMAIL,
+        'maintenance' => CommonProperties::$IN_MAINTENANCE,
         //variable pour activer systeme de mail
         'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,
         'mailRelanceExport' => CommonProperties::$MAIL_RELANCE_EXPORT,

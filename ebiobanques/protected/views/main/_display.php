@@ -37,7 +37,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     (
                     'label' => 'View',
                     'imageUrl' => Yii::app()->request->baseUrl . '/images/zoom.png',
-                    'url' => 'Yii::app()->createUrl("main/details", array("iccc"=>$data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"]))',
+                    'url' => 'Yii::app()->createUrl("main/details", array("group_iccc"=>$data["_id"]["' . CommonTools::AGGREGATEDFIELD1 . '"],"sous_group_iccc"=>$data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"]))',
                     'click' => 'popupdetails',
                 )
             ),

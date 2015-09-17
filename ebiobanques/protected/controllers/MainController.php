@@ -503,15 +503,17 @@ class MainController extends Controller
         $this->layout = '//layouts/detailview';
         $criteria = Yii::app()->session['criteria'];
 
-        if (isset($_GET['iccc']))
-            $criteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', $_GET['iccc']);
+        if (isset($_GET['sous_group_iccc']))
+            $criteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', $_GET['sous_group_iccc']);
         $criteria->sort('ident_pat_biocap', EMongoCriteria::SORT_ASC);
         $dataProvider = new EMongoDocumentDataProvider('SampleCollected');
 
 
         $dataProvider->setCriteria($criteria);
 
-        $this->render('details', array('dataProvider' => $dataProvider));
+        $this->render('details', array('dataProvider' => $dataProvider,
+            'group' => $_GET['group_iccc'],
+            'sous_group' => $_GET['sous_group_iccc']));
     }
 
     public function actionGetSousGroupList() {

@@ -5,6 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+?>
+
+<?php
 
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'details-grid',
@@ -14,8 +17,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
     'columns' => array(
         array('name' => 'ident_pat_biocap', 'header' => "Identifiant BIOCAP"),
-        'RNCE_Lib_GroupeICCC',
-        'RNCE_Lib_SousGroupeICCC',
+        //'RNCE_Lib_GroupeICCC',
+//        array('name' => 'Groupe&nbspICCC', 'value' => 'strlen($data["RNCE_Lib_GroupeICCC"]) < 50 ? $data["RNCE_Lib_GroupeICCC"]."" : substr($data["RNCE_Lib_GroupeICCC"],0,45)."..."'),
+//        array('name' => 'Sous&nbspgroupe&nbspICCC', 'value' => 'strlen($data["RNCE_Lib_SousGroupeICCC"]) < 50 ? $data["RNCE_Lib_SousGroupeICCC"]."": substr($data["RNCE_Lib_SousGroupeICCC"],0,45)."..."'),
+        //array('value' => 'strlen($data["RNCE_Lib_SousGroupeICCC"]) < 50 ? "-" : "+"'),
         'RNCE_Type_Evnmt2',
         'Statut_juridique',
         'RNCE_StatutVital',

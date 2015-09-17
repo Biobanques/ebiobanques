@@ -274,7 +274,7 @@ class MainController extends Controller
                     $patCriteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
                     break;
                 case 'decede';
-                    $patCriteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('vv') . "/i"));
+                    $patCriteria->addCond('RNCE_StatutVital', '==', new MongoRegex("/" . StringUtils::accentToRegex('dcd') . "/i"));
                     break;
                 case 'inconnu':
                 default:

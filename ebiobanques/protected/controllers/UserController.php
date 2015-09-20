@@ -72,7 +72,7 @@ class UserController extends Controller
             $model->attributes = $_POST['User'];
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
-                $this->redirect(array('view', 'id' => $model->_id));
+                $this->redirect(array('view', 'userId' => $model->_id));
             }
         }
 

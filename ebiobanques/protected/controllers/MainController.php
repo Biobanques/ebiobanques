@@ -185,9 +185,7 @@ class MainController extends Controller
 //            $diagCriteria->addCond(CommonTools::AGGREGATEDFIELD1, '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_group) . "/i"));
 //        }
 
-        $group_ssgroup1 = array();
-        $group_ssgroup2 = array();
-        $group_ssgroup3 = array();
+
         $groupCond = array();
 
         $groupCond['$or'] = array();
@@ -211,10 +209,11 @@ class MainController extends Controller
                     }
                 }
             }
+            $diagCriteria->setConditions($groupCond);
         }
 
 
-        $diagCriteria->setConditions($groupCond);
+
         /*
          * Regex for topo / organe fields
          */
@@ -399,7 +398,9 @@ class MainController extends Controller
             $evenement[] = 'Second cancer';
 
         $regex = implode("|", $evenement);
-        $prelCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
+        if ($regex != "") {
+            $prelCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
+        }
         /**
          * Mécanisme pour prendre en charge les choix 'autres' des cases à cocher
          */

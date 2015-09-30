@@ -58,22 +58,22 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Users</td>
+	<td>link=Utilisateurs</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Log système</td>
+	<td>link=Logs système</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Users</td>
+	<td>link=Utilisateurs</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Advanced Search</td>
+	<td>link=Recherche avancée</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Log système</td>
+	<td>link=Logs système</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,7 +118,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Samples</td>
+	<td>link=Echantillons</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,12 +128,12 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>link=Advanced Search</td>
+	<td>link=Recherche avancée</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Advanced Search</td>
+	<td>link=Recherche avancée</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,7 +168,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Samples</td>
+	<td>link=Echantillons</td>
 	<td></td>
 </tr>
 <tr>

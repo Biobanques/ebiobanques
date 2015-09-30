@@ -37,13 +37,13 @@ $('#BiocapForm_iccc_group1').change(function(){
            $('#ssgroup1').load('" . Yii::app()->createUrl('main/getSousGroupList') . "',
     $('#BiocapForm_iccc_group1').serialize()
    );
-
+$('#ssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
     }else{
-                     $('#ssgroup').html('');
-                     $('#ssgroup1').html('');
-                     $('#ssgroup2').html('');
+        $('#ssgroup').html('');
+        $('#ssgroup1').html('');
+        $('#ssgroup2').html('');
         $('#ssgroup3').html('');
-         $('#BiocapForm_iccc_group2').prop('disabled',true);
+        $('#BiocapForm_iccc_group2').prop('disabled',true);
   $('#BiocapForm_iccc_group3').prop('disabled',true);
   }
 
@@ -190,11 +190,11 @@ return false;
 
 
 
-                <div style='display: inline-block;  vertical-align: top;float: left'>
+                <div style='display: inline-block;  vertical-align: middle;float: left;text-align: left'>
                     <?php
                     echo $form->label($model, 'iccc_group');
                     ?>
-                    <div id='ssgroup'></div>
+                    <div id='ssgroup' style="line-height: 5;"></div>
                 </div>
                 <div style='display: inline-block;  vertical-align: top'>
 

@@ -78,6 +78,7 @@ class LightBiocapForm extends CFormModel
             'iccc_group1' => 'Groupe ICCC',
             'iccc_group2' => 'Groupe ICCC',
             'iccc_group3' => 'Groupe ICCC',
+            'iccc_sousgroup' => 'Sous groupe ICCC',
             'iccc_sousgroup1' => 'Sous groupe ICCC',
             'iccc_sousgroup2' => 'Sous groupe ICCC',
             'iccc_sousgroup3' => 'Sous groupe ICCC',

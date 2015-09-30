@@ -119,21 +119,22 @@ class ImportJsonCommand extends CConsoleCommand
                                     $sample->initSoftAttribute('age');
                                     $sample->age = (int) CommonTools::getAgeFromDates($sample->DDN, $sample->Date_prlvt);
                                 }
-                                if (isset($sample->ADN_derive) && isset($sample->ARN_derive) && isset($sample->Plasma) && isset($sample->Serum) && isset($sample->Sang_total)) {
-                                    if (in_array($sample->ADN_derive, array('', null)) && in_array($sample->ARN_derive, array('', null)) && in_array($sample->Plasma, array('', null)) && in_array($sample->Serum, array('', null)) && in_array($sample->Sang_total, array('', null))) {
-                                        $sample->initSoftAttribute('isTumoral');
-                                        $sample->isTumoral = 2;
-                                    } elseif (in_array($sample->ADN_derive, array('', null)) && in_array($sample->ARN_derive, array('', null))) {
-                                        $sample->initSoftAttribute('isTumoral');
-                                        $sample->isTumoral = 0;
-                                    } elseif (in_array($sample->Plasma, array('', null)) && in_array($sample->Serum, array('', null)) && in_array($sample->Sang_total, array('', null))) {
-                                        $sample->initSoftAttribute('isTumoral');
-                                        $sample->isTumoral = 1;
-                                    }
-                                    if ($sample->update(array('age', 'isTumoral'), true))
-                                        $count++;
-                                }
+//                                if (isset($sample->ADN_derive) && isset($sample->ARN_derive) && isset($sample->Plasma) && isset($sample->Serum) && isset($sample->Sang_total)) {
+//                                    if (in_array($sample->ADN_derive, array('', null)) && in_array($sample->ARN_derive, array('', null)) && in_array($sample->Plasma, array('', null)) && in_array($sample->Serum, array('', null)) && in_array($sample->Sang_total, array('', null))) {
+//                                        $sample->initSoftAttribute('isTumoral');
+//                                        $sample->isTumoral = 2;
+//                                    } elseif (in_array($sample->ADN_derive, array('', null)) && in_array($sample->ARN_derive, array('', null))) {
+//                                        $sample->initSoftAttribute('isTumoral');
+//                                        $sample->isTumoral = 0;
+//                                    } elseif (in_array($sample->Plasma, array('', null)) && in_array($sample->Serum, array('', null)) && in_array($sample->Sang_total, array('', null))) {
+//                                        $sample->initSoftAttribute('isTumoral');
+//                                        $sample->isTumoral = 1;
+//                                    }
+//                                    if ($sample->update(array('age', 'isTumoral'), true))
+                                if ($sample->update(array('age'), true))
+                                    $count++;
                             }
+//                            }
                             echo 'Updates computed for ' . $count . ' items.' . "\n";
                         }else {
                             echo "error on insert, please check json file";

@@ -156,21 +156,65 @@ class MainController extends Controller
         /*
          * Regex for iccc_group fields
          */
-        $form->iccc_sousgroup = "";
-        if (isset($form->iccc_sousgroup1) && $form->iccc_sousgroup1 != null && $form->iccc_sousgroup1 != "") {
-            $form->iccc_sousgroup .= "$form->iccc_sousgroup1|";
-            if (isset($form->iccc_sousgroup2) && $form->iccc_sousgroup2 != null && $form->iccc_sousgroup2 != "") {
-                $form->iccc_sousgroup .= "$form->iccc_sousgroup2|";
-                if (isset($form->iccc_sousgroup3) && $form->iccc_sousgroup3 != null && $form->iccc_sousgroup3 != "") {
-                    $form->iccc_sousgroup .= "$form->iccc_sousgroup3|";
+//        $form->iccc_sousgroup = "";
+//        if (isset($form->iccc_sousgroup1) && $form->iccc_sousgroup1 != null && $form->iccc_sousgroup1 != "") {
+//            $form->iccc_sousgroup .= "$form->iccc_sousgroup1|";
+//            if (isset($form->iccc_sousgroup2) && $form->iccc_sousgroup2 != null && $form->iccc_sousgroup2 != "") {
+//                $form->iccc_sousgroup .= "$form->iccc_sousgroup2|";
+//                if (isset($form->iccc_sousgroup3) && $form->iccc_sousgroup3 != null && $form->iccc_sousgroup3 != "") {
+//                    $form->iccc_sousgroup .= "$form->iccc_sousgroup3|";
+//                }
+//            }
+//        }
+//        if ($form->iccc_sousgroup != "") {
+//            $form->iccc_sousgroup = substr($form->iccc_sousgroup, 0, -1);
+//            $diagCriteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_sousgroup) . "/i"));
+//        }
+//        $form->iccc_group = "";
+//        if (isset($form->iccc_group1) && $form->iccc_group1 != null && $form->iccc_group1 != "" && in_array($form->iccc_sousgroup1, array("", null))) {
+//            $form->iccc_group .= "$form->iccc_group1|";
+//            if (isset($form->iccc_group2) && $form->iccc_group2 != null && $form->iccc_group2 != "" && in_array($form->iccc_sousgroup2, array("", null))) {
+//                $form->iccc_group .= "$form->iccc_group2|";
+//                if (isset($form->iccc_group3) && $form->iccc_group3 != null && $form->iccc_group3 != "" && in_array($form->iccc_sousgroup3, array("", null))) {
+//                    $form->iccc_group .= "$form->iccc_group3|";
+//                }
+//            }
+//        }
+//        if ($form->iccc_group != "") {
+//            $form->iccc_group = substr($form->iccc_group, 0, -1);
+//            $diagCriteria->addCond(CommonTools::AGGREGATEDFIELD1, '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_group) . "/i"));
+//        }
+
+        $group_ssgroup1 = array();
+        $group_ssgroup2 = array();
+        $group_ssgroup3 = array();
+        $groupCond = array();
+
+        $groupCond['$or'] = array();
+        if (isset($form->iccc_group1) && $form->iccc_group1 != null && $form->iccc_group1 != "") {
+            if (in_array($form->iccc_sousgroup1, array("", null))) {
+                $groupCond['$or'][] = array(CommonTools::AGGREGATEDFIELD1 => $form->iccc_group1);
+            } else {
+                $groupCond['$or'][] = array(CommonTools::AGGREGATEDFIELD2 => $form->iccc_sousgroup1);
+            }
+            if (isset($form->iccc_group2) && $form->iccc_group2 != null && $form->iccc_group2 != "") {
+                if (in_array($form->iccc_sousgroup2, array("", null))) {
+                    $groupCond['$or'][] = array(CommonTools::AGGREGATEDFIELD1 => $form->iccc_group2);
+                } else {
+                    $groupCond['$or'][] = array(CommonTools::AGGREGATEDFIELD2 => $form->iccc_sousgroup2);
+                }
+                if (isset($form->iccc_group3) && $form->iccc_group3 != null && $form->iccc_group3 != "") {
+                    if (in_array($form->iccc_sousgroup3, array("", null))) {
+                        $groupCond['$or'][] = array(CommonTools::AGGREGATEDFIELD1 => $form->iccc_group3);
+                    } else {
+                        $groupCond['$or'][] = array(CommonTools::AGGREGATEDFIELD2 => $form->iccc_sousgroup3);
+                    }
                 }
             }
         }
-        if ($form->iccc_sousgroup != "") {
-            $form->iccc_sousgroup = substr($form->iccc_sousgroup, 0, -1);
-            $diagCriteria->addCond(CommonTools::AGGREGATEDFIELD2, '==', new MongoRegex("/" . StringUtils::accentToRegex($form->iccc_sousgroup) . "/i"));
-        }
 
+
+        $diagCriteria->setConditions($groupCond);
         /*
          * Regex for topo / organe fields
          */
@@ -529,7 +573,9 @@ class MainController extends Controller
 
         if (isset($form['iccc_group1'])) {
             $values = SampleCollected::model()->getCollection()->distinct(CommonTools::AGGREGATEDFIELD2, array(CommonTools::AGGREGATEDFIELD1 => $form['iccc_group1']));
+            natcasesort($values);
             echo '<select display="inline-block" separator=" " name="' . $prefixe . '[iccc_sousgroup1]" id="' . $prefixe . '_iccc_sousgroup1" style="width:150px">';
+            echo '<option value="">Indifférent</option>';
             foreach ($values as $value) {
                 echo '<option value="' . $value . '">' . $value . '</option>';
             }
@@ -538,6 +584,7 @@ class MainController extends Controller
             $values = SampleCollected::model()->getCollection()->distinct(CommonTools::AGGREGATEDFIELD2, array(CommonTools::AGGREGATEDFIELD1 => $form['iccc_group2']));
             natcasesort($values);
             echo '<select display="inline-block" separator=" " name="' . $prefixe . '[iccc_sousgroup2]" id="' . $prefixe . '_iccc_sousgroup2" style="width:150px">';
+            echo '<option value="">Indifférent</option>';
             foreach ($values as $value) {
                 echo '<option value="' . $value . '">' . $value . '</option>';
             }
@@ -546,6 +593,7 @@ class MainController extends Controller
             $values = SampleCollected::model()->getCollection()->distinct(CommonTools::AGGREGATEDFIELD2, array(CommonTools::AGGREGATEDFIELD1 => $form['iccc_group3']));
             natcasesort($values);
             echo '<select display="inline-block" separator=" " name="' . $prefixe . '[iccc_sousgroup3]" id="' . $prefixe . '_iccc_sousgroup3" style="width:150px">';
+            echo '<option value="">Indifférent</option>';
             foreach ($values as $value) {
                 echo '<option value="' . $value . '">' . $value . '</option>';
             }

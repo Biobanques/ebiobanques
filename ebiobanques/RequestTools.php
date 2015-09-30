@@ -14,7 +14,7 @@ class RequestTools
         switch ($mode_request) {
             case '2':
                 $echCriteria = new EMongoCriteria;
-                $echCriteria->setConditions(array('$or' => array(array_merge($echTCriteria->getConditions(), array('isTumoral' => 1)), array_merge($echNTCriteria->getConditions(), array('isTumoral' => 0)))));
+                $echCriteria->setConditions(array('$or' => array(array_merge($echTCriteria->getConditions(), array('Echant_tumoral' => "Oui")), array_merge($echNTCriteria->getConditions(), array('Echant_tumoral' => "Non")))));
                 $result->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
                 break;
 
@@ -132,13 +132,13 @@ class RequestTools
 
 
             for(var sample in patient.samples){
-if(patient.samples[sample].isTumoral==0){
+if(patient.samples[sample].Echant_tumoral=='Non'){
                     patient.hasNonTumo=true;
                 }
-                                if(patient.samples[sample].isTumoral==1){
+                                if(patient.samples[sample].Echant_tumoral=='Oui'){
                     patient.hasTumo=true;
                 }
-                                if(patient.samples[sample].isTumoral==2){
+                                if(patient.samples[sample].Echant_tumoral=='Inconnu'){
                     patient.hasUndefinedTumo=true;
                 }
 

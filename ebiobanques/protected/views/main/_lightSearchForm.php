@@ -34,7 +34,7 @@ Yii::app()->clientScript->registerScript('disablingLF', "
     $('#LFssgroup1').load('" . Yii::app()->createUrl('main/getSousGroupList') . "',
         $('#LightBiocapForm_iccc_group1').serialize()
   );
-
+$('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
   }else{
   $('#LFssgroup').html('');
   $('#LFssgroup1').html('');
@@ -147,11 +147,12 @@ Yii::app()->clientScript->registerScript('disablingLF', "
 
             <div class = "row" style="text-align: right;">
 
-                <div style='display: inline-block;  vertical-align: top;float: left'>
+                <div style='display: inline-block;  vertical-align: top;float: left;text-align: left'>
                     <?php
                     echo $form->label($model, 'iccc_group');
                     ?>
-                    <div id='LFssgroup'></div>
+
+                    <div id='LFssgroup' style="line-height: 5;"></div>
                 </div>
                 <div style='display: inline-block;  vertical-align: top'>
 

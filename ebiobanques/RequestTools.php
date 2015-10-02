@@ -15,7 +15,23 @@ class RequestTools
             case '2':
                 $echCriteria = new EMongoCriteria;
                 $echCriteria->setConditions(array('$or' => array(array_merge($echTCriteria->getConditions(), array('Echant_tumoral' => "Oui")), array_merge($echNTCriteria->getConditions(), array('Echant_tumoral' => "Non")))));
-                $result->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
+//                $result->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
+                $and = array();
+                if ($diagCriteria->getConditions() != array())
+                    $and[] = $diagCriteria->getConditions();
+                if ($patCriteria->getConditions() != array())
+                    $and[] = $patCriteria->getConditions();
+                if ($prelCriteria->getConditions() != array())
+                    $and[] = $prelCriteria->getConditions();
+                if ($consCriteria->getConditions() != array())
+                    $and[] = $consCriteria->getConditions();
+                if ($echCriteria->getConditions() != array())
+                    $and[] = $echCriteria->getConditions();
+
+
+                if ($and != array())
+                    $result->setConditions(array('$and' => $and));
+
                 break;
 
             case '1':
@@ -27,8 +43,21 @@ class RequestTools
                     $echCriteria = $echTCriteria;
                 else if (count($echTCriteria->getConditions()) == 0 && count($echNTCriteria->getConditions()) > 0)
                     $echCriteria = $echNTCriteria;
-                $result->setConditions(array_merge($diagCriteria->getConditions(), $patCriteria->getConditions(), $prelCriteria->getConditions(), $consCriteria->getConditions(), $echCriteria->getConditions()));
+                $and = array();
+                if ($diagCriteria->getConditions() != array())
+                    $and[] = $diagCriteria->getConditions();
+                if ($patCriteria->getConditions() != array())
+                    $and[] = $patCriteria->getConditions();
+                if ($prelCriteria->getConditions() != array())
+                    $and[] = $prelCriteria->getConditions();
+                if ($consCriteria->getConditions() != array())
+                    $and[] = $consCriteria->getConditions();
+                if ($echCriteria->getConditions() != array())
+                    $and[] = $echCriteria->getConditions();
 
+
+                if ($and != array())
+                    $result->setConditions(array('$and' => $and));
 
                 break;
         }

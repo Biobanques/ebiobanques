@@ -68,6 +68,7 @@ return array(
                     'class' => 'CPhpMailerLogRoute',
                     'levels' => 'error, warning',
                     'emails' => CommonProperties::$ADMIN_EMAIL,
+                    'except' => array('exception.CHttpException.404')
                 ),
                 CommonProperties::$DEV_MODE ?
                         array(

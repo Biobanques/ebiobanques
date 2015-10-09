@@ -65,48 +65,49 @@ class UploadFormController extends Controller
             $fichier = $listFile[2];
         if (isset($_POST['Biobank'])) {
 
-            $biobank = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
-            if ($biobank != null) {
-                $biobank->initSoftAttribute('presentation');
-                $biobank->initSoftAttribute('thematiques');
-                $biobank->initSoftAttribute('publications');
-                $biobank->initSoftAttribute('reseaux');
-                $biobank->initSoftAttribute('qualite');
-                $biobank->initSoftAttribute('projetRecherche');
-                $biobank->attributes = $_POST['Biobank'];
-                //$folder = Yii::app()->basePath . '/../images/extractedLogos/';
-                // $biobank->validate();
-//                if (isset($_POST['importLogo']) && $_POST['importLogo'] == 1) {
-//                    $file = $folder . $fichier;
-//                    $biobank->initSoftAttribute('activeLogo');
-//
-//                    $biobank->activeLogo = (string) $this->logoUpload($file, $biobank);
-//                    if (rename($file, $folder . 'done/' . $fichier)) {
-//                        $listFile = scandir(Yii::app()->basePath . '/../images/extractedLogos/');
-//                        $fichier = $listFile[2];
-//                        Yii::app()->user->setFlash('success', 'renamed');
-//                    } else {
-//                        Yii::app()->user->setFlash('error', 'error on rename');
-//                    }
-//                    Yii::app()->user->setFlash('success', 'imported');
-//                } else {
-//                    Yii::app()->user->setFlash('success', 'logo not imported');
-//                }
+            $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
+            if ($model != null) {
+
+                $model->attributes = $_POST['Biobank'];
+                if (isset($_POST['importLogo']) && $_POST['importLogo'] == 1) {
+                    $file = $folder . $fichier;
+                    $model->initSoftAttribute('activeLogo');
+
+                    $model->activeLogo = (string) $this->logoUpload($file, $model);
+                    if (rename($file, $folder . 'done/' . $fichier)) {
+                        $listFile = scandir(Yii::app()->basePath . '/../images/extractedLogos/');
+                        $fichier = $listFile[2];
+                        Yii::app()->user->setFlash('success', 'renamed');
+                    } else {
+                        Yii::app()->user->setFlash('error', 'error on rename');
+                    }
+                    Yii::app()->user->setFlash('success', 'imported');
+                } else {
+                    Yii::app()->user->setFlash('success', 'logo not imported');
+                }
 
                 if (isset($_FILES['Logo'])) {
 
-                    $biobank->initSoftAttribute('activeLogo');
-                    $biobank->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $biobank);
-                }
-                if ($biobank->update()) {
-                    Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
 
-                    unset($_POST['Biobank']);
-                } else {
-                    $list = '';
-                    foreach ($biobank->errors as $errorName => $errorName)
-                        $list .= "<li>$errorName</li>";
-                    Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
+                    $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
+                }
+                if ($model->update()) {
+                    Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
+                    if (isset($_FILES['Logo'])) {
+
+                        $model->initSoftAttribute('activeLogo');
+                        $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
+                    }
+                    if ($model->update()) {
+                        Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
+
+                        unset($_POST['Biobank']);
+                    } else {
+                        $list = '';
+                        foreach ($model->errors as $errorName => $errorName)
+                            $list .= "<li>$errorName</li>";
+                        Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
+                    }
                 }
             } else {
                 Yii::app()->user->setFlash('error', 'biobank not found');
@@ -122,7 +123,8 @@ class UploadFormController extends Controller
         }
     }
 
-    private function storeLogo($logo, $biobank) {
+    private
+            function storeLogo($logo, $biobank) {
         //  print_r($logo);
         $model = new Logo();
         $tempFilename = $logo["tmp_name"]['filename'];

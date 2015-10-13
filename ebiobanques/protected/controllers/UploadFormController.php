@@ -50,13 +50,7 @@ class UploadFormController extends Controller
 
     public function actionUploadAll() {
         $model = new Biobank();
-        $model->initSoftAttribute('presentation');
-        $model->initSoftAttribute('thematiques');
-        $model->initSoftAttribute('publications');
-        $model->initSoftAttribute('reseaux');
-        $model->initSoftAttribute('qualite');
-        $model->initSoftAttribute('projetRecherche');
-        $model->initSoftAttribute('activeLogo');
+
         $listFile = array();
         //$fichier = null;
         if (is_dir(Yii::app()->basePath . '/../images/extractedLogos/'))
@@ -69,8 +63,7 @@ class UploadFormController extends Controller
             }
             if ($model != null) {
 
-                $model->attributes = $_POST['Biobank'];
-
+                // $model->attributes = $_POST['Biobank'];
 //                if (isset($_POST['importLogo']) && $_POST['importLogo'] == 1) {
 //                    $file = $folder . $fichier;
 //                    $model->initSoftAttribute('activeLogo');
@@ -93,8 +86,8 @@ class UploadFormController extends Controller
 //
 //                    $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
 //                }
-                if ($model->save()) {
-                    Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
+//                if ($model->save()) {
+//                    Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
 //                    if (isset($_FILES['Logo'])) {
 //
 //                        $model->initSoftAttribute('activeLogo');
@@ -110,13 +103,26 @@ class UploadFormController extends Controller
 //                            $list .= "<li>$errorName</li>";
 //                        Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
 //                    }
-                }
+//                }
             } else {
                 Yii::app()->user->setFlash('error', 'biobank not found');
             }
         }
 //        if ($fichier != '.' && $fichier != '..') {
-
+        if (!isset($model->presentation))
+            $model->initSoftAttribute('presentation');
+        if (!isset($model->thematiques))
+            $model->initSoftAttribute('thematiques');
+        if (!isset($model->publications))
+            $model->initSoftAttribute('publications');
+        if (!isset($model->reseaux))
+            $model->initSoftAttribute('reseaux');
+        if (!isset($model->qualite))
+            $model->initSoftAttribute('qualite');
+        if (!isset($model->projetRecherche))
+            $model->initSoftAttribute('projetRecherche');
+        if (!isset($model->activeLogo))
+            $model->initSoftAttribute('activeLogo');
         $this->render('upload', array(
 //                'logo' => $fichier,
             'model' => $model,

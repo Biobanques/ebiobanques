@@ -203,7 +203,7 @@ class Biobank extends LoggableActiveRecord
              */
             array('id,', 'safe'),
         );
-        if ($this->scenario == 'insert' || $this->scenario == 'update') {
+        if ($this->scenario == 'insert' || $this->scenario == 'update' || $this->scenario == 'search') {
             foreach ($this->attributes as $name => $value)
                 $rules[] = array((string) $name, 'safe');
         }

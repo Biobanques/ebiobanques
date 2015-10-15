@@ -3,12 +3,64 @@
 /* @var $model Demande */
 /* @var $form CActiveForm */
 
+
 Yii::app()->clientScript->registerScript('selectDropDown', "
        $('body select').msDropDown();
         ");
 ?>
 <div class="form">
-    <?php
+    <?php // aqui empieza el formulario
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'biobank_manUploaded-form',
+        'enableAjaxValidation' => false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+    ));
+    ?>
+
+    <?php echo $form->errorSummary($model); ?>
+    <div class="row" >
+
+       
+
+        <?php
+        $criteria = new EMongoCriteria;
+        $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
+        echo $form->dropDownList($model, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), 
+                array('empty' => 'select brif code')); 
+                     /* 'ajax'=> array('type'=>'POST',           
+                                   // 'dataType'=>'json',
+                                    'data'=> array('identifier'=>'js:this.value'),
+                                    'url'=> CController::createUrl('uploadForm/uploadAll'),//$this->createUrl('uploadForm/uploadAll')
+                                   //'update'=> '#identifier_id',
+                                   'update'=> CHtml::activeId($model, 'identifier')
+                                    //'success'=> 'function(data){if (data == null)}'
+                )));*/
+                                               
+        ?>      
+  <?php echo $form->error($model, 'identifier'); ?>
+    </div>
+    
+    
+    <div class="row buttons">
+        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'saveBtn')); ?>
+    </div>
+  
+
+   
+
+    <?php $this->endWidget(); //aki terminalario ?> 
+
+</div>
+<!-- form -->
+
+
+
+
+
+<!-- deuxieme formulaire-->
+
+<div class="form">
+    <?php // aki empieza el formulario 2
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank_manUpload-form',
         'enableAjaxValidation' => false,
@@ -30,14 +82,19 @@ Yii::app()->clientScript->registerScript('selectDropDown', "
 
 
         <?php
-        $criteria = new EMongoCriteria;
-        $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-        echo $form->dropDownList($model, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array('empty' => 'select brif code'));
-        ?>        <?php echo $form->error($model, 'presentation'); ?>
+      // $criteria = new EMongoCriteria;
+     //  $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
+       /* echo $form->dropDownList($model, 'id', CHtml::listData(Biobank::model()->findAll($criteria), 'id', 'idAndName'), 
+                array('empty' => 'select brif code'));  */
+                      
+                                                
+        ?>      
+  <?php //echo $form->error($model, 'identifier'); ?>
     </div>
-    <div class="row" style="display: inline-block">
+    <div clmss="row" style="display: inline-block">
 
-        <?php echo $form->labelEx($model, 'presentation'); ?>
+
+        <?php echo $form->labelEx($model, 'presentation'); ?> 
         <?php echo $form->textArea($model, 'presentation', array('style' => "height:200px; width:450px")); ?>
         <?php echo $form->error($model, 'presentation'); ?>
 
@@ -70,11 +127,8 @@ Yii::app()->clientScript->registerScript('selectDropDown', "
 
     </div>
 
-    <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'createBtn') : Yii::t('common', 'saveBtn')); ?>
-    </div>
+    
 
-    <?php $this->endWidget(); ?>
+    <?php $this->endWidget(); //aki terminalario ?> 
 
 </div>
-<!-- form -->

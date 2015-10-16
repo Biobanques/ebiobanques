@@ -139,9 +139,6 @@ class Biobank extends LoggableActiveRecord
         } return true;
     }
 
-    /**
-     * @return array validation rules for model attributes.
-     */
     public function rules() {
 
         $rules = array(

@@ -11,5 +11,5 @@
 
 
 
-$this->renderPartial('_form', array('model' => $model, 'listLogos' => $listLogos ));
+$this->renderPartial('_form', array('model' => $model, 'listLogos' => $listLogos, 'biobankIdentifier' => $biobankIdentifier));
 

@@ -7,21 +7,7 @@
   //     $('body select').msDropDown();
     //    ");
 
-/*Yii::app()->clientScript->registerScript('biobank_manUploaded-form', "
-$('.search-button').change(function(){
-	$('.-form').update('biobank_manUploaded-form',{
-	data: $(this).serialize()
-        });
-	return false;
-});
-$('.search-form form').submit(function(){
-$('#biobanks-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
 
-");*/
 
  
 

@@ -121,9 +121,9 @@ class UploadFormController extends Controller
             $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
         
             }
-            if (isset($_POST['BiobankIdentifierForm'])) {
+           /* if (isset($_POST['Biobank'])) {
                   
-                  $model->attributes = $_POST['BiobankIdentifierForm'];
+                  $model->attributes = $_POST['Biobank'];
              //$model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
             if($model->save()){
                 Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
@@ -131,7 +131,7 @@ class UploadFormController extends Controller
               else
                   Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
             
-             }  
+             }  */
             
             
            

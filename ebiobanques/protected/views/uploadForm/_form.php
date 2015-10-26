@@ -3,59 +3,52 @@
 /* @var $model Demande */
 /* @var $form CActiveForm */
 
-//Yii::app()->clientScript->registerScript('selectDropDown', "
-  //     $('body select').msDropDown();
-    //    ");
+Yii::app()->clientScript->registerScript('sendSelectForm', "
+     $('#BiobankIdentifierForm_identifier').change(function(){
+//alert('test ok');
+$('#biobank_manUploaded-form').submit();
 
-
-
- 
-
+     });
+    ");
 ?>
 
 
 
 
 <div class="form">
-    <?php 
+    <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank_manUploaded-form',
         'enableAjaxValidation' => false,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
-        
-
     ));
     ?>
 
     <?php echo $form->errorSummary($biobankIdentifier); ?>
     <div class="row" >
 
-       
+
 
         <?php
         $criteria = new EMongoCriteria;
         $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-        echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), 
-                array(
-                     'empty' => 'select brif code',
-                     'onchange'=> 'this.form.submit()' //'js:validate_dropdown(this.value)'
-                    /*'ajax'=>array(
-                        'type'=>'POST',
-                        'url'=> Yii::app()->createUrl('uploadForm/uploadAll'),
-                         'update'=>'#identifier',
-                          'data' =>array($biobankIdentifier => 'js:this.value'),
-                    )*/
-                    
-                    )); 
-                     
-                                               
-        ?>      
-  <?php echo $form->error($biobankIdentifier, 'identifier'); ?>
+        echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array(
+            'empty' => 'select brif code',
+                // 'onchange' => 'this.form.submit()' //'js:validate_dropdown(this.value)'
+                /* 'ajax'=>array(
+                  'type'=>'POST',
+                  'url'=> Yii::app()->createUrl('uploadForm/uploadAll'),
+                  'update'=>'#identifier',
+                  'data' =>array($biobankIdentifier => 'js:this.value'),
+                  ) */
+        ));
+        ?>
+        <?php echo $form->error($biobankIdentifier, 'identifier'); ?>
     </div>
-    
-   
 
-    <?php $this->endWidget(); ?> 
+
+
+    <?php $this->endWidget(); ?>
 
 </div>
 <!-- form -->
@@ -67,7 +60,7 @@
 <!-- deuxieme formulaire-->
 
 <div class="form">
-    <?php 
+    <?php
     $form2 = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank_manUpload-form2',
         'enableAjaxValidation' => false,
@@ -79,23 +72,23 @@
     <div class="row" >
 
         <?php
-       // $logo = new Logo('biobank');
+        // $logo = new Logo('biobank');
         ?>
-      <!--  <div class="row">
-           <?php// echo $form2->labelEx($logo, 'filename'); ?>
-           <?php //echo $form2->fileField($logo, 'filename'); ?>
-           <?php //echo $form2->error($logo, 'filename'); ?>
-        </div> -->
+        <!--  <div class="row">
+        <?php // echo $form2->labelEx($logo, 'filename'); ?>
+        <?php //echo $form2->fileField($logo, 'filename'); ?>
+        <?php //echo $form2->error($logo, 'filename'); ?>
+          </div> -->
 
-     
-      
-   <?php echo $form2->hiddenField($model, 'identifier'); ?>
-      
+
+
+        <?php echo $form2->hiddenField($model, 'identifier'); ?>
+
     </div>
-    <div clmss="row" style="display: inline-block">
+    <div class="row" style="display: inline-block">
 
 
-        <?php echo $form2->labelEx($model, 'presentation'); ?> 
+        <?php echo $form2->labelEx($model, 'presentation'); ?>
         <?php echo $form2->textArea($model, 'presentation', array('style' => "height:200px; width:450px")); ?>
         <?php echo $form2->error($model, 'presentation'); ?>
 
@@ -129,9 +122,9 @@
     </div>
 
     <div class="row buttons">
-          <?php echo CHtml::submitButton('Enregistrer'); ?>
+        <?php echo CHtml::submitButton('Enregistrer'); ?>
     </div>
 
-    <?php $this->endWidget();  ?> 
+    <?php $this->endWidget(); ?>
 
 </div>

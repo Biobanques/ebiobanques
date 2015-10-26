@@ -91,6 +91,15 @@ return array(
                 ),
             ),
         ),
+        
+        'clientScript'=>array(
+            'packages'=>array(
+                'jquery'=>array(
+                    'baseUrl'=>'//ajax.googleapis.com/ajax/libs/jquery/1/',
+                    'js'=>array('jquery.min.js'),
+                )
+            ),
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']

@@ -7,28 +7,23 @@
   //     $('body select').msDropDown();
     //    ");
 
-Yii::app()->clientScript->registerScript('biobank_manUploaded-form', "
-$('.search-button').change(function(){
-	$('.-form').update('biobank_manUploaded-form',{
-	data: $(this).serialize()
-        });
-	return false;
-});
-$('.search-form form').submit(function(){
-$('#biobanks-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
 
-");
+
+ 
+
 ?>
+
+
+
+
 <div class="form">
     <?php 
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank_manUploaded-form',
         'enableAjaxValidation' => false,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
+        
+
     ));
     ?>
 
@@ -40,21 +35,24 @@ $('#biobanks-grid').yiiGridView('update', {
         <?php
         $criteria = new EMongoCriteria;
         $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-        echo $form->dropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), 
-                array('empty' => 'select brif code',
-                    'onchange'=>'javascript:click(this);')); /*'on change => 'myFonction()'*/
+        echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), 
+                array(
+                     'empty' => 'select brif code',
+                     'onchange'=> 'this.form.submit()' //'js:validate_dropdown(this.value)'
+                    /*'ajax'=>array(
+                        'type'=>'POST',
+                        'url'=> Yii::app()->createUrl('uploadForm/uploadAll'),
+                         'update'=>'#identifier',
+                          'data' =>array($biobankIdentifier => 'js:this.value'),
+                    )*/
+                    
+                    )); 
                      
                                                
         ?>      
   <?php echo $form->error($biobankIdentifier, 'identifier'); ?>
     </div>
     
-    
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('rechercher'); ?>
-    </div>
-  
-
    
 
     <?php $this->endWidget(); ?> 

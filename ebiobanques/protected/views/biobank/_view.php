@@ -4,7 +4,6 @@
 ?>
 
 <div class="view">
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
@@ -32,7 +31,9 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('folder_reception')); ?>:</b>
 	<?php echo CHtml::encode($data->folder_reception); ?>
 	<br />
-
+        <pre></pre>
+     <hr width=75%"/>
+        
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('folder_done')); ?>:</b>
 	<?php echo CHtml::encode($data->folder_done); ?>

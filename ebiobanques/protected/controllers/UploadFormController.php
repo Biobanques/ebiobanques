@@ -65,12 +65,7 @@ class UploadFormController extends Controller
 //          if (Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']))) {
 //               $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
           
-              /* $model=CHtml::listData($model,'identifier','identifierAndName');
-                 foreach($model as $value=>$name)
-                {
-                  echo CHtml::tag('option',
-                   array('value'=>$value),CHtml::encode($name),true);
-                }*/
+              
                     
               
 //            }
@@ -124,14 +119,23 @@ class UploadFormController extends Controller
             
             if (isset($_POST['BiobankIdentifierForm']) && isset($_POST['BiobankIdentifierForm']['identifier']) && $_POST['BiobankIdentifierForm']['identifier'] != "") {
             $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
-        }
-           
-            if (isset($_POST['Biobank'])) {
-                
-            // $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
-            
-                
+        
             }
+            if (isset($_POST['BiobankIdentifierForm'])) {
+                  
+                  $model->attributes = $_POST['BiobankIdentifierForm'];
+             //$model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
+            if($model->save()){
+                Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
+            }
+              else
+                  Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
+            
+             }  
+            
+            
+           
+            
       
         
 //        if ($fichier != '.' && $fichier != '..') {

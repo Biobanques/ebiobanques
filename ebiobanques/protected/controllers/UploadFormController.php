@@ -52,6 +52,9 @@ class UploadFormController extends Controller
         $model = new Biobank();
         $listFile = array();
 //      $fichier = null;
+       
+        
+        
         
         if (is_dir(Yii::app()->basePath . '/../images/extractedLogos/'))
             $listFile = scandir(Yii::app()->basePath . '/../images/extractedLogos/');
@@ -121,25 +124,70 @@ class UploadFormController extends Controller
             $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
         
             }
-           /* if (isset($_POST['Biobank'])) {
-                  
-                  $model->attributes = $_POST['Biobank'];
-             //$model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
-            if($model->save()){
-                Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
-            }
-              else
-                  Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
-            
-             }  */
-            
+            if (isset($_POST['Biobank'])) {
+               
+                $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
+               $attributesPost = $_POST['Biobank'];
+           /* foreach ($attributesPost as $attName => $attValue) {
+                if (!in_array($attName, $model->attributeNames())) {
+                    $model->initSoftAttribute($attName);
+                }
+            }*/
+             //$model->attributes = $attributesPost;
+             // $model->attributes = $_POST['Biobank']['identifier'];
+             // $model->attributes = $_POST['Biobank'];
+             
+             
+             if (!isset($model->presentation)){
+                $model->initSoftAttribute('presentation');
+                $model->presentation= $_POST['presentation'];
+                
+                
+             }
+                // print_r($model->getErrors()); 
+                
+              if (!isset($model->thematiques)){
+                $model->initSoftAttribute('thematiques');
+                $model->thematiques = $_POST['Biobank']['thematiques'];
+             }
+             
+              if (!isset($model->publications)){
+                $model->initSoftAttribute('publications');
+                $model->publications = $_POST['Biobank']['publications'];
+             }
+              if (!isset($model->reseaux)){
+                $model->initSoftAttribute('reseaux');
+                $model->reseaux = $_POST['Biobank']['reseaux'];
+                
+             }
+              if (!isset($model->qualite)){
+                $model->initSoftAttribute('qualite');
+                $model->qualite = $_POST['Biobank']['qualite'];
+                
+             }
+              if (!isset($model->projetRecherche)){
+                $model->initSoftAttribute('projetRecherche');
+                $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
+               
+             }
+                 
+/*           if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+                
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
+*/            
+             $model->save();
+             }  
+           
             
            
             
       
         
 //        if ($fichier != '.' && $fichier != '..') {
-       if (!isset($model->presentation))
+        $biobankIdentifier = new BiobankIdentifierForm();
+        if (!isset($model->presentation))
             $model->initSoftAttribute('presentation');
         if (!isset($model->thematiques))
             $model->initSoftAttribute('thematiques');
@@ -156,7 +204,7 @@ class UploadFormController extends Controller
         
         
        
-        $biobankIdentifier = new BiobankIdentifierForm();
+       
        
         
         $this->render('upload', array(

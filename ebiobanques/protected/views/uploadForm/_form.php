@@ -105,7 +105,7 @@ $form2 = $this->beginWidget('CActiveForm', array(
         <?php echo $form2->hiddenField($model, 'identifier'); ?>
 
     </div>
-    <div clmss="row" style="display: inline-block">
+    <div class="row" style="display: inline-block">
 
 
 <?php echo $form2->labelEx($model, 'presentation'); ?>

@@ -141,36 +141,44 @@ class UploadFormController extends Controller
              
              if (!isset($model->presentation)){
                 $model->initSoftAttribute('presentation');
-                $model->presentation= $_POST['presentation'];
+                
              // $model->save(); 
                 
              }
+             $model->presentation= $_POST['presentation'];
                 // print_r($model->getErrors()); 
                 
               if (!isset($model->thematiques)){
                 $model->initSoftAttribute('thematiques');
-                $model->thematiques = $_POST['Biobank']['thematiques'];
+                
              }
+             $model->thematiques = $_POST['Biobank']['thematiques'];
              
               if (!isset($model->publications)){
                 $model->initSoftAttribute('publications');
-                $model->publications = $_POST['Biobank']['publications'];
-             }
-              if (!isset($model->reseaux)){
-                $model->initSoftAttribute('reseaux');
-                $model->reseaux = $_POST['Biobank']['reseaux'];
-                
-             }
-              if (!isset($model->qualite)){
-                $model->initSoftAttribute('qualite');
-                $model->qualite = $_POST['Biobank']['qualite'];
-                
-             }
-              if (!isset($model->projetRecherche)){
-                $model->initSoftAttribute('projetRecherche');
-                $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
                
              }
+              $model->publications = $_POST['Biobank']['publications'];
+              
+              if (!isset($model->reseaux)){
+                $model->initSoftAttribute('reseaux');
+                
+                
+             }
+             $model->reseaux = $_POST['Biobank']['reseaux'];
+             
+              if (!isset($model->qualite)){
+                $model->initSoftAttribute('qualite');
+                
+             }
+             
+               $model->qualite = $_POST['Biobank']['qualite'];
+
+              if (!isset($model->projetRecherche)){
+                $model->initSoftAttribute('projetRecherche');   
+               
+             }
+             $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
              
               $model->save();
                  

@@ -37,7 +37,7 @@ type:'POST',
 data:$(this).serialize(),
   success : function(result){
  
-alert('success');
+//alert('success');
  var resultForm = $($.parseHTML(result)).find('#biobank_manUpload-form2').html();
   $('#biobank_manUpload-form2').html(resultForm);
 

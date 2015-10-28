@@ -14,7 +14,7 @@
   });
   return false;
   });
-  $('.search-form form').submit(function(){
+  $('.search-form form').submit(function(){ //copiar la primera linea : con biobank_manUploaded-form
   $('#biobanks-grid').yiiGridView('update', {
   data: $(this).serialize()
   });
@@ -24,12 +24,33 @@
   "); */
 
 Yii::app()->clientScript->registerScript('sendSelectForm', "
-     $('#BiobankIdentifierForm_identifier').change(function(){
-//alert('test ok');
-$('#biobank_manUploaded-form').submit();
+$('#BiobankIdentifierForm_identifier').change(function(){
+    $('#biobank_manUploaded-form').submit();
+});
 
-     });
-    ");
+//
+
+$('#biobank_manUploaded-form').submit(function(){
+
+$.ajax({
+type:'POST',
+data:$(this).serialize(),
+  success : function(result){
+ 
+alert('success');
+ var resultForm = $($.parseHTML(result)).find('#biobank_manUpload-form2').html();
+  $('#biobank_manUpload-form2').html(resultForm);
+
+  },
+  error : function(result){
+  alert('Error on biobank information');
+  }
+  });
+
+ return false;
+});
+");
+
 ?>
 
 

@@ -127,7 +127,8 @@ class UploadFormController extends Controller
             if (isset($_POST['Biobank'])) {
                
                 $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
-               $attributesPost = $_POST['Biobank'];
+             
+                //$attributesPost = $_POST['Biobank'];
            /* foreach ($attributesPost as $attName => $attValue) {
                 if (!in_array($attName, $model->attributeNames())) {
                     $model->initSoftAttribute($attName);
@@ -141,7 +142,7 @@ class UploadFormController extends Controller
              if (!isset($model->presentation)){
                 $model->initSoftAttribute('presentation');
                 $model->presentation= $_POST['presentation'];
-                
+             // $model->save(); 
                 
              }
                 // print_r($model->getErrors()); 
@@ -170,6 +171,8 @@ class UploadFormController extends Controller
                 $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
                
              }
+             
+              $model->save();
                  
 /*           if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
@@ -177,7 +180,7 @@ class UploadFormController extends Controller
             } else
                 Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
 */            
-             $model->save();
+            
              }  
            
             

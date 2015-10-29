@@ -316,7 +316,7 @@ class BiobankController extends Controller
         }
 
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-        $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
+        $mPDF1->WriteHTML($this->renderPartial('printPdf', array('dataProvider' => $dataProvider), true));
         $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 

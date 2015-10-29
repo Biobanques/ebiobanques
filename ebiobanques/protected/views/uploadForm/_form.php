@@ -36,7 +36,7 @@ $.ajax({
     data:$(this).serialize(),
     success : function(result){
     //alert('success');
-    
+
     var resultForm = $($.parseHTML(result)).find('#biobank_manUpload-form2').html();
     $('#biobank_manUpload-form2').html(resultForm);
 
@@ -45,7 +45,7 @@ $.ajax({
       alert('Error on biobank information');
      }
   });
-  
+
 
 
  return false;
@@ -54,35 +54,28 @@ $.ajax({
 ");
 
 Yii::app()->clientScript->registerScript('sendForm2', "
-    $('#biobank_manUpload-form2').on('click', function(e) {
-  
+    $('#biobank_manUpload-form2').submit(function(){
+
   $.ajax({
+  type:'POST',
     data: $(this).serialize(),
-    
-    success: function(data) { 
-      var res = $($.parseHTML(data)).find('#flashMessages').html();
-    $('#biobank_manUpload-form2').html(res);
-    // $('#flashMessages').html('<div class=\"flash-success margin_r15\">Record save Successfully.</div>').fadeIn();
-    // alert('Bien Enregistrer');
-    }
+
+    success: function(result) {
+      var res = $($.parseHTML(result)).find('#flashMessages').html();
+    $('#flashMessages').html(res);
+     //alert('Bien Enregistrer');
+    },
+     error : function(result){
+      alert('Error on biobank information');
+     }
   });
-  e.preventDefault();
+ return false;
 });
-    
-
-  
-
 ");
 ?>
 
 
-<?php
-Yii::app()->clientScript->registerScript(
-   'myHideEffect',
-   '$("#flashMessages").delay(2100).fadeOut(900);',
-   CClientScript::POS_READY
-);
-?>
+
 
 
 
@@ -90,40 +83,39 @@ Yii::app()->clientScript->registerScript(
 
 
 <div class="form">
-<?php
-$form = $this->beginWidget('CActiveForm', array(
-    'id' => 'biobank_manUploaded-form',
-    'enableAjaxValidation' => false,
-    'htmlOptions' => array('enctype' => 'multipart/form-data'),
-   
-        ));
-?>
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'biobank_manUploaded-form',
+        'enableAjaxValidation' => false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+    ));
+    ?>
 
     <?php echo $form->errorSummary($biobankIdentifier); ?>
     <div class="row" >
 
 
 
-    <?php
-    $criteria = new EMongoCriteria;
-    $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-    echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array(
-        'empty' => 'select brif code',
-            //    'onchange'=> 'this.form.submit()' //'js:validate_dropdown(this.value)'
-            /* 'ajax'=>array(
-              'type'=>'POST',
-              'url'=> Yii::app()->createUrl('uploadForm/uploadAll'),
-              'update'=>'#identifier',
-              'data' =>array($biobankIdentifier => 'js:this.value'),
-              ) */
-    ));
-    ?>
+        <?php
+        $criteria = new EMongoCriteria;
+        $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
+        echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array(
+            'empty' => 'select brif code',
+                //    'onchange'=> 'this.form.submit()' //'js:validate_dropdown(this.value)'
+                /* 'ajax'=>array(
+                  'type'=>'POST',
+                  'url'=> Yii::app()->createUrl('uploadForm/uploadAll'),
+                  'update'=>'#identifier',
+                  'data' =>array($biobankIdentifier => 'js:this.value'),
+                  ) */
+        ));
+        ?>
         <?php echo $form->error($biobankIdentifier, 'identifier'); ?>
     </div>
 
 
 
-        <?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div>
 <!-- form -->
@@ -135,25 +127,25 @@ $form = $this->beginWidget('CActiveForm', array(
 <!-- deuxieme formulaire-->
 
 <div class="form">
-<?php
-$form2 = $this->beginWidget('CActiveForm', array(
-    'id' => 'biobank_manUpload-form2',
-    'enableAjaxValidation' => false,
-    'htmlOptions' => array('enctype' => 'multipart/form-data'),
-    // 'clientOptions'=> array('validateOnSubmit'=>true),
-        ));
-?>
+    <?php
+    $form2 = $this->beginWidget('CActiveForm', array(
+        'id' => 'biobank_manUpload-form2',
+        'enableAjaxValidation' => false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+            // 'clientOptions'=> array('validateOnSubmit'=>true),
+    ));
+    ?>
 
     <?php echo $form2->errorSummary($model); ?>
     <div class="row" >
 
-    <?php
-    // $logo = new Logo('biobank');
-    ?>
+        <?php
+        // $logo = new Logo('biobank');
+        ?>
         <!--  <div class="row">
-    <?php // echo $form2->labelEx($logo, 'filename'); ?>
-    <?php //echo $form2->fileField($logo, 'filename');  ?>
-    <?php //echo $form2->error($logo, 'filename'); ?>
+        <?php // echo $form2->labelEx($logo, 'filename');  ?>
+        <?php //echo $form2->fileField($logo, 'filename');  ?>
+        <?php //echo $form2->error($logo, 'filename'); ?>
           </div> -->
 
 
@@ -164,35 +156,35 @@ $form2 = $this->beginWidget('CActiveForm', array(
     <div class="row" style="display: inline-block">
 
 
-<?php echo $form2->labelEx($model, 'presentation'); ?>
-<?php echo $form2->textArea($model, 'presentation', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->labelEx($model, 'presentation'); ?>
+        <?php echo $form2->textArea($model, 'presentation', array('style' => "height:200px; width:450px")); ?>
         <?php echo $form2->error($model, 'presentation'); ?>
 
     </div>
     <div class="row" style="display: inline-block">
-<?php echo $form2->labelEx($model, 'thematiques'); ?>
-<?php echo $form2->textArea($model, 'thematiques', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->labelEx($model, 'thematiques'); ?>
+        <?php echo $form2->textArea($model, 'thematiques', array('style' => "height:200px; width:450px")); ?>
         <?php echo $form2->error($model, 'thematiques'); ?>
     </div>
     <div class="row" style="display: inline-block">
         <?php echo $form2->labelEx($model, 'projetRecherche'); ?>
-<?php echo $form2->textArea($model, 'projetRecherche', array('style' => "height:200px; width:450px")); ?>
-<?php echo $form2->error($model, 'projetRecherche'); ?>
+        <?php echo $form2->textArea($model, 'projetRecherche', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->error($model, 'projetRecherche'); ?>
     </div>
     <div class="row" style="display: inline-block">
         <?php echo $form2->labelEx($model, 'publications'); ?>
         <?php echo $form2->textArea($model, 'publications', array('style' => "height:200px; width:450px")); ?>
-<?php echo $form2->error($model, 'publications'); ?>
+        <?php echo $form2->error($model, 'publications'); ?>
     </div>
     <div class="row" style="display: inline-block">
         <?php echo $form2->labelEx($model, 'reseaux'); ?>
         <?php echo $form2->textArea($model, 'reseaux', array('style' => "height:200px; width:450px")); ?>
-<?php echo $form2->error($model, 'reseaux'); ?>
+        <?php echo $form2->error($model, 'reseaux'); ?>
     </div>
     <div class="row" style="display: inline-block">
         <?php echo $form2->labelEx($model, 'qualite'); ?>
         <?php echo $form2->textArea($model, 'qualite', array('style' => "height:200px; width:450px")); ?>
-<?php echo $form2->error($model, 'qualite'); ?>
+        <?php echo $form2->error($model, 'qualite'); ?>
 
 
     </div>
@@ -201,6 +193,6 @@ $form2 = $this->beginWidget('CActiveForm', array(
         <?php echo CHtml::submitButton('Enregistrer'); ?>
     </div>
 
-        <?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div>

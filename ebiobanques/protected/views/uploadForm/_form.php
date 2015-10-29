@@ -1,3 +1,4 @@
+
 <?php
 /* @var $this DemandeController */
 /* @var $model Demande */
@@ -14,7 +15,7 @@
   });
   return false;
   });
-  $('.search-form form').submit(function(){
+  $('.search-form form').submit(function(){ //copiar la primera linea : con biobank_manUploaded-form
   $('#biobanks-grid').yiiGridView('update', {
   data: $(this).serialize()
   });
@@ -24,13 +25,66 @@
   "); */
 
 Yii::app()->clientScript->registerScript('sendSelectForm', "
-     $('#BiobankIdentifierForm_identifier').change(function(){
-//alert('test ok');
-$('#biobank_manUploaded-form').submit();
+$('#BiobankIdentifierForm_identifier').change(function(){
+    $('#biobank_manUploaded-form').submit();
+});
 
-     });
-    ");
+
+$('#biobank_manUploaded-form').submit(function(){
+$.ajax({
+    type:'POST',
+    data:$(this).serialize(),
+    success : function(result){
+    //alert('success');
+    
+    var resultForm = $($.parseHTML(result)).find('#biobank_manUpload-form2').html();
+    $('#biobank_manUpload-form2').html(resultForm);
+
+         },
+     error : function(result){
+      alert('Error on biobank information');
+     }
+  });
+  
+
+
+ return false;
+});
+
+");
+
+Yii::app()->clientScript->registerScript('sendForm2', "
+    $('#biobank_manUpload-form2').on('click', function(e) {
+  
+  $.ajax({
+    data: $(this).serialize(),
+    
+    success: function(data) { 
+      var res = $($.parseHTML(data)).find('#flashMessages').html();
+    $('#biobank_manUpload-form2').html(res);
+    // $('#flashMessages').html('<div class=\"flash-success margin_r15\">Record save Successfully.</div>').fadeIn();
+    // alert('Bien Enregistrer');
+    }
+  });
+  e.preventDefault();
+});
+    
+
+  
+
+");
 ?>
+
+
+<?php
+Yii::app()->clientScript->registerScript(
+   'myHideEffect',
+   '$("#flashMessages").delay(2100).fadeOut(900);',
+   CClientScript::POS_READY
+);
+?>
+
+
 
 
 
@@ -41,6 +95,7 @@ $form = $this->beginWidget('CActiveForm', array(
     'id' => 'biobank_manUploaded-form',
     'enableAjaxValidation' => false,
     'htmlOptions' => array('enctype' => 'multipart/form-data'),
+   
         ));
 ?>
 
@@ -85,6 +140,7 @@ $form2 = $this->beginWidget('CActiveForm', array(
     'id' => 'biobank_manUpload-form2',
     'enableAjaxValidation' => false,
     'htmlOptions' => array('enctype' => 'multipart/form-data'),
+    // 'clientOptions'=> array('validateOnSubmit'=>true),
         ));
 ?>
 

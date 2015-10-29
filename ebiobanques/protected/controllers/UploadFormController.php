@@ -145,7 +145,7 @@ class UploadFormController extends Controller
              // $model->save(); 
                 
              }
-             $model->presentation= $_POST['presentation'];
+             $model->presentation= $_POST['Biobank']['presentation'];
                 // print_r($model->getErrors()); 
                 
               if (!isset($model->thematiques)){
@@ -180,14 +180,13 @@ class UploadFormController extends Controller
              }
              $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
              
-              $model->save();
+               if($model->save(false)) {
+              Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+
+              } else
+              Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
                  
-/*           if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
-                
-            } else
-                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
-*/            
+
             
              }  
            

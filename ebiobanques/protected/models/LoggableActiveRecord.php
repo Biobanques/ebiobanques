@@ -54,20 +54,24 @@ abstract class LoggableActiveRecord extends EMongoSoftDocument
         return CommonTools::getShortValue($this->$attribute);
     }
 
-    public function onAfterFind($event) {
-        $listEncodes = array();
-        foreach ($this->attributes as $key => $value) {
-            if (is_string($value)) {
-//                $value = preg_replace('/\r\n|\r|\n/', "\n", $value);
-//                $this->$key = $value;
-//            }
-                $encoding = mb_detect_encoding($value);
-                $listEncodes[$key] = $encoding;
-            }
-        }
-        Yii::log(var_dump($listEncodes), CLogger::LEVEL_ERROR);
-        parent::onAfterFind($event);
-    }
+    /*
+      public function onAfterFind($event) {
+      $listEncodes = array();
+      foreach ($this->attributes as $key => $value) {
+      if (is_string($value)) {
+      //                $value = preg_replace('/\r\n|\r|\n/', "\n", $value);
+      //                $this->$key = $value;
+      //            }
+      $encoding = mb_detect_encoding($value);
+      $listEncodes[$key] = $encoding;
+      }
+      }
+      $msg = var_export($listEncodes, true);
+      //  echo $msg;
+      Yii::log($msg, CLogger::LEVEL_ERROR);
 
+      parent::onAfterFind($event);
+      }
+     */
 }
 ?>

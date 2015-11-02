@@ -145,7 +145,7 @@ class Biobank extends LoggableActiveRecord
             /**
              * mandatory attributes
              */
-            array('identifier,name,collection_name,collection_id,contact_id', 'required', 'on' => 'insert,update'),
+            array('identifier,name,collection_name,collection_id', 'required', 'on' => 'insert,update'),
             /**
              * Check unique in db
              * FIXME : EMONgoUniqueValidator doesn t work

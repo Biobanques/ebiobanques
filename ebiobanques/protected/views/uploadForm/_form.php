@@ -1,17 +1,89 @@
+
 <?php
 /* @var $this DemandeController */
 /* @var $model Demande */
 /* @var $form CActiveForm */
 
-//
 //Yii::app()->clientScript->registerScript('selectDropDown', "
-//       $('body select').msDropDown();
-//        ");
-//
+//     $('body select').msDropDown();
+//    ");
+
+/* Yii::app()->clientScript->registerScript('biobank_manUploaded-form', "
+  $('.search-button').change(function(){
+  $('.-form').update('biobank_manUploaded-form',{
+  data: $(this).serialize()
+  });
+  return false;
+  });
+  $('.search-form form').submit(function(){ //copiar la primera linea : con biobank_manUploaded-form
+  $('#biobanks-grid').yiiGridView('update', {
+  data: $(this).serialize()
+  });
+  return false;
+  });
+
+  "); */
+
+Yii::app()->clientScript->registerScript('sendSelectForm', "
+$('#BiobankIdentifierForm_identifier').change(function(){
+    $('#biobank_manUploaded-form').submit();
+});
+
+
+$('#biobank_manUploaded-form').submit(function(){
+$.ajax({
+    type:'POST',
+    data:$(this).serialize(),
+    success : function(result){
+    //alert('success');
+
+    var resultForm = $($.parseHTML(result)).find('#biobank_manUpload-form2').html();
+    $('#biobank_manUpload-form2').html(resultForm);
+
+         },
+     error : function(result){
+      alert('Error on biobank information');
+     }
+  });
+
+
+
+ return false;
+});
+
+");
+
+Yii::app()->clientScript->registerScript('sendForm2', "
+    $('#biobank_manUpload-form2').submit(function(){
+
+  $.ajax({
+  type:'POST',
+    data: $(this).serialize(),
+
+    success: function(result) {
+      var res = $($.parseHTML(result)).find('#flashMessages').html();
+    $('#flashMessages').html(res);
+     //alert('Bien Enregistrer');
+    },
+     error : function(result){
+      alert('Error on biobank information');
+     }
+  });
+ return false;
+});
+");
 ?>
+
+
+
+
+
+
+
+
+
 <div class="form">
     <?php
-    // aqui empieza el formulario
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank_manUploaded-form',
         'enableAjaxValidation' => false,
@@ -27,28 +99,23 @@
         <?php
         $criteria = new EMongoCriteria;
         $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-        echo $form->dropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array('empty' => 'select brif code'));
-        /* 'ajax'=> array('type'=>'POST',
-          // 'dataType'=>'json',
-          'data'=> array('identifier'=>'js:this.value'),
-          'url'=> CController::createUrl('uploadForm/uploadAll'),//$this->createUrl('uploadForm/uploadAll')
-          //'update'=> '#identifier_id',
-          'update'=> CHtml::activeId($model, 'identifier')
-          //'success'=> 'function(data){if (data == null)}'
-          ))); */
+        echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array(
+            'empty' => 'select brif code',
+                //    'onchange'=> 'this.form.submit()' //'js:validate_dropdown(this.value)'
+                /* 'ajax'=>array(
+                  'type'=>'POST',
+                  'url'=> Yii::app()->createUrl('uploadForm/uploadAll'),
+                  'update'=>'#identifier',
+                  'data' =>array($biobankIdentifier => 'js:this.value'),
+                  ) */
+        ));
         ?>
         <?php echo $form->error($biobankIdentifier, 'identifier'); ?>
     </div>
 
 
 
-
-
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Rechercher'); ?>
-    </div>
-
-    <?php $this->endWidget(); //aki terminalario   ?>
+    <?php $this->endWidget(); ?>
 
 </div>
 <!-- form -->
@@ -61,11 +128,11 @@
 
 <div class="form">
     <?php
-    // aki empieza el formulario 2
     $form2 = $this->beginWidget('CActiveForm', array(
         'id' => 'biobank_manUpload-form2',
         'enableAjaxValidation' => false,
-        'htmlOptions' => array('enctype' => 'multipart/form-data', 'accept-charset' => "UTF-8"),
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+            // 'clientOptions'=> array('validateOnSubmit'=>true),
     ));
     ?>
 
@@ -73,27 +140,21 @@
     <div class="row" >
 
         <?php
-//        $logo = new Logo('biobank');
+        // $logo = new Logo('biobank');
         ?>
+        <!--  <div class="row">
+        <?php // echo $form2->labelEx($logo, 'filename');  ?>
+        <?php //echo $form2->fileField($logo, 'filename');  ?>
+        <?php //echo $form2->error($logo, 'filename'); ?>
+          </div> -->
 
-        <!--        <div class="row">
-        <?php //echo $form2->labelEx($logo, 'filename'); ?>
-        <?php //echo $form2->fileField($logo, 'filename'); ?>
-        <?php //echo $form2->error($logo, 'filename');  ?>
-                </div>-->
 
 
-        <?php
-        // $criteria = new EMongoCriteria;
-        //  $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-        /* echo $form2->dropDownList($model, 'id', CHtml::listData(Biobank::model()->findAll($criteria), 'id', 'idAndName'),
-          array('empty' => 'select brif code')); */
-        ?>
-        <?php //echo $form2->error($model, 'identifier');  ?>
+        <?php echo $form2->hiddenField($model, 'identifier'); ?>
+
     </div>
     <div class="row" style="display: inline-block">
 
-        <?php echo $form2->hiddenField($model, 'identifier'); ?>
 
         <?php echo $form2->labelEx($model, 'presentation'); ?>
         <?php echo $form2->textArea($model, 'presentation', array('style' => "height:200px; width:450px")); ?>
@@ -129,9 +190,9 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Mettre à jour'); ?>
+        <?php echo CHtml::submitButton('Enregistrer'); ?>
     </div>
 
-    <?php $this->endWidget(); //aki terminalario   ?>
+    <?php $this->endWidget(); ?>
 
 </div>

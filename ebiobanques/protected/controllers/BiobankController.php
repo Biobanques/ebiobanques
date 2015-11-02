@@ -26,7 +26,7 @@ class BiobankController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg','print', 'exportXls', 'exportCsv', 'exportPdf'),
+                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -129,7 +129,11 @@ class BiobankController extends Controller
                 $model->address = $_POST['Address'];
             }
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'La biobanque a bien été créée.');
+                $flashMsg = 'La biobanque a bien été créée.';
+                if (!isset($model->contact_id) || $model->contact_id == "")
+                    $flashMsg.='<br>Le contact n\'a pas été renseigné, n\'oubliez pas de le faire après sa création';
+                Yii::app()->user->setFlash('success', $flashMsg);
+
                 $this->redirect(array('view', 'id' => $model->_id));
             } else
                 Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être enregistrée');
@@ -255,7 +259,7 @@ class BiobankController extends Controller
             Yii::app()->end();
         }
     }
-    
+
     public function actionExportCsv() {
         $model = new Biobank('search');
         $model->unsetAttributes();
@@ -316,7 +320,7 @@ class BiobankController extends Controller
         }
 
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-        $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
+        $mPDF1->WriteHTML($this->renderPartial('printPdf', array('dataProvider' => $dataProvider), true));
         $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 
@@ -347,13 +351,13 @@ class BiobankController extends Controller
                     $line[] = "-";
                 }
             }
-            $line[]=iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
-            $line[]=iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
-            $contact=$biobank->getContact();
-            if($contact!=null){
-                $line[]=iconv("UTF-8", "ASCII//TRANSLIT", $contact->getFullAddress());
-            }  else {
-             $line[]="No address";   
+            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
+            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
+            $contact = $biobank->getContact();
+            if ($contact != null) {
+                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $contact->getFullAddress());
+            } else {
+                $line[] = "No address";
             }
             $data[] = $line;
         }

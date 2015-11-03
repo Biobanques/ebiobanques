@@ -8,21 +8,7 @@
 //     $('body select').msDropDown();
 //    ");
 
-/* Yii::app()->clientScript->registerScript('biobank_manUploaded-form', "
-  $('.search-button').change(function(){
-  $('.-form').update('biobank_manUploaded-form',{
-  data: $(this).serialize()
-  });
-  return false;
-  });
-  $('.search-form form').submit(function(){ //copiar la primera linea : con biobank_manUploaded-form
-  $('#biobanks-grid').yiiGridView('update', {
-  data: $(this).serialize()
-  });
-  return false;
-  });
 
-  "); */
 
 Yii::app()->clientScript->registerScript('sendSelectForm', "
 $('#BiobankIdentifierForm_identifier').change(function(){
@@ -132,7 +118,7 @@ Yii::app()->clientScript->registerScript('sendForm2', "
         'id' => 'biobank_manUpload-form2',
         'enableAjaxValidation' => false,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
-            // 'clientOptions'=> array('validateOnSubmit'=>true),
+            
     ));
     ?>
 

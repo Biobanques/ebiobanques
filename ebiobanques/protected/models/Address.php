@@ -29,6 +29,8 @@ class Address extends EMongoSoftEmbeddedDocument
      */
     public $country;
 
+    
+    
     // We may define rules for embedded document too
     public function rules() {
         return array(

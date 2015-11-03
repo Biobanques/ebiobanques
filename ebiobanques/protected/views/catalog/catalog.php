@@ -19,7 +19,7 @@ $('#biobanks-grid').yiiGridView('update', {
 </div>
 
 <?php
-$this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'searchBiobank', 'searchable' => true));
+$this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'searchCatalog', 'searchable' => true));
 ?>
 <div class="search-form" style="display:none">
     <?php

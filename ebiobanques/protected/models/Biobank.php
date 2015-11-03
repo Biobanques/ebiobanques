@@ -232,7 +232,7 @@ class Biobank extends LoggableActiveRecord
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'identifier' => Yii::t('common', 'identifier'),
+            'identifier' => Yii::t('common', 'identifier'), //
             'name' => Yii::t('common', 'name'),
             'collection_name' => Yii::t('common', 'collection_name'),
             'collection_id' => Yii::t('common', 'collection_id'),
@@ -256,7 +256,7 @@ class Biobank extends LoggableActiveRecord
             'nbs_bloodcellisolates_samples_affected' => 'blood cell isolates samples affected',
             'nbs_bloodcellisolates_samples_relatives' => 'blood cell isolates samples relatives',
             'nbs_serum_samples_affected' => 'serum samples affected',
-            'nbs_serum_samples_relatives' => 'serum samples relatives',
+            'nbs_serum_samples_relatives' => 'serum sample<br />s relatives',
             'nbs_plasma_samples_affected' => 'Plasma samples affected',
             'nbs_plasma_samples_relatives' => 'Plasma samples relatives',
             'nbs_fluids_samples_affected' => 'Fluids samples affected',
@@ -275,19 +275,21 @@ class Biobank extends LoggableActiveRecord
 
     public function attributeExportedLabels() {
         return array(
-            '_id' => 'ID',
-            'identifier' => Yii::t('common', 'identifier'),
-            'name' => Yii::t('common', 'name'),
-            'collection_name' => Yii::t('common', 'collection_name'),
-            'contact_id' => 'Contact',
-            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
-            'website' => Yii::t('common', 'website'),
+            //'_id' => 'ID',
+            //'name' => Yii::t('common', 'name'),           
+            //'identifier' => Yii::t('common', 'identifier'),
+            //'collection_name' => Yii::t('common', 'collection_name'),
+            //'contact_id' => 'Contact',
+            // 'address' => 'Address',
+            //'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
+            //'website' => Yii::t('common', 'website'),
             'presentation' => Yii::t('common', 'presentation'),
             'thematiques' => Yii::t('common', 'thematiques'),
+            'projetRecherche' => Yii::t('common', 'projetRecherche'),
             'publications' => Yii::t('common', 'publications'),
             'reseaux' => Yii::t('common', 'reseaux'),
             'qualite' => Yii::t('common', 'qualite'),
-            'projetRecherche' => Yii::t('common', 'projetRecherche'),
+            
         );
     }
 
@@ -377,7 +379,16 @@ class Biobank extends LoggableActiveRecord
         if ($contact != null)
             return $contact != null ? $contact->last_name . " " . $contact->first_name : "";
     }
-
+ public function getShortContactInv() {
+        $contact = $this->getContact();
+        if ($contact != null){
+            $contact->first_name = ucfirst($contact->first_name);
+             return $contact->first_name . " " . $contact->last_name ;
+        }
+         else
+             return "";
+           
+    }
     /**
      * retourne l email du contact s il existe
      * @return string
@@ -398,6 +409,15 @@ class Biobank extends LoggableActiveRecord
         $contact = $this->getContact();
         if ($contact != null && $contact->phone != null)
             return $contact->phone;
+        else
+            return null;
+    }
+    public function getPhoneContactPDF() {
+        $contact = $this->getContact();
+        if ($contact != null && $contact->phone != null){
+            $contact->phone = '0'.substr($contact->phone,3);
+            return $contact->phone;
+        }
         else
             return null;
     }

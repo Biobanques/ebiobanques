@@ -91,8 +91,8 @@ class RequestTools
           pat.patients.push(patient);
 
            emit(
-   {       RNCE_Lib_GroupeICCC:this.RNCE_Lib_GroupeICCC!=""?this.RNCE_Lib_GroupeICCC:"Inconnu",
-       RNCE_Lib_SousGroupeICCC:this.RNCE_Lib_SousGroupeICCC!=""?this.RNCE_Lib_SousGroupeICCC:"Inconnu"
+   {       RNCE_Lib3_GroupeICCC:this.RNCE_Lib3_GroupeICCC!=""?this.RNCE_Lib3_GroupeICCC:"Inconnu",
+       RNCE_Lib3_SousGroupeICCC:this.RNCE_Lib3_SousGroupeICCC!=""?this.RNCE_Lib3_SousGroupeICCC:"Inconnu"
        },
      pat
      ) }');

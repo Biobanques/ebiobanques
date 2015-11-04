@@ -19,8 +19,8 @@ class CommonTools
     const FRENCH_HD_DATE_FORMAT = "d/m/Y H:i";
     const ENGLISH_HD_DATE_FORMAT = "Y-m-d H:i";
     const HOUR_DATE_FORMAT = "H:i";
-    const AGGREGATEDFIELD1 = "RNCE_Lib_GroupeICCC";
-    const AGGREGATEDFIELD2 = "RNCE_Lib_SousGroupeICCC";
+    const AGGREGATEDFIELD1 = "RNCE_Lib3_GroupeICCC";
+    const AGGREGATEDFIELD2 = "RNCE_Lib3_SousGroupeICCC";
 
     /*
      * limit number of lines for excel export to prevent memory issue

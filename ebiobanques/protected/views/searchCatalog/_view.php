@@ -7,6 +7,16 @@
 <head>
 <style> 
     
+    h4{
+        color:red;
+    }
+    
+ .name{
+        page-break-before: always;
+        font-weight:bold;
+        }
+        
+
     
 #contact
 {
@@ -33,16 +43,24 @@ margin-left:auto;
 float:right;
 }
 
+#container{
+    background:gold;
+    box-shadow: 3px 3px 2px #666666;
+    width: 100%;
+    
+}
+
+
+
 </style>
 </head>
 </html>
-
 
 <!-- Biobank's name-->
 
 <div class='name'>
     
-    <b> <?php echo $data->name;?></b>
+  <?php echo $data->name;?>
        
 </div>
 
@@ -50,22 +68,20 @@ float:right;
 <div class='id'>
     
     <?php echo CHtml::encode($data->getAttributeLabel('Identifiant BRIF')); ?>:
-	<b style="font-size:medium;"><?php echo CHtml::encode($data->identifier); ?><b>
+	<b><?php echo CHtml::encode($data->identifier); ?><b>
 	
 </div>
 <br />
 
-<div id="container" style ="background:gold;box-shadow: 3px 3px 2px #666666; width: 100%;">
+<div id="container">
     
 <!-- Biobank's contact-->
 <div id='contact'
      >
     
-   <b style="color:red;line-height:30pt;" > 
+   <h4  > 
        <?php echo CHtml::encode($data->getAttributeLabel('Coordinateur')); ?>:
-       </b>
-      <br />
-      <br />
+       </h4>
       
       <?php  echo  $data->contact_id != null && !empty($data->contact_id) ?'<b>' . CHtml::encode($data->getShortContactInv()) . '</b>' . '<br>' . CHtml::encode($data->getPhoneContactPDF()) . '<br>' . CHtml::encode($data->getEmailContact()): "" ; ?>
        
@@ -73,31 +89,31 @@ float:right;
 
 <!-- Biobank's adress-->
 <div id='adress'>
-   <b style="color:red;" > 
+   <h4 > 
        <?php echo CHtml::encode($data->getAttributeLabel('adresse')); ?>:
-       </b>
-      <br />
-      <br />
-	<?php  echo nl2br($data->getAddress()); ?>
+       </h4>
+      
+	<?php  echo nl2br($data->getAddress());?>
+    <br>
     
+      <b> <?php if (isset($data->website)) 
+       echo $data->website;?> </b>
+      
     </div>
-    <br />
 </div>
 
-<br />
-<br />
-        
+<!-- Biobank's attributes-->        
 <div class='view'>
      <?php
     foreach (Biobank::Model()->attributeExportedLabels() as $attribute => $value) {
         if (isset($data->$attribute)) {
             ?>
    
-            <b style="color:red;">
-                <?php echo CHtml::encode($data->getAttributeLabel($attribute)); ?>:</b>
-             <br />
-             <br />
-               <?php
+            <h4 >
+                <?php echo CHtml::encode($data->getAttributeLabel($attribute)); ?>:</h4>
+             
+             
+             <p>   <?php
             switch ($attribute) {
                 case 'presentation':
                     echo nl2br($data->presentation);
@@ -118,10 +134,6 @@ float:right;
                     echo nl2br($data->qualite);
                     break;
                 
-                case 'website':
-                    echo CHtml::link($data->website, array('target' => 'blank'));
-                    break;
-                
                 default:
                    // echo CHtml::encode($data->$attribute);
                     break;
@@ -129,12 +141,11 @@ float:right;
   
             }
             ?>
-            <br />
-            <br />
+             </p>
+            
             <?php
         }
     }
     ?>
-    <br />
-    <br />
+   
 </div>

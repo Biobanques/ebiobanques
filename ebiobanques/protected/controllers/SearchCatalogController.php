@@ -94,15 +94,15 @@ class SearchCatalogController extends Controller
     public function actionExportPdf() {
         $mPDF1 = Yii::app()->ePdf->mpdf();
        
-       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;"><img src="http://www.blogger.com/img/logo40.gif"  alt ="Logo" ></div>'
-               . '<div class="pdf_name" style="color:black; text-align:center;" >Annuaire BIOBANQUES 2015</div>'
+       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
+               . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
                . '<div class="pdf_pagination" style="color:black; text-align:right;" >{PAGENO}</div>';
      
-      // $mPDF1->SetHTMLFooter($html);
+      //$mPDF1->SetHTMLFooter($html);
        $footer= array (
                         'odd' => array (
                           'L' => array (
-                            'content' => 'LOGO',
+                            'content' => 'LOGO',//Yii::app()->request->baseUrl . '/images/logo.png',
                             'font-size' => 10,
                             'font-style' => '',
                             'font-family' => 'serif',
@@ -137,11 +137,7 @@ class SearchCatalogController extends Controller
         }
 
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-       
-        $mPDF1->AddPage();
         $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
-        //$mPDF1->InsertIndex(true, false, "es_ES.utf8", "Spanish_Spain");
-        
         $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 

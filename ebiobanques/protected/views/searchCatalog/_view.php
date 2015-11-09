@@ -93,10 +93,10 @@ float:right;
        <?php echo CHtml::encode($data->getAttributeLabel('adresse')); ?>:
        </h4>
       
-	<?php  echo nl2br($data->getAddress());?>
+	<?php echo nl2br($data->getAddress());?>
     <br>
     
-      <b> <?php if (isset($data->website)) 
+      <b><?php if (isset($data->website)) 
        echo $data->website;?> </b>
       
     </div>

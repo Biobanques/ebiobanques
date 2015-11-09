@@ -8,6 +8,12 @@
 <head>
 <style> 
    
+  @page {
+  size: auto;
+  
+  odd-footer-name: html_myFooter1;
+  even-footer-name: html_myFooter2;
+}  
     
     #title{
         
@@ -79,6 +85,15 @@
     
 </style>
 </head>
+
+    <htmlpagefooter name="myFooter1" style="display:none">
+ <table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt;
+    color: #000000; font-weight: bold; font-style: italic;"><tr>
+    <td width="33%"><span style="font-weight: bold; font-style: italic;"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png');?></span></td>
+    <td width="33%" align="center" style="font-weight: bold; font-style: italic;">Annuaire BIOBANQUES 2015</td>
+    <td width="33%" style="text-align: right; ">{PAGENO}</td>
+    </tr></table>
+</htmlpagefooter>
 </html>
 
 

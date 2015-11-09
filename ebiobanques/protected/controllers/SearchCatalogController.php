@@ -94,15 +94,13 @@ class SearchCatalogController extends Controller
     public function actionExportPdf() {
         $mPDF1 = Yii::app()->ePdf->mpdf();
        
-       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
-               . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
-               . '<div class="pdf_pagination" style="color:black; text-align:right;" >{PAGENO}</div>';
+//       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
+//               . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
+//               . '<div class="pdf_pagination" style="color:black; text-align:right;" >{PAGENO}</div>';
      
-      //$mPDF1->SetHTMLFooter($html);
-      $image= CHtml::image(Yii::app()->baseUrl . '/images/logo.png');
-  //   $mPDF1>Image(Yii::app()->request->baseUrl . '/images/logo.png',0,0,21,29,'png','',true,false);
+//      $mPDF1->SetHTMLFooter($html);
      
-       $footer= array (
+/*       $footer= array (
                         'odd' => array (
                           'L' => array (
                             'content' => '',//Yii::app()->request->baseUrl . '/images/logo.png',
@@ -131,7 +129,7 @@ class SearchCatalogController extends Controller
                       );
  
         $mPDF1->SetFooter( $footer);
-       
+ */
         
         if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
             $criteria = $_SESSION['criteria'];

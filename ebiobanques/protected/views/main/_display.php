@@ -24,7 +24,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => 'Groupe ICCC', 'name' => 'group_iccc', 'value' => '$data["_id"]["' . CommonTools::AGGREGATEDFIELD1 . '"] != null ? $data["_id"]["' . CommonTools::AGGREGATEDFIELD1 . '"] : "Inconnu"'),
         array('header' => 'Sous groupe ICCC', 'name' => 'sous_group_iccc', 'value' => '$data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"] != null ? $data["_id"]["' . CommonTools::AGGREGATEDFIELD2 . '"] : "Inconnu"')
         ,
-        array('name' => 'patientPartialTotal', 'header' => 'Nombre de patients', 'value' => '$data["value"]["patientPartialTotal"]'),
+        array('name' => 'patientPartialTotal', 'header' => 'Nombre de tumeurs', 'value' => '$data["value"]["patientPartialTotal"]'),
         array('name' => 'CR', 'header' => 'Consentement recherche', 'value' => '$data["value"]["CR"]'),
         array('name' => 'IE', 'header' => 'Inclus dans une étude', 'value' => '$data["value"]["IE"]'),
         array(

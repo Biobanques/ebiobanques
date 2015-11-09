@@ -84,7 +84,7 @@ class RequestTools
           var pat ={};
           pat.patients=[];
           var patient = {};
-          patient.id = this.ident_pat_biocap;
+          patient.id = this.ident_tum_biocap;
 
           patient.samples=[];
           patient.samples.push(this);

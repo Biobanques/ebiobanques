@@ -73,7 +73,7 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
 
     <?php
     echo $totalPatientSelected > 0 ?
-            "Au total, $totalPatientSelected patients ont été trouvés avec les critères de recherche suivants, sur les $totalPatient présents en base : " : "Aucun patient trouvé avec ces critères, merci de les modifier : " . "<br>";
+            "Au total, $totalPatientSelected tumeurs ont été trouvées avec les critères de recherche suivants, sur les $totalPatient patients présents en base : " : "Aucune tumeur trouvée avec ces critères, merci de les modifier : " . "<br>";
     echo '<ul>';
     if ($flag == 0)
         $summaryModel = $model;

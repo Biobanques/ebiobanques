@@ -62,11 +62,20 @@ class BiocapForm extends CFormModel
      * ECHANTILLON TUMORAL SUB-BLOCK
      */
     public $ETL;
+    public $ETLoc;
+    public $ETTyp;
+    public $ETDer;
+
 
     /*
      * ECHANTILLON NON TUMORAL SUBBLOCK
      */
     public $ENTA;
+    public $ENTLoc;
+    public $ENTTyp;
+    public $ENTDer;
+    public $ENTRBA;
+
     /*
      * CONSENTEMENT SUBBLOCK
      */
@@ -100,17 +109,17 @@ class BiocapForm extends CFormModel
             'iccc_sousgroup1' => 'Sous groupe ICCC',
             'iccc_sousgroup2' => 'Sous groupe ICCC',
             'iccc_sousgroup3' => 'Sous groupe ICCC',
-            'topoOrganeField' => 'Topo / organe',
-            'topoOrganeField1' => 'Topo / organe',
-            'morphoHistoField' => 'Morpho / histo',
-            'morphoHistoField1' => 'Morpho / histo',
+            'topoOrganeField' => 'Code CIM topo',
+            'topoOrganeField1' => 'Code CIM topo',
+            'morphoHistoField' => 'Code CIM Morpho',
+            'morphoHistoField1' => 'Code CIM Morpho',
             'metastasique' => 'Métastasique',
             'cr_anapath_dispo' => 'CR anapath disponible',
             'donCliInBase' => 'Données cliniques en base',
             /*
              * PATIENT
              */
-            'age' => 'Age',
+            'age' => 'Age au prélèvement',
             'age[0-1]' => '0-1 an',
             'age[2-4]' => '2-4 ans',
             'age[5-9]' => '5-9 ans',
@@ -139,6 +148,13 @@ class BiocapForm extends CFormModel
             'mode_prelev[ponction]' => 'Ponction',
             'mode_prelev[autre]' => 'Autre / Inconnu',
             'ETL' => 'Echantillon tumoral',
+            'ETLoc' => 'Localisation',
+            'ETTyp' => 'Type',
+            'ETDer' => 'Dérivés',
+            'ENTLoc' => 'Localisation',
+            'ENTTyp' => 'Type',
+            'ENTDer' => 'Dérivés',
+            'ENTRBA' => 'Ressources biologiques associées',
             'ETL[tum_prim]' => 'Tumeur primitive',
             'ETL[metastase]' => 'Métastase',
             'ETL[tissu_cong]' => 'Tissu congelé',
@@ -158,6 +174,7 @@ class BiocapForm extends CFormModel
             'ENTA[arn_const]' => 'ARN constitutionnel',
             'ENTA[serum]' => 'Sérum',
             'ENTA[plasma]' => 'Plasma',
+            'ENTA[autre]' => 'Autres liquides',
             'consent_rech' => 'Consentement recherche',
             'consent_RGC' => 'Consentement recherche génétique constitutionnelle',
             'mode_request' => "Mode de requête",

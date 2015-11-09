@@ -81,7 +81,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
 
 
   //topoOrgane
-  $('#LightBiocapForm_topoOrganeField1').keyup(function(){
+  $('#LightBiocapForm_topoOrganeField1').change(function(){
   if($('#LightBiocapForm_topoOrganeField1').val().length>0){
   $('#LightBiocapForm_topoOrganeField2').prop('disabled',false);
   }else{
@@ -90,7 +90,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
   }
   return false;
   });
-  $('#LightBiocapForm_topoOrganeField2').keyup(function(){
+  $('#LightBiocapForm_topoOrganeField2').change(function(){
   if($('#LightBiocapForm_topoOrganeField2').val().length>0){
   $('#LightBiocapForm_topoOrganeField3').prop('disabled',false);
   }else{
@@ -101,7 +101,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
   });
 
   //morphoHisto
-  $('#LightBiocapForm_morphoHistoField1').keyup(function(){
+  $('#LightBiocapForm_morphoHistoField1').change(function(){
   if($('#LightBiocapForm_morphoHistoField1').val().length>0){
   $('#LightBiocapForm_morphoHistoField2').prop('disabled',false);
   }else{
@@ -110,7 +110,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
   }
   return false;
   });
-  $('#LightBiocapForm_morphoHistoField2').keyup(function(){
+  $('#LightBiocapForm_morphoHistoField2').change(function(){
   if($('#LightBiocapForm_morphoHistoField2').val().length>0){
   $('#LightBiocapForm_morphoHistoField3').prop('disabled',false);
   }else{
@@ -195,28 +195,38 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
             <div class = "row" style="text-align: right">
                 <?php
                 echo $form->label($model, 'topoOrganeField', array('style' => 'display:inline-block;float:left'));
+                echo $form->dropDownList($model, 'topoOrganeField1', SampleCollected::model()->getCimoTopoList(), array(
+                    'prompt' => 'Selectionner un code topo',
+                    'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                 ?>
                 <?php
-                echo $form->radioButtonList($model, 'topoOrganeType', array('cimo' => 'CIM-O', 'adicap' => 'ADICAP'), array('display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                //echo $form->label($model, 'topoOrganeField', array('style' => 'display:inline-block;float:left'));
+//                echo $form->radioButtonList($model, 'topoOrganeType', array('cimo' => 'CIM-O', 'adicap' => 'ADICAP'), array('display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                 ?>
 
                 <?php
-                echo $form->textField($model, 'topoOrganeField1', array('size' => '5'));
+                // echo $form->textField($model, 'topoOrganeField1', array('size' => '5'));
                 ?>
                 <?php
-                echo $form->error($model, 'topoOrganeField1');
+                // echo $form->error($model, 'topoOrganeField1');
                 ?>
                 <?php
-                echo $form->textField($model, 'topoOrganeField2', array('size' => '5'));
+                //echo $form->textField($model, 'topoOrganeField2', array('size' => '5'));
+                echo $form->dropDownList($model, 'topoOrganeField2', SampleCollected::model()->getCimoTopoList(), array(
+                    'prompt' => 'Selectionner un code topo',
+                    'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                 ?>
                 <?php
-                echo $form->error($model, 'topoOrganeField2');
+                //  echo $form->error($model, 'topoOrganeField2');
                 ?>
                 <?php
-                echo $form->textField($model, 'topoOrganeField3', array('size' => '5'));
+                //  echo $form->textField($model, 'topoOrganeField3', array('size' => '5'));
+                echo $form->dropDownList($model, 'topoOrganeField3', SampleCollected::model()->getCimoTopoList(), array(
+                    'prompt' => 'Selectionner un code topo',
+                    'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                 ?>
                 <?php
-                echo $form->error($model, 'topoOrganeField3');
+                //  echo $form->error($model, 'topoOrganeField3');
                 ?>
             </div>
             <div class = "row" style="text-align: right">
@@ -224,26 +234,35 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
                 echo $form->label($model, 'morphoHistoField', array('style' => 'display:inline-block;float:left'));
                 ?>
                 <?php
-                echo $form->radioButtonList($model, 'morphoHistoType', array('cimo' => 'CIM-O', 'adicap' => 'ADICAP'), array('display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+//                echo $form->radioButtonList($model, 'morphoHistoType', array('cimo' => 'CIM-O', 'adicap' => 'ADICAP'), array('display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                 ?>
 
                 <?php
-                echo $form->textField($model, 'morphoHistoField1', array('size' => '5'));
+                echo $form->dropDownList($model, 'morphoHistoField1', SampleCollected::model()->getCimoMorphoList(), array(
+                    'prompt' => 'Selectionner un code morpho',
+                    'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
+                // echo $form->textField($model, 'morphoHistoField1', array('size' => '5'));
                 ?>
                 <?php
-                echo $form->error($model, 'morphoHistoField1');
+                //echo $form->error($model, 'morphoHistoField1');
                 ?>
                 <?php
-                echo $form->textField($model, 'morphoHistoField2', array('size' => '5'));
+                echo $form->dropDownList($model, 'morphoHistoField2', SampleCollected::model()->getCimoMorphoList(), array(
+                    'prompt' => 'Selectionner un code morpho',
+                    'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
+//echo $form->textField($model, 'morphoHistoField2', array('size' => '5'));
                 ?>
                 <?php
-                echo $form->error($model, 'morphoHistoField2');
+                //echo $form->error($model, 'morphoHistoField2');
                 ?>
                 <?php
-                echo $form->textField($model, 'morphoHistoField3', array('size' => '5'));
+                echo $form->dropDownList($model, 'morphoHistoField3', SampleCollected::model()->getCimoMorphoList(), array(
+                    'prompt' => 'Selectionner un code morpho',
+                    'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
+//                echo $form->textField($model, 'morphoHistoField3', array('size' => '5'));
                 ?>
                 <?php
-                echo $form->error($model, 'morphoHistoField3');
+                // echo $form->error($model, 'morphoHistoField3');
                 ?>
             </div>
 
@@ -255,9 +274,9 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
             <div class='title'>PATIENT</div>
             <div class="row aligned" >
                 <?php
-                echo $form->label($model, 'age', array('style' => 'width:15%;vertical-align: top;'));
+                echo $form->label($model, 'age', array('style' => 'width: 25%;vertical-align: top;display: inline-block;'));
                 ?>
-                <div style="display: inline-block;width: 79%;vertical-align: top;">
+                <div style="display: inline-block;float:right;width: 70%;vertical-align: top;">
                     <?php ?>
                     <div style="display: inline-block;">
                         <?php
@@ -300,7 +319,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
         </div>
     </div>
     <div class='biocapWindow' style="width: 97%">
-        <div class='title'>PRELEVEMENT-ECHANTILLON</div>
+        <div class='title'>PRELEVEMENT</div>
         <div class='group'>
             <div class='title'>Prélèvement</div>
             <div>

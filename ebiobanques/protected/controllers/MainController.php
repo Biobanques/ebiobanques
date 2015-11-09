@@ -230,10 +230,10 @@ class MainController extends Controller
         if ($form->topoOrganeField != "") {
             $form->topoOrganeField = substr($form->topoOrganeField, 0, -1);
 
-            if ($form->topoOrganeType == 'adicap')
-                $attribute = 'Code_organe1_ADICAP';
-            else
-                $attribute = 'Code_organe1_CIMO3';
+//            if ($form->topoOrganeType == 'adicap')
+//                $attribute = 'Code_organe1_ADICAP';
+//            else
+            $attribute = 'RNCE_LibelleTopo';
             $diagCriteria->addCond($attribute, '==', new MongoRegex("/($form->topoOrganeField)/i"));
         }
         /*
@@ -251,11 +251,11 @@ class MainController extends Controller
         }
         if ($form->morphoHistoField != "") {
             $form->morphoHistoField = substr($form->morphoHistoField, 0, -1);
-
-            if ($form->morphoHistoType == 'adicap')
-                $attribute = 'Type_lesionnel1_ADICAP';
-            else
-                $attribute = 'Type_lesionnel1_CIMO3';
+//
+//            if ($form->morphoHistoType == 'adicap')
+//                $attribute = 'Type_lesionnel1_ADICAP';
+//            else
+            $attribute = 'RNCE_Intitule_CIMO';
             $diagCriteria->addCond($attribute, '==', new MongoRegex("/($form->morphoHistoField)/i"));
         }
         if (isset($form->metastasique))

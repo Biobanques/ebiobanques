@@ -108,5 +108,29 @@ class SampleCollected extends LoggableActiveRecord
         return array_keys($this->find()->getAttributes());
     }
 
+    public function getCimoTopoList() {
+        $values = $this->getCollection()->distinct('RNCE_LibelleTopo');
+        natcasesort($values);
+        $result = array();
+        foreach ($values as $res) {
+            if ($res != '')
+                $result[$res] = $res;
+        }
+
+        return $result;
+    }
+
+    public function getCimoMorphoList() {
+        $values = $this->getCollection()->distinct('RNCE_Intitule_CIMO');
+        natcasesort($values);
+        $result = array();
+        foreach ($values as $res) {
+            if ($res != '')
+                $result[$res] = $res;
+        }
+
+        return $result;
+    }
+
 }
 ?>

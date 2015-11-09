@@ -109,7 +109,7 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     if ($summaryModel->morphoHistoField1 != null && $summaryModel->morphoHistoField1 != "")
                         echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue, ",</li>";
                     break;
-                case 'morphoHistoField1':
+                case 'morphoHistoField':
                     break;
                 case 'morphoHistoField1':
                     $value = $summaryModel->morphoHistoField1;

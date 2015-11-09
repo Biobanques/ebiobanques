@@ -89,7 +89,7 @@ class LightBiocapForm extends CFormModel
             /*
              * PATIENT
              */
-            'age' => 'Age',
+            'age' => 'Age au prélèvement',
             'age[0-1]' => '0-1 an',
             'age[2-4]' => '2-4 ans',
             'age[5-9]' => '5-9 ans',

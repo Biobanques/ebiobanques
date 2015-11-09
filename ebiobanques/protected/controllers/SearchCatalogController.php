@@ -99,10 +99,13 @@ class SearchCatalogController extends Controller
                . '<div class="pdf_pagination" style="color:black; text-align:right;" >{PAGENO}</div>';
      
       //$mPDF1->SetHTMLFooter($html);
+      $image= CHtml::image(Yii::app()->baseUrl . '/images/logo.png');
+  //   $mPDF1>Image(Yii::app()->request->baseUrl . '/images/logo.png',0,0,21,29,'png','',true,false);
+     
        $footer= array (
                         'odd' => array (
                           'L' => array (
-                            'content' => 'LOGO',//Yii::app()->request->baseUrl . '/images/logo.png',
+                            'content' => '',//Yii::app()->request->baseUrl . '/images/logo.png',
                             'font-size' => 10,
                             'font-style' => '',
                             'font-family' => 'serif',

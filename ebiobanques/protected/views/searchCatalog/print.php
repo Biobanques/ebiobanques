@@ -121,8 +121,9 @@
 
 <div class='index'>
      <?php
-   // foreach (Biobank::Model()->findByAttributes($data=>getCity())) { }
+  // Biobank::Model()->findByAttributes($data->getCity());
             ?>
+   </div> 
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
@@ -130,3 +131,16 @@
         'template'=>'{items} {pager}',
 )); ?>
 
+<div class="box1">
+  
+<div id="box2">
+    
+    <div id="box3">
+    
+        
+        </div>
+
+
+</div>
+</div>
+          

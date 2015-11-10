@@ -601,7 +601,7 @@ return false;
                 </div>
                 <div>
                     <?php
-                    echo $form->checkBox($model, 'ETLTyp[bloc_para]', array('value' => 'Tissu tumoral', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null, 'disabled' => true));
+                    echo $form->checkBox($model, 'ETLTyp[bloc_para]', array('value' => 'Tissu tumoral', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo $form::label($model, 'ETLTyp[bloc_para]');
                     ?>
                 </div>

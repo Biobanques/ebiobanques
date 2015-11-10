@@ -475,9 +475,9 @@ class MainController extends Controller
             if (isset($form->ETLTyp['tissu_cong']) && $form->ETLTyp['tissu_cong'] == 'Tissu tumoral congelé') {
                 $echTumType[] = $form->ETLTyp['tissu_cong'] . '$';
             }
-//            if (isset($form->ETLTyp['bloc_para']) && $form->ETLTyp['bloc_para'] == 'Tissu tumoral') {
-//                $echTumType[] = $form->ETLTyp['bloc_para'] . '$';
-//            }
+            if (isset($form->ETLTyp['bloc_para']) && $form->ETLTyp['bloc_para'] == 'Tissu tumoral') {
+                $echTumType[] = $form->ETLTyp['bloc_para'] . '$';
+            }
             if (isset($form->ETLTyp['cell_DMSO']) && $form->ETLTyp['cell_DMSO'] == 'Cellules DMSO') {
                 $echTumType[] = $form->ETLTyp['cell_DMSO'] . '$';
             }

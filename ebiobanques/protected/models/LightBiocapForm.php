@@ -82,10 +82,10 @@ class LightBiocapForm extends CFormModel
             'iccc_sousgroup1' => 'Sous groupe ICCC',
             'iccc_sousgroup2' => 'Sous groupe ICCC',
             'iccc_sousgroup3' => 'Sous groupe ICCC',
-            'topoOrganeField' => 'Topo / organe',
-            'topoOrganeField1' => 'Topo / organe',
-            'morphoHistoField' => 'Morpho / histo',
-            'morphoHistoField1' => 'Morpho / histo',
+            'topoOrganeField' => 'Code CIM topo',
+            'topoOrganeField1' => 'Code CIM topo',
+            'morphoHistoField' => 'Code CIM Morpho',
+            'morphoHistoField1' => 'Code CIM Morpho',
             /*
              * PATIENT
              */

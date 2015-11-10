@@ -128,10 +128,10 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup1') . " : " . $summaryModel->iccc_sousgroup1 . ",</li>";
                     break;
                 case 'iccc_group2':
-                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup2') . " : " . $summaryModel->iccc_sousgroup2 . ",</li>";
+                    echo "Ou <br><li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup2') . " : " . $summaryModel->iccc_sousgroup2 . ",</li>";
                     break;
                 case 'iccc_group3':
-                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup3') . " : " . $summaryModel->iccc_sousgroup3 . ",</li>";
+                    echo "Ou <br><li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . $attributeValue . ", " . $summaryModel->getAttributeLabel('iccc_sousgroup3') . " : " . $summaryModel->iccc_sousgroup3 . ",</li>";
                     break;
                 case 'iccc_group':
                     break;
@@ -151,13 +151,36 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
         }elseif (is_array($attributeValue)) {
             switch ($attributeName) {
                 case 'evenement':
-                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->evenement), ",</li>";
-                    break;
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->evenement), ",</li>";
+//                    break;
                 case 'mode_prelev':
-                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->mode_prelev), ",</li>";
-                    break;
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->mode_prelev), ",</li>";
+//                    break;
                 case 'type_prelev':
-                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->type_prelev), ",</li>";
+                    echo "<li>Prélèvement - " . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->$attributeName), ",</li>";
+
+                    break;
+                case 'ETLLoc':
+                // echo 'Echantillon tumoral - ';
+                case 'ETLTyp':
+                // echo 'Echantillon tumoral - ';
+//
+                case 'ETLDer':
+                    echo "<li>Echantillon tumoral - " . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->$attributeName), ",</li>";
+
+                    break;
+                //  echo 'Echantillon tumoral - ';
+                case 'ENTLoc':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+                case 'ENTTyp':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+                case 'ENTDer':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ENTDer), ",</li>";
+//
+//                    break;
+                case 'ENTRBA':
+
+                    echo "<li>Echantillon non tumoral - " . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->$attributeName), ",</li>";
 
                     break;
                 default:
@@ -168,6 +191,43 @@ $('#summary').load('" . Yii::app()->createUrl('main/search') . " #summary',
                     }
                     echo '</ul></li>';
             }
+//            switch ($attributeName) {
+//                case 'evenement':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->evenement), ",</li>";
+//                    break;
+//                case 'mode_prelev':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->mode_prelev), ",</li>";
+//                    break;
+//                case 'type_prelev':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->type_prelev), ",</li>";
+//
+//                    break;
+//                case 'ETLLoc':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+//                case 'ETLTyp':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+//                case 'ETLDer':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+//                case 'ENTLoc':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+//                case 'ENTTyp':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ETLTyp), ",</li>";
+//                case 'ENTDer':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ENTDer), ",</li>";
+//
+//                    break;
+//                case 'ENTRBA':
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : " . implode(' ou ', $summaryModel->ENTRBA), ",</li>";
+//
+//                    break;
+//                default:
+//                    echo "<li>" . $summaryModel->getAttributeLabel($attributeName) . " : <ul>";
+//                    foreach ($attributeValue as $arrName => $arrVal) {
+//
+//                        echo "<li>" . $summaryModel->getAttributeLabel($attributeName . "[" . $arrName . "]") . " : " . ($arrVal == null ? '' : 'Oui'), ",</li>";
+//                    }
+//                    echo '</ul></li>';
+//            }
         }
     }
 

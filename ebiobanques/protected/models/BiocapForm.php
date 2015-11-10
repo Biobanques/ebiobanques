@@ -62,9 +62,9 @@ class BiocapForm extends CFormModel
      * ECHANTILLON TUMORAL SUB-BLOCK
      */
     public $ETL;
-    public $ETLoc;
-    public $ETTyp;
-    public $ETDer;
+    public $ETLLoc;
+    public $ETLTyp;
+    public $ETLDer;
 
 
     /*
@@ -141,6 +141,7 @@ class BiocapForm extends CFormModel
             'type_prelev[tissu]' => 'Tissu',
             'type_prelev[moelle]' => 'Moelle',
             'type_prelev[sang]' => 'Sang',
+            'type_prelev[liquide]' => 'Liquide',
             'type_prelev[autre]' => 'Autre',
             'mode_prelev' => 'Mode de prélèvement',
             'mode_prelev[biopsie]' => 'Biopsie',
@@ -148,33 +149,35 @@ class BiocapForm extends CFormModel
             'mode_prelev[ponction]' => 'Ponction',
             'mode_prelev[autre]' => 'Autre / Inconnu',
             'ETL' => 'Echantillon tumoral',
-            'ETLoc' => 'Localisation',
-            'ETTyp' => 'Type',
-            'ETDer' => 'Dérivés',
+            'ETLLoc' => 'Localisation',
+            'ETLTyp' => 'Type',
+            'ETLDer' => 'Dérivés',
             'ENTLoc' => 'Localisation',
             'ENTTyp' => 'Type',
             'ENTDer' => 'Dérivés',
             'ENTRBA' => 'Ressources biologiques associées',
-            'ETL[tum_prim]' => 'Tumeur primitive',
-            'ETL[metastase]' => 'Métastase',
-            'ETL[tissu_cong]' => 'Tissu congelé',
-            'ETL[bloc_para]' => 'Bloc paraffine',
-            'ETL[cell_DMSO]' => 'Cellules DMSO',
-            'ETL[cell_CS]' => 'Cellules culot sec',
-            'ETL[adn_der]' => 'ADN dérivé',
-            'ETL[arn_der]' => 'ARN dérivé',
+            'ETLLoc[tum_prim]' => 'Tumeur primitive',
+            'ETLLoc[metastase]' => 'Métastase',
+            'ETLTyp[tissu_cong]' => 'Tissu congelé',
+            'ETLTyp[bloc_para]' => 'Bloc paraffine',
+            'ETLTyp[cell_DMSO]' => 'Cellules DMSO',
+            'ETLTyp[cell_CS]' => 'Cellules culot sec',
+            'ETLDer[adn_der]' => 'ADN dérivé',
+            'ETLDer[arn_der]' => 'ARN dérivé',
             'ENTA' => 'Echantillon non tumoral',
-            'ENTA[tissu_sain_org_tumeur]' => 'Tissu sain - Organe de la tumeur',
-            'ENTA[moelle_sang_rem]' => 'Moëlle ou sang de rémission complète',
-            'ENTA[tissu_sain_autre_org]' => 'Tissu sain - autre organe',
-            'ENTA[sang_tot_cong]' => 'Sang total congelé',
-            'ENTA[lymphocyte]' => 'Lymphocytes',
-            'ENTA[salive]' => 'Salive',
-            'ENTA[adn_const]' => 'ADN constitutionnel',
-            'ENTA[arn_const]' => 'ARN constitutionnel',
-            'ENTA[serum]' => 'Sérum',
-            'ENTA[plasma]' => 'Plasma',
-            'ENTA[autre]' => 'Autres liquides',
+            'ENTLoc[tissu_sain_org_tumeur]' => 'Tissu sain - Organe de la tumeur',
+            'ENTLoc[moelle_sang_rem]' => 'Moëlle ou sang de rémission complète',
+            'ENTLoc[tissu_sain_autre_org]' => 'Tissu sain - autre organe',
+            'ENTTyp[sang_tot_cong]' => 'Sang total congelé',
+            'ENTTyp[tiss_sain]' => 'Tissu sain',
+            'ENTTyp[cellNT]' => 'Cellules non tumorales',
+            'ENTTyp[lymphocyte]' => 'Lymphocytes',
+            'ENTTyp[salive]' => 'Salive',
+            'ENTDer[adn_const]' => 'ADN constitutionnel',
+            'ENTDer[arn_const]' => 'ARN constitutionnel',
+            'ENTRBA[serum]' => 'Sérum',
+            'ENTRBA[plasma]' => 'Plasma',
+            'ENTRBA[autre]' => 'Autres liquides',
             'consent_rech' => 'Consentement recherche',
             'consent_RGC' => 'Consentement recherche génétique constitutionnelle',
             'mode_request' => "Mode de requête",

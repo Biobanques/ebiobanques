@@ -422,6 +422,10 @@ class MainController extends Controller
                 unset($typesAvailable['sang']);
                 $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('sang') . "/i");
             }
+            if (isset($form->type_prelev['liquide']) && $form->type_prelev['liquide'] == 'liquide') {
+                unset($typesAvailable['liquide']);
+                $typePrel[] = new MongoRegex("/" . StringUtils::accentToRegex('liquide') . "/i");
+            }
             if (isset($form->type_prelev['autre']) && $form->type_prelev['autre'] == 'autre') {
                 $prelCriteria->addCond('Type_prlvt', 'notin', array_values($typesAvailable)); //type_echant NOT a typo, error in data source
             } else if (!empty($typePrel))
@@ -459,61 +463,126 @@ class MainController extends Controller
          */
 
         $nat_ech = array();
-        if (isset($form->ETL)) {
-            if (isset($form->ETL['tum_prim']) && $form->ETL['tum_prim'] == 'Tumeur primaire')
-                $nat_ech[] = 'diagnostic';
-            if (isset($form->ETL['tum_prim']) && $form->ETL['tum_prim'] == 'Tumeur primaire')
-                $nat_ech[] = 'diagnostic';
 
-
-            $regex = implode("|", $nat_ech);
+//            if (isset($form->ETL['tum_prim']) && $form->ETL['tum_prim'] == 'Tumeur primaire')
+//                $nat_ech[] = 'diagnostic';
+//            if (isset($form->ETL['tum_prim']) && $form->ETL['tum_prim'] == 'Tumeur primaire')
+//                $nat_ech[] = 'diagnostic';
+//            $regex = implode("|", $nat_ech);
 //$echTCriteria->addCond('RNCE_Type_Evnmt2', "==", new MongoRegex("/" . StringUtils::accentToRegex($regex) . "/i"));
+        if (isset($form->ETLTyp)) {
+            $echTumType = array();
+            if (isset($form->ETLTyp['tissu_cong']) && $form->ETLTyp['tissu_cong'] == 'Tissu tumoral congelé') {
+                $echTumType[] = $form->ETLTyp['tissu_cong'] . '$';
+            }
+//            if (isset($form->ETLTyp['bloc_para']) && $form->ETLTyp['bloc_para'] == 'Tissu tumoral') {
+//                $echTumType[] = $form->ETLTyp['bloc_para'] . '$';
+//            }
+            if (isset($form->ETLTyp['cell_DMSO']) && $form->ETLTyp['cell_DMSO'] == 'Cellules DMSO') {
+                $echTumType[] = $form->ETLTyp['cell_DMSO'] . '$';
+            }
+            if (isset($form->ETLTyp['cell_CS']) && $form->ETLTyp['cell_CS'] == 'Cellules culot sec') {
+                $echTumType[] = $form->ETLTyp['cell_CS'] . '$';
+            }
+            $ETTRegex = implode("|", $echTumType);
+            $echTCriteria->addCond('BB_type_echant_tum', "==", new MongoRegex("/" . StringUtils::accentToRegex($ETTRegex) . "/i"));
+        }
+        if (isset($form->ETLDer)) {
+            $echTumDer = array();
 
-            if (isset($form->ETL['adn_der']) && $form->ETL['adn_der'] == 1) {
+            if (isset($form->ETLDer['adn_der']) && $form->ETLDer['adn_der'] == 'ADN dérivé') {
 
-                $echTCriteria->ADN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echTumDer[] = $form->ETLDer['adn_der'] . '$';
             }
 
-            if (isset($form->ETL['arn_der']) && $form->ETL['arn_der'] == 1) {
+            if (isset($form->ETLDer['arn_der']) && $form->ETLDer['arn_der'] == 'ARN dérivé') {
 
-                $echTCriteria->ARN_derive = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+                $echTumDer[] = $form->ETLDer['arn_der'] . '$';
             }
+            $ETDRegex = implode("|", $echTumDer);
+
+            $echTCriteria->addCond('BB_derives_tum', "==", new MongoRegex("/" . StringUtils::accentToRegex($ETDRegex) . "/i"));
         }
         /*
          * ECHNATILLON NON TUMORAL
          */
-        if (isset($form->ENTA)) {
-            if (isset($form->ENTA['sang_tot_cong']) && $form->ENTA['sang_tot_cong'] == 1) {
 
-                $echNTCriteria->Sang_total = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
+        /*
+         * Type
+         */
+        if (isset($form->ENTTyp)) {
+            $echNTType = array();
+
+            if (isset($form->ENTTyp['tiss_sain']) && $form->ENTTyp['tiss_sain'] == 'Tissu sain') {
+
+                $echNTType[] = $form->ENTTyp['tiss_sain'] . '$';
+            }
+            if (isset($form->ENTTyp['cellNT']) && $form->ENTTyp['cellNT'] == 'Cellules non tumoral') {
+
+                $echNTType[] = $form->ENTTyp['cellNT'] . '$';
+            }
+            if (isset($form->ENTTyp['sang_tot_cong']) && $form->ENTTyp['sang_tot_cong'] == 'Sang total congelé') {
+
+                $echNTType[] = $form->ENTTyp['sang_tot_cong'] . '$';
+            }
+            if (isset($form->ENTTyp['salive']) && $form->ENTTyp['salive'] == 'salive') {
+
+                $echNTType[] = $form->ENTTyp['salive'] . '$';
+            }
+
+            $ENTTRegex = implode("|", $echNTType);
+            $echNTCriteria->addCond('BB_type_echant_non_tum', "==", new MongoRegex("/" . StringUtils::accentToRegex($ENTTRegex) . "/i"));
+        }
+        /*
+         * Dérivés
+         */
+
+        if (isset($form->ENTDer)) {
+            $echNTder = array();
+
+            if (isset($form->ENTDer['adn_const']) && $form->ENTDer['adn_const'] == 'ADN constitutionnel') {
+
+                $echNTder[] = $form->ENTDer['adn_const'] . '$';
+            }
+            if (isset($form->ENTDer['arn_const']) && $form->ENTDer['arn_const'] == 'ARN constitutionnel') {
+
+                $echNTder[] = $form->ENTDer['arn_const'] . '$';
             }
 
 
-            if (isset($form->ENTA['serum']) && $form->ENTA['serum'] == 1) {
+
+            $ENTDRegex = implode("|", $echNTder);
+            $echNTCriteria->addCond('BB_derives_non_tum', "==", new MongoRegex("/" . StringUtils::accentToRegex($ENTDRegex) . "/i"));
+        }
+        /*
+         * RBA
+         */
+        if (isset($form->ENTRBA)) {
+            if (isset($form->ENTRBA['serum']) && $form->ENTRBA['serum'] == 1) {
 
                 $echNTCriteria->Serum = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
-            if (isset($form->ENTA['plasma']) && $form->ENTA['plasma'] == 1) {
+            if (isset($form->ENTRBA['plasma']) && $form->ENTRBA['plasma'] == 1) {
 
                 $echNTCriteria->Plasma = new MongoRegex("/" . StringUtils::accentToRegex('oui') . "/i");
             }
-        }
-        /*
-         * CONSENTEMENT Criteria
-         */
-        if (isset($form->consent_rech))
-            switch ($form->consent_rech) {
-                case 'oui':
-                    $consCriteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('obtenu') . "/i");
-                    break;
-                case 'non';
-                    $consCriteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('refus') . "/i");
-                    break;
-                case 'inconnu':
-                default:
-                    break;
-            }
 
+            /*
+             * CONSENTEMENT Criteria
+             */
+            if (isset($form->consent_rech))
+                switch ($form->consent_rech) {
+                    case 'oui':
+                        $consCriteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('obtenu') . "/i");
+                        break;
+                    case 'non';
+                        $consCriteria->Statut_juridique = new MongoRegex("/" . StringUtils::accentToRegex('refus') . "/i");
+                        break;
+                    case 'inconnu':
+                    default:
+                        break;
+                }
+        }
         return RequestTools::getRequestCriteria($mode_request, $diagCriteria, $patCriteria, $prelCriteria, $echTCriteria, $echNTCriteria, $consCriteria);
     }
 

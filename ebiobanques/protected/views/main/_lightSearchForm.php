@@ -152,7 +152,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
                     echo $form->label($model, 'iccc_group');
                     ?>
 
-                    <div id='LFssgroup' style="line-height: 5;"></div>
+                    <div id='LFssgroup' style="margin-top: 18px;"></div>
                 </div>
                 <div style='display: inline-block;  vertical-align: top'>
 
@@ -162,7 +162,7 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
                         'prompt' => 'Selectionner un groupe',
                         'display' => 'inline-block', 'style' => "width:150px", 'separator' => ' ', 'uncheckValue' => null));
                     ?>
-                    <div id="LFssgroup1">
+                    <div id="LFssgroup1" style="display: block">
 
                     </div>
                 </div>

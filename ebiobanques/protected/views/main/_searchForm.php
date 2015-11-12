@@ -194,7 +194,8 @@ return false;
                     <?php
                     echo $form->label($model, 'iccc_group');
                     ?>
-                    <div id='ssgroup' style="line-height: 5;"></div>
+                    <div id='ssgroup' style="margin-top: 18px;"></div>
+
                 </div>
                 <div style='display: inline-block;  vertical-align: top'>
 

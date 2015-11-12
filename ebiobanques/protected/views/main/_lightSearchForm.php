@@ -363,25 +363,31 @@ $('#LFssgroup').html('" . CActiveForm::label($model, 'iccc_sousgroup') . "');
 //                    echo CHtml::label('Indifférent', 'typePrelRB1');
                 ?>
                 <!--</div>-->
-                <div>
+                <div style="width: 19%">
                     <?php
                     echo $form->checkBox($model, 'type_prelev[tissu]', array('value' => 'tissu', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo $form::label($model, 'type_prelev[tissu]');
                     ?>
                 </div>
-                <div>
+                <div style="width: 19%">
                     <?php
                     echo $form->checkBox($model, 'type_prelev[moelle]', array('value' => 'moelle', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo $form::label($model, 'type_prelev[moelle]');
                     ?>
                 </div>
-                <div>
+                <div style="width: 19%">
                     <?php
                     echo $form->checkBox($model, 'type_prelev[sang]', array('value' => 'sang', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo $form::label($model, 'type_prelev[sang]');
                     ?>
                 </div>
-                <div>
+                <div style="width: 19%">
+                    <?php
+                    echo $form->checkBox($model, 'type_prelev[liquide]', array('value' => 'liquide', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
+                    echo $form::label($model, 'type_prelev[liquide]');
+                    ?>
+                </div>
+                <div style="width: 19%">
                     <?php
                     echo $form->checkBox($model, 'type_prelev[autre]', array('value' => 'autre', 'display' => 'inline-block', 'separator' => ' ', 'uncheckValue' => null));
                     echo $form::label($model, 'type_prelev[autre]');

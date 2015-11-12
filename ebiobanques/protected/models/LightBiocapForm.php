@@ -106,6 +106,7 @@ class LightBiocapForm extends CFormModel
             'type_prelev[tissu]' => 'Tissu',
             'type_prelev[moelle]' => 'Moelle',
             'type_prelev[sang]' => 'Sang',
+            'type_prelev[liquide]' => 'Liquide',
             'type_prelev[autre]' => 'Autre',
             'mode_prelev' => 'Mode de prélèvement',
             'mode_prelev[biopsie]' => 'Biopsie',

@@ -93,6 +93,7 @@ class SearchCatalogController extends Controller
      */
     public function actionExportPdf() {
         $mPDF1 = Yii::app()->ePdf->mpdf();
+        
        
 //       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
 //               . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
@@ -139,7 +140,9 @@ class SearchCatalogController extends Controller
 
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
         $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
-        $mPDF1->Output('biobanks_list.pdf', 'I');
+  //  $mPDF1->debug = true; 
+       // $mPDF1->showImageErrors = true;
+    $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 
     /**

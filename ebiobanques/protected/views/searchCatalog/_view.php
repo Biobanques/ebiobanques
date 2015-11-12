@@ -57,7 +57,8 @@ float:right;
 </html>
 
 <!-- Biobank's name-->
-
+                 
+                        
 <div class='name'>
     
   <?php echo $data->name;?>

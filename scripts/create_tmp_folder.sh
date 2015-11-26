@@ -9,8 +9,6 @@
 ####################################################################
 echo "create folder for temp files"
 
-chmod ugo+wx ../ebiobanques/protected/runtime
+
 mkdir ../ebiobanques/protected/runtime/tmp_files
 chmod ugo+wx ../ebiobanques/protected/runtime/tmp_files
-mkdir ../ebiobanques/assets
-chmod ugo+wx ../ebiobanques/assets

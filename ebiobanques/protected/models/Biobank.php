@@ -379,6 +379,11 @@ class Biobank extends LoggableActiveRecord
         if ($contact != null)
             return $contact != null ? $contact->last_name . " " . $contact->first_name : "";
     }
+    
+    /**
+     * retourne le contact formaté en chaine courte inversée (Prénom nom).
+     * Vide si null
+     */
  public function getShortContactInv() {
         $contact = $this->getContact();
         if ($contact != null){
@@ -412,6 +417,11 @@ class Biobank extends LoggableActiveRecord
         else
             return null;
     }
+    
+    /**
+     * retourne le telephone du contact s il existe en format 01....., sans +33
+     * @return string
+     */
     public function getPhoneContactPDF() {
         $contact = $this->getContact();
         if ($contact != null && $contact->phone != null){
@@ -544,6 +554,17 @@ class Biobank extends LoggableActiveRecord
         return ( $this->address->street . "\n"
                 . $this->address->zip . " " . $this->address->city . "\n"
                 . Yii::t('listCountries', $this->address->country));
+        
+    }
+    
+    /**
+     *
+     * @return only the city of biobanks
+     */
+    public function getCity() {
+        return ($this->address->city . "\n"
+                . Yii::t('listCountries', $this->address->country));
+        
     }
 
     public function getIdentifierAndName() {

@@ -94,46 +94,43 @@ class SearchCatalogController extends Controller
     public function actionExportPdf() {
         $mPDF1 = Yii::app()->ePdf->mpdf();
         
-      
-        /*$footer = array (
-		
-	'L' => array ('content' => 'Footer', 'font-size' => 7, 'font-style' => 'B'),
-	'C' => array ('content' => 'bio', 'font-size' => 7, 'font-style' => 'B'),
-	'R' => array ('content' => '{PAGENO}', 'font-size' => 7, 'font-style' => 'B'),
-	'line' => 1,
-		
-		
-	);
-               
+       
+//       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
+//               . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
+//               . '<div class="pdf_pagination" style="color:black; text-align:right;" >{PAGENO}</div>';
+     
+//      $mPDF1->SetHTMLFooter($html);
+     
+/*       $footer= array (
+                        'odd' => array (
+                          'L' => array (
+                            'content' => '',//Yii::app()->request->baseUrl . '/images/logo.png',
+                            'font-size' => 10,
+                            'font-style' => '',
+                            'font-family' => 'serif',
+                            'color'=>'#000000'
+                          ),
+                          'C' => array (
+                            'content' => 'Annuaire BIOBANQUES 2015',
+                            'font-size' => 10,
+                            'font-style' => '',
+                            'font-family' => 'serif',
+                            'color'=>'#000000'
+                          ),
+                          'R' => array (
+                            'content' => '{PAGENO}',
+                            'font-size' => 10,
+                            'font-style' => '',
+                            'font-family' => 'serif',
+                            'color'=>'#000000'
+                          ),
+                          'line' => 1,
+                        ),
+                        'even' => array ()
+                      );
  
-        $mPDF1->SetFooter( $footer);*/
-       $mPDF1->SetFooter('{PAGENO}');
-      
-       /* $footer = array (
-    'L' => array (
-      'content' => 'Footer',
-      'font-size' => 7,
-      'font-style' => 'B',
-      'font-family' => 'Arial, Helvetica, sans-serif',
-      'color'=>'#000000'
-  ),
-    'C' => array (
-      'content' => 'BIO',
-      'font-size' => 10,
-      'font-style' => 'B',
-      'font-family' => 'serif',
-      'color'=>'#000000'
-    ),
-    'R' => array (
-      'content' => '{PAGENO}',
-      'font-size' => 10,
-      'font-style' => 'B',
-      'font-family' => 'serif',
-      'color'=>'#000000'
-    ),
-'line' => 1,
-);
-        $mPDF1->SetFooter( $footer);*/
+        $mPDF1->SetFooter( $footer);
+ */
         
         if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
             $criteria = $_SESSION['criteria'];
@@ -142,11 +139,10 @@ class SearchCatalogController extends Controller
         }
 
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-       
-        $mPDF1->CreateIndex();
         $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
-        
-        $mPDF1->Output('biobanks_list.pdf', 'I');
+  //  $mPDF1->debug = true; 
+       // $mPDF1->showImageErrors = true;
+    $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 
     /**

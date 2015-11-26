@@ -7,7 +7,8 @@
 # @author  nicolas malservet
 # @version 1.0 
 ####################################################################
-echo "set rights and folders"
+echo "create folder for temp files"
+
 chmod ugo+wx ../ebiobanques/protected/runtime
 mkdir ../ebiobanques/protected/runtime/tmp_files
 chmod ugo+wx ../ebiobanques/protected/runtime/tmp_files

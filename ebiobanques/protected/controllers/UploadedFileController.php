@@ -52,12 +52,12 @@ class UploadedFileController extends Controller
     public function actionAdmin() {
 
         $model = new UploadedFile();
-        if (isset($_POST['UploadedFile']['fileUploaded'])) {
+        if (isset($_FILES['uploadFileField']) && $_FILES['uploadFileField']['error'] == 0) {
             $add = false;
-            if (isset($model->addOrReplace) && $model->addOrReplace == 'add') {
+            if (isset($_POST['UploadedFile']['addOrReplace']) && $_POST['UploadedFile']['addOrReplace'] == 'add') {
                 $add = true;
             }
-            $fileId = $this->uploadEchFile($_FILES['UploadedFile']);
+            $fileId = $this->uploadEchFile($_FILES['uploadFileField']);
 
             if ($fileId != null) {
                 $file = CommonTools::importFile($this->loadModel($fileId), $add);
@@ -197,9 +197,9 @@ class UploadedFileController extends Controller
         $model = new UploadedFile();
         $_SESSION['biobank_id'] = $biobank_id;
         if (isset($file)) {
-            $tempFilename = $file["tmp_name"]['fileUploaded'];
-            $filename = $file["name"]['fileUploaded'];
-            if ($file['size']['fileUploaded'] < 15000000) {
+            $tempFilename = $file["tmp_name"];
+            $filename = $file["name"];
+            if ($file['size'] < 15000000) {
 
                 $splitted = explode(".", $filename);
                 $extension = end($splitted);

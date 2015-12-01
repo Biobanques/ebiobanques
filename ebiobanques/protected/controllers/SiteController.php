@@ -148,12 +148,6 @@ class SiteController extends Controller
             $biobankId = $_GET['id'];
         $model->biobank_id = $biobankId;
         $user = CommonTools::getConnectedUser();
-//        $prefs = $this->getPreferences();
-//        $prefs = $user->preferences;
-//        if ($prefs == null) {
-//            $user->preferences = new Preferences;
-//            $user->save();
-//        }
         if (isset($_GET ['Preferences'])) {
             $user->preferences->attributes = $_GET ['Preferences'];
             $user->disableBehavior('LoggableBehavior');

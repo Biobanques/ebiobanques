@@ -1,15 +1,5 @@
 <?php
 //recuperation des preferences d dattributs affiches du user
-//$prefs = Preferences::model()->findByAttributes(array(
-//    'id_user' => Yii::app()->user->id
-//        ));
-//if ($prefs == null) {
-//    $prefs = new Preferences ();
-//    $prefs->id_user = Yii::app()->user->id;
-//    $prefs->save();
-//} else {
-//    echo "Vous n'avez pas encore enregistré vos préférences de tableau.";
-//}
 $prefs = CommonTools::getPreferences();
 //recuperation des noms des attributs affichables des colonnes du grid
 

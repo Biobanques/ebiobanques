@@ -3,7 +3,6 @@
 //Chargement des preferen,ces d'affichage de colonnes
 $prefs = CommonTools::getPreferences();
 
-//$prefsNames = Preferences::model()->attributeNames();
 $imageSampleDetail = Yii::app()->baseUrl . '/images/zoom.png';
 $columns = array();
 
@@ -104,7 +103,6 @@ foreach ($prefs as $property => $propertyValue) {
 //
 $columns [] = array(
     'header' => Yii::t('demande', 'sampleDetail'),
-// 		) ), // lien d'affichage de la popup
     'class' => 'CLinkColumn',
     'labelExpression' => '$data->_id',
     'urlExpression' => 'Yii::app()->createUrl("site/view",array("id"=>"$data->_id"))',

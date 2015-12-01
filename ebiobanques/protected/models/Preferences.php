@@ -46,24 +46,6 @@ class Preferences extends EMongoSoftEmbeddedDocument
     public $notes = 1;
     public $collection_name = 1;
     public $collection_id;
-    /**
-     * Returns the static model of the specified AR class.
-     *
-     * @param string $className
-     *        	active record class name.
-     * @return Echantillon the static model class
-     */
-//    public static function model($className = __CLASS__) {
-//        return parent::model($className);
-//    }
-
-    /**
-     *
-     * @return string the associated database table name
-     */
-//    public function getCollectionName() {
-//        return 'preferences';
-//    }
 
     /**
      *
@@ -71,14 +53,6 @@ class Preferences extends EMongoSoftEmbeddedDocument
      */
     public function rules() {
         return array(
-//            array('id_user,id_depositor ,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
-// ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
-// ,biobank_id ,notes', 'required'
-//            ),
-//            array('id_depositor ,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
-// ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
-// ,biobank_id ,notes', 'numerical', 'integerOnly' => true
-//            ),
             array('id_depositor,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
  ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
  ,biobank_id,notes,

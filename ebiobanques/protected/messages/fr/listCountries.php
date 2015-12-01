@@ -9,4 +9,21 @@
 return array(
     'fr' => 'France',
     'en' => 'Royaume-Uni',
+    'es' => 'Espagne',
+    'de' => 'Allemagne',
+    'it' => 'Italie',
+    'ru' => 'Russie',
+    'be' => 'Belgique',
+    'ch' => 'Suisse',
+    'pt' => 'Portugal',
+    'nl' => 'Pays-Bas',
+    'pl' => 'Pologne',
+    'dk' => 'Danemark',
+    'ca' => 'Canada',
+    'br' => 'Brésil',
+    'cn' => 'Chine',
+    'hk' => 'Hong-Kong',
+    'jp' => 'Japon',
+    'au' => 'Australie',
+    'nz' => 'Nouvelle-Zélande'
 );

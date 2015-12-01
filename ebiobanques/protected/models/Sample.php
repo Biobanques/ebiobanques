@@ -57,24 +57,54 @@ class Sample extends EMongoDocument
     public $tumor_diagnosis;
     public $file_imported_id;
     public $notes = array();
-    public $field_notes;
+    protected $field_notes;
     /**
      * format string uniquement pas de int
      * @var type
      */
-    public $field_age_min;
+    protected $field_age_min;
     /**
      * format string uniquement pas de int
      * @var type
      */
-    public $field_age_max;
+    protected $field_age_max;
     /**
      * array of biobanks is an attribute to store arrays of biobanks selected into the search list
      */
     protected $arrayOfBiobanks;
 
+//    protected $arrayOfBiobanks;
+
     public function setArrayOfBiobanks($array) {
         $this->arrayOfBiobanks = $array;
+    }
+
+    public function setField_age_min($value) {
+        $this->field_age_min = $value;
+    }
+
+    public function setField_age_max($value) {
+        $this->field_age_max = $value;
+    }
+
+    public function setField_notes($value) {
+        $this->field_notes = $value;
+    }
+
+    public function getField_age_min() {
+        return $this->field_age_min;
+    }
+
+    public function getField_age_max() {
+        return $this->field_age_max;
+    }
+
+    public function getField_notes() {
+        return $this->field_notes;
+    }
+
+    public function getArrayOfBiobanks() {
+        return $this->arrayOfBiobanks;
     }
 
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
@@ -128,21 +158,21 @@ class Sample extends EMongoDocument
                 'collect_date, patient_birth_date',
                 'safe'
             ),
-            array(
-                'field_notes',
-                'length',
-                'max' => 60
-            ),
-            array(
-                'field_age_min',
-                'length',
-                'max' => 3
-            ),
-            array(
-                'field_age_max',
-                'length',
-                'max' => 3
-            ),
+//            array(
+//                'field_notes',
+//                'length',
+//                'max' => 60
+//            ),
+//            array(
+//                'field_age_min',
+//                'length',
+//                'max' => 3
+//            ),
+//            array(
+//                'field_age_max',
+//                'length',
+//                'max' => 3
+//            ),
             array(
                 'id, id_depositor, id_sample, consent_ethical, gender, age, collect_date, storage_conditions, consent, supply, max_delay_delivery, detail_treatment, disease_outcome, authentication_method, patient_birth_date, tumor_diagnosis, biobank_id, file_imported_id,field_notes,notes,concernerEchantillon',
                 'safe',

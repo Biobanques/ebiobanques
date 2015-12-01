@@ -1,5 +1,21 @@
 <?php
 
+require_once 'protected/extensions/ExcelExt/PHPExcel/Reader/IReadFilter.php';
+
+class MyReadFilter implements PHPExcel_Reader_IReadFilter
+{
+
+    public function readCell($column, $row, $worksheetName = '') {
+        // Read title row and rows 20 - 30
+        if ($row == 1 || ($row >= 0 && $row <= 10)) {
+            return true;
+        }
+
+        return false;
+    }
+
+}
+
 /**
  * class of Common tools to use in all functions.
  * can agregate some common constants.
@@ -146,20 +162,38 @@ class CommonTools
     public static function xlsToCsv($file, $excelFormat) {
         $result = 0;
         require_once 'protected/extensions/ExcelExt/PHPExcel.php';
+        Yii::log("limit : " . ini_get('memory_limit'), 'error');
+        ini_set('memory_limit', '512M');
+        Yii::log("limit after set: " . ini_get('memory_limit'), 'error');
+        set_time_limit('1200');
+//        $cacheMethod = PHPExcel_CachedObjectStorageFactory:: cache_to_sqlite3;
+//        $cacheSettings = array();
+//        PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
+        //PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
+
         $path = Yii::app()->basePath . "/runtime/tmp_files/temp_$file->filename";
         /*
          * Création du fichier sur le disque
          */
         $fres = $file->write($path);
         $reader = PHPExcel_IOFactory::createReader($excelFormat);
+        // $message1 = PHPExcel_Settings::getCacheStorageMethod();
+        // $message2 = PHPExcel_Settings::getCacheStorageClass();
+        //  Yii::log("cacheMethod : " . $message1 . ", CacheClass : " . $message2, 'error');
         /*
          * Chargement par phpExcel
          */
+        // $reader->setReadDataOnly(true);
+//        $reader->setReadFilter(new MyReadFilter());
+        Yii::log("load excel file", 'error');
         $excel = $reader->load($path);
+        Yii::log("excel file loaded", 'error');
+        unset($reader);
         /*
          * Ecriture en .csv
          */
         $writer = PHPExcel_IOFactory::createWriter($excel, 'CSV');
+        $writer->setPreCalculateFormulas(false);
         $writer->save("$path.csv");
         /*
          * Récupération du csv
@@ -180,6 +214,8 @@ class CommonTools
         $keysArray = array();
         $listBadSamples = array();
         $newSamples = array();
+//        $tempSaveList = new MongoInsertBatch(Sample::model()->getCollection());
+        $tempSaveList = array();
         /**
          * Version 1 : Les champs non repertorés sont ajoutés en notes
          */
@@ -195,36 +231,55 @@ class CommonTools
             } else {
                 $model = new Sample();
                 $model->disableBehavior('LoggableBehavior');
+                $model->_id = new MongoId();
+                while (!$model->validate(array('_id')))
+                    $model->_id = new MongoId();
                 $model->biobank_id = $biobank_id;
                 $model->file_imported_id = $fileImportedId;
 
                 foreach ($keysArray as $key2 => $value2) {
-                    if (in_array($value2, Sample::model()->attributeNames())) {
+                    if ($value2 != "biobank_id" && $value2 != "file_imported_id")
+                        if (in_array($value2, Sample::model()->attributeNames())) {
 
-                        $model->$value2 = $data[$key2];
-                        if (!$model->validate($value2)) {
+                            $model->$value2 = $data[$key2];
+                            if (!$model->validate(array($value2))) {
 
-                            Yii::log("Problem with item" . $model->getAttributeLabel($value2) . ",set to null.", CLogger::LEVEL_ERROR);
-                            $model->$value2 = null;
+                                //   Yii::log("Problem with item" . $model->getAttributeLabel($value2) . ",set to null.\n " . implode(", ", $model->errors[$value2]), CLogger::LEVEL_ERROR);
+                                $model->$value2 = null;
+                            }
+                        } else {
+
+
+                            $note = new Note();
+                            $note->key = $value2;
+                            $note->value = $data[$key2];
+                            $model->notes[] = $note->attributes;
                         }
-                    } else {
-
-
-                        $note = new Note();
-                        $note->key = $value2;
-                        $note->value = $data[$key2];
-                        $model->notes[] = $note;
-                    }
                 }
 
-                if (!$model->save()) {
+                if (!$model->validate()) {
+                    Yii::log("Problem with sample validation " . print_R($model->errors, true), CLogger::LEVEL_ERROR);
                     $listBadSamples[] = $row;
                 } else {
+
+                    $tempSaveList[] = $model->attributes;
+//                        $tempSaveList->add($model->attributes);
+
+
                     $newSamples[] = $model->_id;
                 }
             }
             $row++;
+            if ($row != 2 && $row % 400 == 2) {
+                Yii::log("Nb treated : " . $row, 'error');
+                Sample::model()->getCollection()->batchInsert($tempSaveList, array());
+                $tempSaveList = array();
+
+                //$tempSaveList->execute(array());
+                //$tempSaveList = new MongoInsertBatch(Sample::model()->getCollection());
+            }
         }
+        Sample::model()->getCollection()->batchInsert($tempSaveList, array("w" => 1));
 
         /*
          * Version 2 : seuls nes champs dont la colonne est annotée avec le préfixe 'notes' sont pris en note

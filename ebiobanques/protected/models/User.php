@@ -3,7 +3,7 @@
 /**
  * This is the MongoDB Document model class based on table "User".
  */
-class User extends LoggableActiveRecord
+class User extends EMongoSoftDocument
 {
     public $id;
     public $prenom;
@@ -17,6 +17,7 @@ class User extends LoggableActiveRecord
     public $inactif;
     public $biobank_id;
     public $verifyCode;
+    // public $preferences;
 
     /**
      * Returns the static model of the specified AR class.
@@ -37,6 +38,13 @@ class User extends LoggableActiveRecord
         return 'user';
     }
 
+    public function behaviors() {
+        return array(
+            'LoggableBehavior' =>
+            'application.modules.auditTrail.behaviors.LoggableBehavior',
+        );
+    }
+
     /**
      * @return array validation rules for model attributes.
      */
@@ -55,7 +63,7 @@ class User extends LoggableActiveRecord
             array('password', 'pwdStrength'),
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, biobank_id', 'safe', 'on' => 'search'),
-            array('biobank_id', 'safe'),
+            array('biobank_id,preferences', 'safe'),
         );
         if (!CommonProperties::$DEV_MODE)
             $result[] = array('email', 'EMongoUniqueValidator');
@@ -79,6 +87,12 @@ class User extends LoggableActiveRecord
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
+    }
+
+    public function embeddedDocuments() {
+        return array(
+            'preferences' => 'Preferences',
+        );
     }
 
     /**

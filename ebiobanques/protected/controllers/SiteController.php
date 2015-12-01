@@ -147,15 +147,21 @@ class SiteController extends Controller
         if (isset($_GET['id']) && isset($_GET['layout']) && $_GET['layout'] == 'vitrine_layout')
             $biobankId = $_GET['id'];
         $model->biobank_id = $biobankId;
-        $prefs = Preferences::model()->findByAttributes(array('id_user' => Yii::app()->user->id));
-        if ($prefs == null) {
-            $prefs = new Preferences;
-            $prefs->id_user = Yii::app()->user->id;
-            $prefs->save();
-        }
+        $user = CommonTools::getConnectedUser();
+//        $prefs = $this->getPreferences();
+//        $prefs = $user->preferences;
+//        if ($prefs == null) {
+//            $user->preferences = new Preferences;
+//            $user->save();
+//        }
         if (isset($_GET ['Preferences'])) {
-            $prefs->attributes = $_GET ['Preferences'];
-            $prefs->save();
+            $user->preferences->attributes = $_GET ['Preferences'];
+            $user->disableBehavior('LoggableBehavior');
+            if ($user->validate(array('preferences')))
+                $user->save(false);
+            else {
+                var_dump($user->preferences->errors);
+            }
         }
         if (isset($_GET ['Sample'])) {
             $model->attributes = $_GET ['Sample'];
@@ -268,7 +274,7 @@ class SiteController extends Controller
             'model' => $model
         ));
     }
-    
+
     /**
      * display catalog of biobanks with contacts and agregated infos
      */
@@ -278,7 +284,6 @@ class SiteController extends Controller
         if (isset($_GET ['Biobank']))
             $model->attributes = $_GET ['Biobank'];
         //make the search
-        
         //render the biobanks
         $this->render('catalog', array(
             'model' => $model

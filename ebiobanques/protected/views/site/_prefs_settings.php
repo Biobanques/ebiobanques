@@ -1,30 +1,34 @@
 
 <div>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'prefs-form',
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'prefs-form',
+    ));
+    $prefModel = new Preferences();
+    $prefModel->attributes = $model;
+    foreach ($model as $field => $fieldValue) {
+        if ($field != 'id_user' && $field != '_id' && $field != 'id') {
+            if ($fieldValue == 1)
+                $checked = true;
+            else
+                $checked = false;
+            ?>
+            <div style="float:left;width:200px;font-size:8pt">
+                <?php
+                echo $form->checkBox($prefModel, $field, array('checked' => $checked));
+                ?>
+                <span >
+                    <?php echo $form->label($prefModel, $field); ?>
+                </span>
+            </div>
 
-	
-)); 
-foreach($model->attributeNames () as $field){
-	if($field!='id_user' && $field!='_id'&& $field!='id'){
-	if($model->$field==1)
-	$checked=true;
-	else 
-		$checked=false;
-	?>
-	<div style="float:left;width:200px;font-size:8pt">
-	<?php echo $form->checkBox($model,$field,array('checked'=>$checked));?>
-<span >
-	<?php echo $form->label($model,$field);?>
-	</span>
- </div> 
+            <?php
+        }
+    }
+    ?>
 
-<?php 
-}}
-?>
 
-	
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div>

@@ -2,6 +2,8 @@
 
 /**
  * This is the model class for table "Preferences".
+ * Used only to move preferences from independant collection to user's embedded object
+ * Used in movePrefsCommand
  *
  * The followings are the available columns in table 'Preferences':
  * @property integer $id
@@ -25,7 +27,7 @@
  * @property integer $notes
  *
  */
-class Preferences extends EMongoSoftEmbeddedDocument
+class Preferences_tmp extends EMongoSoftDocument
 {
     public $id_depositor;
     public $id_sample;
@@ -46,6 +48,7 @@ class Preferences extends EMongoSoftEmbeddedDocument
     public $notes = 1;
     public $collection_name = 1;
     public $collection_id;
+
     /**
      * Returns the static model of the specified AR class.
      *
@@ -53,17 +56,17 @@ class Preferences extends EMongoSoftEmbeddedDocument
      *        	active record class name.
      * @return Echantillon the static model class
      */
-//    public static function model($className = __CLASS__) {
-//        return parent::model($className);
-//    }
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
     /**
      *
      * @return string the associated database table name
      */
-//    public function getCollectionName() {
-//        return 'preferences';
-//    }
+    public function getCollectionName() {
+        return 'preferences';
+    }
 
     /**
      *

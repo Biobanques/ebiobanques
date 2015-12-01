@@ -49,6 +49,19 @@ class CommonTools
         return CommonProperties::$DEV_MODE;
     }
 
+    public static function getConnectedUser() {
+        return User::model()->findByPk(Yii::app()->user->id);
+    }
+
+    public static function getPreferences() {
+
+        $user = CommonTools::getConnectedUser();
+        $user->disableBehavior('LoggableBehavior');
+        $result = $user->preferences;
+        $user->save();
+        return $result;
+    }
+
     /**
      * translate a mysql date to en franch format dd/mm/yyyy
      * @param unknown $madate

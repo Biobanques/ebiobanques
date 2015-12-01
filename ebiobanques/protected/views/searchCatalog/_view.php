@@ -11,13 +11,23 @@
         color:red;
     }
     
+    .id{
+        
+}
+    
  .name{
         page-break-before: always;
         font-weight:bold;
+        float:left;
         }
         
-
-    
+  .logo{
+         height: auto; 
+         width: auto; 
+         max-width: 120px; 
+        float:right;
+        }      
+      
 #contact
 {
 
@@ -31,7 +41,7 @@ float:left;
 
 }
 
-#adress
+#address
 {
 
 width:40%;
@@ -43,14 +53,17 @@ margin-left:auto;
 float:right;
 }
 
-#container{
+#box{
     background:gold;
     box-shadow: 3px 3px 2px #666666;
     width: 100%;
     
 }
-
-
+#container2{
+    background:red;
+    width: 100%;
+    
+}
 
 </style>
 </head>
@@ -58,7 +71,7 @@ float:right;
 
 <!-- Biobank's name-->
                  
-                        
+  <div id="container2">                      
 <div class='name'>
     
   <?php echo $data->name;?>
@@ -66,15 +79,35 @@ float:right;
 </div>
 
 <!-- Biobank's identifier-->
-<div class='id'>
+<div class='id' style = float:left;>
     
     <?php echo CHtml::encode($data->getAttributeLabel('Identifiant BRIF')); ?>:
 	<b><?php echo CHtml::encode($data->identifier); ?><b>
 	
 </div>
+</div>
 <br />
 
-<div id="container">
+<div class="logo">
+    
+    <?php 
+    
+    //$logo = isset($data->activeLogo) && $data->activeLogo != null && $data->activeLogo != "" ? Logo::model()->findByPk(new MongoId($data->activeLogo)) : null;
+   //  if ($logo != null) {
+      // echo $logo->toHtml();   
+     //  }
+       // if(isset($data->activeLogo) && ($data->activeLogo != null) && ($data->activeLogo != "")){
+       // $logo=  Logo::model()->findByPk(new MongoId($data->activeLogo));
+        // echo $logo->toHtml(); 
+        
+      //  }
+       // else echo 'No disponible';
+        ?> 
+    
+</div>
+
+
+<div id="box">
     
 <!-- Biobank's contact-->
 <div id='contact'
@@ -89,7 +122,7 @@ float:right;
 </div>
 
 <!-- Biobank's adress-->
-<div id='adress'>
+<div id='address'>
    <h4 > 
        <?php echo CHtml::encode($data->getAttributeLabel('adresse')); ?>:
        </h4>

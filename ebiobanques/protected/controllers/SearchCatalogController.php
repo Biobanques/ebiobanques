@@ -92,7 +92,7 @@ class SearchCatalogController extends Controller
      * export pdf avec mpdf et liste  d'index : Technique HTML to PDF
      */
     public function actionExportPdf() {
-        $mPDF1 = Yii::app()->ePdf->mpdf();
+        //$mPDF1 = Yii::app()->ePdf->mpdf();
         
        
 //       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
@@ -129,55 +129,40 @@ class SearchCatalogController extends Controller
                         'even' => array ()
                       );
  
-        $mPDF1->SetFooter( $footer);
- */
+        $mPDF1->SetFooter( $footer);*/
+
         
-        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+       /* if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
             $criteria = $_SESSION['criteria'];
         } else {
             $criteria = new EMongoCriteria;
         }
-
+           
+         $criteria->sort('identifier', EMongoCriteria::SORT_DESC);
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
         $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
-  //  $mPDF1->debug = true; 
-       // $mPDF1->showImageErrors = true;
-    $mPDF1->Output('biobanks_list.pdf', 'I');
-    }
+        $mPDF1->Output('biobanks_list.pdf', 'I');*/
+        
+        //cration de pdf avec tcpdf
+        
+        $model = new Biobank();
+          $model->unsetAttributes();
+      //  if (isset($_GET['Biobank']))
+      //     $model->attributes = $_GET['Biobank'];
 
-    /**
-     * export xls des biobanques
-     */
-    public function actionExportXls() {
-        $model = new Biobank('search');
-        $model->unsetAttributes();
-        if (isset($_GET['Biobank']))
-            $model->attributes = $_GET['Biobank'];
-        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+      
+        
+       if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
             $criteria = $_SESSION['criteria'];
         } else {
             $criteria = new EMongoCriteria;
         }
-
-        $biobanks = Biobank::model()->findAll($criteria);
-        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
-        foreach ($biobanks as $biobank) {
-            $line = array();
-            foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
-
-                if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
-                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
-                } else {
-                    $line[] = "-";
-                }
-            }
-            $data[] = $line;
-        }
-        Yii::import('application.extensions.phpexcel.JPhpExcel');
-        $xls = new JPhpExcel('UTF-8', true, 'Biobank list');
-        $xls->addArray($data);
-        $xls->generateXML('Biobank list');
+           
+        $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
+        $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
+        $models = Biobank::model()->findAll();
+        BiobanksPDFExporter::exporter($models);
+        
     }
 
     /**

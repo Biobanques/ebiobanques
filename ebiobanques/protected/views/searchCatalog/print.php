@@ -38,7 +38,7 @@
         
          text-align: center;
          border-width: 10pt;
-         margin-bottom: 400px;
+         margin-bottom: 250px;
         
     }
     .box1{
@@ -51,7 +51,7 @@
         margin-left: 20pt; 
         margin-right: 40pt;
         margin-top: 40pt; 
-        margin-bottom: 30pt;
+        margin-bottom: 25pt;
 	
 }
     #box2{
@@ -79,7 +79,9 @@
 	
 }
     #image{
-        text-align: center;
+          
+            text-align: center;
+            position: center;
     	
     }  
      #footer_image{
@@ -94,7 +96,7 @@
     <htmlpagefooter name="myFooter1" style="display:none">
    <table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt;
     color: #000000; font-weight: bold; font-style: italic;"><tr>
-        <td width="33%"><span style="font-weight: bold; font-style: italic;"> <img id ="footer_image" src="<?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/logos/image58.png');?>" alt = 'logo'/></span></td>
+        <td width="33%"><span style="font-weight: bold; font-style: italic;"> <img id ="footer_image" src="<?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/logobb.png');?>" alt = 'logo'/></span></td>
     <td width="33%" align="center" style="font-weight: bold; font-style: italic;">Annuaire BIOBANQUES 2015</td>
     <td width="33%" style="text-align: right; ">{PAGENO}</td>
     </tr></table>
@@ -123,8 +125,8 @@
         </div>
 
       
-           <div id="image"> 
-               <?php echo CHtml::image( Yii::app()->request->baseUrl.'/images/logos/image58.png');
+           <div id="image" > 
+               <?php echo CHtml::image( Yii::app()->request->baseUrl.'/images/logobb.png');
                  
                         ?>
         </div>

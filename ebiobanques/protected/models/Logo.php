@@ -60,4 +60,14 @@ class Logo extends EMongoGridFS
         return $result;
     }
 
+     /**
+     * display the current logo into simple image format.
+     * @return simple img
+     */
+     public function toSimpleImage() {
+        $splitStringArray = split(".", $this->filename);
+        $extension = end($splitStringArray);
+        $result = CommonTools::data_uri($this->getBytes(), "image/" . $extension) ;
+        return $result;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 //require_once('tcpdf_include.php');
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,10 +13,11 @@
  * @author nicolas
  */
 class BiobanksPDFExporter {
-     public function Header() {
+
+    public function Header() {
         // Logo
         //$image_file = K_PATH_IMAGES.'logo_example.jpg';
-         $pdf->Image('images/logobb.png', '', '', '', '', 'PNG', '', '', true, 60, 'C');
+        $pdf->Image('images/logobb.png', '', '', '', '', 'PNG', '', '', true, 60, 'C');
         // Set font
         $this->SetFont('helvetica', 'B', 20);
         // Title
@@ -25,11 +27,12 @@ class BiobanksPDFExporter {
     // Page footer
     public function Footer() {
         // Position at 15 mm from bottom
-        $this->SetY(-15);
-        // Set font
-        $this->SetFont('helvetica', 'I', 8);
-        // Page number
-        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        /*   $this->SetY(-15);
+          // Set font
+          $this->SetFont('helvetica', 'I', 8);
+          // Page number
+          $this->Cell(0, 10, 'Page '.$this->getAliasNumPage(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+         * */
     }
 
     public static $LINE_HEIGHT = 7;
@@ -40,7 +43,32 @@ class BiobanksPDFExporter {
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Biobanques');
         $pdf->SetTitle('Annuaire Biobanques');
+        $pdf->SetDisplayMode($zoom = 'fullpage', $layout = 'TwoColumnRight', $mode = 'UseNone');
 
+        $pdf = BiobanksPDFExporter::getFirstPage($pdf);
+
+        $pdf->SetFont('times', '', 12);
+
+
+        /* $pdf->setPrintFooter(true);
+          $foot = '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image('/images/logobb.png', 'logo', array());
+          '</div>'
+          . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
+          . '<div class="pdf_pagination" style="color:black; text-align:right;" >' . $pdf->getAliasNumPage() . '</div>';
+
+          $pdf->Footer();
+         * */
+
+        //$pdf->Cell(0, 0,'right', 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        //affichage de attribut
+        foreach ($models as $model) {
+            $pdf = BiobanksPDFExporter::getPage($pdf, $model);
+        }
+        // $pdf->LastPage();
+        $pdf->Output("biobanks_list.pdf", "D");
+    }
+
+    public static function getFirstPage($pdf) {
         $pdf->SetHeaderData('', 0, PDF_HEADER_TITLE, '');
         $pdf->setHeaderFont(Array('helvetica', '', 8));
         $pdf->setFooterFont(Array('helvetica', '', 6));
@@ -86,142 +114,74 @@ class BiobanksPDFExporter {
         $pdf->Line(20, 20, 20, $pdf->getPageHeight() - 20); //ligne lateral gauche
         $pdf->AddPage();
         $pdf->AddPage();
+        return $pdf;
+    }
+
+    /**
+     * each biobank have 2 pages
+     * @param type $pdf
+     * @param type $model
+     * @return type
+     */
+    public static function getPage($pdf, $model) {
+        $pdf->AddPage();
+        $pdf->SetAutoPageBreak(TRUE, 10); //marge inferieure
+        $pdf->SetFont('timesB', '', 11);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Cell(0, 0, $model->name, 0, false, 'L', 0, '', 0, false, 'T', 'M');
+        $pdf->Ln(4);
         $pdf->SetFont('times', '', 12);
-
-
-        $pdf->setPrintFooter(true);
-        $foot = '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image('/images/logobb.png', 'logo', array());
-        '</div>'
-                . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
-                . '<div class="pdf_pagination" style="color:black; text-align:right;" >' . $pdf->getAliasNumPage() . '</div>';
-
-        //$pdf->Footer();
-       // $pdf->Cell(0, 0,'right', 0, false, 'R', 0, '', 0, false, 'T', 'M');
-       
-        //affichage de attribut
-        foreach ($models as $model) {
-            $pdf->SetAutoPageBreak(TRUE, 10); //marge inferieure
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Cell(0, 0, $model->name, 0, false, 'L', 0, '', 0, false, 'T', 'M');
-            $pdf->Ln(4);
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Cell(0, 0,'Identifiant BRIF : '.$model->identifier , 0, false, 'L', 0, '', 0, false, 'T', 'M');
-             //$pdf->SetFont('timesB', '', 11);
-           
-
-
-            $logo = isset($model->activeLogo) && $model->activeLogo != null && $model->activeLogo != "" ? Logo::model()->findByPk(new MongoId($model->activeLogo)) : null;
-            if ($logo != null) {
-
-                $pdf->Image($logo->toSimpleImage(), '',16,25 ,10 , '', '', '', true, 300, 'R');
-            }
-           
-            $pdf->Ln(6);
-
-            if (isset($model->website))
-                $web = $model->website;
-           
-
-                    
-            $html1 = '<div style = "background-color:gold;"> '
-                    . '<div  style=" text-align:left;margin-top:0;">'
-                    . '<h4  style= "color:red;">'
-                    . $model->getAttributeLabel('Coordinateur:')
-                    . '</h4>'
-                    . '<b>' . $model->getShortContactInv() . '</b>'
-                    . '<br>' . $model->getPhoneContact() . '<br>' . $model->getEmailContact()
-                    . '</div>'
-                  
-                   .'<div style= "width:40%;position:relative;padding:0px;margin-left:2%;margin-right:auto;text-align:right;">'
-                    . '<h4  style= " color:red;">'
-                    . $model->getAttributeLabel('Adresse:')
-                    . '</h4>'
-                    . nl2br($model->getAddress()) . '<br>'
-                    . '<b>' . $web . '</b>'
-                    . '</div>'
-                     . '</div>';
-            
-           
-            $pdf->writeHTML($html1);
-            //$pdf->writeHTMLCell(0, 0, '', '', $html1, 0, 0, false, true, '', false);      
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->Ln(7);
-           
-           // $pdf->Cell(0, 0,$model->getAttributeLabel('Coordinateur:'), 0, true, 'L', 0, '', 0, true, 'T', 'M');
-            //$pdf->Cell(0, 0,$model->getAttributeLabel('Adresse :'), 0, false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->Ln(6);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(0, 0, 0);
-            //$pdf->Cell(0, 0,$model->getShortContactInv(), 0, false, 'L', 0, '', 0, false, 'T', 'M');
-            
-           // $pdf->Ln(10);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->writeHTML($model->getAttributeLabel('Présentation : '));
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln(2);
-            if (isset($model->presentation))
-                $pdf->writeHTML(nl2br($model->presentation));
-            //$pdf->writeHTMLCell(0,0,'','',nl2br($model->presentation),0,0,false,true,'R',true);
-            $pdf->Ln(12);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->writeHTML($model->getAttributeLabel('Thématiques : '));
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln(2);
-            if (isset($model->thematiques))
-                $pdf->writeHTML(nl2br($model->thematiques));
-
-            $pdf->Ln(1);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->writeHTML($model->getAttributeLabel('Projets de recherche : '));
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln(2);
-            if (isset($model->projetRecherche))
-                $pdf->writeHTML(nl2br($model->projetRecherche));
-
-            $pdf->Ln(1);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->writeHTML($model->getAttributeLabel('Publications : '));
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln(2);
-            if (isset($model->publications))
-                $pdf->writeHTML(nl2br($model->publications));
-
-            $pdf->Ln(1);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->writeHTML($model->getAttributeLabel('Réseaux : '));
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln(2);
-            if (isset($model->reseaux))
-                $pdf->writeHTML(nl2br($model->reseaux));
-
-            $pdf->Ln(1);
-            $pdf->SetFont('timesB', '', 11);
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->writeHTML($model->getAttributeLabel('Qualité : '));
-            $pdf->SetFont('times', '', 12);
-            $pdf->SetTextColor(0, 0, 0);
-            $pdf->Ln(2);
-            if (isset($model->qualite))
-                $pdf->writeHTML(nl2br($model->qualite));
-
-
-            $pdf->AddPage();
+        $pdf->Cell(0, 0, 'Identifiant BRIF : ' . $model->identifier, 0, false, 'L', 0, '', 0, false, 'T', 'M');
+        $logo = isset($model->activeLogo) && $model->activeLogo != null && $model->activeLogo != "" ? Logo::model()->findByPk(new MongoId($model->activeLogo)) : null;
+        if ($logo != null) {
+            $pdf->Image($logo->toSimpleImage(), '', 16, 25, 10, '', '', '', true, 300, 'R');
         }
-        $pdf->LastPage();
-        $pdf->Output("biobanks_list.pdf", "I");
+        $pdf->Ln(6);
+
+        //affichage du cadre Coordinateur : addresse
+        //color gold
+        $pdf->SetFillColor(255, 215, 0);
+        $pdf->SetFont('helvetica', 'B', 12);
+
+        $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
+        $pdf->RoundedRect(10, 28, 190, 25, 3.50, '1111', 'DF');
+        //color red to text
+        $pdf->SetTextColor(205, 0, 0);
+        $pdf->MultiCell(90, 5, 'Coordinateur:', 0, 'L', 1, 0, '', '', false);
+        $pdf->MultiCell(90, 5, 'Adresse:', 0, 'L', 1, 1, '', '', false);
+        //color black text
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->MultiCell(90, 2, $model->getShortContactInv() . "\n" . $model->getPhoneContact() . "\n" . $model->getEmailContact(), 0, 'L', 1, 0, '', '');
+        $website = isset($model->website) ? $model->website : '';
+        $pdf->MultiCell(90, 2, ($model->getAddress()) . "\n" . $website, 0, 'L', 1, 1, '', '');
+        $pdf->Ln(7);
+        //add each paragraph with title
+        $pdf = BiobanksPDFExporter::addParagraph($pdf, 'Présentation : ', isset($model->presentation) ? $model->presentation : '');
+        $pdf = BiobanksPDFExporter::addParagraph($pdf, 'Thématiques : ', isset($model->thematiques) ? $model->thematiques : '');
+        $pdf = BiobanksPDFExporter::addParagraph($pdf, 'Projets de recherche : ', isset($model->projetRecherche) ? $model->projetRecherche : '');
+        $pdf = BiobanksPDFExporter::addParagraph($pdf, 'Publications : ', isset($model->publications) ? $model->publications : '');
+        $pdf = BiobanksPDFExporter::addParagraph($pdf, 'Réseaux : ', isset($model->reseaux) ? $model->reseaux : '');
+        $pdf = BiobanksPDFExporter::addParagraph($pdf, 'Qualité : ', isset($model->qualite) ? $model->qualite : '');
+        return $pdf;
+    }
+
+    /**
+     * add a paragraph to the pdf.
+     * Always the same style, title in red
+     * txt in black justified
+     */
+    public static function addParagraph($pdf, $title, $txt) {
+        $pdf->SetFont('timesB', '', 11);
+        $pdf->SetTextColor(255, 0, 0);
+        //$pdf->Cell(0,0,'Présentation : ');
+        $pdf->MultiCell(180, 2, $title, 0, 'L', 0, 1, '', '', true);
+
+        $pdf->SetFont('times', '', 12);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Ln(2);
+        $pdf->MultiCell(180, 15, $txt, 0, 'J', 0, 1, '', '', true);
+        return $pdf;
     }
 
 }

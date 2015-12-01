@@ -192,4 +192,5 @@ class Contact extends LoggableActiveRecord
         return $this->adresse != null ? CHtml::encode($this->adresse) . ' - ' . CHtml::encode($this->code_postal) . ' ' . CHtml::encode($this->ville) : "";
     }
 
+     
 }

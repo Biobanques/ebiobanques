@@ -1,0 +1,22 @@
+#page {
+    padding-top: 60px;
+}
+
+.logo {
+    max-height: 60px;
+    padding-left: 20px;
+}
+
+table {
+    text-align: center;
+}
+
+div.form .rememberMe label
+{
+    display: inline;
+}
+
+.userProfil {
+    margin-top: 15px;
+    width:160px;
+}

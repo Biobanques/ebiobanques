@@ -261,8 +261,8 @@ class SiteController extends Controller
             $model->attributes = $_GET ['Biobank'];
         if (isset($_GET ['Address'])) {
 
-            $model->address = new Address('search');
-            $model->address = $_GET['Address'];
+
+            $model->address->attributes = $_GET['Address'];
         }
         $this->render('biobanks', array(
             'model' => $model

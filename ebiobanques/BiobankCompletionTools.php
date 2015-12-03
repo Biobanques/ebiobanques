@@ -42,7 +42,7 @@ class BiobankCompletionTools
         if ($fields == null)
             $fields = BiobankCompletionTools::getAllFieldsArray();
         foreach ($fields as $field) {
-            if (isset($biobank->$field) && $biobank->$field != null && $biobank->$field != 'null' && $biobank->$field != '') {
+            if (isset($biobank->$field) && $biobank->$field != null && $biobank->$field != 'null' && $biobank->$field != '' && $biobank->$field != '/') {
                 $result['fieldsPresent']['fields'][] = $field;
             } else {
                 $result['fieldsMissing']['fields'][] = $field;

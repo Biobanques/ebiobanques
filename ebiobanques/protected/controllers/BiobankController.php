@@ -394,8 +394,8 @@ class BiobankController extends Controller
         foreach ($stats as $keyStats => $valueStats) {
             if (is_array($valueStats)) {
                 $datas['categories'][$index] = $keyStats;
-                $datas['missingFields'][$index] = 1 - $valueStats['GCR'];
-                $datas['presentFields'][$index] = $valueStats['GCR'];
+                $datas['missingFields'][$index] = ((1 - $valueStats['GCR']) * 100);
+                $datas['presentFields'][$index] = $valueStats['GCR'] * 100;
                 $index++;
             }
         }

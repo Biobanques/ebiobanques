@@ -33,15 +33,15 @@ class BiobanksPDFExporter {
         $pdf->SetHeaderMargin(5);
         $pdf->SetFooterMargin(10);
         $pdf->SetAutoPageBreak(TRUE, 0);
-        
+
         //pas de header et footer sur la premier page
         $pdf->SetPrintHeader(false);
-        $pdf->SetPrintFooter(false);  
+        $pdf->SetPrintFooter(false);
         //affichage de la premier page
         $pdf = BiobanksPDFExporter::getFirstPage($pdf);
         //reaffectation du header et footer
         $pdf->SetPrintHeader(true);
-        $pdf->SetPrintFooter(true);  
+        $pdf->SetPrintFooter(true);
         //affichage de attribut
         foreach ($models as $model) {
             $pdf = BiobanksPDFExporter::getPage($pdf, $model);
@@ -126,7 +126,7 @@ class BiobanksPDFExporter {
         $pdf->SetFillColor(255, 215, 0);
         $pdf->SetFont('helvetica', 'B', 12);
         $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
-        $pdf->RoundedRect($x=10,$y= 35,$w= 190,$h=30,$r=3.50,$round_corner='1111',$style='DF');
+        $pdf->RoundedRect($x = 10, $y = 35, $w = 190, $h = 30, $r = 3.50, $round_corner = '1111', $style = 'DF');
         //color red to text
         $pdf->SetTextColor(205, 0, 0);
         $pdf->MultiCell(90, 5, 'Coordinateur:', 0, 'L', 1, 0, '', '', false);
@@ -160,7 +160,12 @@ class BiobanksPDFExporter {
         $pdf->SetFont('times', '', 12);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Ln(2);
-        $pdf->MultiCell(180, 15, $txt, 0, 'L', 0, 1, '', '', true);
+        if (empty($txt)) {
+            $pdf->SetFont('times', 'i', 12);
+            $pdf->SetTextColor(128, 128, 128);
+            $txt = "Non défini.";
+        }
+        $pdf->MultiCell(180, 15, $txt."\n", $border=0, $align='J', 0, 1, '', '', true);
         return $pdf;
     }
 

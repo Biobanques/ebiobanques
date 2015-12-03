@@ -418,6 +418,7 @@ class Biobank extends LoggableActiveRecord
     /**
      * retourne le telephone du contact s il existe en format 01....., sans +33
      * @return string
+     * @deprecated Use CommonFormatter instead of this ugly method.
      */
     public function getPhoneContactPDF() {
         $contact = $this->getContact();

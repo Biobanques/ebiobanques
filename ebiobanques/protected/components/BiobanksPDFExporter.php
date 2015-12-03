@@ -134,7 +134,7 @@ class BiobanksPDFExporter {
         //color black text
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->MultiCell(90, 2, $model->getShortContactInv() . "\n" . $model->getPhoneContact() . "\n" . $model->getEmailContact(), 0, 'L', 1, 0, '', '');
+        $pdf->MultiCell(90, 2, $model->getShortContactInv() . "\n" . CommonFormatter::telNumberToFrench($model->getPhoneContact()) . "\n" . $model->getEmailContact(), 0, 'L', 1, 0, '', '');
         $website = isset($model->website) ? $model->website : '';
         $pdf->MultiCell(90, 2, ($model->getAddress()) . "\n" . $website, 0, 'L', 1, 1, '', '');
         $pdf->Ln(7);

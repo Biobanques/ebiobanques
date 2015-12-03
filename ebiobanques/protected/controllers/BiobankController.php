@@ -26,7 +26,7 @@ class BiobankController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf'),
+                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -380,6 +380,58 @@ class BiobankController extends Controller
 
         $this->render('print', array(
             'dataProvider' => $dataProvider,
+        ));
+    }
+
+    public function actionGlobalStats() {
+        $datas = array();
+        $datas['categories'] = array();
+        $datas['missingFields'] = array();
+        $datas['presentFields'] = array();
+
+        $stats = BiobankCompletionTools::getBiobankAttributesGlobalCompletudeRate();
+        $index = 0;
+        foreach ($stats as $keyStats => $valueStats) {
+            if (is_array($valueStats)) {
+                $datas['categories'][$index] = $keyStats;
+                $datas['missingFields'][$index] = 1 - $valueStats['GCR'];
+                $datas['presentFields'][$index] = $valueStats['GCR'];
+                $index++;
+            }
+        }
+
+        $counts = array('nbBiobanks' => $stats['nbBiobanks'], 'nbFields' => $stats['nbFields'], 'avgGCR' => $stats['avgGCR']);
+
+//        foreach ($stats as $key => $value) {
+//            if (isset($value['GCR'])) {
+//                $datas[$key] = array();
+//                $datas[$key]['GCR'] = $value['GCR'];
+//                $datas[$key]['nbIds'] = $value['nbIds'];
+//            }
+//        }
+
+        $this->render('globalStats', array(
+            'counts' => (object) $counts,
+            'datas' => $datas
+                //  'dataProvider' => $datas,
+                //  'statsGlobales' => $stats
+        ));
+    }
+
+    public function actionDetailledStats() {
+
+
+
+        if (isset($_GET['id'])) {
+            $biobank_id = new MongoId($_GET['id']);
+        }
+        $model = $this->loadModel($biobank_id);
+        $stats = $model->getDetailledStats();
+        $statsGlobales = BiobankCompletionTools::getBiobankAttributesGlobalCompletudeRate();
+        $this->render('detailledStats', array(
+            'model' => $model,
+            'stats' => $stats,
+            'statsGlobales' => $statsGlobales,
         ));
     }
 

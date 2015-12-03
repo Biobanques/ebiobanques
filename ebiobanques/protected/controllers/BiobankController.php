@@ -227,8 +227,11 @@ class BiobankController extends Controller
 
         $model = new Biobank('search');
         $model->unsetAttributes();  // clear any default values
+
         if (isset($_GET['Biobank']))
             $model->attributes = $_GET['Biobank'];
+        if (isset($_GET['Address']))
+            $model->address->attributes = $_GET['Address'];
 
         $this->render('admin', array(
             'model' => $model,

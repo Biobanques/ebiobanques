@@ -342,10 +342,21 @@ class Biobank extends LoggableActiveRecord
         if ($this->contact_id != null && $this->contact_id != "")
             $criteria->contact_id = $this->contact_id;
 
-        if (isset($this->address) && $this->address->city != null)
-            $criteria->addCond('address.city', '==', new MongoRegex('/' . $this->address->city . '/i'));
-        //always sort with alphabetical order on name
-
+        if (isset($this->address) && $this->address->city != null) {
+            if ($this->address->city == '0') {
+                $criteria->address->city = null;
+            } else {
+                $criteria->addCond('address.city', '==', new MongoRegex('/' . $this->address->city . '/i'));
+            }
+        }
+        if (isset($this->address) && $this->address->country != null) {
+            if ($this->address->country == '0') {
+                $criteria->address->country = null;
+            } else {
+                $criteria->addCond('address.country', '==', new MongoRegex('/' . $this->address->country . '/i'));
+            }
+        }
+//always sort with alphabetical order on name
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
         Yii::app()->session['criteria'] = $criteria;
         return new EMongoDocumentDataProvider($this, array(

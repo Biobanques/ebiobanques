@@ -29,8 +29,6 @@ class Address extends EMongoSoftEmbeddedDocument
      */
     public $country;
 
-    
-    
     // We may define rules for embedded document too
     public function rules() {
         return array(
@@ -56,6 +54,28 @@ class Address extends EMongoSoftEmbeddedDocument
             'city',
             'country',
         );
+    }
+
+    public function getActiveListOfCities() {
+        $result = array();
+        $cities = $this->getOwner()->getCollection()->distinct('address.city');
+        foreach ($cities as $city) {
+            $result[$city] = $city;
+        }
+        $result["0"] = '--undefined--';
+        natcasesort($result);
+        return $result;
+    }
+
+    public function getActiveListOfCountries() {
+        $result = array();
+        $countries = $this->getOwner()->getCollection()->distinct('address.country');
+        foreach ($countries as $country) {
+            $result[$country] = Yii::t('listCountries', $country);
+        }
+        $result["0"] = '--undefined--';
+        natcasesort($result);
+        return $result;
     }
 
     // NOTE: for embedded documents we do not define static model method!

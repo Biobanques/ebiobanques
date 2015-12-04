@@ -133,9 +133,9 @@ class SearchCatalogController extends Controller
      */
     public function actionExportPdf() {
         $criteria = new EMongoCriteria;
-        $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
+        $criteria->sort('name', EMongoCriteria::SORT_ASC);
         $models = Biobank::model()->findAll($criteria);
-        BiobanksPDFExporter::exporter($models); 
+        BiobanksPDFExporter::exporter($models);
     }
 
     /**

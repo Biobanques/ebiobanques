@@ -12,72 +12,54 @@
  * render to display elements of Biobanks
  * @author nicolas
  */
-class BiobanksPDFExporter {
-
-    public function Header() {
-        // Logo
-        //$image_file = K_PATH_IMAGES.'logo_example.jpg';
-        $pdf->Image('images/logobb.png', '', '', '', '', 'PNG', '', '', true, 60, 'C');
-        // Set font
-        $this->SetFont('helvetica', 'B', 20);
-        // Title
-        $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    }
-
-    // Page footer
-    public function Footer() {
-        // Position at 15 mm from bottom
-        /*   $this->SetY(-15);
-          // Set font
-          $this->SetFont('helvetica', 'I', 8);
-          // Page number
-          $this->Cell(0, 10, 'Page '.$this->getAliasNumPage(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
-         * */
-    }
-
+class BiobanksPDFExporter
+{
     public static $LINE_HEIGHT = 7;
 
     public static function exporter($models) {
-        require_once(Yii::getPathOfAlias('application.vendors') . '/tcpdf/tcpdf.php');
-        $pdf = new TCPDF();
-        $pdf->SetCreator(PDF_CREATOR);
+        $pdf = new BiobankPDF();
+        $pdf->SetCreator('Biobanques');
         $pdf->SetAuthor('Biobanques');
         $pdf->SetTitle('Annuaire Biobanques');
         $pdf->SetDisplayMode($zoom = 'fullpage', $layout = 'TwoColumnRight', $mode = 'UseNone');
 
+        //set header and footer
+        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        // set margins
+        $pdf->SetMargins(15, 18, 15);
+        $pdf->SetHeaderMargin(5);
+        $pdf->SetFooterMargin(10);
+        $pdf->SetAutoPageBreak(TRUE, 0);
+
+        //pas de header et footer sur la premier page
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+        //affichage de la premier page
         $pdf = BiobanksPDFExporter::getFirstPage($pdf);
-
-        $pdf->SetFont('times', '', 12);
-
-
-        /* $pdf->setPrintFooter(true);
-          $foot = '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image('/images/logobb.png', 'logo', array());
-          '</div>'
-          . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
-          . '<div class="pdf_pagination" style="color:black; text-align:right;" >' . $pdf->getAliasNumPage() . '</div>';
-
-          $pdf->Footer();
-         * */
-
-        //$pdf->Cell(0, 0,'right', 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        //reaffectation du header et footer
+        $pdf->SetPrintHeader(true);
+        $pdf->SetPrintFooter(true);
         //affichage de attribut
         foreach ($models as $model) {
             $pdf = BiobanksPDFExporter::getPage($pdf, $model);
         }
+        // add a  Table Of Content
+        // // add a new page for TOC
+        $pdf->addTOCPage();
+        $pdf->SetFont('times', 'B', 16);
+        $pdf->MultiCell(0, 0, 'Table des matières', 0, 'C', 0, 1, '', '', true, 0);
+        $pdf->Ln();
+        $pdf->SetFont('dejavusans', '', 12);
+        $pdf->addTOC(2, 'courier', '.', 'Table des matières', 'B', array(128, 0, 0));
+        $pdf->endTOCPage();
         // $pdf->LastPage();
         $pdf->Output("biobanks_list.pdf", "D");
     }
 
     public static function getFirstPage($pdf) {
-        $pdf->SetHeaderData('', 0, PDF_HEADER_TITLE, '');
-        $pdf->setHeaderFont(Array('helvetica', '', 8));
-        $pdf->setFooterFont(Array('helvetica', '', 6));
-        $pdf->SetMargins(15, 18, 15);
-        $pdf->SetHeaderMargin(5);
-        $pdf->SetFooterMargin(10);
-        $pdf->SetAutoPageBreak(TRUE, 0);
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
         $pdf->SetFont('timesB', '', 20);
         $pdf->AddPage();
         $pdf->Ln(20);
@@ -112,8 +94,6 @@ class BiobanksPDFExporter {
         $pdf->Line($pdf->getPageWidth() - 20, 20, $pdf->getPageWidth() - 20, $pdf->getPageHeight() - 20); //ligne lateral droite
         $pdf->Line(20, $pdf->getPageHeight() - 20, $pdf->getPageWidth() - 20, $pdf->getPageHeight() - 20); //ligne inferieur
         $pdf->Line(20, 20, 20, $pdf->getPageHeight() - 20); //ligne lateral gauche
-        $pdf->AddPage();
-        $pdf->AddPage();
         return $pdf;
     }
 
@@ -125,7 +105,9 @@ class BiobanksPDFExporter {
      */
     public static function getPage($pdf, $model) {
         $pdf->AddPage();
+        $pdf->Bookmark($model->name, 0, 0, '', 'B', array(0, 64, 128));
         $pdf->SetAutoPageBreak(TRUE, 10); //marge inferieure
+        $pdf->Ln(4);
         $pdf->SetFont('timesB', '', 11);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(0, 0, $model->name, 0, false, 'L', 0, '', 0, false, 'T', 'M');
@@ -137,14 +119,14 @@ class BiobanksPDFExporter {
             $pdf->Image($logo->toSimpleImage(), '', 16, 25, 10, '', '', '', true, 300, 'R');
         }
         $pdf->Ln(6);
-
         //affichage du cadre Coordinateur : addresse
         //color gold
+        //espace vide d une ligne
+        $pdf->Cell(0, 0, '', 0, 1, '', 0, '', 4);
         $pdf->SetFillColor(255, 215, 0);
         $pdf->SetFont('helvetica', 'B', 12);
-
         $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
-        $pdf->RoundedRect(10, 28, 190, 25, 3.50, '1111', 'DF');
+        $pdf->RoundedRect($x = 10, $y = 35, $w = 190, $h = 30, $r = 3.50, $round_corner = '1111', $style = 'DF');
         //color red to text
         $pdf->SetTextColor(205, 0, 0);
         $pdf->MultiCell(90, 5, 'Coordinateur:', 0, 'L', 1, 0, '', '', false);
@@ -152,7 +134,7 @@ class BiobanksPDFExporter {
         //color black text
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', '', 10);
-        $pdf->MultiCell(90, 2, $model->getShortContactInv() . "\n" . $model->getPhoneContact() . "\n" . $model->getEmailContact(), 0, 'L', 1, 0, '', '');
+        $pdf->MultiCell(90, 2, $model->getShortContactInv() . "\n" . CommonFormatter::telNumberToFrench($model->getPhoneContact()) . "\n" . $model->getEmailContact(), 0, 'L', 1, 0, '', '');
         $website = isset($model->website) ? $model->website : '';
         $pdf->MultiCell(90, 2, ($model->getAddress()) . "\n" . $website, 0, 'L', 1, 1, '', '');
         $pdf->Ln(7);
@@ -174,13 +156,16 @@ class BiobanksPDFExporter {
     public static function addParagraph($pdf, $title, $txt) {
         $pdf->SetFont('timesB', '', 11);
         $pdf->SetTextColor(255, 0, 0);
-        //$pdf->Cell(0,0,'Présentation : ');
         $pdf->MultiCell(180, 2, $title, 0, 'L', 0, 1, '', '', true);
-
         $pdf->SetFont('times', '', 12);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Ln(2);
-        $pdf->MultiCell(180, 15, $txt, 0, 'J', 0, 1, '', '', true);
+        if (empty($txt)) {
+            $pdf->SetFont('times', 'i', 12);
+            $pdf->SetTextColor(128, 128, 128);
+            $txt = "Non défini.";
+        }
+        $pdf->MultiCell(180, 15, $txt . "\n", $border = 0, $align = 'J', 0, 1, '', '', true);
         return $pdf;
     }
 

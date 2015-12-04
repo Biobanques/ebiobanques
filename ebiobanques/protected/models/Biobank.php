@@ -190,7 +190,7 @@ class Biobank extends LoggableActiveRecord
             array('sampling_practice', 'length', 'max' => 2),
             array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,keywords_MeSH', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -273,7 +273,7 @@ class Biobank extends LoggableActiveRecord
     public function attributeExportedLabels() {
         return array(
             //'_id' => 'ID',
-            //'name' => Yii::t('common', 'name'),           
+            //'name' => Yii::t('common', 'name'),
             //'identifier' => Yii::t('common', 'identifier'),
             //'collection_name' => Yii::t('common', 'collection_name'),
             //'contact_id' => 'Contact',
@@ -286,7 +286,6 @@ class Biobank extends LoggableActiveRecord
             'publications' => Yii::t('common', 'publications'),
             'reseaux' => Yii::t('common', 'reseaux'),
             'qualite' => Yii::t('common', 'qualite'),
-            
         );
     }
 
@@ -378,6 +377,18 @@ class Biobank extends LoggableActiveRecord
         return $result;
     }
 
+    public function getDetailledStats() {
+        return BiobankCompletionTools::getBiobankCompletudeRate($this->_id);
+    }
+
+    public function getTauxCompletude() {
+        return $this->getDetailledStats()['fieldsPresent']['totalRate'];
+    }
+
+    public function getRoundedTauxCompletude() {
+        return round($this->getTauxCompletude() * 100, 2);
+    }
+
     /**
      * retourne le contact formaté en chaine courte.
      * Vide si null
@@ -387,21 +398,20 @@ class Biobank extends LoggableActiveRecord
         if ($contact != null)
             return $contact != null ? $contact->last_name . " " . $contact->first_name : "";
     }
-    
+
     /**
      * retourne le contact formaté en chaine courte inversée (Prénom nom).
      * Vide si null
      */
- public function getShortContactInv() {
+    public function getShortContactInv() {
         $contact = $this->getContact();
-        if ($contact != null){
+        if ($contact != null) {
             $contact->first_name = ucfirst($contact->first_name);
-             return $contact->first_name . " " . $contact->last_name ;
-        }
-         else
-             return "";
-           
+            return $contact->first_name . " " . $contact->last_name;
+        } else
+            return "";
     }
+
     /**
      * retourne l email du contact s il existe
      * @return string
@@ -425,18 +435,18 @@ class Biobank extends LoggableActiveRecord
         else
             return null;
     }
-    
+
     /**
      * retourne le telephone du contact s il existe en format 01....., sans +33
      * @return string
+     * @deprecated Use CommonFormatter instead of this ugly method.
      */
     public function getPhoneContactPDF() {
         $contact = $this->getContact();
-        if ($contact != null && $contact->phone != null){
-            $contact->phone = '0'.substr($contact->phone,3);
+        if ($contact != null && $contact->phone != null) {
+            $contact->phone = '0' . substr($contact->phone, 3);
             return $contact->phone;
-        }
-        else
+        } else
             return null;
     }
 
@@ -562,9 +572,8 @@ class Biobank extends LoggableActiveRecord
         return ( $this->address->street . "\n"
                 . $this->address->zip . " " . $this->address->city . "\n"
                 . Yii::t('listCountries', $this->address->country));
-        
     }
-    
+
     /**
      *
      * @return only the city of biobanks
@@ -572,7 +581,6 @@ class Biobank extends LoggableActiveRecord
     public function getCity() {
         return ($this->address->city . "\n"
                 . Yii::t('listCountries', $this->address->country));
-        
     }
 
     public function getIdentifierAndName() {

@@ -202,7 +202,7 @@ class CommonMailer
         $subject = "Inscription d'un nouvel utilisateur sur ebiobanques.fr";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
-            $userDetails.="<li>$label : $value</li>";
+            $userDetails.="<li>$label : " . print_r($value, true) . "</li>";
         }
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 				<?xml version=\"1.0\" encoding=\"utf-8\"?>

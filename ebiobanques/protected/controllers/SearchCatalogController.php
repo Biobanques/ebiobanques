@@ -87,6 +87,47 @@ class SearchCatalogController extends Controller
         // $csv->exportCurrentPageOnly();
         Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/csv", false);
     }
+    
+    
+     /**
+     * export xls des biobanques
+     */
+    public function actionExportXls() {
+        $model = new Biobank('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Biobank']))
+            $model->attributes = $_GET['Biobank'];
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+
+        $biobanks = Biobank::model()->findAll($criteria);
+        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+        foreach ($biobanks as $biobank) {
+            $line = array();
+          //  $line[]= iconv("UTF-8", "ASCII//TRANSLIT", $biobank->identifier);
+            foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
+
+                if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
+                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); 
+                } else {
+                    $line[] = "-";
+                }
+            }
+            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
+            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
+            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getPhoneContact());
+            
+            $data[] = $line;
+        }
+        Yii::import('application.extensions.phpexcel.JPhpExcel');
+        $xls = new JPhpExcel('UTF-8', true, 'Biobank list');
+        $xls->addArray($data);
+        $xls->generateXML('Biobank list');
+    }
 
     /**
      * export pdf avec mpdf et liste  d'index : Technique HTML to PDF

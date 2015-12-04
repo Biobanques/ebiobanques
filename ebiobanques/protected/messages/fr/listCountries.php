@@ -9,7 +9,7 @@
 return array(
     'fr' => 'France',
     'uk' => 'Royaume-Uni',
-    'us' => 'États-Unis',
+    'us' => 'Etats-Unis',
     'es' => 'Espagne',
     'de' => 'Allemagne',
     'at' => 'Autriche',
@@ -19,6 +19,8 @@ return array(
     'ee' => 'Estonie',
     'fi' => 'Finlande',
     'gr' => 'Grèce',
+    'gh' => 'Groenland',
+    'gg' => 'Grece',
     'hu' => 'Hongrie',
     'ie' => 'Irlande',
     'it' => 'Italie',

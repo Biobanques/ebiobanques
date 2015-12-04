@@ -273,10 +273,10 @@ class Biobank extends LoggableActiveRecord
     public function attributeExportedLabels() {
         return array(
             //'_id' => 'ID',
-             'name' => Yii::t('common', 'name'),
-             'identifier' => Yii::t('common', 'identifier'),
+            'name' => Yii::t('common', 'name'),
+            'identifier' => Yii::t('common', 'identifier'),
             //'collection_name' => Yii::t('common', 'collection_name'),
-            // 'contact_id' =>Yii::t('common', 'contact'), 
+            // 'contact_id' =>Yii::t('common', 'contact'),
             // 'address' => 'Address',
             //'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
             'website' => Yii::t('common', 'website'),
@@ -286,6 +286,9 @@ class Biobank extends LoggableActiveRecord
             'publications' => Yii::t('common', 'publications'),
             'reseaux' => Yii::t('common', 'reseaux'),
             'qualite' => Yii::t('common', 'qualite'),
+            'shortContact' => 'Nom et prenom du contact',
+            'emailContact' => 'Email du contact',
+            'phoneContact' => 'Telephone du contact',
         );
     }
 

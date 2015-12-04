@@ -87,9 +87,8 @@ class SearchCatalogController extends Controller
         // $csv->exportCurrentPageOnly();
         Yii::app()->getRequest()->sendFile($filename, $csv->toCSV(), "text/csv", false);
     }
-    
-    
-     /**
+
+    /**
      * export xls des biobanques
      */
     public function actionExportXls() {
@@ -102,25 +101,25 @@ class SearchCatalogController extends Controller
         } else {
             $criteria = new EMongoCriteria;
         }
-
-        $biobanks = Biobank::model()->findAll($criteria);
-        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
         setlocale(LC_ALL, 'fr_FR.UTF-8');
+        $biobanks = Biobank::model()->findAll($criteria);
+        $data = array(1 => array_values(Biobank::model()->attributeExportedLabels()));
+
         foreach ($biobanks as $biobank) {
             $line = array();
-          //  $line[]= iconv("UTF-8", "ASCII//TRANSLIT", $biobank->identifier);
+            //  $line[]= iconv("UTF-8", "ASCII//TRANSLIT", $biobank->identifier);
             foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
 
                 if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
-                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); 
+                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute);
                 } else {
                     $line[] = "-";
                 }
             }
-            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
-            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
-            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getPhoneContact());
-            
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getPhoneContact());
+
             $data[] = $line;
         }
         Yii::import('application.extensions.phpexcel.JPhpExcel');

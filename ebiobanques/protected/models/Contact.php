@@ -15,8 +15,8 @@
  * @property string $code_postal
  * @property integer $inactive
  */
-class Contact extends LoggableActiveRecord
-{
+class Contact extends LoggableActiveRecord {
+
     /**
      * id is deprectaed. use _id to store relation with contact
      * @var type
@@ -32,6 +32,7 @@ class Contact extends LoggableActiveRecord
     public $pays;
     public $code_postal;
     public $inactive;
+
     /**
      * biobank attached to this contact
      * a contact must be attached to a biobank. A biobank must have one main contact
@@ -191,33 +192,5 @@ class Contact extends LoggableActiveRecord
     public function getFullAddress() {
         return $this->adresse != null ? CHtml::encode($this->adresse) . ' - ' . CHtml::encode($this->code_postal) . ' ' . CHtml::encode($this->ville) : "";
     }
-    
-    /**
-     * get an array of country used by dropDownList.
-     */
-    public function getArrayCountries() {
-        return array(
-            'fr' => Yii::t('listCountries', 'fr'),
-            'en' => Yii::t('listCountries', 'en'),
-            'es' => Yii::t('listCountries', 'es'),
-            'de' => Yii::t('listCountries', 'de'),
-            'it' => Yii::t('listCountries', 'it'),
-            'ru' => Yii::t('listCountries', 'ru'),
-            'be' => Yii::t('listCountries', 'be'),
-            'ch' => Yii::t('listCountries', 'ch'),
-            'pt' => Yii::t('listCountries', 'pt'),
-            'nl' => Yii::t('listCountries', 'nl'),
-            'pl' => Yii::t('listCountries', 'pl'),
-            'dk' => Yii::t('listCountries', 'dk'),
-            'ca' => Yii::t('listCountries', 'ca'),
-            'br' => Yii::t('listCountries', 'br'),
-            'cn' => Yii::t('listCountries', 'cn'),
-            'hk' => Yii::t('listCountries', 'hk'),
-            'jp' => Yii::t('listCountries', 'jp'),
-            'au' => Yii::t('listCountries', 'au'),
-            'nz' => Yii::t('listCountries', 'nz')
-        );
-    }
 
-     
 }

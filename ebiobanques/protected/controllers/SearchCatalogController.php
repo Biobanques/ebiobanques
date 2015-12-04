@@ -108,10 +108,11 @@ class SearchCatalogController extends Controller
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         foreach ($biobanks as $biobank) {
             $line = array();
+          //  $line[]= iconv("UTF-8", "ASCII//TRANSLIT", $biobank->identifier);
             foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
 
                 if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
-                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); 
                 } else {
                     $line[] = "-";
                 }

@@ -273,13 +273,13 @@ class Biobank extends LoggableActiveRecord
     public function attributeExportedLabels() {
         return array(
             //'_id' => 'ID',
-            //'name' => Yii::t('common', 'name'),
-            //'identifier' => Yii::t('common', 'identifier'),
+             'name' => Yii::t('common', 'name'),
+             'identifier' => Yii::t('common', 'identifier'),
             //'collection_name' => Yii::t('common', 'collection_name'),
-            //'contact_id' => 'Contact',
+            // 'contact_id' =>Yii::t('common', 'contact'), 
             // 'address' => 'Address',
             //'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
-            //'website' => Yii::t('common', 'website'),
+            'website' => Yii::t('common', 'website'),
             'presentation' => Yii::t('common', 'presentation'),
             'thematiques' => Yii::t('common', 'thematiques'),
             'projetRecherche' => Yii::t('common', 'projetRecherche'),

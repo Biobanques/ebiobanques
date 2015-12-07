@@ -286,9 +286,9 @@ class Biobank extends LoggableActiveRecord
             'publications' => Yii::t('common', 'publications'),
             'reseaux' => Yii::t('common', 'reseaux'),
             'qualite' => Yii::t('common', 'qualite'),
-            'shortContact' => 'Nom et prenom du contact',
-            'emailContact' => 'Email du contact',
-            'phoneContact' => 'Telephone du contact',
+            'shortContact' => Yii::t('common', 'shortContact'),
+            'emailContact' => Yii::t('common', 'emailContact'),
+            'phoneContact' => Yii::t('common', 'phoneContact'),
         );
     }
 

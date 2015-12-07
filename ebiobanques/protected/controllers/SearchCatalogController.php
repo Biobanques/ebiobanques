@@ -108,7 +108,8 @@ class SearchCatalogController extends Controller
         $firstLine = array_keys(Biobank::model()->attributeExportedLabels());
         $firstLineConv = array();
         foreach ($firstLine as $attributeLabel) {
-            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", $attributeLabel);
+//            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", $attributeLabel);
+            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", Biobank::model()->attributeExportedLabels()[$attributeLabel]);
         }
         $data = array(1 => $firstLineConv);
         //  $data = array(1 => array_values(Biobank::model()->attributeExportedLabels()));

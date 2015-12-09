@@ -117,10 +117,16 @@ class SearchBiobankController extends Controller
         } else {
             $criteria = new EMongoCriteria;
         }
-
-        $biobanks = Biobank::model()->findAll($criteria);
-        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
         setlocale(LC_ALL, 'fr_FR.UTF-8');
+        $biobanks = Biobank::model()->findAll($criteria);
+        $firstLine = array_keys(Biobank::model()->attributeExportedLabels());
+        $firstLineConv = array();
+        foreach ($firstLine as $attributeLabel) {
+            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", $attributeLabel);
+        }
+        $data = array(1 => $firstLineConv);
+//        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
+
         foreach ($biobanks as $biobank) {
             $line = array();
             foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {

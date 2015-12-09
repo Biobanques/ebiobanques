@@ -1,5 +1,7 @@
 <?php
 
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
@@ -27,6 +29,7 @@ return array(
         'application.modules.auditTrail.models.AuditTrail',
         'application.modules.auditTrail.behaviors.LoggableBehavior',
     ),
+    'theme' => 'bootstrap',
     'modules' => array(
         'auditTrail' => array(),
     ),
@@ -57,6 +60,9 @@ return array(
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',
+        ),
+        'bootstrap' => array(
+            'class' => 'bootstrap.components.Bootstrap',
         ),
         'log' => array(
             'class' => 'CLogRouter',

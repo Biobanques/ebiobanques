@@ -119,6 +119,9 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'onlyAlphaNumeric' => 'Only the alphanumeric characters are allowed for this field.',
     'diagnosisAvailable' => 'Diagnosis available',
     'website' => 'Web site',
-    'catalog' =>'Catalog',
+    'catalog' => 'Catalog',
+    'shortContact' => 'Contact\'s name and first name',
+    'emailContact' => 'Contact\'s email',
+    'phoneContact' => 'Contact\'s phone',
 );
 ?>

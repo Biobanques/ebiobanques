@@ -33,8 +33,9 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 
 $imageSelect = CHtml::image(Yii::app()->baseUrl . '/images/table-icone.png', Yii::t('common', 'prefsSelect'));
     
-$this->Widget('zii.widgets.grid.CGridView', array(
+$this->Widget('bootstrap.widgets.TbGridView', array(
     'id' => 'biobanks-grid',
+    'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
 // 	'filter'=>$model,
     'columns' => array(
@@ -48,9 +49,6 @@ $this->Widget('zii.widgets.grid.CGridView', array(
                
 //button to view biobank infos
         array('class' => 'CButtonColumn',
-            'header' => CHtml::link($imageSelect, '#', array(
-                'onclick' => '$("#selectPopup").dialog("open");return false;'
-            )), // lien d'affichage de la popup
             'template' => '{view}',
             'buttons' => array(
                 'view' => array(

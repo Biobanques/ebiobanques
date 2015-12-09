@@ -15,8 +15,8 @@
  * @property string $code_postal
  * @property integer $inactive
  */
-class Contact extends LoggableActiveRecord
-{
+class Contact extends LoggableActiveRecord {
+
     /**
      * id is deprectaed. use _id to store relation with contact
      * @var type
@@ -32,6 +32,7 @@ class Contact extends LoggableActiveRecord
     public $pays;
     public $code_postal;
     public $inactive;
+
     /**
      * biobank attached to this contact
      * a contact must be attached to a biobank. A biobank must have one main contact
@@ -192,5 +193,4 @@ class Contact extends LoggableActiveRecord
         return $this->adresse != null ? CHtml::encode($this->adresse) . ' - ' . CHtml::encode($this->code_postal) . ' ' . CHtml::encode($this->ville) : "";
     }
 
-     
 }

@@ -216,7 +216,13 @@ $listOnglets['other'] = $attributes_other;
                         ?>
 
                         <?php echo $form->labelEx($model->$attName, $emAtt); ?>
-                        <?php echo $form->textField($model->$attName, $emAtt); ?>
+                        <?php
+                        if ($emAtt == "country") {
+                            echo $form->dropDownList($model->$attName, $emAtt, CommonTools::getArrayCountriesSorted(), ($model->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : ""));
+                        } else {
+                            echo $form->textField($model->$attName, $emAtt);
+                        }
+                        ?>
                         <?php
                         echo $form->error($model->$attName, $emAtt);
                     }

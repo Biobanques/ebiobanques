@@ -89,80 +89,62 @@ class SearchCatalogController extends Controller
     }
 
     /**
+     * export xls des biobanques
+     */
+    public function actionExportXls() {
+        $model = new Biobank('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Biobank']))
+            $model->attributes = $_GET['Biobank'];
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        //    setlocale(LC_ALL, 'fr_FR.UTF-8');
+        $biobanks = Biobank::model()->findAll($criteria);
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+        //$biobanks = Biobank::model()->findAll($criteria);
+        $firstLine = array_keys(Biobank::model()->attributeExportedLabels());
+        $firstLineConv = array();
+        foreach ($firstLine as $attributeLabel) {
+//            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", $attributeLabel);
+            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", Biobank::model()->attributeExportedLabels()[$attributeLabel]);
+        }
+        $data = array(1 => $firstLineConv);
+        //  $data = array(1 => array_values(Biobank::model()->attributeExportedLabels()));
+
+        foreach ($biobanks as $biobank) {
+            $line = array();
+            //  $line[]= iconv("UTF-8", "ASCII//TRANSLIT", $biobank->identifier);
+            foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
+
+                if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
+                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute);
+                } else {
+                    $line[] = "-";
+                }
+            }
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getPhoneContact());
+
+            $data[] = $line;
+        }
+        Yii::import('application.extensions.phpexcel.JPhpExcel');
+        $xls = new JPhpExcel('UTF-8', true, 'Biobank list');
+        $xls->addArray($data);
+        $xls->generateXML('Biobank list');
+    }
+
+    /**
      * export pdf avec mpdf et liste  d'index : Technique HTML to PDF
      */
     public function actionExportPdf() {
-        //$mPDF1 = Yii::app()->ePdf->mpdf();
-        
-       
-//       $html =   '<div class="pdf_logo" style=" text-align:left; margin-top: 35px;">' . CHtml::image(Yii::app()->request->baseUrl . '/images/logo.png', 'logo', array()); '</div>'
-//               . '<div class="pdf_name" style="color:black; text-align:center;display: inline-block;" >Annuaire BIOBANQUES 2015</div>'
-//               . '<div class="pdf_pagination" style="color:black; text-align:right;" >{PAGENO}</div>';
-     
-//      $mPDF1->SetHTMLFooter($html);
-     
-/*       $footer= array (
-                        'odd' => array (
-                          'L' => array (
-                            'content' => '',//Yii::app()->request->baseUrl . '/images/logo.png',
-                            'font-size' => 10,
-                            'font-style' => '',
-                            'font-family' => 'serif',
-                            'color'=>'#000000'
-                          ),
-                          'C' => array (
-                            'content' => 'Annuaire BIOBANQUES 2015',
-                            'font-size' => 10,
-                            'font-style' => '',
-                            'font-family' => 'serif',
-                            'color'=>'#000000'
-                          ),
-                          'R' => array (
-                            'content' => '{PAGENO}',
-                            'font-size' => 10,
-                            'font-style' => '',
-                            'font-family' => 'serif',
-                            'color'=>'#000000'
-                          ),
-                          'line' => 1,
-                        ),
-                        'even' => array ()
-                      );
- 
-        $mPDF1->SetFooter( $footer);*/
-
-        
-       /* if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
-            $criteria = $_SESSION['criteria'];
-        } else {
-            $criteria = new EMongoCriteria;
-        }
-           
-         $criteria->sort('identifier', EMongoCriteria::SORT_DESC);
-        $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-        $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
-        $mPDF1->Output('biobanks_list.pdf', 'I');*/
-        
-        //cration de pdf avec tcpdf
-        
-        $model = new Biobank();
-          $model->unsetAttributes();
-      //  if (isset($_GET['Biobank']))
-      //     $model->attributes = $_GET['Biobank'];
-
-      
-        
-       if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
-            $criteria = $_SESSION['criteria'];
-        } else {
-            $criteria = new EMongoCriteria;
-        }
-           
-        $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
-        $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-        $models = Biobank::model()->findAll();
+        $criteria = new EMongoCriteria;
+        $criteria->sort('name', EMongoCriteria::SORT_ASC);
+        $models = Biobank::model()->findAll($criteria);
         BiobanksPDFExporter::exporter($models);
-        
     }
 
     /**

@@ -1,23 +1,15 @@
 <?php
 //echo Yii::app()->request->urlReferrer;
 //Chargement des preferen,ces d'affichage de colonnes
-$prefs = Preferences::model()->findByAttributes(array(
-    'id_user' => Yii::app()->user->id
-        ));
-if ($prefs == null) {
-    $prefs = new Preferences ();
-    $prefs->id_user = Yii::app()->user->id;
-    $prefs->save();
-}
+$prefs = CommonTools::getPreferences();
 
-$prefsNames = Preferences::model()->attributeNames();
 $imageSampleDetail = Yii::app()->baseUrl . '/images/zoom.png';
 $columns = array();
 
-foreach ($prefsNames as $property) {
+foreach ($prefs as $property => $propertyValue) {
 //
     if ($property != 'id_user' && $property != "_id") {
-        if ($prefs->$property)
+        if ($propertyValue)
             $visibility = "table_cell";
         else
             $visibility = 'display:none';
@@ -111,7 +103,6 @@ foreach ($prefsNames as $property) {
 //
 $columns [] = array(
     'header' => Yii::t('demande', 'sampleDetail'),
-// 		) ), // lien d'affichage de la popup
     'class' => 'CLinkColumn',
     'labelExpression' => '$data->_id',
     'urlExpression' => 'Yii::app()->createUrl("site/view",array("id"=>"$data->_id"))',

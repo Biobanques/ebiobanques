@@ -25,10 +25,8 @@
  * @property integer $notes
  *
  */
-class Preferences extends LoggableActiveRecord
+class Preferences extends EMongoSoftEmbeddedDocument
 {
-    public $id;
-    public $id_user;
     public $id_depositor;
     public $id_sample;
     public $consent_ethical;
@@ -50,38 +48,11 @@ class Preferences extends LoggableActiveRecord
     public $collection_id;
 
     /**
-     * Returns the static model of the specified AR class.
-     *
-     * @param string $className
-     *        	active record class name.
-     * @return Echantillon the static model class
-     */
-    public static function model($className = __CLASS__) {
-        return parent::model($className);
-    }
-
-    /**
-     *
-     * @return string the associated database table name
-     */
-    public function getCollectionName() {
-        return 'preferences';
-    }
-
-    /**
      *
      * @return array validation rules for model attributes.
      */
     public function rules() {
         return array(
-            array('id_user,id_depositor ,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
- ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
- ,biobank_id ,notes', 'required'
-            ),
-            array('id_depositor ,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
- ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
- ,biobank_id ,notes', 'numerical', 'integerOnly' => true
-            ),
             array('id_depositor,id_sample ,consent_ethical ,gender ,age ,collect_date ,storage_conditions
  ,consent ,supply ,max_delay_delivery ,detail_treatment ,disease_outcome ,authentication_method ,patient_birth_date ,tumor_diagnosis
  ,biobank_id,notes,
@@ -95,7 +66,7 @@ class Preferences extends LoggableActiveRecord
  ,biobank_id ,notes,
  collection_name, collection_id',
                 'safe',
-                'on' => 'search'
+                'on' => 'search,insert,update'
             )
         );
     }

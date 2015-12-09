@@ -49,6 +49,19 @@ class CommonTools
         return CommonProperties::$DEV_MODE;
     }
 
+    public static function getConnectedUser() {
+        return User::model()->findByPk(Yii::app()->user->id);
+    }
+
+    public static function getPreferences() {
+
+        $user = CommonTools::getConnectedUser();
+        $user->disableBehavior('LoggableBehavior');
+        $result = $user->preferences;
+        $user->save();
+        return $result;
+    }
+
     /**
      * translate a mysql date to en franch format dd/mm/yyyy
      * @param unknown $madate
@@ -392,6 +405,60 @@ class CommonTools
             return mb_substr($initialValue, 0, 75) . '...';
         } else
             return $initialValue;
+    }
+    
+    /**
+     * get an array of country used by dropDownList.
+     */
+    public function getArrayCountries() {
+        return array(
+            'fr' => Yii::t('listCountries', 'fr'),
+            'uk' => Yii::t('listCountries', 'uk'),
+            'us' => Yii::t('listCountries', 'us'),
+            'es' => Yii::t('listCountries', 'es'),
+            'de' => Yii::t('listCountries', 'de'),
+            'at' => Yii::t('listCountries', 'at'),
+            'bg' => Yii::t('listCountries', 'bg'),
+            'cy' => Yii::t('listCountries', 'cy'),
+            'hr' => Yii::t('listCountries', 'hr'),
+            'ee' => Yii::t('listCountries', 'ee'),
+            'fi' => Yii::t('listCountries', 'fi'),
+            'gr' => Yii::t('listCountries', 'gr'),
+            'hu' => Yii::t('listCountries', 'hu'),
+            'ie' => Yii::t('listCountries', 'ie'),
+            'it' => Yii::t('listCountries', 'it'),
+            'lv' => Yii::t('listCountries', 'lv'),
+            'lt' => Yii::t('listCountries', 'lt'),
+            'lu' => Yii::t('listCountries', 'lu'),
+            'mt' => Yii::t('listCountries', 'mt'),
+            'cz' => Yii::t('listCountries', 'cz'),
+            'ro' => Yii::t('listCountries', 'ro'),
+            'sk' => Yii::t('listCountries', 'sk'),
+            'si' => Yii::t('listCountries', 'si'),
+            'se' => Yii::t('listCountries', 'se'),
+            'it' => Yii::t('listCountries', 'it'),
+            'ru' => Yii::t('listCountries', 'ru'),
+            'be' => Yii::t('listCountries', 'be'),
+            'ch' => Yii::t('listCountries', 'ch'),
+            'pt' => Yii::t('listCountries', 'pt'),
+            'nl' => Yii::t('listCountries', 'nl'),
+            'pl' => Yii::t('listCountries', 'pl'),
+            'dk' => Yii::t('listCountries', 'dk'),
+            'ua' => Yii::t('listCountries', 'ua'),
+            'ca' => Yii::t('listCountries', 'ca'),
+            'cn' => Yii::t('listCountries', 'cn'),
+            'jp' => Yii::t('listCountries', 'jp'),
+            'tr' => Yii::t('listCountries', 'tr')
+        );
+    }
+    
+    /**
+     * get an array of countries sorted by value.
+     */
+    public function getArrayCountriesSorted() {
+        $resArraySorted = new ArrayObject(CommonTools::getArrayCountries());
+        $resArraySorted->asort();
+        return $resArraySorted;
     }
 
 }

@@ -174,7 +174,7 @@ class Sample extends EMongoDocument
 //                'max' => 3
 //            ),
             array(
-                'id, id_depositor, id_sample, consent_ethical, gender, age, collect_date, storage_conditions, consent, supply, max_delay_delivery, detail_treatment, disease_outcome, authentication_method, patient_birth_date, tumor_diagnosis, biobank_id, file_imported_id,field_notes,notes,concernerEchantillon',
+                'id, id_depositor, id_sample, consent_ethical, gender, age, collect_date, storage_conditions, consent, supply, max_delay_delivery, detail_treatment, disease_outcome, authentication_method, patient_birth_date, tumor_diagnosis, biobank_id, file_imported_id,field_notes,notes,concernerEchantillon,field_age_min, field_age_max',
                 'safe',
                 'on' => 'search'
             )

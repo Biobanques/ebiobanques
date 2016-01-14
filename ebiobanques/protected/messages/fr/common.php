@@ -123,6 +123,7 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'catalog' => 'Catalogue',
     'shortContact' => 'Nom et prénom du contact',
     'emailContact' => 'Email du contact',
-    'phoneContact' => 'Telephone du contact',
+    'phoneContact' => 'Télephone du contact',
+    'InvalidPhoneNumber' => 'Format de télephone invalide.'
 );
 ?>

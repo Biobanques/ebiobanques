@@ -94,7 +94,8 @@ $attributes_oblig = array(
     'biobank_class',
     'diagnosis_available',
     array('attributeName' => 'contact_id', 'value' => Contact::model()->getArrayContacts()),
-    'address'
+    'address',
+    'responsable'
 );
 
 $attributes_facult = array(
@@ -193,7 +194,7 @@ $listOnglets['other'] = $attributes_other;
 
 
 
-    <table>
+    <table style="border-collapse: collapse;">
         <?php
         $count = 0;
         foreach ($attributes_oblig as $attName) {
@@ -202,14 +203,22 @@ $listOnglets['other'] = $attributes_other;
             if ($count % 2 == 0)
                 echo' <td>';
             else
-                echo'<tr><td width="400px">';
+                echo'<tr ><td width="400px">';
 
             if (is_string($attName)) {
+
                 if (is_object($model->$attName)) {
+                    $partialCount = 0;
+                    $count = 0;
+                    echo '<tr style="border:1px solid #000;">';
+                    echo '<tr><td width="400px">';
+
+                    echo $form->labelEx($model, $attName, array('style' => 'font-style: italic; font-size: 1.1em;'));
+
 
                     foreach ($model->$attName->attributeNames() as $emAtt) {
-                        $count++;
-                        if ($count % 2 == 0)
+                        $partialCount++;
+                        if ($partialCount % 2 == 0)
                             echo' <td>';
                         else
                             echo'<tr><td width="400px">';
@@ -226,6 +235,7 @@ $listOnglets['other'] = $attributes_other;
                         <?php
                         echo $form->error($model->$attName, $emAtt);
                     }
+                    echo '<tr style="border:1px solid #000;">';
                 } else {
                     ?>
 

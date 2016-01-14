@@ -123,5 +123,6 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'shortContact' => 'Contact\'s name and first name',
     'emailContact' => 'Contact\'s email',
     'phoneContact' => 'Contact\'s phone',
+    'InvalidPhoneNumber' => 'Invalid phone number.'
 );
 ?>

@@ -70,7 +70,7 @@ class UploadedFileController extends Controller
         );
         $datas[] = new SampleProperty("id_depositor", "Identification of depositor", "Text"
         );
-        $datas[] = new SampleProperty("id_familiy", "Identification number of the family", "Text"
+        $datas[] = new SampleProperty("id_family", "Identification number of the family", "Text"
         );
         $datas[] = new SampleProperty("id_donor", "Identification number of the donor", "Text"
         );

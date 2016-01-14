@@ -110,6 +110,7 @@ class Biobank extends LoggableActiveRecord
     public function embeddedDocuments() {
         return array(
             'address' => 'Address',
+            'responsable' => 'Op_resp'
         );
     }
 
@@ -190,7 +191,7 @@ class Biobank extends LoggableActiveRecord
             array('sampling_practice', 'length', 'max' => 2),
             array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,responsable,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -267,6 +268,8 @@ class Biobank extends LoggableActiveRecord
             'nbs_other_samples_affected' => 'Other samples affected',
             'nbs_other_samples_relatives' => 'Other samples relatives',
             'sampling_practice' => 'General sampling practice',
+            'address' => Yii::t('adress', 'address'),
+            'responsable' => Yii::t('responsible', 'responsible'),
         );
     }
 
@@ -277,7 +280,7 @@ class Biobank extends LoggableActiveRecord
             'identifier' => Yii::t('common', 'identifier'),
             //'collection_name' => Yii::t('common', 'collection_name'),
             // 'contact_id' =>Yii::t('common', 'contact'),
-            // 'address' => 'Address',
+            'address' => Yii::t('adress', 'address'),
             //'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
             'website' => Yii::t('common', 'website'),
             'presentation' => Yii::t('common', 'presentation'),
@@ -289,6 +292,7 @@ class Biobank extends LoggableActiveRecord
             'shortContact' => Yii::t('common', 'shortContact'),
             'emailContact' => Yii::t('common', 'emailContact'),
             'phoneContact' => Yii::t('common', 'phoneContact'),
+            'responsable' => Yii::t('responsible', 'responsible'),
         );
     }
 
@@ -400,6 +404,16 @@ class Biobank extends LoggableActiveRecord
         $contact = $this->getContact();
         if ($contact != null)
             return $contact != null ? $contact->last_name . " " . $contact->first_name : "";
+    }
+
+    /**
+     * retourne le resposnable formaté en chaine courte.
+     * Vide si null
+     */
+    public function getShortResponsable() {
+        $responsable = $this->responsable;
+        if ($responsable != null)
+            return $responsable != null ? $responsable->lastName . " " . $responsable->firstName : "";
     }
 
     /**
@@ -575,6 +589,10 @@ class Biobank extends LoggableActiveRecord
         return ( $this->address->street . "\n"
                 . $this->address->zip . " " . $this->address->city . "\n"
                 . Yii::t('listCountries', $this->address->country));
+    }
+
+    public function getResponsable() {
+        return ( $this->responsable->firstName . " " . $this->responsable->lastName . "\n" . $this->responsable->email . "\n" . $this->responsable->direct_phone);
     }
 
     /**

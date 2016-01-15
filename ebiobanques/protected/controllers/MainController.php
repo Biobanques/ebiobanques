@@ -122,17 +122,18 @@ class MainController extends Controller
             $criteria = $this->createCriteria($lightModel);
         }
         $result = $this->createDataProvider($criteria, $mode_request);
-
-
+        if (!isset($result['results']))
+            $result['results'] = array();
         $dataProvider = new CArrayDataProvider($result['results'], array('keyField' => false/* '_id' */, 'sort' => array('defaultOrder' => 'sous_group_iccc ' . CSort::SORT_DESC, 'attributes' => array('group_iccc', 'sous_group_iccc', 'patientPartialTotal', 'total', 'CR', 'IE'))));
         $samplesList = array();
         foreach ($result["results"] as $res) {
             $value = $res['value'];
             foreach ($value['patients'] as $patient)
                 foreach ($patient['samples'] as $sample)
-                    $samplesList[] = $sample['_id'];
+                    $samplesList[] = $sample;
         }
         $storedCriteria = new EMongoCriteria;
+
         $storedCriteria->addCond('_id', 'in', $samplesList);
         Yii::app()->session['criteria'] = $storedCriteria;
         $this->render('searchForm', array('flag' => $flag, 'model' => $model, 'lightModel' => $lightModel, 'dataProvider' => $dataProvider, 'totalPatient' => count(SampleCollected::model()->getCollection()->distinct('ident_pat_biocap')), 'totalPatientSelected' => $result['total']));
@@ -598,16 +599,21 @@ class MainController extends Controller
         $reduce = $requestElements['reduce'];
         $finalize = $requestElements['finalize'];
 
-        $queryResult = $db->command(array(
+        $db->command(array(
             'mapreduce' => "sampleCollected",
             'query' => $query,
             'map' => $map,
             'reduce' => $reduce,
             'finalize' => $finalize,
             //place le resultat en memoire
-            'out' => Array("inline" => TRUE)
+            'out' => Array("replace" => 'testReplace')
         ));
 
+        $queryResult = array();
+        $results = $db->selectCollection('testReplace')->find(array(), array('value.CR' => true, 'value.IE' => true, 'value.patientPartialTotal' => true, 'value.patients.id' => true, 'value.patients.samples' => true,));
+        //$results = $db->selectCollection('testReplace')->find();
+
+        $queryResult['results'] = $results;
         $result = RequestTools::filterResult($mode_request, $queryResult);
         return $result;
     }

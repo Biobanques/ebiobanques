@@ -159,7 +159,7 @@ class RequestTools
             patient.hasNonTumo=false;
             patient.hasUndefinedTumo=false;
 
-
+  var listSamples=[];
             for(var sample in patient.samples){
 if(patient.samples[sample].Echant_tumoral=='Non'){
                     patient.hasNonTumo=true;
@@ -179,7 +179,10 @@ if(patient.samples[sample].Echant_tumoral=='Non'){
                if(patient.samples[sample].Inclusion_protoc_rech=='oui'){
                 patient.inclusion=1;
                                 }
+                                listSamples.push(patient.samples[sample]._id);
                 }
+               
+                 patient.samples=listSamples;
 if(patient.hasTumo==true&&patient.hasNonTumo==true){
              partialResult2.patients.push(patient);
 }
@@ -227,8 +230,9 @@ if(patient.hasTumo==true&&patient.hasNonTumo==true){
             patient.samples=partialResult.patients[partPat];
             patient.consentement=0;
             patient.inclusion=0;
-
+  var listSamples=[];
             for(var sample in patient.samples){
+
                 if(patient.samples[sample].Statut_juridique=='Refus'){
                     patient.consentement=2;
                 }else if(patient.samples[sample].Statut_juridique=='Obtenu'&&patient.consentement!=2){
@@ -237,7 +241,9 @@ if(patient.hasTumo==true&&patient.hasNonTumo==true){
                if(patient.samples[sample].Inclusion_protoc_rech=='oui'){
                 patient.inclusion=1;
                                 }
+                                listSamples.push(patient.samples[sample]._id);
                 }
+                patient.samples=listSamples;
              partialResult2.patients.push(patient);
         }
             var result={};
@@ -266,6 +272,7 @@ if(patient.hasTumo==true&&patient.hasNonTumo==true){
 
     public function filterResult($mode_request, $queryResult) {
         $result = array();
+
         switch ($mode_request) {
 
             case "2":
@@ -273,13 +280,33 @@ if(patient.hasTumo==true&&patient.hasNonTumo==true){
             case "1":
             default:
                 $totalFound = 0;
-                foreach ($queryResult['results'] as $key => $value) {
-                    if ($value['value']['patientPartialTotal'] == 0)
-                        unset($queryResult['results'][$key]);
-                    else
-                        $totalFound+=$value['value']['patientPartialTotal'];
+
+                while ($queryResult['results']->hasNext()) {
+                    $current = $queryResult['results']->getNext();
+                    $toAdd = array();
+
+                    if ($current['value']['patientPartialTotal'] != 0) {
+                        $toAdd['_id'] = $current['_id'];
+                        $toAdd['value'] = array();
+                        $toAdd['value']['CR'] = $current['value']['CR'];
+                        $toAdd['value']['IE'] = $current['value']['IE'];
+                        $toAdd['value']['patientPartialTotal'] = $current['value']['patientPartialTotal'];
+                        foreach ($current['value']['patients'] as $patient) {
+                            $patAdded = array();
+                            $patAdded['id'] = $patient['id'];
+
+                            $patAdded['samples'] = $patient['samples'];
+//                            $patAdded['samples'] = array();
+//                            foreach ($patient['samples'] as $sample) {
+//                                $patAdded['samples'][] = array('_id' => $sample['_id']);
+//                            }
+                            $toAdd['value']['patients'][] = $patAdded;
+//                            $toAdd['value']['patients'][] = array('id' => $patient['id']);
+                        }
+                        $totalFound+=$current['value']['patientPartialTotal'];
+                        $result['results'][] = $toAdd;
+                    }
                 }
-                $result = $queryResult;
                 $result['total'] = $totalFound;
                 break;
         }

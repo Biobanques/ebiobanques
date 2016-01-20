@@ -177,8 +177,12 @@ class BiobankController extends Controller
                 $model->address = $_POST['Address'];
             }
             if (isset($_POST['Op_resp'])) {
-                $model->responsable = $_POST['Op_resp'];
+                $model->responsable_op = $_POST['Op_resp'];
             }
+            if (isset($_POST['Qual_resp'])) {
+                $model->responsable_qual = $_POST['Qual_resp'];
+            }
+
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
                 // $this->redirect(array('view', 'id' => $model->_id));

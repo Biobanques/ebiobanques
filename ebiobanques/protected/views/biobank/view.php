@@ -62,7 +62,8 @@ $attributes_oblig = array(
     array('name' => 'contact', 'value' => $model->getShortContact()),
     'diagnosis_available',
     array('name' => 'address', 'value' => nl2br($model->getAddress()), 'type' => 'raw',),
-    array('name' => 'responsable', 'value' => nl2br($model->getResponsable()), 'type' => 'raw',),
+    array('name' => 'responsable_op', 'value' => nl2br($model->getResponsableOp()), 'type' => 'raw',),
+    array('name' => 'responsable_qual', 'value' => nl2br($model->getResponsableQual()), 'type' => 'raw',),
         // 'responsible'
 );
 
@@ -91,7 +92,7 @@ $attributes_info = array(
 
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address', 'responsable', 'vitrine'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address', 'responsable_op', 'responsable_qual', 'vitrine'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {

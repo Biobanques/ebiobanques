@@ -10,6 +10,11 @@ class Op_resp extends EMongoSoftEmbeddedDocument
 {
     /**
      *
+     * @var string $civility
+     */
+    public $civility;
+    /**
+     *
      * @var string $firstName
      */
     public $firstName;
@@ -32,7 +37,7 @@ class Op_resp extends EMongoSoftEmbeddedDocument
     // We may define rules for embedded document too
     public function rules() {
         return array(
-            array('firstName,lastName,email,direct_phone', 'safe'),
+            array('civility,firstName,lastName,email,direct_phone', 'safe'),
             array('email', 'CEmailValidator', 'allowEmpty' => true),
             array('direct_phone', 'phoneValidator', 'language' => 'fr'),
         );
@@ -41,6 +46,7 @@ class Op_resp extends EMongoSoftEmbeddedDocument
     // And attribute names too
     public function attributeLabels() {
         return array(
+            'civility' => Yii::t('responsible', 'civility'),
             'firstName' => Yii::t('responsible', 'firstName'),
             'lastName' => Yii::t('responsible', 'lastName'),
             'email' => Yii::t('responsible', 'email'),
@@ -49,12 +55,17 @@ class Op_resp extends EMongoSoftEmbeddedDocument
     }
 
     public function phoneValidator($attribute, $params) {
+        if (!isset($params['allowEmpty']))
+            $params['allowEmpty'] = true;
+        if ($params['allowEmpty'] == true && empty($this->$attribute))
+            return true;
         if (!preg_match("#^\+33[0-9]{9}$#", $this->$attribute))
             $this->addError($attribute, Yii::t('common', 'InvalidPhoneNumber'));
     }
 
     public function attributeNames() {
         return array(
+            'civility',
             'firstName',
             'lastName',
             'email',

@@ -1,11 +1,15 @@
 <?php
 
 return array(
-    'responsible' => 'Operational manager',
+    'civility' => 'Civility',
+    'responsible_op' => 'Operational manager',
+    'responsible_qual' => 'Quality manager',
     'firstName' => 'First name',
     'lastName' => 'Last name',
     'email' => 'Email',
-    'direct_phone' => 'Direct phone'
+    'direct_phone' => 'Direct phone',
+    'mister' => 'Mr',
+    'miss' => 'Ms'
 );
 /*
  * To change this license header, choose License Headers in Project Properties.

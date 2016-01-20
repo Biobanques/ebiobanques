@@ -95,7 +95,8 @@ $attributes_oblig = array(
     'diagnosis_available',
     array('attributeName' => 'contact_id', 'value' => Contact::model()->getArrayContacts()),
     'address',
-    'responsable'
+    'responsable_op',
+    'responsable_qual',
 );
 
 $attributes_facult = array(
@@ -228,6 +229,8 @@ $listOnglets['other'] = $attributes_other;
                         <?php
                         if ($emAtt == "country") {
                             echo $form->dropDownList($model->$attName, $emAtt, CommonTools::getArrayCountriesSorted(), ($model->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : ""));
+                        } elseif ($emAtt == "civility") {
+                            echo $form->dropDownList($model->$attName, $emAtt, array('mister' => Yii::t('responsible', 'mister'), 'miss' => Yii::t('responsible', 'miss')), ($model->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : ""));
                         } else {
                             echo $form->textField($model->$attName, $emAtt);
                         }
@@ -307,6 +310,8 @@ $listOnglets['other'] = $attributes_other;
                     $model->initSoftAttribute($attName);
 
                 echo $form->labelEx($model, $attName);
+
+
                 echo $form->textField($model, $attName);
                 echo $form->error($model, $attName);
             } elseif (is_array($attName)) {

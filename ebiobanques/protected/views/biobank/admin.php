@@ -53,7 +53,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'),
         array('name' => 'diagnosis_available', 'header' => $model->getAttributeLabel('diagnosis_available')),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name' => 'responsable', 'value' => '$data->getShortResponsable()', 'header' => $model->getAttributeLabel('responsable')),
+        array('name' => 'responsable_op', 'value' => '$data->getShortResponsableOp()', 'header' => $model->getAttributeLabel('responsable_op')),
+        array('name' => 'responsable_qual', 'value' => '$data->getShortResponsableQual()', 'header' => $model->getAttributeLabel('responsable_qual')),
         array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getRoundedTauxCompletude()."%"',

@@ -1,19 +1,19 @@
 <?php
 
-Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
-    // 'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
+// 'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'ebiobanques.fr',
     //par defaut en français
     'language' => 'fr',
     //'theme'=>'abound',
-    // preloading 'log' component
+// preloading 'log' component
     'preload' => array('log'),
     // autoloading model and component classes
     'import' => array(
@@ -36,7 +36,7 @@ return array(
     // application components
     'components' => array(
         'user' => array(
-            // enable cookie-based authentication
+// enable cookie-based authentication
             'allowAutoLogin' => true,
             //tell the application to use your WebUser class instead of the default CWebUser
             'class' => 'WebUser',
@@ -44,7 +44,7 @@ return array(
         'urlManager' => array(
             'urlFormat' => 'path',
             'rules' => array(
-                // REST patterns ( to ldif exchange with BBMRI)
+// REST patterns ( to ldif exchange with BBMRI)
                 array('api/getBiobanksLDIF', 'verb' => 'GET'),
             ),
         ),
@@ -58,7 +58,7 @@ return array(
             'gridFStemporaryFolder' => '/tmp/mongo'
         ),
         'errorHandler' => array(
-            // use 'site/error' action to display errors
+// use 'site/error' action to display errors
             'errorAction' => 'site/error',
         ),
         'bootstrap' => array(
@@ -71,10 +71,14 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ), array(
+//                   
                     'class' => 'CPhpMailerLogRoute',
                     'levels' => 'error, warning',
                     'emails' => CommonProperties::$ADMIN_EMAIL,
-                    'except' => array('exception.CHttpException.404')
+                    'except' => array(
+                        'exception.CHttpException.404',
+                        'exception.CHttpException.403'
+                    )
                 ),
                 CommonProperties::$DEV_MODE ?
                         array(
@@ -97,20 +101,19 @@ return array(
                 ),
             ),
         ),
-        
-        'clientScript'=>array(
-            'packages'=>array(
-                'jquery'=>array(
-                    'baseUrl'=>'//ajax.googleapis.com/ajax/libs/jquery/1/',
-                    'js'=>array('jquery.min.js'),
+        'clientScript' => array(
+            'packages' => array(
+                'jquery' => array(
+                    'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1/',
+                    'js' => array('jquery.min.js'),
                 )
             ),
         ),
     ),
     // application-level parameters that can be accessed
-    // using Yii::app()->params['paramName']
+// using Yii::app()->params['paramName']
     'params' => array(
-        // this is used in contact page
+// this is used in contact page
         'adminEmail' => CommonProperties::$ADMIN_EMAIL,
         //variable pour activer systeme de mail
         'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,

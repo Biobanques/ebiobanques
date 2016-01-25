@@ -97,6 +97,7 @@ $attributes_oblig = array(
     'address',
     'responsable_op',
     'responsable_qual',
+    'responsable_adj'
 );
 
 $attributes_facult = array(
@@ -230,7 +231,7 @@ $listOnglets['other'] = $attributes_other;
                         if ($emAtt == "country") {
                             echo $form->dropDownList($model->$attName, $emAtt, CommonTools::getArrayCountriesSorted(), ($model->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : ""));
                         } elseif ($emAtt == "civility") {
-                            echo $form->dropDownList($model->$attName, $emAtt, array('mister' => Yii::t('responsible', 'mister'), 'miss' => Yii::t('responsible', 'miss')), ($model->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : ""));
+                            echo $form->dropDownList($model->$attName, $emAtt, array('mister' => Yii::t('responsible', 'mister'), 'miss' => Yii::t('responsible', 'miss')), array('prompt' => '----'));
                         } else {
                             echo $form->textField($model->$attName, $emAtt);
                         }

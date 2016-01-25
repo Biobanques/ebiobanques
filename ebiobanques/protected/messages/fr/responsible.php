@@ -4,6 +4,7 @@ return array(
     'civility' => 'Civilité',
     'responsible_op' => 'Responsable opérationnel',
     'responsible_qual' => 'Responsable qualité',
+    'responsable_adj' => 'Responsable adjoint',
     'firstName' => 'Prénom',
     'lastName' => 'Nom',
     'email' => 'Email',

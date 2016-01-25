@@ -112,6 +112,7 @@ class Biobank extends LoggableActiveRecord
             'address' => 'Address',
             'responsable_op' => 'Op_resp',
             'responsable_qual' => 'Qual_resp',
+            'responsable_adj' => 'Adj_resp',
         );
     }
 
@@ -192,7 +193,7 @@ class Biobank extends LoggableActiveRecord
             array('sampling_practice', 'length', 'max' => 2),
             array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,responsable_op,responsable_qual,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
+            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,responsable_op,responsable_qual,responsable_adj,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -272,6 +273,7 @@ class Biobank extends LoggableActiveRecord
             'address' => Yii::t('adress', 'address'),
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
+            'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
         );
     }
 
@@ -296,6 +298,7 @@ class Biobank extends LoggableActiveRecord
             'phoneContact' => Yii::t('common', 'phoneContact'),
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
+            'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
         );
     }
 
@@ -417,6 +420,12 @@ class Biobank extends LoggableActiveRecord
         $responsable_op = $this->responsable_op;
         if ($responsable_op != null)
             return $responsable_op != null ? $responsable_op->lastName . " " . $responsable_op->firstName : "";
+    }
+
+    public function getShortResponsableAdj() {
+        $responsable_adj = $this->responsable_adj;
+        if ($responsable_adj != null)
+            return $responsable_adj != null ? $responsable_adj->lastName . " " . $responsable_adj->firstName : "";
     }
 
     public function getShortResponsableQual() {
@@ -602,6 +611,10 @@ class Biobank extends LoggableActiveRecord
 
     public function getResponsableOp() {
         return ( Yii::t('responsible', $this->responsable_op->civility) . " " . $this->responsable_op->firstName . " " . $this->responsable_op->lastName . "\n" . $this->responsable_op->email . "\n" . $this->responsable_op->direct_phone);
+    }
+
+    public function getResponsableAdj() {
+        return ( Yii::t('responsible', $this->responsable_adj->civility) . " " . $this->responsable_adj->firstName . " " . $this->responsable_adj->lastName . "\n" . $this->responsable_adj->email . "\n" . $this->responsable_adj->direct_phone);
     }
 
     public function getResponsableQual() {

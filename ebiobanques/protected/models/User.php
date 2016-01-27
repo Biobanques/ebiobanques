@@ -75,13 +75,16 @@ class User extends EMongoSoftDocument
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($caseSensitive = false) {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
+
         $criteria = new EMongoCriteria;
 
         foreach ($this->getSafeAttributeNames()as $attribute) {
-            if ($this->$attribute != null && $attribute != 'preferences')
-                $criteria->addCond($attribute, '==', new MongoRegex('/' . $this->$attribute . '*/i'));
+            if ($this->$attribute != null && $attribute != 'preferences') {
+                if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id')
+                    $criteria->addCond($attribute, '==', $this->$attribute);
+                else
+                    $criteria->addCond($attribute, '==', new MongoRegex('/' . $this->$attribute . '*/i'));
+            }
         }
 
         $criteria->sort('nom', EMongoCriteria::SORT_ASC);
@@ -150,9 +153,9 @@ class User extends EMongoSoftDocument
      */
     public function getArrayProfil() {
         $res = array();
-        $res ['0'] = "standard user";
-        $res ['1'] = "admin systeme";
-        $res ['2'] = "admin de biobanque";
+        $res ["0"] = "standard user";
+        $res ["1"] = "admin systeme";
+        $res ["2"] = "admin de biobanque";
         return $res;
     }
 
@@ -161,8 +164,8 @@ class User extends EMongoSoftDocument
      */
     public function getArrayInactif() {
         $res = array();
-        $res ['0'] = "actif";
-        $res ['1'] = "inactif";
+        $res ["0"] = "actif";
+        $res ["1"] = "inactif";
         return $res;
     }
 

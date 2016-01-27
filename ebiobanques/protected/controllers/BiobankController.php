@@ -40,8 +40,9 @@ class BiobankController extends Controller
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        $model = $this->loadModel($id);
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model' => $model,
         ));
     }
 
@@ -175,7 +176,7 @@ class BiobankController extends Controller
                 }
             }
             $model->attributes = $attributesPost;
-            if (isset($_FILES['Logo'])) {
+            if (isset($_FILES['Logo']) && $_FILES['Logo']['name']['filename'] != "") {
 
                 $model->initSoftAttribute('activeLogo');
                 $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);

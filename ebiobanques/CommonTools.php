@@ -198,8 +198,11 @@ class CommonTools
          */
         // $reader->setReadDataOnly(true);
 //        $reader->setReadFilter(new MyReadFilter());
+
         Yii::log("load excel file", 'error');
+
         $excel = $reader->load($path);
+        // $excel->setActiveSheetIndex(1);
         Yii::log("excel file loaded", 'error');
         unset($reader);
         /*

@@ -6,8 +6,9 @@ return array(
     'values' => 'Valeurs admissibles',
     'uploadPopupHelpTitle' => 'Spécifications du fichier',
     'uploadPopupHelpContent' => '<ul>'
+    . '<li>Les données doivent se trouver dans la première feuille du classeur</li>'
     . '<li>Le champs "id_sample" est obligatoire.</li>'
-    . '<li>Les noms de colonnes doivent être inscrits dans la première ligne du fichier.</li>'
+    . '<li>Les noms de colonnes doivent être inscrits dans la première ligne de la feuille.</li>'
     . '<li>Seules les colonnes dont la première ligne correspond <b>exactement</b> à un nom de propriété seront ajoutées aux propriétés de l\'échantillon.</li>'
     . '<li>Les colonnes dont la première ligne ne correspond pas exactement à un nom de propriété seront ajoutées comme notes associées à l\'échantillon.</li>'
     . '</ul>'

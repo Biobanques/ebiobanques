@@ -78,11 +78,12 @@ class User extends EMongoSoftDocument
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
         $criteria = new EMongoCriteria;
-        if ($this->nom != null)
-            $criteria->addCond('nom', '==', new MongoRegex('/' . $this->nom . '*/i'));
-        if ($this->prenom != null)
-            $criteria->addCond('prenom', '==', new MongoRegex('/' . $this->name . '*/i'));
-        //always sort with alphabetical order
+
+        foreach ($this->getSafeAttributeNames()as $attribute) {
+            if ($this->$attribute != null && $attribute != 'preferences')
+                $criteria->addCond($attribute, '==', new MongoRegex('/' . $this->$attribute . '*/i'));
+        }
+
         $criteria->sort('nom', EMongoCriteria::SORT_ASC);
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria

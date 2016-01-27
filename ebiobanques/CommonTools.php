@@ -365,7 +365,8 @@ class CommonTools
                 $log = 'Error with manual import. File id : ' . $fileImportedId . ' - line : ' . $badSample;
                 Yii::log($log, CLogger::LEVEL_ERROR);
             }
-        }return count($listBadSamples);
+        }
+        return count($listBadSamples);
     }
 
     public static function getIntPhone($phone) {
@@ -406,7 +407,7 @@ class CommonTools
         } else
             return $initialValue;
     }
-    
+
     /**
      * get an array of country used by dropDownList.
      */
@@ -451,7 +452,7 @@ class CommonTools
             'tr' => Yii::t('listCountries', 'tr')
         );
     }
-    
+
     /**
      * get an array of countries sorted by value.
      */

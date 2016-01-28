@@ -69,7 +69,7 @@ $attributes_oblig = array(
 );
 
 $attributes_facult = array(
-    'website',
+    array('name' => 'website', 'value' => $model->getWebsite(), 'type' => 'raw',),
     //'vitrine',
     'folder_reception',
     'folder_done',
@@ -93,7 +93,7 @@ $attributes_info = array(
 
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {

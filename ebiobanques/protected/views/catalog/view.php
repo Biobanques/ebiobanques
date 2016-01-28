@@ -33,7 +33,7 @@ $attributes_oblig = array(
 
 
 $attributes_facult = array(
-    'website',
+    array('name' => 'website', 'value' => $model->getWebsite(), 'type' => 'raw',),
 );
 $attributes_qualite = array(
     'cert_ISO9001',
@@ -61,7 +61,7 @@ $attributes_diagnostic = array(
     'Q00-Q99',
     'R00-Z99'
 );
-$attributes_samples = array('sampling_disease_group','sampling_disease_group_code','keywords_MeSH');
+$attributes_samples = array('sampling_disease_group', 'sampling_disease_group_code', 'keywords_MeSH');
 $attributes_samples_nbs = array('nbs_dna_samples_affected',
     'nbs_dna_samples_relatives',
     'nbs_cdna_samples_affected',
@@ -165,7 +165,7 @@ foreach ($attributes as $attributeName => $attributeValue) {
     <h3>Résumé des échantillons biologiques</h3>
     <h4>Généralités</h4>
     <?php
-    $attributes_samples_availables[]=array('name' => 'sampling_practice', 'value' => $model->getSamplingPractice());
+    $attributes_samples_availables[] = array('name' => 'sampling_practice', 'value' => $model->getSamplingPractice());
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
         'attributes' => $attributes_samples_availables
@@ -179,10 +179,10 @@ foreach ($attributes as $attributeName => $attributeValue) {
     foreach ($attributes_samples_nbs_availables as $attNbs) {
         //si suffixe = affected on ecrit sur la ligne de titre sinon on skip
         if (!strpos($attNbs['name'], "affected") == false) {
-            $ar=$model->attributeLabels();
-            $name= str_replace ( "affected" , "" ,$ar[$attNbs['name']] );
+            $ar = $model->attributeLabels();
+            $name = str_replace("affected", "", $ar[$attNbs['name']]);
             echo "<div class=\"grid-nbs\"><b>" .
-            $name. "</b></div>";
+            $name . "</b></div>";
         }
         echo "<div class=\"grid-nbs-nb\">";
         if (isset($attNbs['value']) && $attNbs != "") {

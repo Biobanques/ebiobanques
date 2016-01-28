@@ -660,4 +660,23 @@ class Biobank extends LoggableActiveRecord
         return $result;
     }
 
+    public function getWebsite() {
+        if ($this->website != null && $this->website != '' && $this->website != '/') {
+            if (strpos($this->website, 'http://') === false && strpos($this->website, 'https://') === false) {
+                $this->website = 'http://' . $this->website;
+            }
+            return CHtml::link($this->website, $this->website, array("target" => "_blank"));
+        }
+        return '';
+    }
+
+    public function beforeSave() {
+        if (isset($this->website) && $this->website != null && $this->website != '' && $this->website != '/') {
+            if (strpos($this->website, 'http://') === false && strpos($this->website, 'https://') === false) {
+                $this->website = 'http://' . $this->website;
+            }
+        }
+        return parent::beforeSave();
+    }
+
 }

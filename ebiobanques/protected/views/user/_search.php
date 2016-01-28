@@ -13,10 +13,6 @@
     ));
     ?>
 
-    <div class="row">
-        <?php echo $form->label($model, '_id'); ?>
-        <?php echo $form->textField($model, '_id'); ?>
-    </div>
 
     <div class="row">
         <?php echo $form->label($model, 'prenom'); ?>

@@ -17,7 +17,7 @@ class UploadedFile extends EMongoGridFS
     public $metadata = array();
     public $uploadDate;
     /**
-     * property to store the value if add samples at the end or replace 
+     * property to store the value if add samples at the end or replace
      */
     public $addOrReplace;
 
@@ -60,4 +60,9 @@ class UploadedFile extends EMongoGridFS
             $this->addError('filename', 'Biobank_id is not set.');
     }
 
+//public function afterSave() {
+//    parent::afterSave();
+//    $fileImported=new FileImported;
+//
+//}
 }

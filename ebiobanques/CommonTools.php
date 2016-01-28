@@ -143,7 +143,13 @@ class CommonTools
         $biobank_id = $file->metadata['biobank_id'];
         $file_imported_id = $file->_id;
         $bytes = CommonTools::toCsv($file);
-        $error = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id, $add);
+        $resultAnalyse = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id, $add);
+        $error = $resultAnalyse['error'];
+        if ($resultAnalyse['inserted'] > 0) {
+            $added = CommonTools::addToImportedFiles($file);
+            if ($added == true)
+                Yii::log('ExcelFile ajouté aux file_imported');
+        }
 
 
 
@@ -286,7 +292,7 @@ class CommonTools
                 }
             }
             $row++;
-            if ($row != 2 && $row % 400 == 2) {
+            if ($row != 2 && $row % 400 == 2 && !empty($tempSaveList)) {
                 Yii::log("Nb treated : " . $row, 'error');
                 Sample::model()->getCollection()->batchInsert($tempSaveList, array());
                 $tempSaveList = array();
@@ -295,8 +301,9 @@ class CommonTools
                 //$tempSaveList = new MongoInsertBatch(Sample::model()->getCollection());
             }
         }
-        Sample::model()->getCollection()->batchInsert($tempSaveList, array("w" => 1));
-
+        if (!empty($tempSaveList)) {
+            Sample::model()->getCollection()->batchInsert($tempSaveList, array("w" => 1));
+        }
         /*
          * Version 2 : seuls nes champs dont la colonne est annotée avec le préfixe 'notes' sont pris en note
          */
@@ -369,7 +376,29 @@ class CommonTools
                 Yii::log($log, CLogger::LEVEL_ERROR);
             }
         }
-        return count($listBadSamples);
+
+        return array('error' => count($listBadSamples), 'inserted' => count($newSamples));
+    }
+
+    public function addToImportedFiles($file) {
+        $fileImported = new FileImported;
+        $fileImported->_id = $file->_id;
+        $fileImported->biobank_id = $file->metadata['biobank_id'];
+        $fileImported->extraction_id = time();
+        $fileImported->given_name = $file->filename;
+        $fileImported->suffix_type = '3';
+        $fileImported->generated_name = $file->filename;
+
+        $fileImported->date_import = $file->uploadDate->toDateTime()->format('Y-m-d H:i:s');
+        $fileImported->version_format = '2';
+        if ($fileImported->save())
+            return true;
+        else {
+            $errors = $fileImported->getErrors();
+            Yii::log('Impossible to store xls file info in FileImported !', CLogger::LEVEL_ERROR);
+            foreach ($errors as $attributeName => $errorAttribute)
+                Yii::log($attributeName . " : " . implode(', ', $errorAttribute), CLogger::LEVEL_ERROR);
+        }
     }
 
     public static function getIntPhone($phone) {

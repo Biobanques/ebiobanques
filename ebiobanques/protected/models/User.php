@@ -3,7 +3,7 @@
 /**
  * This is the MongoDB Document model class based on table "User".
  */
-class User extends EMongoSoftDocument
+class User extends LoggableActiveRecord
 {
     public $id;
     public $prenom;

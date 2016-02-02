@@ -62,6 +62,14 @@ class CommonTools
         return $result;
     }
 
+    public function getPhoneRegex() {
+        $regexArray = array(
+            'fr' => array('regex' => '#^\+33[0-9]{9}$#', 'readable' => '+33 123456789'),
+                // 'en' => array('regex' => '#^\+33[0-9]{9}$#', 'readable' => '+33 123456789'),
+        );
+        return $regexArray;
+    }
+
     /**
      * translate a mysql date to en franch format dd/mm/yyyy
      * @param unknown $madate

@@ -53,15 +53,19 @@
                 <?php echo $form->error($model, 'passwordCompare'); ?>
             </td>
         </tr>
+
+
+
         <tr>
             <td>
                 <?php echo $form->labelEx($model, 'telephone'); ?>
-                <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250)); ?>
+
+                <?php echo $form->textField($model, 'telephone', array('size' => 20, 'maxlength' => 250, 'placeholder' => CommonTools::getPhoneRegex()['fr']['readable'])); ?>
                 <?php echo $form->error($model, 'telephone'); ?>
             </td>
             <td>
                 <?php echo $form->labelEx($model, 'gsm'); ?>
-                <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250)); ?>
+                <?php echo $form->textField($model, 'gsm', array('size' => 20, 'maxlength' => 250, 'placeholder' => CommonTools::getPhoneRegex()['fr']['readable'])); ?>
                 <?php echo $form->error($model, 'gsm'); ?>
             </td>
         </tr>

@@ -56,8 +56,10 @@ class MyaccountController extends Controller
         $id = Yii::app()->user->getId();
         $model = $this->loadModel($id);
         if (isset($_POST['User'])) {
+            $model->setScenario('userUpdate');
             $model->attributes = $_POST['User'];
-            if ($model->save(null))
+
+            if ($model->save())
                 $this->redirect(array('index', 'id' => $model->_id));
         }
         $this->render('index', array(

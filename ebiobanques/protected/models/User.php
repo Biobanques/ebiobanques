@@ -10,6 +10,7 @@ class User extends EMongoSoftDocument
     public $nom;
     public $login;
     public $password;
+    protected $passwordCompare;
     public $email;
     public $telephone;
     public $gsm;
@@ -17,6 +18,14 @@ class User extends EMongoSoftDocument
     public $inactif;
     public $biobank_id;
     protected $verifyCode;
+
+    public function getPasswordCompare() {
+        return $this->passwordCompare;
+    }
+
+    public function setPasswordCompare($value) {
+        $this->passwordCompare = $value;
+    }
 
     public function getVerifyCode() {
         return $this->verifyCode;
@@ -63,6 +72,7 @@ class User extends EMongoSoftDocument
             array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom,nom', 'alphaOnly'),
             array('login', 'alphaNumericOnly'),
+            array('password', 'compare', 'compareAttribute' => 'passwordCompare', 'on' => 'subscribe,userUpdate'),
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('gsm', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
@@ -73,6 +83,8 @@ class User extends EMongoSoftDocument
             array('password', 'length', 'min' => 6),
             array('prenom, nom, login, password, email, telephone, gsm, profil, inactif, biobank_id', 'safe', 'on' => 'search'),
             array('biobank_id,preferences', 'safe'),
+            array('passwordCompare', 'safe', 'on' => 'subscribe,userUpdate'),
+            array('passwordCompare', 'required', 'on' => 'subscribe,userUpdate'),
         );
         if (!CommonProperties::$DEV_MODE)
             $result[] = array('email', 'EMongoUniqueValidator');
@@ -118,6 +130,7 @@ class User extends EMongoSoftDocument
             'nom' => Yii::t('common', 'lastname'),
             'login' => Yii::t('common', 'Login'),
             'password' => Yii::t('common', 'password'),
+            'passwordCompare' => Yii::t('common', 'passwordCompare'),
             'email' => Yii::t('common', 'email'),
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),

@@ -33,18 +33,24 @@
                 <?php echo $form->labelEx($model, 'login'); ?>
                 <?php echo $form->textField($model, 'login', array('size' => 20, 'maxlength' => 250)); ?>
                 <?php echo $form->error($model, 'login'); ?>
+            </td>            <td>
+                <?php echo $form->labelEx($model, 'email'); ?>
+                <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
+                <?php echo $form->error($model, 'email'); ?>
             </td>
+
+
+        </tr>
+        <tr>
             <td>
                 <?php echo $form->labelEx($model, 'password'); ?>
                 <?php echo $form->passwordField($model, 'password', array('size' => 20, 'maxlength' => 250)); ?>
                 <?php echo $form->error($model, 'password'); ?>
             </td>
-        </tr>
-        <tr>
             <td>
-                <?php echo $form->labelEx($model, 'email'); ?>
-                <?php echo $form->textField($model, 'email', array('size' => 20, 'maxlength' => 250)); ?>
-                <?php echo $form->error($model, 'email'); ?>
+                <?php echo $form->labelEx($model, 'passwordCompare'); ?>
+                <?php echo $form->passwordField($model, 'passwordCompare', array('size' => 20, 'maxlength' => 250)); ?>
+                <?php echo $form->error($model, 'passwordCompare'); ?>
             </td>
         </tr>
         <tr>

@@ -77,6 +77,7 @@ return array(
     'rememberMe' => 'Remember me next time',
     'userName' => 'Username',
     'password' => 'Password',
+    'passwordCompare' => 'Repeat password',
     'noAccount' => 'No account yet on ebiobanques.fr?',
     'subscribe' => 'Subscribe',
     'invalidUsername' => 'Invalid username.',

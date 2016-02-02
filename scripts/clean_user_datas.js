@@ -9,6 +9,10 @@
  */
 
 db = db.getSiblingDB('interop');
+
+/*
+Clean profiles * 
+ */
 var listBadValues = [0,NumberLong(0),null,""]
 for (var badValue in listBadValues){
     print('repair datas for value : ' +listBadValues[badValue]);
@@ -16,3 +20,8 @@ for (var badValue in listBadValues){
 }
 db.user.update({'profil':1},{'$set':{'profil':'1'}},{'multi':true});
 db.user.update({'profil':2},{'$set':{'profil':'2'}},{'multi':true});
+
+/*
+ * Delete existing verifyCode
+ */
+db.user.update({'verifyCode':{$exists:true}},{$unset:{'verifyCode':true}},{'multi':true});

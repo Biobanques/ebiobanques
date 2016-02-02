@@ -16,7 +16,16 @@ class User extends EMongoSoftDocument
     public $profil;
     public $inactif;
     public $biobank_id;
-    public $verifyCode;
+    protected $verifyCode;
+
+    public function getVerifyCode() {
+        return $this->verifyCode;
+    }
+
+    public function setVerifyCode($code) {
+        $this->verifyCode = $code;
+    }
+
     // public $preferences;
 
     /**
@@ -209,6 +218,7 @@ class User extends EMongoSoftDocument
     protected function beforeSave() {
         if (parent::beforeSave()) {
             // something happens here
+            unset($this->verifyCode);
             $this->cleanAttributesFormat();
             return true;
         } else

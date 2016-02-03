@@ -502,4 +502,26 @@ class CommonTools
         return $resArraySorted;
     }
 
+    public function getAllFieldsarray($collectionClass) {
+        $db = Yii::app()->getComponent('mongodb')->getDbInstance();
+        $result = array();
+        // $db = Biobank::model()->getDb();
+        // $biobankCollection = Biobank::model()->getCollection();
+        $mr = $db->command(array(
+            "mapreduce" => $collectionClass,
+            //   "query" => array('id' => '11'),
+            "map" => "function() {
+    for (var key in this) { emit(key,null); }
+  }",
+            "reduce" => "function(key, stuff) { return key; }",
+            "out" => Array("inline" => TRUE)
+        ));
+        foreach ($mr['results'] as $mrResult) {
+            $result[] = $mrResult['_id'];
+        }
+
+
+        return $result;
+    }
+
 }

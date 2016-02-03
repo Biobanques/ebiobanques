@@ -99,16 +99,35 @@ class MybiobankController extends Controller
             $id = $_SESSION['biobank_id'];
         else
             $id = Yii::app()->user->biobank_id;
-        $model = $this->loadModel($id);
+        //  $model = $this->loadModel($id);
         $model = new Sample('search');
         $model->unsetAttributes();  // clear any default values
+        $model->biobank_id = $id;
         if (isset($_GET['Sample']))
             $model->attributes = $_GET['Sample'];
 
-        $this->render('echManage', array(
+
+        $user = CommonTools::getConnectedUser();
+        if (isset($_GET ['Preferences'])) {
+            $user->preferences->attributes = $_GET ['Preferences'];
+            $user->disableBehavior('LoggableBehavior');
+            if ($user->validate(array('preferences')))
+                $user->save(false);
+            else {
+                var_dump($user->preferences->errors);
+            }
+        }
+        if (isset($_POST['Sample'])) {
+            $model->attributes = $_POST['Sample'];
+        }
+        $this->render('search_samples', array(
             'model' => $model,
             'biobank_id' => $id
         ));
+//        $this->render('echManage', array(
+//            'model' => $model,
+//            'biobank_id' => $id
+//        ));
     }
 
     public function actionView($id) {
@@ -127,7 +146,7 @@ class MybiobankController extends Controller
         if (isset($_POST['Sample'])) {
             $model->attributes = $_POST['Sample'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('view', 'id' => $model->_id));
         }
 
         $this->render('echUpdate', array(

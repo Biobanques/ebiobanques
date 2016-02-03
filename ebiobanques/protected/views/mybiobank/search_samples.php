@@ -28,7 +28,6 @@ $('.prefs-button').click(function(){
 });
 
 $('.search-form form').submit(function(){
-
 	$('#sample-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
@@ -50,10 +49,10 @@ $scriptCB;
     <?php
     $imageSelect = CHtml::image(Yii::app()->baseUrl . '/images/table-icone.png', Yii::t('common', 'prefsSelect'));
     ?>
-    <script type="text/javascript">
+<!--    <script type="text/javascript">
         function addEchToDemand(id) {
             jQuery.ajax({
-                'url': '<?php echo Yii::app()->createUrl("site/changerDemandeEchantillon") ?>',
+                'url': '<?php //echo Yii::app()->createUrl("site/changerDemandeEchantillon")               ?>',
                 'data': {'id': id},
                 'type': 'post',
                 'cache': false,
@@ -67,7 +66,7 @@ $scriptCB;
                 var obj = document.getElementsByName('selectionCB[]');
                 for (var i = 0; i < obj.length; i++) {
                     jQuery.ajax({
-                        'url': '<?php echo Yii::app()->createUrl("site/addDemandeAllEchantillon") ?>',
+                        'url': '<?php //echo Yii::app()->createUrl("site/addDemandeAllEchantillon")               ?>',
                         'data': {'id': obj[i].value},
                         'type': 'post',
                         'cache': false,
@@ -78,7 +77,7 @@ $scriptCB;
                 var obj = document.getElementsByName('selectionCB[]');
                 for (var i = 0; i < obj.length; i++) {
                     jQuery.ajax({
-                        'url': '<?php echo Yii::app()->createUrl("site/removeDemandeAllEchantillon") ?>',
+                        'url': '<?php //echo Yii::app()->createUrl("site/removeDemandeAllEchantillon")               ?>',
                         'data': {'id': obj[i].value},
                         'type': 'post',
                         'cache': false,
@@ -90,7 +89,7 @@ $scriptCB;
         }
         function createNewDemand() {
             jQuery.ajax({
-                'url': '<?php echo Yii::app()->createUrl("site/newDemand") ?>',
+                'url': '<?php //echo Yii::app()->createUrl("site/newDemand")               ?>',
                 //'data':{'newDemand':'newDemand'},
                 'type': 'post',
                 'cache': false,
@@ -107,33 +106,33 @@ $scriptCB;
             $('.demandeMessage').html(data);
             //alert(data);
         }
-    </script>
+    </script>-->
 </div>
 <br>
-<div style="border:1px solid blueviolet;padding:3px;">
+<!--<div style="border:1px solid blueviolet;padding:3px;">-->
     <!--<img src=Yii::app()->baseUrl."/images/basket.png" alt="mon panier"/>-->
-    <?php
-    echo CHtml::image(yii::app()->baseUrl . "/images/basket.png", "mon panier");
-    echo CHtml::link(Yii::t('common', 'choseDemand'), Yii::app()->createUrl('demande/chose', array_merge(array('id_user' => Yii::app()->user->id), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())));
-    ?>
+<?php
+//    echo CHtml::image(yii::app()->baseUrl . "/images/basket.png", "mon panier");
+//    echo CHtml::link(Yii::t('common', 'choseDemand'), Yii::app()->createUrl('demande/chose', array_merge(array('id_user' => Yii::app()->user->id), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())));
+?>
 <!--    <img src=Yii::app()->baseUrl."/images/basket_go.png" alt="finaliser mon panier" style="padding-left:10px;"/>-->
-    <?php
-    echo CHtml::image(yii::app()->baseUrl . "/images/basket_go.png", "finaliser mon panier");
-    echo CHtml::link(Yii::t('common', 'proceedApplication'), Yii::app()->createUrl('demande/updateAndSend', array_merge(array('id' => Yii::app()->session['activeDemand'][0]->_id), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())));
-    ?>
-    <?php
-    $this->widget('application.widgets.HelpDivWidget', array(
-        'id' => 'helpdDivPanier',
-        'text' => Yii::t('help', 'remplirPanier'),
-    ));
-    ?>
-</div>
+<?php
+//    echo CHtml::image(yii::app()->baseUrl . "/images/basket_go.png", "finaliser mon panier");
+//    echo CHtml::link(Yii::t('common', 'proceedApplication'), Yii::app()->createUrl('demande/updateAndSend', array_merge(array('id' => Yii::app()->session['activeDemand'][0]->_id), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())));
+?>
+<?php
+//    $this->widget('application.widgets.HelpDivWidget', array(
+//        'id' => 'helpdDivPanier',
+//        'text' => Yii::t('help', 'remplirPanier'),
+//    ));
+?>
+<!--</div>-->
 <br>
 <div>
     <?php
-    $this->renderPartial('_search_smart_samples', array(
-        'smartForm' => $smartForm
-    ));
+//    $this->renderPartial('_search_smart_samples', array(
+//        'smartForm' => $smartForm
+//    ));
     ?>
 </div>
 <?php
@@ -145,7 +144,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array(
 ?>
 <div class="search-form" style="display: none">
     <?php
-    $this->renderPartial('_search_samples', array(
+    $this->renderPartial('_echForm', array(
         'model' => $model
     ));
     ?>
@@ -248,7 +247,7 @@ $columns [] = array('class' => 'CButtonColumn',
     'header' => CHtml::link($imageSelect, '#', array(
         'onclick' => '$("#selectPopup").dialog("open");return false;'
     )), // lien d'affichage de la popup
-    'template' => '{view}',
+    'template' => '{view},{update},{delete}',
     'buttons' => array(
         'view' => array(
             'url' => 'Yii::app()->createUrl("site/view",array("id"=>"$data->_id", "asDialog"=>1))',

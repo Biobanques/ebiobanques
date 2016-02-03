@@ -269,8 +269,11 @@ class Sample extends EMongoDocument
         if (isset($this->storage_conditions) && !empty($this->storage_conditions) && $this->storage_conditions != "U") {
             $criteria->storage_conditions = "" . $this->storage_conditions . "";
         }
-        if (isset($this->consent) && !empty($this->consent) && $this->consent != "U") {
+        if (isset($this->consent) && !empty($this->consent)) {
             $criteria->consent = "" . $this->consent . "";
+        }
+        if (isset($this->consent_ethical) && !empty($this->consent_ethical)) {
+            $criteria->consent_ethical = "" . $this->consent_ethical . "";
         }
         if (isset($this->max_delay_delivery) && !empty($this->max_delay_delivery)) {
             $criteria->max_delay_delivery = "" . $this->max_delay_delivery . "";

@@ -60,6 +60,7 @@
         <?php echo $form->error($model, 'gsm'); ?>
     </div>
 
+
     <div class="row">
         <?php echo $form->labelEx($model, 'profil'); ?>
         <?php echo $form->dropDownList($model, 'profil', User::model()->getArrayProfil(), array('prompt' => '----')); ?>

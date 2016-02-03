@@ -7,17 +7,17 @@
 if (isset(Yii::app()->session['mails'])) {
     unset(Yii::app()->session['mails']);
 }
-
-$prefs = Preferences::model()->findByAttributes(array(
-    'id_user' => Yii::app()->user->id
-        ));
-if ($prefs == null) {
-    $prefs = new Preferences ();
-    $prefs->id_user = Yii::app()->user->id;
-    $prefs->save();
-}
-
-$prefsNames = Preferences::model()->attributeNames();
+$prefs = CommonTools::getPreferences();
+//$prefs = Preferences::model()->findByAttributes(array(
+//    'id_user' => Yii::app()->user->id
+//        ));
+//if ($prefs == null) {
+//    $prefs = new Preferences ();
+//    $prefs->id_user = Yii::app()->user->id;
+//    $prefs->save();
+//}
+//EMongoEmbeddedDocument::getSafeAttributeNames();
+$prefsNames = $prefs->getSafeAttributeNames();
 
 $sortedData = $model->getArraySamples();
 $arrayBiobank = $model->getBiobanksFromSamples($sortedData);

@@ -58,7 +58,6 @@ class CatalogController extends Controller
         );
     }
 
-    
     /**
      * display catalog of biobanks with contacts and agregated infos
      */
@@ -68,18 +67,18 @@ class CatalogController extends Controller
         if (isset($_GET ['Biobank']))
             $model->attributes = $_GET ['Biobank'];
         //make the search
-        
         //render the biobanks
         $this->render('catalog', array(
             'model' => $model
         ));
     }
-    
-        /**
+
+    /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        $this->layout = '//layouts/detailview';
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -97,8 +96,8 @@ class CatalogController extends Controller
             }
         }
     }
-    
-        /**
+
+    /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded

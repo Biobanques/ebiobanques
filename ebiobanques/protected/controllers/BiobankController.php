@@ -257,6 +257,14 @@ class BiobankController extends Controller
             $model->attributes = $_GET['Biobank'];
         if (isset($_GET['Address']))
             $model->address->attributes = $_GET['Address'];
+        foreach (array('Op_resp' => 'responsable_op', 'Adj_resp' => 'responsable_adj', 'Qual_resp' => 'responsable_qual')as $obj => $prop) {
+            if (isset($_GET[$obj]['FullNameForDDList']) && $_GET[$obj]['FullNameForDDList'] != null) {
+
+                list($model->$prop->lastName, $model->$prop->firstName) = explode('_', $_GET[$obj]['FullNameForDDList']);
+            }
+        }
+
+
 
         $this->render('admin', array(
             'model' => $model,

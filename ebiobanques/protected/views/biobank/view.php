@@ -69,7 +69,7 @@ $attributes_oblig = array(
 );
 
 $attributes_facult = array(
-    array('name' => 'website', 'value' => $model->getWebsite(), 'type' => 'raw',),
+    array('name' => 'website', 'value' => $model->getFormattedWebsite(), 'type' => 'raw',),
     //'vitrine',
     'folder_reception',
     'folder_done',

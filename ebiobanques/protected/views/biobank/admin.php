@@ -21,6 +21,7 @@ $('.search-form form').submit(function(){
 
 <h1>Gestion des Biobanques</h1>
 <?php
+//var_dump(        $model->getRespDropdownList('responsable_op'));
 ?>
 
 
@@ -56,6 +57,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'responsable_op', 'value' => '$data->getShortResponsableOp()', 'header' => $model->getAttributeLabel('responsable_op')),
         array('name' => 'responsable_qual', 'value' => '$data->getShortResponsableQual()', 'header' => $model->getAttributeLabel('responsable_qual')),
         array('name' => 'responsable_adj', 'value' => '$data->getShortResponsableAdj()', 'header' => $model->getAttributeLabel('responsable_adj')),
+        //  array('name' => 'website', 'value' => '$data->getFormattedWebsite()', 'header' => $model->getAttributeLabel('website')),
+        array(
+            'class' => 'CLinkColumn',
+            'labelExpression' => '$data->getWebsiteWithHttp()',
+            //'url' => '$data->getWebsite()',
+            'urlExpression' => '$data->getWebsiteWithHttp()',
+            'linkHtmlOptions' => array('target' => 'blank'),
+            'htmlOptions' => array('style' => "text-align:center"),
+            'header' => $model->getAttributeLabel('website')
+        ),
         array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getRoundedTauxCompletude()."%"',

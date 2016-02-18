@@ -90,10 +90,20 @@ class Biobank extends LoggableActiveRecord
     public $nbs_celllines_samples_relatives;
     public $nbs_other_samples_affected;
     public $nbs_other_samples_relatives;
+    // public $website;
     /**
      * specify the type of samples if other. Free text.
      */
     public $nbs_other_specification;
+    protected $qualityCombinate;
+
+    public function getQualityCombinate() {
+        return $this->qualityCombinate;
+    }
+
+    public function setQualityCombinate($value) {
+        $this->qualityCombinate = $value;
+    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -193,7 +203,7 @@ class Biobank extends LoggableActiveRecord
             array('sampling_practice', 'length', 'max' => 2),
             array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,responsable_op,responsable_qual,responsable_adj,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
+            array('qualityCombinate,identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,responsable_op,responsable_qual,responsable_adj,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -274,6 +284,8 @@ class Biobank extends LoggableActiveRecord
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
+            'website' => Yii::t('common', 'website'),
+            'qualityCombinate' => Yii::t('common', 'qualityCombinate'),
         );
     }
 
@@ -312,6 +324,9 @@ class Biobank extends LoggableActiveRecord
         $criteria = new EMongoCriteria;
         if ($this->identifier != null)
             $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '/i'));
+        if ($this->responsable_op != null) {
+
+        }
 
         if ($this->name != null)
             $criteria->addCond('name', '==', new MongoRegex('/' . $this->name . '/i'));
@@ -333,6 +348,21 @@ class Biobank extends LoggableActiveRecord
             $regexId = substr($regexId, 0, -1);
             $criteria->addCond('collection_id', '==', new MongoRegex("/($regexId)/i"));
         }
+        if ($this->qualityCombinate != null && $this->qualityCombinate != "") {
+            $listWords = explode(" ", $this->qualityCombinate);
+            $regexId = "";
+            foreach ($listWords as $word) {
+                $regexId.="$word|";
+            }
+            $regexId = substr($regexId, 0, -1);
+
+            $criteria->createOrGroup('qualite');
+            $criteria->addCondToOrGroup('qualite', array('quality' => new MongoRegex("/($regexId)/i")));
+            $criteria->addCondToOrGroup('qualite', array('cert_ISO9001' => new MongoRegex("/($regexId)/i")));
+            $criteria->addCondToOrGroup('qualite', array('cert_NFS96900' => new MongoRegex("/($regexId)/i")));
+            $criteria->addCondToOrGroup('qualite', array('cert_autres' => new MongoRegex("/($regexId)/i")));
+            $criteria->addOrGroup('qualite');
+        }
         if ($this->diagnosis_available != null && $this->diagnosis_available != "") {
             $listWords = explode(" ", $this->diagnosis_available);
             $regexId = "";
@@ -353,6 +383,32 @@ class Biobank extends LoggableActiveRecord
         }
         if ($this->contact_id != null && $this->contact_id != "")
             $criteria->contact_id = $this->contact_id;
+
+
+
+
+        if (isset($this->responsable_adj) && $this->responsable_adj->lastName != null) {
+            $criteria->addCond('responsable_adj.lastName', '==', new MongoRegex('/' . $this->responsable_adj->lastName . '/i'));
+        }
+        if (isset($this->responsable_adj) && $this->responsable_adj->firstName != null) {
+            $criteria->addCond('responsable_adj.firstName', '==', new MongoRegex('/' . $this->responsable_adj->firstName . '/i'));
+        }
+        if (isset($this->responsable_op) && $this->responsable_op->lastName != null) {
+            $criteria->addCond('responsable_op.lastName', '==', new MongoRegex('/' . $this->responsable_op->lastName . '/i'));
+        }
+        if (isset($this->responsable_op) && $this->responsable_op->firstName != null) {
+            $criteria->addCond('responsable_op.firstName', '==', new MongoRegex('/' . $this->responsable_op->firstName . '/i'));
+        }
+        if (isset($this->responsable_qual) && $this->responsable_qual->lastName != null) {
+            $criteria->addCond('responsable_qual.lastName', '==', new MongoRegex('/' . $this->responsable_qual->lastName . '/i'));
+        }
+        if (isset($this->responsable_qual) && $this->responsable_qual->firstName != null) {
+            $criteria->addCond('responsable_qual.firstName', '==', new MongoRegex('/' . $this->responsable_qual->firstName . '/i'));
+        }
+
+
+
+
 
         if (isset($this->address) && $this->address->city != null) {
             if ($this->address->city == '0') {
@@ -661,7 +717,23 @@ class Biobank extends LoggableActiveRecord
     }
 
     public function getWebsite() {
-        if ($this->website != null && $this->website != '' && $this->website != '/') {
+        if (isset($this->website) && $this->website != null && $this->website != '' && $this->website != '/')
+            return $this->website;
+        return null;
+    }
+
+    public function getWebsiteWithHttp() {
+        if (isset($this->website) && $this->website != null && $this->website != '' && $this->website != '/') {
+            if (strpos($this->website, 'http://') === false && strpos($this->website, 'https://') === false) {
+                $this->website = 'http://' . $this->website;
+            }
+            return $this->website;
+        }
+        return null;
+    }
+
+    public function getFormattedWebsite() {
+        if (isset($this->website) && $this->website != null && $this->website != '' && $this->website != '/') {
             if (strpos($this->website, 'http://') === false && strpos($this->website, 'https://') === false) {
                 $this->website = 'http://' . $this->website;
             }
@@ -679,4 +751,70 @@ class Biobank extends LoggableActiveRecord
         return parent::beforeSave();
     }
 
+    public function getEmbeddedContactsList() {
+        foreach (array('responsable_op', 'responsable_adj', 'responsable_qual')as $fieldName) {
+            $newVal = $fieldName . "List";
+            $$newVal = array();
+            $$newVal = $this->getContactList($fieldName);
+        }
+        $result = array_merge($responsable_opList, $responsable_adjList, $responsable_qualList);
+        return $result;
+    }
+
+    public function getContactList($fieldName) {
+        return $this->getCollection()->distinct($fieldName);
+    }
+
+    public function getRespDropdownList($fieldName) {
+        $list = $this->getContactList($fieldName);
+        $result = array();
+
+        foreach ($list as $contact) {
+            if (isset($contact['lastName']) && $contact['lastName'] != '')
+                $result[strtolower($contact['lastName'] . '_' . $contact['firstName'])] = ($contact['civility'] == "miss" ? 'Mme' : 'M.') . " " . ucfirst(strtolower($contact['firstName'])) . " " . strtoupper($contact['lastName']);
+        }
+        ksort($result);
+
+        return $result;
+    }
+
 }
+//
+//
+//db.getCollection("biobank").aggregate([
+//{  $group:
+//    { "_id":"$_id",
+//
+//        "responsables":{"$push":{"name":"$responsable_op.lastName",
+//        "fullName":
+//            {"$concat":[{"$toUpper":"$responsable_op.lastName"}," ","$responsable_op.firstName"]}}
+//        },
+// "responsables1":{"$push":{"name":"$responsable_adj.lastName",
+//        "fullName":
+//            {"$concat":[{"$toUpper":"$responsable_adj.lastName"}," ","$responsable_adj.firstName"]}}
+//        },"responsables2":{"$push":{"name":"$responsable_qual.lastName",
+//        "fullName":
+//            {"$concat":[{"$toUpper":"$responsable_qual.lastName"}," ","$responsable_qual.firstName"]}}
+//        },
+//
+//
+//    }
+//        }
+//         ,{"$match":{$or:[
+//             {"responsables":{$nin:[[],"",null]}},
+//         {"responsables1":{$nin:[[],"",null]}},
+//         {"responsables2":{$nin:[[],"",null]}}
+//         ]}}
+//
+//        ,{
+//            "$project": {
+//                "name": "$_id",
+//
+//                "resps": { "$setUnion": [ "$responsables","$responsables1","$responsables2",] },
+//                "_id": 0,
+//
+//            }
+//        },{"$unwind":"$resps"},{"$group":{"_id":"$resps"}},
+//         {$match:{"_id":{$nin:[null,""," "]}}}
+//
+//])

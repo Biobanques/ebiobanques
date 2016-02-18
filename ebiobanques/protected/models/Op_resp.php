@@ -73,5 +73,9 @@ class Op_resp extends EMongoSoftEmbeddedDocument
         );
     }
 
+    public function getFullNameForDDList() {
+        return $this->lastName . '_' . $this->firstName;
+    }
+
     // NOTE: for embedded documents we do not define static model method!
 }

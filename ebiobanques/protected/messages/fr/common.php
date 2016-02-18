@@ -125,6 +125,7 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'shortContact' => 'Nom et prénom du contact',
     'emailContact' => 'Email du contact',
     'phoneContact' => 'Télephone du contact',
-    'InvalidPhoneNumber' => 'Format de télephone invalide.'
+    'InvalidPhoneNumber' => 'Format de télephone invalide.',
+    'qualityCombinate' => 'Champs qualité'
 );
 ?>

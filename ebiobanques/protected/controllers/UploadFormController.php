@@ -34,9 +34,7 @@ class UploadFormController extends Controller
                 'actions' => array(
                     'uploadAll',
                 ),
-                'users' => array(
-                    '$user->isAdmin()'
-                )
+                'expression' => '$user->isAdmin()',
             ),
         );
     }
@@ -52,12 +50,16 @@ class UploadFormController extends Controller
         $model = new Biobank();
         $listFile = array();
 //      $fichier = null;
-       
+
         $biobankIdentifier = new BiobankIdentifierForm();
         if (!isset($model->presentation))
             $model->initSoftAttribute('presentation');
         if (!isset($model->thematiques))
             $model->initSoftAttribute('thematiques');
+        if (!isset($model->presentation_en))
+            $model->initSoftAttribute('presentation_en');
+        if (!isset($model->thematiques_en))
+            $model->initSoftAttribute('thematiques_en');
         if (!isset($model->publications))
             $model->initSoftAttribute('publications');
         if (!isset($model->reseaux))
@@ -66,126 +68,112 @@ class UploadFormController extends Controller
             $model->initSoftAttribute('qualite');
         if (!isset($model->projetRecherche))
             $model->initSoftAttribute('projetRecherche');
+        if (!isset($model->qualite_en))
+            $model->initSoftAttribute('qualite_en');
+        if (!isset($model->projetRecherche_en))
+            $model->initSoftAttribute('projetRecherche_en');
         if (!isset($model->activeLogo))
             $model->initSoftAttribute('activeLogo');
-        
-        
-        if (is_dir(Yii::app()->basePath . '/../images/extractedLogos/'))
-            $listFile = scandir(Yii::app()->basePath . '/../images/extractedLogos/');
-//        if (isset($listFile[2]) && !is_dir($listFile[2]))
-//            $fichier = $listFile[2];
-//        if (isset($_POST['Biobank'])) {
-            
-//               $model->attributes = $_POST['Biobank'];
-//                if (isset($_POST['importLogo']) && $_POST['importLogo'] == 1) {
-//                    $file = $folder . $fichier;
-//                    $model->initSoftAttribute('activeLogo');
-//
-//                    $model->activeLogo = (string) $this->logoUpload($file, $model);
-//                    if (rename($file, $folder . 'done/' . $fichier)) {
-//                        $listFile = scandir(Yii::app()->basePath . '/../images/extractedLogos/');
-//                        $fichier = $listFile[2];
-//                        Yii::app()->user->setFlash('success', 'renamed');
-//                    } else {
-//                        Yii::app()->user->setFlash('error', 'error on rename');
-//                    }
-//                    Yii::app()->user->setFlash('success', 'imported');
-//                } else {
-//                    Yii::app()->user->setFlash('success', 'logo not imported');
-//                }
-//
-//                if (isset($_FILES['Logo'])) {
-//
-//
-//                    $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
-//                }
-//              if ($model->save()) {
-//                  
-//                    Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
-//               }
-//                    if (isset($_FILES['Logo'])) {
-//
-//                        $model->initSoftAttribute('activeLogo');
-//                        $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
-//                    }
-        /* if ($model->update()) {
-          Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . 'Biobank infos saved');
 
-          unset($_POST['Biobank']);
-          } else {
-          //                        $list = '';
-          //                        foreach ($model->errors as $errorName => $errorName)
-          //                            $list .= "<li>$errorName</li>";
-          //                        Yii::app()->user->setFlash('error', 'error on save : <ul>' . $list . '</ul>');
-          } */
-//                }*/
-//          } else {
-//                Yii::app()->user->setFlash('error', 'biobank not found');
-//            }
-            
-            if (isset($_POST['BiobankIdentifierForm']) && isset($_POST['BiobankIdentifierForm']['identifier']) && $_POST['BiobankIdentifierForm']['identifier'] != "") {
+
+//        if (is_dir(Yii::app()->basePath . '/../images/extractedLogos/'))
+//            $listFile = scandir(Yii::app()->basePath . '/../images/extractedLogos/');
+
+
+        if (isset($_POST['BiobankIdentifierForm']) && isset($_POST['BiobankIdentifierForm']['identifier']) && $_POST['BiobankIdentifierForm']['identifier'] != "") {
             $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['BiobankIdentifierForm']['identifier']));
-        
-            }
-            if (isset($_POST['Biobank'])) {
-               
-                $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
-           
-             
-             
-             if (!isset($model->presentation)){
+            if (!isset($model->presentation))
                 $model->initSoftAttribute('presentation');
-   
-             }
-             $model->presentation= $_POST['Biobank']['presentation'];
-                // print_r($model->getErrors()); 
-                
-              if (!isset($model->thematiques)){
-                $model->initSoftAttribute('thematiques');    
-             }
-             $model->thematiques = $_POST['Biobank']['thematiques'];
-             
-              if (!isset($model->publications)){
+            if (!isset($model->thematiques))
+                $model->initSoftAttribute('thematiques');
+            if (!isset($model->presentation_en))
+                $model->initSoftAttribute('presentation_en');
+            if (!isset($model->thematiques_en))
+                $model->initSoftAttribute('thematiques_en');
+            if (!isset($model->publications))
                 $model->initSoftAttribute('publications');
-               
-             }
-              $model->publications = $_POST['Biobank']['publications'];
-              
-              if (!isset($model->reseaux)){
-               $model->initSoftAttribute('reseaux');  
-             }
-             $model->reseaux = $_POST['Biobank']['reseaux'];
-             
-              if (!isset($model->qualite)){
+            if (!isset($model->reseaux))
+                $model->initSoftAttribute('reseaux');
+            if (!isset($model->qualite))
                 $model->initSoftAttribute('qualite');
-                
-             }
+            if (!isset($model->projetRecherche))
+                $model->initSoftAttribute('projetRecherche');
+            if (!isset($model->qualite_en))
+                $model->initSoftAttribute('qualite_en');
+            if (!isset($model->projetRecherche_en))
+                $model->initSoftAttribute('projetRecherche_en');
+            if (!isset($model->activeLogo))
+                $model->initSoftAttribute('activeLogo');
+        }
+        if (isset($_POST['Biobank'])) {
 
-               $model->qualite = $_POST['Biobank']['qualite'];
+            $model = Biobank::model()->findByAttributes(array('identifier' => $_POST['Biobank']['identifier']));
 
-              if (!isset($model->projetRecherche)){
-                $model->initSoftAttribute('projetRecherche');   
-               
-             }
-             $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
-             
-               if($model->save(false)) {
-              Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
 
-              } else
-              Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
 
-             }  
+            if (!isset($model->presentation)) {
+                $model->initSoftAttribute('presentation');
+            }
+            $model->presentation = $_POST['Biobank']['presentation'];
+            // print_r($model->getErrors());
 
-        
-//        if ($fichier != '.' && $fichier != '..') {
-        
+            if (!isset($model->thematiques)) {
+                $model->initSoftAttribute('thematiques');
+            }
+            $model->thematiques = $_POST['Biobank']['thematiques'];
+
+            if (!isset($model->presentation_en)) {
+                $model->initSoftAttribute('presentation_en');
+            }
+            $model->presentation_en = $_POST['Biobank']['presentation_en'];
+            // print_r($model->getErrors());
+
+            if (!isset($model->thematiques_en)) {
+                $model->initSoftAttribute('thematiques_en');
+            }
+            $model->thematiques_en = $_POST['Biobank']['thematiques_en'];
+
+            if (!isset($model->publications)) {
+                $model->initSoftAttribute('publications');
+            }
+            $model->publications = $_POST['Biobank']['publications'];
+
+            if (!isset($model->reseaux)) {
+                $model->initSoftAttribute('reseaux');
+            }
+            $model->reseaux = $_POST['Biobank']['reseaux'];
+
+            if (!isset($model->qualite)) {
+                $model->initSoftAttribute('qualite');
+            }
+
+            $model->qualite = $_POST['Biobank']['qualite'];
+
+            if (!isset($model->projetRecherche)) {
+                $model->initSoftAttribute('projetRecherche');
+            }
+            $model->projetRecherche = $_POST['Biobank']['projetRecherche'];
+
+            if (!isset($model->qualite_en))
+                $model->initSoftAttribute('qualite_en');
+            $model->qualite_en = $_POST['Biobank']['qualite_en'];
+
+            if (!isset($model->projetRecherche_en))
+                $model->initSoftAttribute('projetRecherche_en');
+            $model->projetRecherche_en = $_POST['Biobank']['projetRecherche_en'];
+
+            if ($model->save(false)) {
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
+        }
+
 
         $this->render('upload', array(
 //          'logo' => $fichier,
             'model' => $model,
             'listLogos' => $listFile,
-            'biobankIdentifier' =>$biobankIdentifier,
+            'biobankIdentifier' => $biobankIdentifier,
         ));
 
 

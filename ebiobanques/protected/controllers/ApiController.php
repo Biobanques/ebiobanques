@@ -74,10 +74,12 @@ c: fr
             $attributes['biobankName'] = $biobank->name;
             $attributes['biobankAcronym'] = "FALSE";
             $attributes['biobankJuridicalPerson'] = $biobank->getShortContact();
-             if (isset($biobank->presentation))
-                    $attributes['biobankDescription'] = $biobank->presentation;
+            if (isset($biobank->presentation_en))
+                $attributes['biobankDescription'] = $biobank->presentation_en;
+            else if (isset($biobank->presentation))
+                $attributes['biobankDescription'] = $biobank->presentation;
             if (isset($biobank->website))
-                    $attributes['biobankURL'] = "http://".$biobank->website;
+                $attributes['biobankURL'] = $biobank->getWebsiteWithHttp();
 
             $attributes['biobankIDRef'] = "FALSE";
             if (isset($biobank->latitude))
@@ -95,7 +97,7 @@ c: fr
             $attributes['biobankITStaffSize'] = "FALSE";
             $attributes['biobankISAvailable'] = "FALSE";
             $attributes['biobankHISAvailable'] = "FALSE";
-            
+
             //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
             $attributes['biobankPartnerCharterSigned'] = "FALSE";
 
@@ -115,28 +117,26 @@ c: fr
             $attributes['materialStoredTissueFFPE'] = "FALSE";
             $attributes['materialStoredCellLines'] = "FALSE";
             $attributes['materialStoredPathogen'] = "FALSE";
-             
-            
+
+
             $attributes['temperatureRoom'] = "FALSE";
             $attributes['temperature2to10'] = "FALSE";
             $attributes['temperature-18to-35'] = "FALSE";
             $attributes['temperature-60to-85'] = "FALSE";
             $attributes['temperatureLN'] = "FALSE";
             $attributes['temperatureOther'] = "FALSE";
-             
-             
+
+
             // $attributes['biobankMaterialStoredcDNAmRNA'] = "FALSE";
             // $attributes['biobankMaterialStoredmicroRNA'] = "FALSE";
             // $attributes['biobankMaterialStoredWholeBlood'] = "FALSE";
             // $attributes['biobankMaterialStoredPBC'] = "FALSE";
             // $attributes['biobankMaterialStoredTissueCryo'] = "FALSE";
-            // $attributes['biobankMaterialStoredTissueParaffin'] = "FALSE"; 
+            // $attributes['biobankMaterialStoredTissueParaffin'] = "FALSE";
             // $attributes['biobankMaterialStoredImmortalizedCellLines'] = "FALSE";
-           //  $attributes['biobankMaterialStoredIsolatedPathogen'] = "FALSE";
-            
-            
+            //  $attributes['biobankMaterialStoredIsolatedPathogen'] = "FALSE";
             //Biobank Network
-            
+
             $attributes['biobankNetworkID'] = "FALSE";
             $attributes['biobankNetworkName'] = "FALSE";
             $attributes['biobankNetworkAcronym'] = "FALSE";
@@ -152,9 +152,9 @@ c: fr
             $attributes['biobankNetworkURL'] = "FALSE";
             $attributes['biobankNetworkJuridicalPerson'] = "FALSE";
 
-                //Collection
-           
-            $attributes['collectionID'] ="FR_".$biobank->identifier.':collection:'. $biobank->collection_id;
+            //Collection
+
+            $attributes['collectionID'] = "FR_" . $biobank->identifier . ':collection:' . $biobank->collection_id;
             $attributes['collectionAcronym'] = "FALSE";
             $attributes['collectionName'] = $biobank->collection_name;
             $attributes['collectionDescription'] = "FALSE";
@@ -172,9 +172,9 @@ c: fr
             $attributes['collectionAvailableGenealogicalRecords'] = "FALSE";
             $attributes['collectionAvailablePhysioBiochemMeasurements'] = "FALSE";
             $attributes['collectionAvailableOther'] = "FALSE";
-           
-                //CollectionType
-           
+
+            //CollectionType
+
             $attributes['collectionTypeCaseControl'] = "FALSE";
             $attributes['collectionTypeCohort'] = "FALSE";
             $attributes['collectionTypeCrossSectional'] = "FALSE";
@@ -185,8 +185,8 @@ c: fr
             $attributes['collectionTypeDiseaseSpecific'] = "FALSE";
             $attributes['collectionTypeBirthCohort'] = "FALSE";
             $attributes['collectionTypeOther'] = "FALSE";
-            
-            
+
+
             $attributes['collectionSampleAccessFee'] = "FALSE";
             $attributes['collectionSampleAccessJointProjects'] = "FALSE";
             $attributes['collectionSampleAccessDescription'] = "FALSE";
@@ -198,28 +198,28 @@ c: fr
             $attributes['collectionOrderOfMagnitude'] = "FALSE";
             $attributes['collectionSize'] = "FALSE";
             $attributes['collectionSizeTimestamp'] = "FALSE";
-           
-           
+
+
             //nmber of samples 10^n n=number
             //$attributes['biobankSize'] = "1";
             //$attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
-            
+
             $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";
-            
-           
+
+
             $contact = $biobank->getContact();
-            
+
             //TODO info de contact obligatoire lever un warning si pas affectée pour l export
             if ($contact != null) {
-                
+
                 $attributes['collectionHeadFirstName'] = $contact->first_name;
                 $attributes['collectionHeadLastName'] = $contact->last_name;
                 $attributes['collectionHeadRole'] = "FALSE";
-                
+
                 $attributes['biobankHeadFirstName'] = $contact->first_name;
-                $attributes['biobankHeadLasttName'] = $contact->last_name;
-                $attributes['biobankHeadRole'] = "FALSE";
-                
+                $attributes['biobankHeadLastName'] = $contact->last_name;
+                $attributes['biobankHeadRole'] = "Director";
+
                 // contactInfomation
                 $attributes['contactID'] = $contact->id;
                 $attributes['contactFirstName'] = $contact->first_name;
@@ -229,11 +229,11 @@ c: fr
                 $attributes['contactZIP'] = $contact->code_postal;
                 $attributes['contactCity'] = $contact->ville;
                 //$attributes['contactCountry'] = $contact->pays ;
-                $attributes['contactCountry'] = "FR" ;//TODO get pays avec FR pas integer $contact->pays;
+                $attributes['contactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
                 $attributes['contactIDRef'] = "FALSE";
                 $attributes['contactPriority'] = "FALSE";
 
-                
+
 
                 //TODO contact email need to be filled
                 if (isset($contact->email))
@@ -248,7 +248,7 @@ c: fr
             $result.="dn: biobankID=" . trim($attributes['biobankID']) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n"; //TODO recuperer le diagnistique agréger
             foreach ($attributes as $key => $value) {
                 if (isset($value))
-              //      $result.=$key . ":: " . base64_encode(trim($value)) . "\n";
+                //      $result.=$key . ":: " . base64_encode(trim($value)) . "\n";
                     $result.=$key . ":: " . trim($value) . "\n";
             }
             //FIXME mandatory empty line
@@ -278,30 +278,30 @@ c: fr
         $attributesnotempty[] = 'contactID';
         $attributesnotempty[] = 'contactEmail';
         $attributesnotempty[] = 'contactCountry';
-        
+
         //$attributesnotempty[] = 'contactAddress';
         //$attributesnotempty[] = 'contactCity';
         //$attributesnotempty[] = 'contactZIP';
         //$attributesnotempty[] = 'objectClass';
         //$attributesnotempty[] = 'contactPhone';
-       // $attributesnotempty[] = 'biobankMaterialStoredDNA';
+        // $attributesnotempty[] = 'biobankMaterialStoredDNA';
 //        $attributesnotempty[] = 'biobankMaterialStoredcDNAmRNA';
 //        $attributesnotempty[] = 'biobankMaterialStoredmicroRNA';
 //        $attributesnotempty[] = 'biobankMaterialStoredWholeBlood';
 //        $attributesnotempty[] = 'biobankMaterialStoredPBC';
-       /* $attributesnotempty[] = 'biobankMaterialStoredBlood';
-        $attributesnotempty[] = 'biobankMaterialStoredPlasma';
-        $attributesnotempty[] = 'biobankMaterialStoredSerum';
-        $attributesnotempty[] = 'biobankMaterialStoredTissueFrozen';
-        $attributesnotempty[] = 'biobankMaterialStoredTissueFFPE';
-        $attributesnotempty[] = 'biobankMaterialStoredImmortalizedCellLines';
-        $attributesnotempty[] = 'biobankMaterialStoredUrine';
-        $attributesnotempty[] = 'biobankMaterialStoredSaliva';
-        $attributesnotempty[] = 'biobankMaterialStoredFaeces';
-        $attributesnotempty[] = 'biobankMaterialStoredIsolatedPathogen';
-        $attributesnotempty[] = 'biobankMaterialStoredOther';
-        $attributesnotempty[] = 'biobankPartnerCharterSigned';
-        $attributesnotempty[] = 'biobankSize';*/
+        /* $attributesnotempty[] = 'biobankMaterialStoredBlood';
+          $attributesnotempty[] = 'biobankMaterialStoredPlasma';
+          $attributesnotempty[] = 'biobankMaterialStoredSerum';
+          $attributesnotempty[] = 'biobankMaterialStoredTissueFrozen';
+          $attributesnotempty[] = 'biobankMaterialStoredTissueFFPE';
+          $attributesnotempty[] = 'biobankMaterialStoredImmortalizedCellLines';
+          $attributesnotempty[] = 'biobankMaterialStoredUrine';
+          $attributesnotempty[] = 'biobankMaterialStoredSaliva';
+          $attributesnotempty[] = 'biobankMaterialStoredFaeces';
+          $attributesnotempty[] = 'biobankMaterialStoredIsolatedPathogen';
+          $attributesnotempty[] = 'biobankMaterialStoredOther';
+          $attributesnotempty[] = 'biobankPartnerCharterSigned';
+          $attributesnotempty[] = 'biobankSize'; */
 
         foreach ($attributesnotempty as $attributenotempty) {
             if (empty($attributes[$attributenotempty])) {

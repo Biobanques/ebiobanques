@@ -118,7 +118,6 @@ Yii::app()->clientScript->registerScript('sendForm2', "
         'id' => 'biobank_manUpload-form2',
         'enableAjaxValidation' => false,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
-            
     ));
     ?>
 
@@ -129,7 +128,7 @@ Yii::app()->clientScript->registerScript('sendForm2', "
         // $logo = new Logo('biobank');
         ?>
         <!--  <div class="row">
-        <?php // echo $form2->labelEx($logo, 'filename');  ?>
+        <?php // echo $form2->labelEx($logo, 'filename');   ?>
         <?php //echo $form2->fileField($logo, 'filename');  ?>
         <?php //echo $form2->error($logo, 'filename'); ?>
           </div> -->
@@ -153,9 +152,36 @@ Yii::app()->clientScript->registerScript('sendForm2', "
         <?php echo $form2->error($model, 'thematiques'); ?>
     </div>
     <div class="row" style="display: inline-block">
+        <?php echo $form2->labelEx($model, 'presentation_en'); ?>
+        <?php echo $form2->textArea($model, 'presentation_en', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->error($model, 'presentation_en'); ?>
+
+    </div>
+    <div class="row" style="display: inline-block">
+        <?php echo $form2->labelEx($model, 'thematiques_en'); ?>
+        <?php echo $form2->textArea($model, 'thematiques_en', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->error($model, 'thematiques_en'); ?>
+    </div>
+    <div class="row" style="display: inline-block">
         <?php echo $form2->labelEx($model, 'projetRecherche'); ?>
         <?php echo $form2->textArea($model, 'projetRecherche', array('style' => "height:200px; width:450px")); ?>
         <?php echo $form2->error($model, 'projetRecherche'); ?>
+    </div>
+
+    <div class="row" style="display: inline-block">
+        <?php echo $form2->labelEx($model, 'projetRecherche_en'); ?>
+        <?php echo $form2->textArea($model, 'projetRecherche_en', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->error($model, 'projetRecherche_en'); ?>
+    </div>
+    <div class="row" style="display: inline-block">
+        <?php echo $form2->labelEx($model, 'qualite'); ?>
+        <?php echo $form2->textArea($model, 'qualite', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->error($model, 'qualite'); ?>
+    </div>
+    <div class="row" style="display: inline-block">
+        <?php echo $form2->labelEx($model, 'qualite_en'); ?>
+        <?php echo $form2->textArea($model, 'qualite_en', array('style' => "height:200px; width:450px")); ?>
+        <?php echo $form2->error($model, 'qualite_en'); ?>
     </div>
     <div class="row" style="display: inline-block">
         <?php echo $form2->labelEx($model, 'publications'); ?>
@@ -167,13 +193,7 @@ Yii::app()->clientScript->registerScript('sendForm2', "
         <?php echo $form2->textArea($model, 'reseaux', array('style' => "height:200px; width:450px")); ?>
         <?php echo $form2->error($model, 'reseaux'); ?>
     </div>
-    <div class="row" style="display: inline-block">
-        <?php echo $form2->labelEx($model, 'qualite'); ?>
-        <?php echo $form2->textArea($model, 'qualite', array('style' => "height:200px; width:450px")); ?>
-        <?php echo $form2->error($model, 'qualite'); ?>
 
-
-    </div>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton('Enregistrer'); ?>

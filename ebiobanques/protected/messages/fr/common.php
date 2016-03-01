@@ -126,6 +126,8 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'emailContact' => 'Email du contact',
     'phoneContact' => 'Télephone du contact',
     'InvalidPhoneNumber' => 'Format de télephone invalide.',
-    'qualityCombinate' => 'Champs qualité'
+    'qualityCombinate' => 'Champs qualité',
+    'Map of biobanks' => "Carte des biobanques",
+    'show map' => 'Voir la carte des biobanques',
 );
 ?>

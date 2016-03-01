@@ -18,6 +18,8 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'ext.*',
+        'ext.bootstrap.*',
+        'ext.EGMap.*',
         //'ext.YiiMongoDbSuite.*',
         'ext.MongoDbSuite.*',
         'ext.MongoDbSuite.extra.*',
@@ -71,7 +73,7 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ), array(
-//                   
+//
                     'class' => 'CPhpMailerLogRoute',
                     'levels' => 'error, warning',
                     'emails' => CommonProperties::$ADMIN_EMAIL,

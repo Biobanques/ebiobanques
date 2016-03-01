@@ -24,7 +24,10 @@ class BiobankController extends Controller
      * @return array access control rules
      */
     public function accessRules() {
-        return array(
+        return array(array('allow',
+                'actions' => array('map'), // deny all users
+                'users' => array('*'),
+            ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats'),
                 'expression' => '$user->isAdmin()',
@@ -34,6 +37,12 @@ class BiobankController extends Controller
             ),
         );
     }
+
+//
+//    public function actionMap() {
+//        $this->layout = '//layouts/main';
+//        $this->render('map');
+//    }
 
     /**
      * Displays a particular model.

@@ -5,10 +5,18 @@ $('.search-button').click(function(){
 	$('.search-form').toggle();
 	return false;
 });
+$('#mapButton').click(function(){
+	$('#mapContainer').toggle();
+        if('#mapContainer:visible'){
+        initMap();
+        }
+	return false;
+});
 $('.search-form form').submit(function(){
 $('#biobanks-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
+
 	return false;
 });
 ");
@@ -19,7 +27,16 @@ $('#biobanks-grid').yiiGridView('update', {
 </div>
 
 <?php
-// echo CHtml::link('Advanced Search','#',array('class'=>'search-button'));
+if (isset(CommonProperties::$GMAPS_KEY) && CommonProperties::$GMAPS_KEY != '') {
+    $dataProvider = $model->search();
+    echo CHtml::button(Yii::t('common', 'show map'), array('id' => 'mapButton'));
+    ?>
+    <div id='mapContainer' style='display: none'><?php
+        $this->renderPartial('_map');
+        ?>
+    </div>
+    <?php
+}
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'searchBiobank', 'searchable' => true));
 ?>
 <div class="search-form" style="display:none">
@@ -33,7 +50,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 <?php
 $this->Widget('zii.widgets.grid.CGridView', array(
     'id' => 'biobanks-grid',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $dataProvider,
 // 	'filter'=>$model,
     'columns' => array(
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),

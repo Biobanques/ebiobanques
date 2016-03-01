@@ -10,6 +10,7 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
+        'ext.EHttpClient.*',
         'ext.MongoDbSuite.*',
         'ext.MongoDbSuite.extra.*',
         'application.modules.auditTrail.models.AuditTrail',

@@ -146,12 +146,17 @@ class CommonTools
     }
 
     public static function importFile($file, $add) {
+
         $error = 0;
 
         $biobank_id = $file->metadata['biobank_id'];
         $file_imported_id = $file->_id;
+        Yii::beginProfile('XLS_To_CSV');
         $bytes = CommonTools::toCsv($file);
+        Yii::endProfile('XLS_To_CSV');
+        Yii::beginProfile('analyzeAndImportCsv');
         $resultAnalyse = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id, $add);
+        Yii::endProfile('analyzeAndImportCsv');
         $errors = $resultAnalyse['errors'];
         $error = count($errors);
         if ($resultAnalyse['inserted'] > 0) {
@@ -174,6 +179,7 @@ class CommonTools
             $file->metadata['errors'] = $errors;
             $file->save();
         }
+
         return $file;
     }
 

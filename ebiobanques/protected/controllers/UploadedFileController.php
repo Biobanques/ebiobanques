@@ -33,7 +33,7 @@ class UploadedFileController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'search' actions
-                'actions' => array('admin', 'constructAttachment', 'viewReport'),
+                'actions' => array('admin', 'constructAttachment', 'viewReport', 'processFile'),
                 'expression' => '$user->isBiobankAdmin()||$user->isAdmin()',
             ),
 //            array('allow', // allow authenticated user to perform 'search' actions
@@ -54,8 +54,9 @@ class UploadedFileController extends Controller
     }
 
     public function actionAdmin() {
-
+        $fileId = null;
         $model = new UploadedFile();
+        $add = null;
         if (isset($_FILES['uploadFileField']) && $_FILES['uploadFileField']['error'] == 0) {
             $add = false;
             if (isset($_POST['UploadedFile']['addOrReplace']) && $_POST['UploadedFile']['addOrReplace'] == 'add') {
@@ -64,6 +65,7 @@ class UploadedFileController extends Controller
             $fileId = $this->uploadEchFile($_FILES['uploadFileField']);
 
             if ($fileId != null) {
+
                 $file = CommonTools::importFile($this->loadModel($fileId), $add);
                 $this->sendReportMail($file);
             }
@@ -76,7 +78,14 @@ class UploadedFileController extends Controller
 
 
         $model->addOrReplace = 'add';
-        $this->render('admin', array('model' => $model, 'dataProviderProperties' => $dataProviderProperties));
+        $this->render('admin', array('model' => $model, 'dataProviderProperties' => $dataProviderProperties, 'fileId' => $fileId, 'add' => $add));
+    }
+
+    public function actionProcessFile($id, $add) {
+//        if ($id != null) {
+//            $file = CommonTools::importFile($this->loadModel(new MongoId($id)), $add);
+//            $this->sendReportMail($file);
+//        }
     }
 
     public function loadModel($id) {
@@ -88,6 +97,7 @@ class UploadedFileController extends Controller
     }
 
     private function uploadEchFile($file) {
+        Yii::beginProfile('uploadAndSave');
         if (Yii::app()->user->isAdmin())
             $biobank_id = $_SESSION['biobank_id'];
         else
@@ -115,13 +125,14 @@ class UploadedFileController extends Controller
 
                         if ($model->save()) {
                             Yii::app()->user->setFlash('success', "$filename successfully saved with id $model->_id.");
+                            Yii::endProfile('uploadAndSave');
                             return $model->_id;
                         } else {
                             Yii::app()->user->setFlash('error', "Saving error");
                             return null;
                         }
                     } else {
-                        Yii::app()->user->setFlash('error', "Saving error");
+                        Yii::app()->user->setFlash('error', "Saving error 2");
                         return null;
                     }
                 } else {
@@ -288,7 +299,7 @@ class UploadedFileController extends Controller
 
     public function constructAttachmentForMail($file) {
         $attachment = null;
-        if (isset($file->metadata['errors']) && count($file->metadata['errors'])) {
+        if (isset($file->metadata['errors']) && count($file->metadata['errors']) != 0) {
             $arrayErrors = $file->getCollection()->aggregate(array(
                 array('$match' => array('_id' => $file->_id)),
                 array('$unwind' => '$metadata.errors'),
@@ -330,6 +341,7 @@ class UploadedFileController extends Controller
     }
 
     public function constructExcelFile($arrayErrors) {
+        Yii::beginProfile('ConstructXlsReport');
         include_once(Yii::app()->basePath . '/extensions/ExcelExt/PHPExcel.php');
 
         $excelFile = new PhpExcel();
@@ -353,6 +365,7 @@ class UploadedFileController extends Controller
 
             $row++;
         }
+        Yii::endProfile('ConstructXlsReport');
         return $excelFile;
     }
 

@@ -75,6 +75,11 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning,info',
                 ),
+                CommonProperties::$DEV_MODE ?
+                        array(
+                    'class' => 'CProfileLogRoute',
+                    'report' => 'summary',
+                        ) : null,
 //                array(
 //                    'class' => 'ext.MongoDbSuite.EMongoDbLogRoute',
 //                    'levels' => '',
@@ -115,14 +120,14 @@ return array(
                 ),
             ),
         ),
-//        'clientScript' => array(
-//            'packages' => array(
-//                'jquery' => array(
-//                    'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1/',
-//                    'js' => array('jquery.min.js'),
-//                )
-//            ),
-//        ),
+        'clientScript' => array(
+            'packages' => array(
+                'jquery' => array(
+                    'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1/',
+                    'js' => array('jquery.min.js'),
+                )
+            ),
+        ),
     ),
     // application-level parameters that can be accessed
 // using Yii::app()->params['paramName']

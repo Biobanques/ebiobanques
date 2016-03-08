@@ -13,7 +13,7 @@
 <ul>
     <li><?php echo yii::t('myBiobank', 'importFileName') ?> : <?php echo $model->filename ?></li>
     <li><?php echo yii::t('myBiobank', 'importFileDate') ?> : <?php echo $model->uploadDate->toDateTime()->format('d/m/Y, H:i:s') ?></li>
-    <li><?php echo yii::t('myBiobank', 'importFileSize') ?> : <?php echo CommonTools::FileSizeConvert($model->length) ?></li>
+    <li><?php echo yii::t('myBiobank', 'importFileSize') ?> : <?php echo CommonTools::FileSizeConvert($model->getSize()) ?></li>
 </ul>
 <table style="border: solid 2px #000000; ">
     <tr style='background-color: #c76dff'>

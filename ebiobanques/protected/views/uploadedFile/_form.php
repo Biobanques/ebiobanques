@@ -13,8 +13,19 @@ Yii::app()->clientScript->registerScript("valid", "
             $('#uploadFileField').val('');
         }
     });");
+if ($fileId != null) {
+    Yii::app()->clientScript->registerScript("callProcess", "
+    $(document).ready(function(){
+$.ajax({url : '" . Yii::app()->createUrl('uploadedFile/processFile', array('id' => $fileId, 'add' => $add)) . "',
+            success : function(code_html, statut){ // success est toujours en place, bien sûr !
 
 
+
+       },
+
+    });
+});");
+}
 
 $fileBase = CHtml::link('template_ebiobanques.xls', Yii::app()->baseUrl . '/protected/datas/template_ebiobanques.xls');
 

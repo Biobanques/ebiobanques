@@ -16,7 +16,7 @@ class UploadedFile extends EMongoGridFS
     public $filename;
     public $metadata = array();
     public $uploadDate;
-    public $length;
+    // public $length;
 
     /**
      * property to store the value if add samples at the end or replace
@@ -38,7 +38,7 @@ class UploadedFile extends EMongoGridFS
     public function rules() {
         return array(
             array('filename, metadata', 'safe'),
-            array('length', 'safe', 'on' => 'search'),
+            //array('length', 'safe', 'on' => 'search'),
             // array('addOrReplace', 'unsafe'),
             array('filename,uploadDate', 'required'),
             array('metadata', 'isBiobankDefined'),

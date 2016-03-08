@@ -16,11 +16,12 @@ class UploadedFile extends EMongoGridFS
     public $filename;
     public $metadata = array();
     public $uploadDate;
+    public $length;
+
     /**
      * property to store the value if add samples at the end or replace
      */
-    public $addOrReplace;
-
+    // protected $addOrReplace;
     // this method should return the collection name for storing files
     public function getCollectionName() {
         return 'uploadedEchFile';
@@ -37,6 +38,8 @@ class UploadedFile extends EMongoGridFS
     public function rules() {
         return array(
             array('filename, metadata', 'safe'),
+            array('length', 'safe', 'on' => 'search'),
+            // array('addOrReplace', 'unsafe'),
             array('filename,uploadDate', 'required'),
             array('metadata', 'isBiobankDefined'),
         );
@@ -60,9 +63,12 @@ class UploadedFile extends EMongoGridFS
             $this->addError('filename', 'Biobank_id is not set.');
     }
 
-//public function afterSave() {
-//    parent::afterSave();
-//    $fileImported=new FileImported;
-//
-//}
+    public function getAddOrReplace() {
+        return $this->metadata['addToOld'];
+    }
+
+    public function setAddOrReplace($value) {
+        $this->metadata['addToOld'] = $value;
+    }
+
 }

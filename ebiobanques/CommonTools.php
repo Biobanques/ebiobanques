@@ -152,11 +152,14 @@ class CommonTools
         $file_imported_id = $file->_id;
         $bytes = CommonTools::toCsv($file);
         $resultAnalyse = CommonTools::analyzeCsv($bytes, $biobank_id, $file_imported_id, $add);
-        $error = $resultAnalyse['error'];
+        $errors = $resultAnalyse['errors'];
+        $error = count($errors);
         if ($resultAnalyse['inserted'] > 0) {
             $added = CommonTools::addToImportedFiles($file);
             if ($added == true)
-                Yii::log('ExcelFile ajouté aux file_imported');
+                Yii::log('ExcelFile ajouté aux file_imported', CLogger::LEVEL_INFO, 'importFile');
+            $file->metadata['samplesAdded'] = $resultAnalyse['inserted'];
+            $file->metadata['addToOld'] = $add ? true : false;
         }
 
 
@@ -164,9 +167,14 @@ class CommonTools
         if ($error == 0)
             Yii::app()->user->setFlash('success', Yii::app()->user->getFlash('success') . '<br>All samples where successfully imported');
         else {
+
             Yii::app()->user->setFlash('notice', Yii::app()->user->getFlash('success') . "<br>$error elements were not correctly imported. Please ask admin for more details");
             Yii::app()->user->setFlash('success', null);
+
+            $file->metadata['errors'] = $errors;
+            $file->save();
         }
+        return $file;
     }
 
     public static function toCsv($file) {
@@ -189,9 +197,9 @@ class CommonTools
     public static function xlsToCsv($file, $excelFormat) {
         $result = 0;
         require_once 'protected/extensions/ExcelExt/PHPExcel.php';
-        Yii::log("limit : " . ini_get('memory_limit'), 'error');
+        Yii::log("limit : " . ini_get('memory_limit'), 'info');
         ini_set('memory_limit', '512M');
-        Yii::log("limit after set: " . ini_get('memory_limit'), 'error');
+        Yii::log("limit after set: " . ini_get('memory_limit'), 'info');
         set_time_limit('1200');
 //        $cacheMethod = PHPExcel_CachedObjectStorageFactory:: cache_to_sqlite3;
 //        $cacheSettings = array();
@@ -213,11 +221,11 @@ class CommonTools
         // $reader->setReadDataOnly(true);
 //        $reader->setReadFilter(new MyReadFilter());
 
-        Yii::log("load excel file", 'error');
+        Yii::log("load excel file", 'info');
 
         $excel = $reader->load($path);
         // $excel->setActiveSheetIndex(1);
-        Yii::log("excel file loaded", 'error');
+        Yii::log("excel file loaded", 'info');
         unset($reader);
         /*
          * Ecriture en .csv
@@ -288,8 +296,14 @@ class CommonTools
                 }
 
                 if (!$model->validate()) {
-                    Yii::log("Problem with sample validation " . print_R($model->errors, true), CLogger::LEVEL_ERROR);
-                    $listBadSamples[] = $row;
+
+                    $errorList = array();
+                    foreach ($model->errors as $errorKey => $errorValue) {
+                        $errorList[] = array('attributeName' => $errorKey, 'errorValue' => $errorValue);
+                    }
+
+                    $listBadSamples[] = array('row' => $row, 'attributes' => $errorList);
+//                    $listBadSamples[] = array('row' => $row, 'attributes' => array($model->errors));
                 } else {
 
                     $tempSaveList[] = $model->attributes;
@@ -301,7 +315,7 @@ class CommonTools
             }
             $row++;
             if ($row != 2 && $row % 400 == 2 && !empty($tempSaveList)) {
-                Yii::log("Nb treated : " . $row, 'error');
+                Yii::log("Nb treated : " . $row, CLogger::LEVEL_ERROR, 'importFile');
                 Sample::model()->getCollection()->batchInsert($tempSaveList, array());
                 $tempSaveList = array();
 
@@ -314,61 +328,55 @@ class CommonTools
         }
         /*
          * Version 2 : seuls nes champs dont la colonne est annotée avec le préfixe 'notes' sont pris en note
+
+          //        while (($data = fgetcsv($import, 1000, ",")) !== FALSE) {
+          //
+          //
+          //
+          //
+          //
+          //            if ($row == 1) {
+          //                foreach ($data as $key => $value) {
+          //                    if (in_array($value, Sample::model()->attributeNames())) {
+          //                        $keysArray[$key] = $value;
+          //                    } elseif (substr($value, 0, 5) == 'notes') {
+          //                        $keysArray[$key] = $value;
+          //                    }
+          //                }
+
+          //            } else {
+          //                $model = new Sample();
+          //                $model->disableBehavior('LoggableBehavior');
+          //                $model->biobank_id = $biobank_id;
+          //                $model->file_imported_id = $fileImportedId;
+          //                foreach ($keysArray as $key2 => $value2) {
+          //                    if (substr($value2, 0, 5) != 'notes') {
+          //
+          //                        $model->$value2 = $data[$key2];
+          //                        if (!$model->validate($value2)) {
+          //
+          //                            Yii::log("Problem with item" . $model->getAttributeLabel($value2) . ",set to null.", CLogger::LEVEL_ERROR);
+          //                            $model->$value2 = null;
+          //                        }
+          //                    } else {
+          //
+          //                        $noteKey = end(explode(':', $value2));
+          //                        $note = new Note();
+          //                        $note->key = $noteKey;
+          //                        $note->value = $data[$key2];
+          //                        $model->notes[] = $note;
+          //                    }
+          //                }
+          //
+          //                if (!$model->save()) {
+          //                    $listBadSamples[] = $row;
+          //                } else {
+          //                    $newSamples[] = $model->_id;
+          //                }
+          //            }
+          //            $row++;
+          //        }
          */
-
-
-//        while (($data = fgetcsv($import, 1000, ",")) !== FALSE) {
-//
-//            /*
-//             * Traitement de la ligne d'entete
-//             */
-//
-//
-//
-//            if ($row == 1) {
-//                foreach ($data as $key => $value) {
-//                    if (in_array($value, Sample::model()->attributeNames())) {
-//                        $keysArray[$key] = $value;
-//                    } elseif (substr($value, 0, 5) == 'notes') {
-//                        $keysArray[$key] = $value;
-//                    }
-//                }
-//                /*
-//                 * Traitement des lignes de données
-//                 */
-//            } else {
-//                $model = new Sample();
-//                $model->disableBehavior('LoggableBehavior');
-//                $model->biobank_id = $biobank_id;
-//                $model->file_imported_id = $fileImportedId;
-//                foreach ($keysArray as $key2 => $value2) {
-//                    if (substr($value2, 0, 5) != 'notes') {
-//
-//                        $model->$value2 = $data[$key2];
-//                        if (!$model->validate($value2)) {
-//
-//                            Yii::log("Problem with item" . $model->getAttributeLabel($value2) . ",set to null.", CLogger::LEVEL_ERROR);
-//                            $model->$value2 = null;
-//                        }
-//                    } else {
-//
-//                        $noteKey = end(explode(':', $value2));
-//                        $note = new Note();
-//                        $note->key = $noteKey;
-//                        $note->value = $data[$key2];
-//                        $model->notes[] = $note;
-//                    }
-//                }
-//
-//                if (!$model->save()) {
-//                    $listBadSamples[] = $row;
-//                } else {
-//                    $newSamples[] = $model->_id;
-//                }
-//            }
-//            $row++;
-//        }
-
 
         fclose($import);
         if (!$add && count($newSamples) > 0) {
@@ -378,14 +386,15 @@ class CommonTools
             Sample::model()->deleteAll($deleteCriteria);
         }
         if (count($listBadSamples) != 0) {
+
             $log = '';
-            foreach ($listBadSamples as $badSample) {
-                $log = 'Error with manual import. File id : ' . $fileImportedId . ' - line : ' . $badSample;
-                Yii::log($log, CLogger::LEVEL_ERROR);
+            foreach ($listBadSamples as $lineNumber => $errors) {
+                $log = 'Error with manual import. File id : ' . $fileImportedId . ' - line : ' . $lineNumber;
+                Yii::log($log, CLogger::LEVEL_ERROR, 'importFile');
             }
         }
 
-        return array('error' => count($listBadSamples), 'inserted' => count($newSamples));
+        return array('errors' => $listBadSamples, 'inserted' => count($newSamples));
     }
 
     public function addToImportedFiles($file) {
@@ -521,6 +530,48 @@ class CommonTools
         }
 
 
+        return $result;
+    }
+
+    /**
+     * Converts bytes into human readable file size.
+     *
+     * @param string $bytes
+     * @return string human readable file size (2,87 Мб)
+     * @author Mogilev Arseny
+     */
+    function FileSizeConvert($bytes) {
+        $bytes = floatval($bytes);
+        $arBytes = array(
+            0 => array(
+                "UNIT" => "TB",
+                "VALUE" => pow(1024, 4)
+            ),
+            1 => array(
+                "UNIT" => "GB",
+                "VALUE" => pow(1024, 3)
+            ),
+            2 => array(
+                "UNIT" => "MB",
+                "VALUE" => pow(1024, 2)
+            ),
+            3 => array(
+                "UNIT" => "KB",
+                "VALUE" => 1024
+            ),
+            4 => array(
+                "UNIT" => "B",
+                "VALUE" => 1
+            ),
+        );
+
+        foreach ($arBytes as $arItem) {
+            if ($bytes >= $arItem["VALUE"]) {
+                $result = $bytes / $arItem["VALUE"];
+                $result = str_replace(".", ",", strval(round($result, 2))) . " " . $arItem["UNIT"];
+                break;
+            }
+        }
         return $result;
     }
 

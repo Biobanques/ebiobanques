@@ -19,7 +19,9 @@ return array(
     'import' => array(
         'ext.*',
         'ext.bootstrap.*',
+        'ext.bootstrap.widgets.*',
         'ext.EGMap.*',
+        'ext.ExcelExt.*',
         //'ext.YiiMongoDbSuite.*',
         'ext.MongoDbSuite.*',
         'ext.MongoDbSuite.extra.*',
@@ -71,24 +73,34 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'CFileLogRoute',
-                    'levels' => 'error, warning',
-                ), array(
-//
-                    'class' => 'CPhpMailerLogRoute',
-                    'levels' => 'error, warning',
-                    'emails' => CommonProperties::$ADMIN_EMAIL,
-                    'except' => array(
-                        'exception.CHttpException.404',
-                        'exception.CHttpException.403'
-                    )
-                ),
-                CommonProperties::$DEV_MODE ?
-                        array(
-                    'class' => 'CWebLogRoute',
                     'levels' => 'error, warning,info',
-                        ) : array('class' => 'CWebLogRoute',
-                    'levels' => 'none',
-                        ),
+                ),
+//                array(
+//                    'class' => 'ext.MongoDbSuite.EMongoDbLogRoute',
+//                    'levels' => '',
+//                    'connectionString' => CommonProperties::$CONNECTION_STRING,
+//                    'dbName' => 'interop',
+//                    'collectionName' => 'importFileLogs',
+//                    'categories' => array('importFile'),
+//                    'timestampType' => 'date',
+//                ),
+//                array(
+////
+//                    'class' => 'CPhpMailerLogRoute',
+//                    'levels' => 'error, warning',
+//                    'emails' => CommonProperties::$ADMIN_EMAIL,
+//                    'except' => array(
+//                        'exception.CHttpException.404',
+//                        'exception.CHttpException.403'
+//                    )
+//                ),
+//                CommonProperties::$DEV_MODE ?
+//                        array(
+//                    'class' => 'CWebLogRoute',
+//                    'levels' => 'error, warning,info',
+//                        ) : array('class' => 'CWebLogRoute',
+//                    'levels' => 'none',
+//                        ),
             ),
         ),
         'ePdf' => array(
@@ -103,14 +115,14 @@ return array(
                 ),
             ),
         ),
-        'clientScript' => array(
-            'packages' => array(
-                'jquery' => array(
-                    'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1/',
-                    'js' => array('jquery.min.js'),
-                )
-            ),
-        ),
+//        'clientScript' => array(
+//            'packages' => array(
+//                'jquery' => array(
+//                    'baseUrl' => '//ajax.googleapis.com/ajax/libs/jquery/1/',
+//                    'js' => array('jquery.min.js'),
+//                )
+//            ),
+//        ),
     ),
     // application-level parameters that can be accessed
 // using Yii::app()->params['paramName']

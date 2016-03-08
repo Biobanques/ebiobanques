@@ -25,6 +25,16 @@ return array(
     . '<p>A file example is available here : fileBase</p>'
     . '<p>Explanations are available here : fileInfoBase</p>'
     . '<p>You can choose to add uploaded samples to the current ones, or replace them,',
-    'uploadInfo' => 'How to design my file?'
+    'uploadInfo' => 'How to design my file?',
+    'downloadReport' => 'Download report',
+    'thanks' => 'Thank you for importing samples on ebiobanques.fr platform',
+    'summaryTitle' => 'Import summary',
+    'importName' => 'File name',
+    'importDate' => 'Import date',
+    'importSize' => 'File size',
+    'samplesNumber' => 'Imported samples',
+    'errorSamplesNumber' => 'Samples with errors',
+    'mailDetail' => 'Errors details is available in attachment',
+    'downloadDetail' => 'Errors details can be downloaded here : ',
 );
 ?>

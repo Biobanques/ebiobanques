@@ -5,6 +5,8 @@
  * @author nmalservet
  *
  */
+//include_once 'ext.phpmailer.JPhpMailer';
+
 class CommonMailer
 {
     const PROD_URL = "\"http://www.ebiobanques.fr/";
@@ -341,6 +343,75 @@ A bientôt sur ebiobanques.fr
         } catch (Exception $e) {
             Yii::log("exception sur save mail", "error");
             return false;
+        }
+    }
+
+    /**
+     *
+     * @param type $subject
+     * @param type $body
+     * @param type $emailTo
+     * @param type $attachmentPath - default no null, string for path to the attached file
+     * @param type $attachmentString - default to null, array(string 'data'=>$data, string 'name'=>$name
+     */
+    public function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null) {
+        Yii::import('application.extensions.phpmailer.JPhpMailer');
+
+        $mail = new JPhpMailer;
+        $mail->IsSMTP();
+        $mail->Host = CommonProperties::$SMTP_SENDER_HOST;
+        $mail->SMTPAuth = true;
+        $mail->Port = CommonProperties::$SMTP_SENDER_PORT;
+        $mail->Username = CommonProperties::$SMTP_SENDER_USERNAME;
+        $mail->Password = CommonProperties::$SMTP_SENDER_PASSWORD;
+        $mail->SetFrom(CommonProperties::$SMTP_SENDER_FROM_EMAIL, 'Application ebiobanques.fr');
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $mail->IsHTML(true);
+
+
+        if (CommonProperties::$DEV_MODE) {
+            $mail->AddAddress(CommonProperties::$ADMIN_EMAIL, CommonProperties::$ADMIN_EMAIL);
+        } else {
+            $mail->AddAddress($emailTo, $emailTo);
+        }
+        $mail->CharSet = 'UTF-8';
+        if ($attachmentPath != null) {
+            $mail->AddAttachment($attachmentPath);
+        }
+        if ($attachmentString != null) {
+            $mail->AddStringAttachment($attachmentString['data'], $attachmentString['name']);
+        }
+
+        /*
+         * Replace src img tags and attach images to mail
+         */
+        preg_match_all('/<img[^>]*src="([^"]*)"/i', $mail->Body, $matches);
+        if (isset($matches[0]))
+            foreach ($matches[0] as $index => $img) {
+                // make cid
+                $id = 'img' . $index;
+                $src = $matches[1][$index];
+                if ($mail->AddEmbeddedImage('../' . $src, $id)) {
+//                    //this replace might be improved
+//                    //as it could potentially replace stuff you dont want to replace
+                    $mail->Body = str_replace($src, 'cid:' . $id, $mail->Body);
+                    $imagesLog = true;
+                } else {
+                    $imagesLog = false;
+                }
+            }
+        if ($mail->send()) {
+            Yii::log('report mail sent', CLogger::LEVEL_ERROR);
+            if ($imagesLog)
+                Yii::log('image WELL attached : src : ' . $src . ', id : ' . $id, CLogger::LEVEL_ERROR);
+            else
+                Yii::log('image not attached : src : ' . '../' . $src . ', id : ' . $id, CLogger::LEVEL_ERROR);
+        } else
+            Yii::log('Error sending mail', CLogger::LEVEL_ERROR);
+        //clean output stream, to avoid headers content type conflicts
+        while (ob_get_level() > 0) {
+            ob_end_clean();
         }
     }
 

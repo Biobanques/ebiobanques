@@ -33,9 +33,13 @@ class UploadedFileController extends Controller
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'search' actions
-                'actions' => array('admin'),
+                'actions' => array('admin', 'constructAttachment', 'viewReport'),
                 'expression' => '$user->isBiobankAdmin()||$user->isAdmin()',
             ),
+//            array('allow', // allow authenticated user to perform 'search' actions
+//                'users' => array('*'),
+//                'actions' => array('')
+//            ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
@@ -61,11 +65,80 @@ class UploadedFileController extends Controller
 
             if ($fileId != null) {
                 $file = CommonTools::importFile($this->loadModel($fileId), $add);
-            } else {
-
+                $this->sendReportMail($file);
             }
         }
 
+        $datas = $this->getDataForFileConstruct();
+
+
+        $dataProviderProperties = new CArrayDataProvider($datas, array('keyField' => false, 'pagination' => false,));
+
+
+        $model->addOrReplace = 'add';
+        $this->render('admin', array('model' => $model, 'dataProviderProperties' => $dataProviderProperties));
+    }
+
+    public function loadModel($id) {
+        $model = UploadedFile::model()->findByPk($id);
+
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+
+    private function uploadEchFile($file) {
+        if (Yii::app()->user->isAdmin())
+            $biobank_id = $_SESSION['biobank_id'];
+        else
+            $biobank_id = Yii::app()->user->biobank_id;
+        $model = new UploadedFile();
+        $_SESSION['biobank_id'] = $biobank_id;
+        if (isset($file)) {
+            $tempFilename = $file["tmp_name"];
+            $filename = $file["name"];
+            if ($file['size'] < 15000000) {
+
+                $splitted = explode(".", $filename);
+                $extension = end($splitted);
+                if (in_array($extension, array('xls', 'xlsx'))) {
+                    $model->filename = $tempFilename;
+                    $model->metadata['biobank_id'] = $biobank_id;
+
+                    $model->uploadDate = new MongoDate();
+
+                    if ($model->save()) {
+                        $model->filename = $filename;
+
+
+
+
+                        if ($model->save()) {
+                            Yii::app()->user->setFlash('success', "$filename successfully saved with id $model->_id.");
+                            return $model->_id;
+                        } else {
+                            Yii::app()->user->setFlash('error', "Saving error");
+                            return null;
+                        }
+                    } else {
+                        Yii::app()->user->setFlash('error', "Saving error");
+                        return null;
+                    }
+                } else {
+                    Yii::app()->user->setFlash('error', "$filename is not a valid  file.");
+                    return null;
+                }
+            } else {
+                Yii::app()->user->setFlash('error', "$filename is too big");
+
+                return null;
+            }
+        } else
+            return null;
+    }
+
+    private function getDataForFileConstruct() {
+        $datas = array();
         $datas[] = new SampleProperty("id_sample", "Identification number of the biological material", "Text"
         );
         $datas[] = new SampleProperty("id_depositor", "Identification of depositor", "Text"
@@ -173,70 +246,114 @@ class UploadedFileController extends Controller
         );
         $datas[] = new SampleProperty("tumor_diagnosis", "tumor_diagnosis", "Text : CIM 10 format");
 
-
-        $dataProviderProperties = new CArrayDataProvider($datas, array('keyField' => false, 'pagination' => false,));
-
-
-        $model->addOrReplace = 'add';
-        $this->render('admin', array('model' => $model, 'dataProviderProperties' => $dataProviderProperties));
+        return $datas;
     }
 
-    public function loadModel($id) {
-        $model = UploadedFile::model()->findByPk($id);
+    protected function sendReportMail($file) {
+        $subject = 'Import samples file report';
+        $this->layout = '//layouts/withoutMenu';
+        $flashMessages = Yii::app()->user->getFlashes();
 
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
+        $body = $this->render('reportMail', array('model' => $file, 'forMail' => true), true);
+        foreach ($flashMessages as $messageKey => $messageValue)
+            Yii::app()->user->setFlash($messageKey, $messageValue);
+        $this->layout = '/layouts/menu_mybiobank';
+        $emailTo = Yii::app()->user->email;
+
+        $attachment = $this->constructAttachmentForMail($file);
+        CommonMailer::directSend($subject, $body, $emailTo, null, $attachment);
     }
 
-    private function uploadEchFile($file) {
-        if (Yii::app()->user->isAdmin())
-            $biobank_id = $_SESSION['biobank_id'];
-        else
-            $biobank_id = Yii::app()->user->biobank_id;
-        $model = new UploadedFile();
-        $_SESSION['biobank_id'] = $biobank_id;
-        if (isset($file)) {
-            $tempFilename = $file["tmp_name"];
-            $filename = $file["name"];
-            if ($file['size'] < 15000000) {
+    public function actionViewReport($id) {
 
-                $splitted = explode(".", $filename);
-                $extension = end($splitted);
-                if (in_array($extension, array('xls', 'xlsx'))) {
-                    $model->filename = $tempFilename;
-                    $model->metadata['biobank_id'] = $biobank_id;
+        //   CommonMailer::directSend('testSJ', 'testBody', 'matthieu.penicaud@gmail.com', null, null);
+        // $this->layout = '//layouts/withoutMenu';
+        $file = $this->loadModel(new MongoId($id));
+        //  $attachment = $this->constructAttachmentForMail($file);
+        $this->render('reportMail', array('model' => $file, 'forMail' => false), false);
+    }
 
-                    $model->uploadDate = new MongoDate();
+    public function actionConstructAttachment($id) {
+        $file = $this->loadModel(new MongoId($id));
+        $excelFile = $this->constructFileForDownload($file);
 
-                    if ($model->save()) {
-                        $model->filename = $filename;
+        $writer = PHPExcel_IOFactory::createWriter($excelFile, 'Excel5');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
+        header('Content-Disposition: attachment;filename="nomfichier.xls"');
 
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+    }
 
+    public function constructAttachmentForMail($file) {
+        $attachment = null;
+        if (isset($file->metadata['errors']) && count($file->metadata['errors'])) {
+            $arrayErrors = $file->getCollection()->aggregate(array(
+                array('$match' => array('_id' => $file->_id)),
+                array('$unwind' => '$metadata.errors'),
+                array('$unwind' => '$metadata.errors.attributes'),
+                array('$unwind' => '$metadata.errors.attributes.errorValue'),
+                array('$project' => array('metadata.errors' => 1))));
+            $attachment = array();
+            //   MongoDate::toDateTime();
 
-                        if ($model->save()) {
-                            Yii::app()->user->setFlash('success', "$filename successfully saved with id $model->_id.");
-                            return $model->_id;
-                        } else {
-                            Yii::app()->user->setFlash('error', "Saving error");
-                            return null;
-                        }
-                    } else {
-                        Yii::app()->user->setFlash('error', "Saving error");
-                        return null;
-                    }
-                } else {
-                    Yii::app()->user->setFlash('error', "$filename is not a valid  file.");
-                    return null;
-                }
-            } else {
-                Yii::app()->user->setFlash('error', "$filename is too big");
+            $attachment['name'] = 'sample_import_report_' . $file->uploadDate->toDateTime()->format('Y-m-d') . '.xls';
+            $excelFile = $this->constructExcelFile($arrayErrors);
 
-                return null;
-            }
-        } else
-            return null;
+            $writer = PHPExcel_IOFactory::createWriter($excelFile, 'Excel5');
+
+            ob_start();
+
+            $writer->save('php://output');
+            $attachment['data'] = ob_get_contents();
+        }
+        return $attachment;
+    }
+
+    public function constructFileForDownload($file) {
+
+        if (isset($file->metadata['errors']) && count($file->metadata['errors'])) {
+            $arrayErrors = $file->getCollection()->aggregate(array(
+                array('$match' => array('_id' => $file->_id)),
+                array('$unwind' => '$metadata.errors'),
+                array('$unwind' => '$metadata.errors.attributes'),
+                array('$unwind' => '$metadata.errors.attributes.errorValue'),
+                array('$project' => array('metadata.errors' => 1))));
+//            $attachment = array();
+//            //   MongoDate::toDateTime();
+//
+//            $attachment['name'] = 'sample_import_report_' . $file->uploadDate->toDateTime()->format('Y-m-d') . '.xls';
+            return $excelFile = $this->constructExcelFile($arrayErrors);
+        }
+        return null;
+    }
+
+    public function constructExcelFile($arrayErrors) {
+        include_once(Yii::app()->basePath . '/extensions/ExcelExt/PHPExcel.php');
+
+        $excelFile = new PhpExcel();
+        $excelFile->getProperties()->setCreator('ebiobanques.fr');
+        $excelFile->getProperties()->setTitle('Samples import report');
+        $excelSheet = $excelFile->setActiveSheetIndex(0);
+
+        $excelSheet->setCellValueByColumnAndRow(0, 1, 'Error on line');
+        $excelSheet->setCellValueByColumnAndRow(1, 1, 'Attribute name');
+        $excelSheet->setCellValueByColumnAndRow(2, 1, 'Error message');
+        $row = 2;
+        $col = 0;
+
+        foreach ($arrayErrors['result'] as $error) {
+            $rowError = $error['metadata']['errors']['row'];
+            $excelSheet->setCellValueByColumnAndRow($col, $row, $rowError);
+            $attributeName = $error['metadata']['errors']['attributes']['attributeName'];
+            $excelSheet->setCellValueByColumnAndRow($col + 1, $row, $attributeName);
+            $errorValue = $error['metadata']['errors']['attributes']['errorValue'];
+            $excelSheet->setCellValueByColumnAndRow($col + 2, $row, $errorValue);
+
+            $row++;
+        }
+        return $excelFile;
     }
 
 }

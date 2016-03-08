@@ -81,4 +81,12 @@ class FileImported extends LoggableActiveRecord
         }
     }
 
+    public function getFromXls() {
+        $result = UploadedFile::getCollection()->count(array('_id' => new MongoId($this->_id)));
+        if ($result == 1) {
+            return true;
+        }
+        return false;
+    }
+
 }

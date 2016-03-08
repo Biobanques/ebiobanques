@@ -27,5 +27,15 @@ return array(
     . '<p>Vous pouvez choisir d\'ajouter les échantillons à ceux existants (par défaut), ou de remplacer les échantillons existants.'
     . '',
     'uploadInfo' => 'Comment former mon fichier?',
+    'downloadReport' => 'Télécharger le rapport',
+    'thanks' => 'Merci d\'avoir importé vos échantillons sur la plate-forme ebiobanques.fr',
+    'summaryTitle' => 'Résumé de votre import',
+    'importName' => 'Nom du fichier',
+    'importDate' => 'Date de l\'import',
+    'importSize' => 'Taille du fichier',
+    'samplesNumber' => 'Nombre d\'échantillons importés',
+    'errorSamplesNumber' => 'Nombre d\'échantillons avec erreur',
+    'mailDetail' => 'Vous pouvez retrouver le détail des erreurs dans le fichier excel joint à cet email.',
+    'downloadDetail' => 'Vous pouvez retrouver le détail des erreurs dans le fichier excel telechargeable : ',
 );
 ?>

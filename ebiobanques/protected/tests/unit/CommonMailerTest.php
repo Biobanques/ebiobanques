@@ -23,10 +23,21 @@ class CommonMailerTest extends PHPUnit_Framework_TestCase
      */
     public function testSendMailRecoverPassword() {
         $criteria = new EMongoCriteria;
-        $criteria->login = "demo";
+        $criteria->login = "mpenicaud";
         $user = User::model()->find($criteria);
-        ;
+
         $this->assertTrue(CommonMailer::sendMailRecoverPassword($user));
+    }
+
+    /**
+     * testing method to check if sendMail is correct.
+     */
+    public function testDirectSend() {
+        $subject = "This is a test mail subject";
+        $body = "This is a test mail body";
+        $emailTo = CommonProperties::$ADMIN_EMAIL;
+        $this->assertFalse(CommonMailer::directSend(null, $body, $emailTo, null, null, false));
+        $this->assertTrue(CommonMailer::directSend($subject, $body, $emailTo, null, null, false));
     }
 
 }

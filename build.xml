@@ -243,8 +243,9 @@
          depends="prepare"
          description="Run unit tests with PHPUnit">
   <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
-   <arg value="--configuration"/>
-   <arg path="${src}/tests/phpunit.xml"/>
+   <arg line="--configuration ${src}/tests/phpunit.xml ${src}/tests/unit/"/>
+   <!--<arg path="${src}/tests/phpunit.xml"/>-->
+   <!--<arg path="${src}/tests/units/"/>-->
   </exec>
 
   <property name="phpunit.done" value="true"/>

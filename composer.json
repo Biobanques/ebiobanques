@@ -1,16 +1,13 @@
 {
-    "require-dev": {
-        "phpunit/phpunit": "4.1.3",
-        "phpunit/dbunit": ">=1.2",
-        "phpunit/phpunit-story": "*",
-        "phpunit/phpunit-selenium": ">=1.2",
-        "phpunit/php-invoker": "1.1.3",
-        "sebastian/phpcpd": "*",
-        "phpmd/phpmd" : "2.3.2",
-        "phploc/phploc": "2.0.2",
-        "sebastian/phpcpd": "1.4.3",
-        "phpdocumentor/phpdocumentor": "v2.0.1",
-         "squizlabs/php_codesniffer": "2.*",
-         "theseer/phpdox":"*"
+  "require-dev": {
+        "sebastian/exporter": "1.2.*",
+        "sebastian/environment": "1.3.*",
+        "sebastian/diff": "1.4.*",
+        "sebastian/comparator": "1.2.*",
+        "phpunit/php-file-iterator": "1.4.1",
+        "phpunit/phpunit": "4.8.*",
+        "phpunit/php-invoker": "^1.1",
+        "phpunit/dbunit": "^2.0",
+        "phpunit/phpunit-selenium": "1.2.*"
     }
 }

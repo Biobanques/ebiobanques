@@ -96,7 +96,7 @@ class UploadedFileController extends Controller
         return $model;
     }
 
-    private function uploadEchFile($file) {
+    public function uploadEchFile($file) {
         Yii::beginProfile('uploadAndSave');
         if (Yii::app()->user->isAdmin())
             $biobank_id = $_SESSION['biobank_id'];
@@ -299,7 +299,7 @@ class UploadedFileController extends Controller
 
     public function constructAttachmentForMail($file) {
         $attachment = null;
-        if (isset($file->metadata['errors']) && count($file->metadata['errors']) != 0) {
+        if (isset($file->metadata['errors']) && count($file->metadata['errors'])) {
             $arrayErrors = $file->getCollection()->aggregate(array(
                 array('$match' => array('_id' => $file->_id)),
                 array('$unwind' => '$metadata.errors'),

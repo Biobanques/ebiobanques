@@ -318,15 +318,16 @@ class CommonMailer
      * @return true if it s sent ( stored in db then pull by the cron task)
      */
     public static function sendMailRecoverPassword($user) {
-        try {
-            if ($user != null)
+        if ($user != null) {
+            try {
+
                 $to = $user->email;
-            $fname = $user->prenom;
-            $lname = $user->nom;
-            $login = $user->login;
-            $password = $user->password;
-            $subject = "Informations perdues sur ebiobanques.fr";
-            $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+                $fname = $user->prenom;
+                $lname = $user->nom;
+                $login = $user->login;
+                $password = $user->password;
+                $subject = "Informations perdues sur ebiobanques.fr";
+                $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 		<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<html><head>
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur ebiobanques.fr</title>
@@ -339,10 +340,11 @@ class CommonMailer
 A bientôt sur ebiobanques.fr
 		</body>
 		";
-            return CommonMailer::sendMail($to, $subject, $body);
-        } catch (Exception $e) {
-            Yii::log("exception sur save mail", "error");
-            return false;
+                return CommonMailer::sendMail($to, $subject, $body);
+            } catch (Exception $e) {
+                Yii::log("exception sur save mail", "error");
+                return false;
+            }
         }
     }
 
@@ -354,7 +356,8 @@ A bientôt sur ebiobanques.fr
      * @param type $attachmentPath - default no null, string for path to the attached file
      * @param type $attachmentString - default to null, array(string 'data'=>$data, string 'name'=>$name
      */
-    public function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null) {
+    public function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null, $cleanAfterSend = true) {
+        $imagesLog = null;
         Yii::import('application.extensions.phpmailer.JPhpMailer');
 
         $mail = new JPhpMailer;
@@ -401,18 +404,22 @@ A bientôt sur ebiobanques.fr
                     $imagesLog = false;
                 }
             }
-        if ($mail->send()) {
+        if ($result = $mail->send()) {
             Yii::log('report mail sent', CLogger::LEVEL_ERROR);
-            if ($imagesLog)
+            if ($imagesLog) {
                 Yii::log('image WELL attached : src : ' . $src . ', id : ' . $id, CLogger::LEVEL_ERROR);
-            else
+            } else if ($imagesLog != null)
                 Yii::log('image not attached : src : ' . '../' . $src . ', id : ' . $id, CLogger::LEVEL_ERROR);
-        } else
+        } else {
             Yii::log('Error sending mail', CLogger::LEVEL_ERROR);
-        //clean output stream, to avoid headers content type conflicts
-        while (ob_get_level() > 0) {
-            ob_end_clean();
         }
+
+        //clean output stream, to avoid headers content type conflicts
+        if ($cleanAfterSend)
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+        return $result;
     }
 
 }

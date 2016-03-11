@@ -6,6 +6,7 @@ return CMap::mergeArray(
                 require($mergeWith), array(
             'import' => array(
                 'ext.SeleniumWebTestCase.*',
+                'application.controllers.*'
             ),
             'components' => array(
                 'fixture' => array(

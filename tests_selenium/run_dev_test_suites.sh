@@ -32,12 +32,12 @@ echo "add data for selenium tests for all"
 mongo $MONGO_HOST $MONGO_PARAMETERS $MONGO_DB ./db_init.js
 echo "reapply mongo id update"
 
-java -jar selenium-server-standalone-2.44.0.jar -log selenium_vsc.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/visiteSiteSansConnexionTestSuite.html" $CURRENTPATH"/results_visite_sans_connexion.html"
+java -jar selenium-server-standalone-2.44.0.jar -log selenium_vsc.log -htmlSuite "*googlechrome" "http://ebiobanques.local" $CURRENTPATH"/dev/testsSuites/visiteSiteSansConnexionTestSuite.html" $CURRENTPATH"/results_visite_sans_connexion.html"
 
-java -jar selenium-server-standalone-2.44.0.jar -log selenium_adm.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/administrationTestSuite.html" $CURRENTPATH"/results_administration.html"
+#java -jar selenium-server-standalone-2.44.0.jar -log selenium_adm.log -htmlSuite "*googlechrome" "http://ebiobanques.local" $CURRENTPATH"/dev/testsSuites/administrationTestSuite.html" $CURRENTPATH"/results_administration.html"
 
-java -jar selenium-server-standalone-2.44.0.jar -log selenium_mbb.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/managerBiobankTestSuite.html" $CURRENTPATH"/results_manager_biobanque.html"
+#java -jar selenium-server-standalone-2.44.0.jar -log selenium_mbb.log -htmlSuite "*googlechrome" "http://ebiobanques.local" $CURRENTPATH"/dev/testsSuites/managerBiobankTestSuite.html" $CURRENTPATH"/results_manager_biobanque.html"
 
-java -jar selenium-server-standalone-2.44.0.jar -log selenium_mbb.log -htmlSuite "*googlechrome" "http://localhost/ebiobanques" $CURRENTPATH"/dev/testsSuites/simpleUserTestSuite.html" $CURRENTPATH"/results_simple_user.html"
+#java -jar selenium-server-standalone-2.44.0.jar -log selenium_mbb.log -htmlSuite "*googlechrome" "http://ebiobanques.local" $CURRENTPATH"/dev/testsSuites/simpleUserTestSuite.html" $CURRENTPATH"/results_simple_user.html"
 
 echo "END SCRIPT"

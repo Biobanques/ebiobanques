@@ -159,7 +159,7 @@ $listOnglets['sampling'] = $attributes_sampling;
 
 //make array of attributes stored but not defined in the common model
 $attributes_other = array();
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo'));
 
 $att = $model->getAttributes();
 foreach ($att as $attributeName => $attributeValue) {

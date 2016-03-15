@@ -137,10 +137,10 @@ class ContactController extends Controller
         $nameCriteria = null;
         $cityCriteria = null;
         $countryCriteria = null;
-        $dataContact = Contact::model()->findAll($contactCriteria);
         if (isset($_POST['GlobalContactForm'])) {
+            $resp_types = array();
             if (isset($_POST['GlobalContactForm']['profils']) && is_array($_POST['GlobalContactForm']['profils'])) {
-                $resp_types = array();
+
                 if (in_array('resp_adj', $_POST['GlobalContactForm']['profils']))
                     $resp_types[] = 'responsable_adj';
                 if (in_array('resp_qual', $_POST['GlobalContactForm']['profils']))
@@ -175,7 +175,10 @@ class ContactController extends Controller
             }
             if (!empty($contactCriteria->getConditions()) && isset($contactCriteria->getConditions()['$and']))
                 $dataContact = Contact::model()->findAll($contactCriteria);
+        }else {
+            $dataContact = Contact::model()->findAll($contactCriteria);
         }
+
         if (!empty($resp_types))
             $dataBiobank = Biobank::model()->getContactsFormatted($resp_types, $biobankIdCriteria, $nameCriteria, $cityCriteria, $countryCriteria);
         $data = array_merge($dataContact, $dataBiobank);

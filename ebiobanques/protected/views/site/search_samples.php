@@ -129,13 +129,13 @@ $scriptCB;
     ?>
 </div>
 <br>
-<div>
-    <?php
-    $this->renderPartial('_search_smart_samples', array(
-        'smartForm' => $smartForm
-    ));
-    ?>
-</div>
+<!--<div>-->
+<?php
+//    $this->renderPartial('_search_smart_samples', array(
+//        'smartForm' => $smartForm
+//    ));
+?>
+<!--</div>-->
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array(
     'links' => array(),
@@ -143,6 +143,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array(
     'searchable' => true,
 ));
 ?>
+<!--<div class="search-form" >-->
 <div class="search-form" style="display: none">
     <?php
     $this->renderPartial('_search_samples', array(

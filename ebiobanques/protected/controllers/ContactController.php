@@ -128,7 +128,7 @@ class ContactController extends Controller
         $form = new GlobalContactForm();
         $model = new Contact();
         $model->unsetAttributes();  // clear any default values
-        $form->profils = array(0);  // clear any default values
+        $form->profils = array('resp', 'resp_qual', 'resp_adj', 'resp_op');  // clear any default values
         $dataContact = array();
         $dataBiobank = array();
         $resp_types = array('responsable_adj', 'responsable_qual', 'responsable_op');
@@ -176,6 +176,7 @@ class ContactController extends Controller
             if (!empty($contactCriteria->getConditions()) && isset($contactCriteria->getConditions()['$and']))
                 $dataContact = Contact::model()->findAll($contactCriteria);
         }else {
+            $contactCriteria->addCond('biobank_id', '!=', null);
             $dataContact = Contact::model()->findAll($contactCriteria);
         }
 

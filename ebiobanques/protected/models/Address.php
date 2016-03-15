@@ -60,9 +60,11 @@ class Address extends EMongoSoftEmbeddedDocument
         $result = array();
         $cities = $this->getOwner()->getCollection()->distinct('address.city');
         foreach ($cities as $city) {
-            $result[$city] = $city;
+            $result[str_replace('-', ' ', strtolower($city))] = str_replace('-', ' ', ucfirst($city));
         }
-        $result["0"] = '--undefined--';
+        if (isset($result['']))
+            unset($result['']);
+        // $result["0"] = '--undefined--';
         natcasesort($result);
         return $result;
     }
@@ -71,9 +73,10 @@ class Address extends EMongoSoftEmbeddedDocument
         $result = array();
         $countries = $this->getOwner()->getCollection()->distinct('address.country');
         foreach ($countries as $country) {
-            $result[$country] = Yii::t('listCountries', $country);
+            $country = strtolower($country);
+            $result[str_replace('-', ' ', $country)] = str_replace('-', ' ', ucfirst(Yii::t('listCountries', $country)));
         }
-        $result["0"] = '--undefined--';
+        // $result["0"] = '--undefined--';
         natcasesort($result);
         return $result;
     }

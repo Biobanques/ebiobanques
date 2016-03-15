@@ -593,7 +593,7 @@ class Biobank extends LoggableActiveRecord
         $biobanks = Biobank::model()->findAll();
         foreach ($biobanks as $biobank)
             $res[(string) $biobank->_id] = $biobank->name;
-
+        natcasesort($res);
         return $res;
     }
 
@@ -614,8 +614,10 @@ class Biobank extends LoggableActiveRecord
      * util dans les grids de présentation pour user.
      * null sinon
      */
-    public function getBiobankName($idBiobank) {
+    public function getBiobankName($idBiobank = null) {
         $result = "Non défini";
+        if ($idBiobank == null)
+            return $this->name;
         $biobank = $this->getBiobank($idBiobank);
         if ($biobank != null) {
             $result = $biobank->identifier;
@@ -783,43 +785,131 @@ class Biobank extends LoggableActiveRecord
         return $result;
     }
 
+    public function getContactsFormatted($resp_types, $biobankIdCriteria = null, $nameCriteria = null, $cityCriteria = null, $countryCriteria = null) {
+        $result = array();
+
+        foreach ($resp_types as $resp_type) {
+            $match = array();
+            $match[$resp_type . '.lastName'] = array(
+                '$nin' => array(
+                    null,
+                    ''
+                ),
+            );
+            if ($nameCriteria != null)
+                $match[$resp_type . '.lastName'] = new MongoRegex('/' . $nameCriteria . '/i');
+            if ($biobankIdCriteria != null)
+                $match['_id'] = new MongoId($biobankIdCriteria);
+            if ($cityCriteria != null)
+                $match['address.city'] = new MongoRegex('/' . $cityCriteria . '/i');
+            if ($countryCriteria != null)
+                $match['address.country'] = new MongoRegex('/' . $countryCriteria . '/i');
+            $arrayQuery = array(
+                array(
+                    '$match' =>
+                    $match
+                ),
+                array(
+                    '$project' =>
+                    array(
+                        '_id' => 1,
+                        'adresse' => '$address.street',
+                        'city' => '$address.city',
+                        'zip' => '$address.zip',
+                        'country' => '$address.country',
+                        $resp_type => 1,
+                        'type' =>
+                        array(
+                            '$literal' =>
+                            array(
+                                $resp_type
+                            ),
+                        ),
+                    ),
+                ),
+                array(
+                    '$unwind' => '$type',
+                ),
+                array(
+                    '$group' =>
+                    array(
+                        '_id' => '$_id',
+                        'city' =>
+                        array(
+                            '$first' => '$city',
+                        ),
+                        'country' =>
+                        array(
+                            '$first' => '$country',
+                        ),
+                        'zip' =>
+                        array(
+                            '$first' => '$zip',
+                        ),
+                        'adresse' =>
+                        array(
+                            '$first' => '$adresse',
+                        ),
+                        $resp_type =>
+                        array(
+                            '$first' => '$' . $resp_type,
+                        ),
+                        'responsables' =>
+                        array(
+                            '$push' =>
+                            array(
+                                '$cond' =>
+                                array(
+                                    array(
+                                        '$eq' =>
+                                        array(
+                                            '$type',
+                                            $resp_type,
+                                        ),
+                                    ),
+                                    '$' . $resp_type,
+                                    false
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                array(
+                    '$project' =>
+                    array(
+                        '_id' => 1,
+                        'adresse' => 1,
+                        'zip' => 1,
+                        'city' => 1,
+                        'country' => 1,
+                        'responsables' => 1,
+                    ),
+                ),
+                array(
+                    '$unwind' => '$responsables',
+                ),
+                array(
+                    '$project' =>
+                    array(
+                        'biobank_id' => '$_id',
+                        'adresse' => '$adresse',
+                        'code_postal' => '$zip',
+                        'pays' => '$country',
+                        'ville' => '$city',
+                        'civility' => '$responsables.civility',
+                        'first_name' => '$responsables.firstName',
+                        'last_name' => '$responsables.lastName',
+                        'email' => '$responsables.email',
+                        'phone' => '$responsables.direct_phone',
+                        'contactType' => array('$literal' => $resp_type)
+                    ),
+                ),
+            );
+
+            $partialResult = $this->getCollection("biobank")->aggregate($arrayQuery);
+            $result = array_merge($result, $partialResult['result']);
+        }
+        return $result;
+    }
+
 }
-//
-//
-//db.getCollection("biobank").aggregate([
-//{  $group:
-//    { "_id":"$_id",
-//
-//        "responsables":{"$push":{"name":"$responsable_op.lastName",
-//        "fullName":
-//            {"$concat":[{"$toUpper":"$responsable_op.lastName"}," ","$responsable_op.firstName"]}}
-//        },
-// "responsables1":{"$push":{"name":"$responsable_adj.lastName",
-//        "fullName":
-//            {"$concat":[{"$toUpper":"$responsable_adj.lastName"}," ","$responsable_adj.firstName"]}}
-//        },"responsables2":{"$push":{"name":"$responsable_qual.lastName",
-//        "fullName":
-//            {"$concat":[{"$toUpper":"$responsable_qual.lastName"}," ","$responsable_qual.firstName"]}}
-//        },
-//
-//
-//    }
-//        }
-//         ,{"$match":{$or:[
-//             {"responsables":{$nin:[[],"",null]}},
-//         {"responsables1":{$nin:[[],"",null]}},
-//         {"responsables2":{$nin:[[],"",null]}}
-//         ]}}
-//
-//        ,{
-//            "$project": {
-//                "name": "$_id",
-//
-//                "resps": { "$setUnion": [ "$responsables","$responsables1","$responsables2",] },
-//                "_id": 0,
-//
-//            }
-//        },{"$unwind":"$resps"},{"$group":{"_id":"$resps"}},
-//         {$match:{"_id":{$nin:[null,""," "]}}}
-//
-//])

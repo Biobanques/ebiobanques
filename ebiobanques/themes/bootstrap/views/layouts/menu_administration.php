@@ -17,6 +17,7 @@
                 array('label' => 'Samples', 'url' => array('/echantillon/admin')),
                 array('label' => 'Users', 'url' => array('/user/admin')),
                 array('label' => 'Contacts', 'url' => array('/contact/admin')),
+                array('label' => 'Export des contacts', 'url' => array('/contact/exportContact')),
                 array('label' => 'Log système', 'url' => array('/auditTrail/admin')),
             ),
         ));

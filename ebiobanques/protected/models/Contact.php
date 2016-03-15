@@ -15,8 +15,8 @@
  * @property string $code_postal
  * @property integer $inactive
  */
-class Contact extends LoggableActiveRecord {
-
+class Contact extends LoggableActiveRecord
+{
     /**
      * id is deprectaed. use _id to store relation with contact
      * @var type
@@ -32,7 +32,6 @@ class Contact extends LoggableActiveRecord {
     public $pays;
     public $code_postal;
     public $inactive;
-
     /**
      * biobank attached to this contact
      * a contact must be attached to a biobank. A biobank must have one main contact
@@ -123,13 +122,19 @@ class Contact extends LoggableActiveRecord {
 
     public function attributeExportedLabels() {
         return array(
-            '_id' => 'ID',
+            // '_id' => 'ID',
+            'biobank_id' => Yii::t('common', 'biobanks'),
             'first_name' => Yii::t('common', 'firstname'),
             'last_name' => Yii::t('common', 'lastname'),
             'email' => Yii::t('common', 'email'),
             'phone' => Yii::t('common', 'phone'),
-            'fullAddress' => Yii::t('common', 'adress'),
+            'adresse' => Yii::t('common', 'adress'),
+            'ville' => Yii::t('common', 'city'),
+            'pays' => Yii::t('common', 'country'),
+            'code_postal' => Yii::t('common', 'zipcode'),
+//            'fullAddress' => Yii::t('common', 'adress'),
             'biobankName' => Yii::t('common', 'biobanks'),
+            'contactType' => Yii::t('common', 'contactType'),
         );
     }
 
@@ -173,6 +178,12 @@ class Contact extends LoggableActiveRecord {
         return $res;
     }
 
+    public function getContactType() {
+        if (!isset($this->biobank_id) || $this->biobank_id == null || $this->biobank_id == '')
+            return 'Contact divers';
+        return 'Responsable';
+    }
+
     /**
      * get biobank name of this contact
      * usefull in view contacts for site
@@ -191,6 +202,31 @@ class Contact extends LoggableActiveRecord {
 
     public function getFullAddress() {
         return $this->adresse != null ? CHtml::encode($this->adresse) . ' - ' . CHtml::encode($this->code_postal) . ' ' . CHtml::encode($this->ville) : "";
+    }
+
+    public function getActiveListOfCities() {
+        $result = array();
+        $cities = $this->getCollection()->distinct('ville');
+        foreach ($cities as $city) {
+            $result[str_replace('-', ' ', strtolower($city))] = str_replace('-', ' ', ucfirst($city));
+        }
+        if (isset($result['']))
+            unset($result[""]);
+        // $result["0"] = '--undefined--';
+        natcasesort($result);
+        return $result;
+    }
+
+    public function getActiveListOfCountries() {
+        $result = array();
+        $countries = $this->getCollection()->distinct('pays');
+        foreach ($countries as $country) {
+            $country = strtolower($country);
+            $result[str_replace('-', ' ', $country)] = str_replace('-', ' ', ucfirst(Yii::t('listCountries', $country)));
+        }
+        // $result["0"] = '--undefined--';
+        natcasesort($result);
+        return $result;
     }
 
 }

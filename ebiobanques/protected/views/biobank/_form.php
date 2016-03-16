@@ -438,8 +438,12 @@ $listOnglets['other'] = $attributes_other;
         }
 
         echo '</table>';
-        if ($id == 'codes_cim')
-            echo CHtml::submitButton('Ajouter un code Cim', array('submit' => $this->createUrl("biobank/addCim", array('id' => $model->_id)), 'onclick' => '$("#addCimPopup").dialog("open");return false;', 'name' => 'addCim',));
+        if ($id == 'codes_cim') {
+            if ($this->action->id == 'update')
+                echo CHtml::submitButton('Ajouter un code Cim', array('submit' => $this->createUrl("biobank/addCim", array('id' => $model->_id)), 'onclick' => '$("#addCimPopup").dialog("open");return false;', 'name' => 'addCim',));
+            if ($this->action->id == 'create')
+                $this->renderPartial('/site/_help_message', array('title' => 'Ajout de code CIM non disponible', 'content' => 'L\'ajout de codes CIM ne peut sse faire que si la biobanque a déjà été créée. La fonctionnalité est disponible dans la vue de mise à jour.'));
+        }
         if ($id == 'other') {
             echo CHtml::Button('Add field', array('id' => 'addButton', 'onclick' => '$("#addFieldPopup").dialog("open");return false;'));
         }

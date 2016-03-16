@@ -3,6 +3,30 @@
 /* @var $model Biobank */
 /* @var $form CActiveForm */
 $cancelRoute = Yii::app()->createAbsoluteUrl('biobank/admin');
+$delCimUrl = $this->createUrl("biobank/removeCim", array('id' => $model->_id));
+
+/**
+ * Register custom script for del CIM codes buttons, to avoid issue of reloading script after an ajax request
+ * Get cim code from id, send ajax request to remove concerned cim code, and reload cim codes tab.
+ */
+Yii::app()->clientScript->registerScript('addCim', ""
+        . "jQuery('body').on('click','.delCimButton',function(){"
+        . "var id = this.id;"
+        . "var splitedId = id.split('_');"
+        . "$.ajax({"
+        . "type:'POST',"
+        . "data:{'idCim':splitedId[1]},"
+        . "url:'$delCimUrl',"
+        . "success:function(response){"
+        . "div_content = $(response).find('#form_codes_cim').html();"
+        . "$('#form_codes_cim').html(div_content);"
+        . "}"
+        . "})"
+        . ""
+        . "})"
+        . "");
+
+
 Yii::app()->clientScript->registerScript('create', "
 
  $('.menuTab').click(function(){
@@ -46,6 +70,7 @@ window.location.href='$cancelRoute';
 
 ");
 
+
 //widget de popup d'ajout dynamique de champ
 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
     'id' => 'addFieldPopup',
@@ -76,6 +101,50 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 
 <?php
 $this->endWidget();
+
+//widget de popup d'ajout dynamique de champ
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id' => 'addCimPopup',
+    // additional javascript options for the dialog plugin
+    'options' => array(
+        'title' => 'Ajout d\'un code CIM',
+        'autoOpen' => false,
+        'width' => '350px'
+    ),
+));
+?>
+<div class='wide form'>
+    <?php
+    $newCimForm = $this->beginWidget('CActiveForm', array(
+        'id' => 'newCim-form',
+        'enableAjaxValidation' => false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+    ));
+    $this->renderPartial('/site/_help_message', array('title' => 'Formats valides', 'content' => 'Les formats suivants sont valides : <br><ul>'
+        . '<li>A00</li>'
+        . '<li>A00.0</li>'
+        . '<li>A00-Z99</li>'
+    ));
+    echo $newCimForm->textField($model, 'cims[new]');
+    echo '<br>';
+    echo CHtml::ajaxSubmitButton('add cim', $this->createUrl('addCim', array('id' => $model->_id)), array(
+        // 'update' => '#form_codes_cim',
+        'success' => 'js:function(response){'
+        . 'if(response=="Error"){'
+        . 'alert("Erreur, merci de vérifier que le format est bon et que le code n\'est pas déjà présent dans la liste");'
+        . 'return;'
+        . '}'
+        . 'div_content = $(response).find("#form_codes_cim").html();'
+        . '$("#form_codes_cim").html(div_content);'
+        . '$("#addCimPopup").dialog("close");'
+        . '}'
+    ));
+    $this->endWidget('newCim-form');
+    ?>
+</div>
+
+<?php
+$this->endWidget('addCimPopup');
 ?>
 
 <?php
@@ -118,7 +187,13 @@ $attributes_qualite = array(
     'cert_autres',
     'observations',
 );
+
+
 $listOnglets['qualite'] = $attributes_qualite;
+
+
+$cims = array('cims');
+$listOnglets['codes_cim'] = $cims;
 
 $attributes_info = array(
     array('attributeName' => 'gest_software', 'value' => CommonTools::getSoftwareList()),
@@ -159,7 +234,7 @@ $listOnglets['sampling'] = $attributes_sampling;
 
 //make array of attributes stored but not defined in the common model
 $attributes_other = array();
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, $cims, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo'));
 
 $att = $model->getAttributes();
 foreach ($att as $attributeName => $attributeValue) {
@@ -183,6 +258,7 @@ $listOnglets['other'] = $attributes_other;
 
     <?php
     echo $form->errorSummary($model);
+
     /**
      * Affichage des attributs obligatoires
      */
@@ -297,37 +373,63 @@ $listOnglets['other'] = $attributes_other;
         echo "<div class='TabForm' id='form_$id' $displayDisable >";
         echo '<table>';
         $count = 0;
-        foreach ($attributes as $attName) {
+        if ($id != 'codes_cim') {
+            foreach ($attributes as $attName) {
 
-            $count++;
-            if ($count % 2 == 0)
-                echo' <td>';
-            else
-                echo'<tr><td width="400px">';
+                $count++;
+                if ($count % 2 == 0)
+                    echo' <td>';
+                else
+                    echo'<tr><td width="400px">';
 
-            if (is_string($attName)) {
+                if (is_string($attName)) {
 
-                if (!isset($model->$attName))
-                    $model->initSoftAttribute($attName);
+                    if (!isset($model->$attName))
+                        $model->initSoftAttribute($attName);
 
-                echo $form->labelEx($model, $attName);
+                    echo $form->labelEx($model, $attName);
 
 
-                echo $form->textField($model, $attName);
-                echo $form->error($model, $attName);
-            } elseif (is_array($attName)) {
-                if (!isset($model->$attName['attributeName']))
-                    $model->initSoftAttribute($attName['attributeName']);
-                echo $form->labelEx($model, $attName['attributeName']);
-                echo $form->dropDownList($model, $attName['attributeName'], $attName['value'], array('prompt' => '----'));
-                echo $form->error($model, $attName['attributeName']);
+                    echo $form->textField($model, $attName);
+                    echo $form->error($model, $attName);
+                } elseif (is_array($attName)) {
+                    if (!isset($model->$attName['attributeName']))
+                        $model->initSoftAttribute($attName['attributeName']);
+                    echo $form->labelEx($model, $attName['attributeName']);
+                    echo $form->dropDownList($model, $attName['attributeName'], $attName['value'], array('prompt' => '----'));
+                    echo $form->error($model, $attName['attributeName']);
+                }
+                if ($count % 2 == 0)
+                    echo' </td></tr>';
+                else
+                    echo'</td>';
             }
-            if ($count % 2 == 0)
-                echo' </td></tr>';
-            else
-                echo'</td>';
+        }else {
+            if (!isset($model->cims)) {
+                $model->initSoftAttribute('cims');
+                $model->cims = array();
+            } else {
+                // $model->cims = array('A22', 'C52', 'B12');
+                foreach ($model->cims as $idCim => $cim) {
+                    $count++;
+                    if ($count % 2 == 0)
+                        echo' <td>';
+                    else
+                        echo'<tr><td width="400px">';
+                    echo $form->textField($model, "cims[$idCim][code]", array('readonly' => true, 'style' => 'width:150px;margin-right : 15px'));
+
+                    echo CHtml::submitButton('Suppr.', array('id' => 'delcim_' . $idCim, 'name' => 'delcim_' . $idCim, 'class' => 'delCimButton', 'onclick' => 'return false;'));
+                    if ($count % 2 == 0)
+                        echo' </td></tr>';
+                    else
+                        echo'</td>';
+                }
+            }
         }
+
         echo '</table>';
+        if ($id == 'codes_cim')
+            echo CHtml::submitButton('Ajouter un code Cim', array('submit' => $this->createUrl("biobank/addCim", array('id' => $model->_id)), 'onclick' => '$("#addCimPopup").dialog("open");return false;', 'name' => 'addCim',));
         if ($id == 'other') {
             echo CHtml::Button('Add field', array('id' => 'addButton', 'onclick' => '$("#addFieldPopup").dialog("open");return false;'));
         }
@@ -335,6 +437,12 @@ $listOnglets['other'] = $attributes_other;
     }
     ?>
     <div class="row buttons">
+
+        <?php echo '<hr style="height: 5px;
+border-style: solid;
+border-color: black;
+border-width: 1px 0 0 0;
+border-radius: 5px;">'; ?>
         <?php echo CHtml::resetButton('Cancel', array('id' => 'resetButton')); ?>
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>

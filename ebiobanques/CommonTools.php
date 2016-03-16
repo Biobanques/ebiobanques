@@ -581,4 +581,11 @@ class CommonTools
         return $result;
     }
 
+    public function validateCimCodeFormat($cimCode) {
+        $result = false;
+        if (preg_match("/(^[A-Z]{1}[0-9]{2}$)|(^[A-Z]{1}[0-9]{2}\\-{1}[A-Z]{1}[0-9]{2}$)|(^[A-Z]{1}[0-9]{2}\\.{1}[0-9]{1}$)/", $cimCode) === 1)
+            $result = true;
+        return $result;
+    }
+
 }

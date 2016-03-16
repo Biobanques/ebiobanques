@@ -29,7 +29,7 @@ class BiobankController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats'),
+                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats', 'removeCim', 'addCim'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -65,6 +65,25 @@ class BiobankController extends Controller
             }
         }
         echo $messageResult;
+    }
+
+    public function actionRemoveCim($id) {
+        $model = $this->loadModel($id);
+        if (isset($_POST['idCim']) && $_POST['idCim'] != null)
+            $model->removeCimCode($_POST['idCim']);
+        $this->redirect(array('biobank/update', 'id' => $id));
+    }
+
+    public function actionAddCim($id) {
+        $model = $this->loadModel($id);
+        if (isset($_POST['Biobank']['cims']['new']) && $_POST['Biobank']['cims']['new'] != null && $_POST['Biobank']['cims']['new'] != '') {
+
+            $result = $model->addCimCode($_POST['Biobank']['cims']['new']);
+        }
+        if ($result)
+            $this->redirect(array('biobank/update', 'id' => $id));
+        else
+            echo "Error";
     }
 
     /**

@@ -10,4 +10,5 @@ return array(
     'biobank_facultatif' => 'Facultatif',
     'biobank_qualite' => 'Qualité',
     'biobank_info' => 'Informatique',
+    'biobank_codes_cim' => 'Codes CIM',
 );

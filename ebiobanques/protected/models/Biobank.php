@@ -96,6 +96,10 @@ class Biobank extends LoggableActiveRecord
      * specify the type of samples if other. Free text.
      */
     public $nbs_other_specification;
+    /**
+     * array of ICD codes
+     */
+    public $cims = array();
     protected $qualityCombinate;
 
     public function getQualityCombinate() {
@@ -104,6 +108,27 @@ class Biobank extends LoggableActiveRecord
 
     public function setQualityCombinate($value) {
         $this->qualityCombinate = $value;
+    }
+
+    public function removeCimCode($position) {
+        if (isset($this->cims[$position])) {
+            unset($this->cims[$position]);
+        }
+        $this->save(false);
+    }
+
+    public function addCimCode($cimCode) {
+        $cimValidation = CommonTools::validateCimCodeFormat($cimCode);
+        $listOfCodes = array();
+        foreach ($this->cims as $cim) {
+            $listOfCodes[] = $cim['code'];
+        }
+        if (!in_array($cimCode, $listOfCodes) && $cimValidation) {
+            $this->cims[] = array('code' => $cimCode);
+            return $this->save(false);
+        }
+
+        return false;
     }
 
     /**
@@ -778,7 +803,7 @@ class Biobank extends LoggableActiveRecord
 
         foreach ($list as $contact) {
             if (isset($contact['lastName']) && $contact['lastName'] != '')
-                $result[strtolower($contact['lastName'] . '_' . $contact['firstName'])] = ($contact['civility'] == "miss" ? 'Mme' : 'M.') . " " . ucfirst(strtolower($contact['firstName'])) . " " . strtoupper($contact['lastName']);
+                $result[strtolower($contact['lastName'] . '_' . $contact['firstName'])] = (isset($contact['civility']) && $contact['civility'] == "miss" ? 'Mme' : 'M.') . " " . ucfirst(strtolower($contact['firstName'])) . " " . strtoupper($contact['lastName']);
         }
         ksort($result);
 

@@ -18,6 +18,13 @@ Yii::app()->clientScript->registerScript('test', "
  	$('#biobank_qualite').toggle(true);
  	return false;
  });
+ $('#cims').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_cims').toggle(true);
+ 	return false;
+ });
  $('#informatique').click(function(){
   $('.testonglets').removeClass('active');
  $(this).addClass('active');
@@ -84,6 +91,7 @@ $attributes_qualite = array(
     'cert_autres',
     'observations',
 );
+$cims = array('name' => 'cims', 'value' => nl2br(print_r($model->cims, true)), 'type' => 'raw',);
 $attributes_info = array(
     'gest_software',
     'other_software',
@@ -93,7 +101,7 @@ $attributes_info = array(
 
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {
@@ -113,6 +121,7 @@ foreach ($attributes as $attributeName => $attributeValue)
     <ul id="onglets">
         <li class="testonglets active" id="facult"><?php echo CHtml::link('Facultatif', '#', array('class' => 'testonglets')); ?></li>
         <li class="testonglets" id="qualite"><a href="#"> Qualité </a></li>
+        <li class="testonglets" id="cims"><a href="#"> Codes CIM </a></li>
         <li class="testonglets" id="informatique"><a href="#"> Informatique </a></li>
         <li class="testonglets" id="other"><a href="#"> Autres </a></li>
     </ul>
@@ -131,6 +140,18 @@ foreach ($attributes as $attributeName => $attributeValue)
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
         'attributes' => $attributes_qualite
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_cims" style="display: none">
+
+    <?php
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'dataProvider' => new CArrayDataProvider($model->cims, array('keyField' => 'code',
+                //  'pagination' => false
+                )),
+        'columns' => array('code'
+        )
     ));
     ?>
 </div>

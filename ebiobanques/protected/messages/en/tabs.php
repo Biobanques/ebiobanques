@@ -10,4 +10,5 @@ return array(
     'biobank_facultatif' => 'Mandatory',
     'biobank_qualite' => 'Quality',
     'biobank_info' => 'Softwares',
+    'biobank_codes_cim' => 'ICD codes',
 );

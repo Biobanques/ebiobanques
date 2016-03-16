@@ -61,7 +61,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'identifier' => 'Identifiant',
     'name' => 'Nom',
     'collection_name' => 'Nom de la collection',
-    'collection_id' => 'Collection',
+    'collection_id' => 'Id de la collection',
     'date_entry' => 'Date d\'entrée',
     'folder_reception' => 'Dossier de réception',
     'folder_done' => 'Dossier fait',

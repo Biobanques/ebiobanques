@@ -60,7 +60,7 @@ return array(
     'identifier' => 'Identifier',
     'name' => 'Name',
     'collection_name' => 'Collection name',
-    'collection_id' => 'Collection',
+    'collection_id' => 'Collection id',
     'date_entry' => 'Date of entry',
     'folder_reception' => 'Reception folder',
     'folder_done' => 'Done folder',

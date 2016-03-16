@@ -158,8 +158,8 @@ $this->endWidget('addCimPopup');
 $attributes_oblig = array(
     'identifier',
     'name',
-    'collection_name',
     'collection_id',
+    'collection_name',
     'biobank_class',
     'diagnosis_available',
     array('attributeName' => 'contact_id', 'value' => Contact::model()->getArrayContacts()),
@@ -281,7 +281,7 @@ $listOnglets['other'] = $attributes_other;
             if ($count % 2 == 0)
                 echo' <td>';
             else
-                echo'<tr ><td width="400px">';
+                echo'<tr ><td width="50%">';
 
             if (is_string($attName)) {
 
@@ -289,7 +289,7 @@ $listOnglets['other'] = $attributes_other;
                     $partialCount = 0;
                     $count = 0;
                     echo '<tr style="border:1px solid #000;">';
-                    echo '<tr><td width="400px">';
+                    echo '<tr><td width="50%">';
 
                     echo $form->labelEx($model, $attName, array('style' => 'font-style: italic; font-size: 1.1em;'));
 
@@ -299,7 +299,7 @@ $listOnglets['other'] = $attributes_other;
                         if ($partialCount % 2 == 0)
                             echo' <td>';
                         else
-                            echo'<tr><td width="400px">';
+                            echo'<tr><td width="50%">';
                         ?>
 
                         <?php echo $form->labelEx($model->$attName, $emAtt); ?>
@@ -317,6 +317,16 @@ $listOnglets['other'] = $attributes_other;
                     }
                     echo '<tr style="border:1px solid #000;">';
                 } else {
+                    if ($attName == 'collection_id') {
+                        $this->renderPartial('/site/_help_message', array('title' => 'Référence MIABIS', 'content' => ' Sample Collection ID that also links the sample collection to the hosting biobank or study.<br>'
+                            . CHtml::link('Data-describing-Sample-Collection', 'https://github.com/MIABIS/miabis/wiki/Data-describing-Sample-Collection')
+                        ));
+                    }
+                    if ($attName == 'collection_name') {
+                        $this->renderPartial('/site/_help_message', array('title' => 'Référence MIABIS', 'content' => 'The name of the sample collection in english.<br><br>'
+                            . CHtml::link('Data-describing-Sample-Collection', 'https://github.com/MIABIS/miabis/wiki/Data-describing-Sample-Collection', array('target' => 'blank'))
+                        ));
+                    }
                     ?>
 
                     <?php echo $form->labelEx($model, $attName); ?>
@@ -329,7 +339,7 @@ $listOnglets['other'] = $attributes_other;
                     $model->initSoftAttribute($attName['attributeName']);
                 ?>
                 <?php echo $form->labelEx($model, $attName['attributeName']); ?>
-                <?php echo $form->dropDownList($model, $attName['attributeName'], $attName['value'], array('prompt' => '----')); ?>
+                <?php echo $form->dropDownList($model, $attName['attributeName'], $attName['value'], array('prompt' => '----', 'style' => 'width:280px')); ?>
                 <?php
                 echo $form->error($model, $attName['attributeName']);
             }
@@ -345,11 +355,11 @@ $listOnglets['other'] = $attributes_other;
      */
     ?>
     <div id="menu">
-        <ul id="onglets">
+        <ul id="onglets" style="left: auto">
             <?php
             $active = 'active';
             foreach ($listOnglets as $id => $attributes) {
-                echo "<li class='menuTab $active' id='$id'>";
+                echo "<li class = 'menuTab $active' id = '$id'>";
                 $active = '';
                 echo CHtml::link(Yii::t('tabs', 'biobank_' . $id));
                 echo '</li>';
@@ -370,7 +380,7 @@ $listOnglets['other'] = $attributes_other;
         else
             $displayDisable = '';
         $display = false;
-        echo "<div class='TabForm' id='form_$id' $displayDisable >";
+        echo "<div class = 'TabForm' id = 'form_$id' $displayDisable >";
         echo '<table>';
         $count = 0;
         if ($id != 'codes_cim') {
@@ -380,7 +390,7 @@ $listOnglets['other'] = $attributes_other;
                 if ($count % 2 == 0)
                     echo' <td>';
                 else
-                    echo'<tr><td width="400px">';
+                    echo'<tr><td width="50%">';
 
                 if (is_string($attName)) {
 
@@ -415,7 +425,7 @@ $listOnglets['other'] = $attributes_other;
                     if ($count % 2 == 0)
                         echo' <td>';
                     else
-                        echo'<tr><td width="400px">';
+                        echo'<tr><td width="50%">';
                     echo $form->textField($model, "cims[$idCim][code]", array('readonly' => true, 'style' => 'width:150px;margin-right : 15px'));
 
                     echo CHtml::submitButton('Suppr.', array('id' => 'delcim_' . $idCim, 'name' => 'delcim_' . $idCim, 'class' => 'delCimButton', 'onclick' => 'return false;'));

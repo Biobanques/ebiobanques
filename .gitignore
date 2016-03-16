@@ -1,6 +1,5 @@
 /ebiobanques/protected/runtime/application.log
 /ebiobanques/assets/f9bf41b/
-/ebiobanques/CommonProperties.php
 /ebiobanques/assets/
 /scripts/script_rebuild_prod_de1185_via_ssh_rsync.sh
 /vendor/
@@ -22,3 +21,6 @@
 /ebiobanques/protected/commands/SwitchIdsCommand.php
 /tests_selenium/run_partial.sh
 /tests_selenium/results_simple_user.html
+/notes_biocap
+/ebiobanques/protected/commands/testbbcpCommand.php
+/ebiobanques/CommonProperties.php

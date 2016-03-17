@@ -100,7 +100,7 @@ class SearchBiobankController extends Controller
         }
 
         $dataProvider = new EMongoDocumentDataProvider('Biobank', array('criteria' => $criteria, 'pagination' => false));
-        $mPDF1->WriteHTML($this->renderPartial('print', array('dataProvider' => $dataProvider), true));
+        $mPDF1->WriteHTML($this->renderPartial('_printPdf', array('dataProvider' => $dataProvider), true));
         $mPDF1->Output('biobanks_list.pdf', 'I');
     }
 
@@ -117,26 +117,45 @@ class SearchBiobankController extends Controller
         } else {
             $criteria = new EMongoCriteria;
         }
-        setlocale(LC_ALL, 'fr_FR.UTF-8');
-        $biobanks = Biobank::model()->findAll($criteria);
-        $firstLine = array_keys(Biobank::model()->attributeExportedLabels());
-        $firstLineConv = array();
-        foreach ($firstLine as $attributeLabel) {
-            $firstLineConv[] = iconv("UTF-8", "ASCII//TRANSLIT", $attributeLabel);
-        }
-        $data = array(1 => $firstLineConv);
-//        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
 
+        $biobanks = Biobank::model()->findAll($criteria);
+        $data = array(1 => array_keys(Biobank::model()->attributeExportedLabels()));
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
         foreach ($biobanks as $biobank) {
             $line = array();
             foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
 
                 if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
-                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                    if (is_string($biobank->$attribute))
+                        $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                    else {
+                        switch ($attribute) {
+                            case "address":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getAddress());
+                                break;
+                            case "responsable_op":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableOp());
+                                break;
+                            case "responsable_qual":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableQual());
+                                break;
+                            case "responsable_adj":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableAdj());
+                                break;
+                        }
+                    }
                 } else {
                     $line[] = "-";
                 }
             }
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
+            $contact = $biobank->getContact();
+//            if ($contact != null) {
+//                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $contact->getFullAddress());
+//            } else {
+//                $line[] = "No address";
+//            }
             $data[] = $line;
         }
         Yii::import('application.extensions.phpexcel.JPhpExcel');

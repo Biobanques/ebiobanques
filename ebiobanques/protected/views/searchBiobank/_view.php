@@ -17,6 +17,15 @@
                 case 'address':
                     echo nl2br($data->getAddress());
                     break;
+                case 'responsable_op':
+                    echo nl2br($data->getResponsableOp());
+                    break;
+                case 'responsable_qual':
+                    echo nl2br($data->getResponsableQual());
+                    break;
+                case 'responsable_adj':
+                    echo nl2br($data->getResponsableAdj());
+                    break;
                 case 'website':
                     echo CHtml::link($data->website, 'http://' . $data->website, array('target' => 'blank'));
                     break;

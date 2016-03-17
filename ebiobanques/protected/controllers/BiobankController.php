@@ -325,7 +325,7 @@ class BiobankController extends Controller
     }
 
     public function actionExportCsv() {
-        $model = new Biobank('search');
+        $model = new Biobank();
         $model->unsetAttributes();
         if (isset($_GET['Biobank']))
             $model->attributes = $_GET['Biobank'];
@@ -351,6 +351,21 @@ class BiobankController extends Controller
                 if (isset($model->$attribute)) {
                     if (!is_object($model->$attribute)) {
                         $datas[$attribute] = $model->$attribute;
+                    } else {
+                        switch ($attribute) {
+                            case "address":
+                                $datas[$attribute] = $model->getAddress();
+                                break;
+                            case "responsable_op":
+                                $datas[$attribute] = $model->getResponsableOp();
+                                break;
+                            case "responsable_qual":
+                                $datas[$attribute] = $model->getResponsableQual();
+                                break;
+                            case "responsable_adj":
+                                $datas[$attribute] = $model->getResponsableAdj();
+                                break;
+                        }
                     }
                 } else {
                     $datas[$attribute] = "";

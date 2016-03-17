@@ -66,6 +66,11 @@ body
 {
     display: inline;
     margin-left:2px;
+    border-right: 1px solid #bbb;
+}
+
+#mainmenu ul li:last-child {
+    border-right: none;
 }
 
 #mainmenu ul li a

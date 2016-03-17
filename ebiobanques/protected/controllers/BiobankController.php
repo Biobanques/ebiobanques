@@ -410,19 +410,36 @@ class BiobankController extends Controller
             foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
 
                 if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
-                    $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                    if (is_string($biobank->$attribute))
+                        $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                    else {
+                        switch ($attribute) {
+                            case "address":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getAddress());
+                                break;
+                            case "responsable_op":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableOp());
+                                break;
+                            case "responsable_qual":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableQual());
+                                break;
+                            case "responsable_adj":
+                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableAdj());
+                                break;
+                        }
+                    }
                 } else {
                     $line[] = "-";
                 }
             }
-            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
-            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
+//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
             $contact = $biobank->getContact();
-            if ($contact != null) {
-                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $contact->getFullAddress());
-            } else {
-                $line[] = "No address";
-            }
+//            if ($contact != null) {
+//                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $contact->getFullAddress());
+//            } else {
+//                $line[] = "No address";
+//            }
             $data[] = $line;
         }
         Yii::import('application.extensions.phpexcel.JPhpExcel');

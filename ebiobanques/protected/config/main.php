@@ -20,6 +20,7 @@ return array(
         'ext.*',
         'ext.bootstrap.*',
         'ext.bootstrap.widgets.*',
+        'ext.EHttpClient.*',
         'ext.EGMap.*',
         'ext.ExcelExt.*',
         //'ext.YiiMongoDbSuite.*',

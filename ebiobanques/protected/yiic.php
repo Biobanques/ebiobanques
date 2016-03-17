@@ -3,6 +3,7 @@
 date_default_timezone_set('Europe/Paris');
 //include common properties
 include dirname(__FILE__) . '/../CommonProperties.php';
+include dirname(__FILE__) . '/../CommonTools.php';
 
 // change the following paths if necessary
 $yiic = dirname(__FILE__) . '/../yii-1.1.17/framework/yiic.php';

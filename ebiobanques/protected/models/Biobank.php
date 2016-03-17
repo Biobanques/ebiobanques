@@ -164,6 +164,10 @@ class Biobank extends LoggableActiveRecord
      * @return boolean
      */
     public function beforeValidate() {
+        if (isset($this->address) && $this->address != null && (!isset($this->location) || $this->location == null)) {
+            CommonTools::getLatLong($this, false);
+        }
+
         if ($this->name == null) {
             Yii::log('Trying to store a biobank without name, operation refused', CLogger::LEVEL_WARNING);
         } else {
@@ -237,7 +241,7 @@ class Biobank extends LoggableActiveRecord
             /**
              * safes attributes : attributes not modified by th eapplication so without validation rule
              */
-            array('id,', 'safe'),
+            array('id', 'safe'),
         );
         if ($this->scenario == 'insert' || $this->scenario == 'update' || $this->scenario == 'search') {
             foreach ($this->attributes as $name => $value)
@@ -780,6 +784,7 @@ class Biobank extends LoggableActiveRecord
                 $this->website = 'http://' . $this->website;
             }
         }
+
         return parent::beforeSave();
     }
 

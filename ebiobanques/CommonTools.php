@@ -588,4 +588,48 @@ class CommonTools
         return $result;
     }
 
+    public function getLatLong($biobank, $saveAfterFind = true) {
+
+        if (isset($biobank->address->street) && isset($biobank->address->city) && isset($biobank->address->zip) && isset($biobank->address->country)) {
+
+            $requestAddress = str_ireplace(' ', '+', $biobank->address->street) . '+' . $biobank->address->zip . '+' . str_ireplace(' ', '+', $biobank->address->city) . '+' . $biobank->address->country;
+
+            $requestAddress = CommonTools::url($requestAddress);
+
+            $completeAddress = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $requestAddress;
+            $request = new EHttpClient($completeAddress);
+
+            $response = $request->request('GET');
+            $var = json_decode($response->getBody());
+            if ($var->status != "ZERO_RESULTS") {
+                echo "formated address : $requestAddress";
+                print_r($var->results[0]->geometry->location);
+                $biobank->latitude = $var->results[0]->geometry->location->lat;
+                $biobank->longitude = $var->results[0]->geometry->location->lng;
+                if (!property_exists($biobank, 'location'))
+                    $biobank->initSoftAttribute('location');
+                $biobank->location = array('type' => 'Point', 'coordinates' => array($biobank->longitude, $biobank->latitude));
+                if ($saveAfterFind)
+                    $biobank->save();
+            } else
+                Yii::log('Can\'t find coordinates from this adress : ' . print_r($biobank->address, true), CLogger::LEVEL_WARNING);
+        } else {
+            Yii::log('Can\'t find coordinates from this adress : ' . print_r($biobank->address, true), CLogger::LEVEL_WARNING);
+        }
+    }
+
+    /**
+     * Format url for google API
+     * @param type $url
+     * @return type
+     */
+    protected function url($url) {
+        $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
+        $url = trim($url, "-");
+        $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
+        $url = strtolower($url);
+        $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
+        return $url;
+    }
+
 }

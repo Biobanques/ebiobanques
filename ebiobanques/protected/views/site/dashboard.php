@@ -44,7 +44,7 @@ $this->pageTitle = Yii::app()->name;
         $this->beginWidget('zii.widgets.CPortlet', array('title' => "<i class='icon-adjust'></i>" . Yii::t('common', 'BioBkReg')));
         $this->widget('zii.widgets.grid.CGridView', array(
             'id' => 'echantillon-grid',
-            'dataProvider' => Biobank::model()->search(),
+            'dataProvider' => new EMongoDocumentDataProvider(Biobank::model()),
             'columns' => array(
                 'identifier',
                 'name',

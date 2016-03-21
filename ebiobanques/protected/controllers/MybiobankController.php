@@ -7,8 +7,8 @@
  * @author nicolas
  *
  */
-class MybiobankController extends Controller
-{
+class MybiobankController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -235,10 +235,20 @@ class MybiobankController extends Controller
      * @throws CHttpException
      */
     public function loadModel($mongoId) {
-        $model = Biobank::model()->findByPK(new MongoId($mongoId));
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
+        if ($mongoId == null) {
+            return null;
+        } else {
+            try {
+                $objMongoId = new MongoId($mongoId);
+                $model = Biobank::model()->findByPK($objMongoId);
+                if ($model === null)
+                    throw new CHttpException(404, 'The requested page does not exist.');
+                return $model;
+            } catch (MongoException $ex) {
+                //log error
+                Yii::log("error mongo exception on id mongo:".$mongoId,'error', 'application');
+            }
+        }
     }
 
     public function loadEchModel($id) {

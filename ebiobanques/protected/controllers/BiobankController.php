@@ -422,24 +422,26 @@ class BiobankController extends Controller
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         foreach ($biobanks as $biobank) {
             $line = array();
+            //echo "biobank:".$biobank->id;
+            //Yii::log('Pb converting string: : ' . $biobank->id, CLogger::LEVEL_ERROR);
             foreach (array_keys($biobank->attributeExportedLabels()) as $attribute) {
 
                 if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
                     if (is_string($biobank->$attribute))
-                        $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                        $line[] = CommonTools::convertStringToAscii( $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
                     else {
                         switch ($attribute) {
                             case "address":
-                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getAddress());
+                                $line[] = CommonTools::convertStringToAscii($biobank->getAddress());
                                 break;
                             case "responsable_op":
-                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableOp());
+                                $line[] = CommonTools::convertStringToAscii( $biobank->getResponsableOp());
                                 break;
                             case "responsable_qual":
-                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableQual());
+                                $line[] = CommonTools::convertStringToAscii( $biobank->getResponsableQual());
                                 break;
                             case "responsable_adj":
-                                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getResponsableAdj());
+                                $line[] = CommonTools::convertStringToAscii( $biobank->getResponsableAdj());
                                 break;
                         }
                     }
@@ -447,14 +449,6 @@ class BiobankController extends Controller
                     $line[] = "-";
                 }
             }
-//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getShortContact());
-//            $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $biobank->getEmailContact());
-            $contact = $biobank->getContact();
-//            if ($contact != null) {
-//                $line[] = iconv("UTF-8", "ASCII//TRANSLIT", $contact->getFullAddress());
-//            } else {
-//                $line[] = "No address";
-//            }
             $data[] = $line;
         }
         Yii::import('application.extensions.phpexcel.JPhpExcel');

@@ -2,8 +2,7 @@
 
 require_once 'protected/extensions/ExcelExt/PHPExcel/Reader/IReadFilter.php';
 
-class MyReadFilter implements PHPExcel_Reader_IReadFilter
-{
+class MyReadFilter implements PHPExcel_Reader_IReadFilter {
 
     public function readCell($column, $row, $worksheetName = '') {
         // Read title row and rows 20 - 30
@@ -22,11 +21,11 @@ class MyReadFilter implements PHPExcel_Reader_IReadFilter
  * @author nicolas malservet
  * @since version 0.1
  */
-class CommonTools
-{
+class CommonTools {
     /*
      * FORMAT DATE
      */
+
     const MYSQL_DATE_FORMAT = "Y-m-d H:i:s";
     const MYSQL_DATE_DAY_FORMAT = "Y-m-d 00:00:00";
     const FRENCH_DATE_FORMAT = "H:i:s d/m/Y";
@@ -630,6 +629,25 @@ class CommonTools
         $url = strtolower($url);
         $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
         return $url;
+    }
+
+    /**
+     * 
+     * return the string encoded into ASCII
+     * use //IGNORE instead of translit since php 5.4 
+     * because this method iconv return false and problem 
+     * if illegal characters are presents.
+     * if pb during conversion return an empty string
+     * @param type $string in UTF-8 format
+     */
+    public static function convertStringToAscii($string) {
+        $result="";
+        try {
+            $result=iconv("UTF-8", "ASCII//IGNORE", $string);
+        } catch (Exception $ex) {
+            Yii::log('Pb converting string: : ' . $string, CLogger::LEVEL_ERROR);
+        }
+        return $result;
     }
 
 }

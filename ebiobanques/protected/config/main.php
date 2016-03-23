@@ -76,11 +76,6 @@ return array(
                     'class'=>'CFileLogRoute',
                     'levels'=>'error, warning',
                 ),
-                CommonProperties::$DEV_MODE ?
-                        array(
-                    'class' => 'CProfileLogRoute',
-                    'report' => 'summary',
-                        ) : null,
             ),
         ),
         'ePdf' => array(

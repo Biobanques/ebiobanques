@@ -73,40 +73,14 @@ return array(
             'class' => 'CLogRouter',
             'routes' => array(
                 array(
-                    'class' => 'CFileLogRoute',
-                    'levels' => 'error, warning,info',
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'error, warning',
                 ),
                 CommonProperties::$DEV_MODE ?
                         array(
                     'class' => 'CProfileLogRoute',
                     'report' => 'summary',
                         ) : null,
-//                array(
-//                    'class' => 'ext.MongoDbSuite.EMongoDbLogRoute',
-//                    'levels' => '',
-//                    'connectionString' => CommonProperties::$CONNECTION_STRING,
-//                    'dbName' => 'interop',
-//                    'collectionName' => 'importFileLogs',
-//                    'categories' => array('importFile'),
-//                    'timestampType' => 'date',
-//                ),
-//                array(
-////
-//                    'class' => 'CPhpMailerLogRoute',
-//                    'levels' => 'error, warning',
-//                    'emails' => CommonProperties::$ADMIN_EMAIL,
-//                    'except' => array(
-//                        'exception.CHttpException.404',
-//                        'exception.CHttpException.403'
-//                    )
-//                ),
-//                CommonProperties::$DEV_MODE ?
-//                        array(
-//                    'class' => 'CWebLogRoute',
-//                    'levels' => 'error, warning,info',
-//                        ) : array('class' => 'CWebLogRoute',
-//                    'levels' => 'none',
-//                        ),
             ),
         ),
         'ePdf' => array(

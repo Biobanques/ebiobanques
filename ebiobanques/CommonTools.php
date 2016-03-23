@@ -587,7 +587,7 @@ class CommonTools {
         return $result;
     }
 
-    public function getLatLong($biobank, $saveAfterFind = true) {
+    public static function getLatLong($biobank, $saveAfterFind = true) {
 
         if (isset($biobank->address->street) && isset($biobank->address->city) && isset($biobank->address->zip) && isset($biobank->address->country)) {
 
@@ -622,7 +622,7 @@ class CommonTools {
      * @param type $url
      * @return type
      */
-    protected function url($url) {
+    public static function url($url) {
         $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
         $url = trim($url, "-");
         $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);

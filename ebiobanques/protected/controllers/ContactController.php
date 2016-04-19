@@ -173,7 +173,8 @@ class ContactController extends Controller
                 $countryCriteria = $_POST['GlobalContactForm']['pays'];
                 $contactCriteria->addCond('pays', '==', new MongoRegex('/' . $_POST['GlobalContactForm']['pays'] . '/i'));
             }
-            if (!empty($contactCriteria->getConditions()) && isset($contactCriteria->getConditions()['$and']))
+            $arConditions=$contactCriteria->getConditions();
+            if (!empty($arConditions) && isset($arConditions['$and']))
                 $dataContact = Contact::model()->findAll($contactCriteria);
         }else {
             $contactCriteria->addCond('biobank_id', '!=', null);

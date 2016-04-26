@@ -22,8 +22,8 @@ return array(
             'class' => 'EMongoDB',
             'connectionString' => CommonProperties::$CONNECTION_STRING,
             'dbName' => 'interop',
-            'fsyncFlag' => false,
-            'safeFlag' => false,
+            'fsyncFlag' => true,
+            'safeFlag' => true,
             'useCursor' => false
         ),
         'log' => array(

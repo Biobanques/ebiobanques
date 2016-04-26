@@ -260,8 +260,6 @@ class SiteController extends Controller
         if (isset($_GET ['Biobank']))
             $model->attributes = $_GET ['Biobank'];
         if (isset($_GET ['Address'])) {
-
-
             $model->address->attributes = $_GET['Address'];
         }
         $this->render('biobanks', array(

@@ -49,8 +49,9 @@ class StatTools
 //            $fileCriteria = new EMongoCriteria;
 //            $fileCriteria->date_import = new MongoRegex('/' . $filterDate . '*/i');
             $currentMonth = date("M", strtotime('-' . $i . ' month' . $dateJour));
+            $currentMonthDigits = date("m", strtotime('-' . $i . ' month' . $dateJour));
             $currentYear = date("Y", strtotime('-' . $i . ' month' . $dateJour));
-            $regexString = '/[a-z]{3} ' . $currentMonth . ' [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [a-z]{3} ' . $currentYear . '/i';
+            $regexString = "/([a-z]{3} $currentMonth [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [a-z]{3} $currentYear)|($currentYear-$currentMonthDigits-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})/i";
             $fileCriteria = new EMongoCriteria;
             $fileCriteria->date_import = new MongoRegex($regexString);
             $monthCount = 0;
@@ -59,8 +60,9 @@ class StatTools
             if ((count($files)) > 0) {
                 $arrayOfFilesId = array();
                 foreach ($files as $fichier) {
-
+//ajout des 2 car erreurs partielle en base sur les echantillons issus de xls (enregistrés avec fichier->_id)
                     $arrayOfFilesId [] = (string) $fichier->_id;
+                    $arrayOfFilesId [] = $fichier->_id;
                 }
                 $criteria = new EMongoCriteria ();
                 $criteria->file_imported_id('in', $arrayOfFilesId);
@@ -139,10 +141,11 @@ class StatTools
 //            $criteria = new EMongoCriteria;
 //            $criteria->date_import = new MongoRegex('/' . $filterDate . '*/i');
             $currentMonth = date("M", strtotime('-' . $i . ' month' . $dateJour));
+            $currentMonthDigits = date("m", strtotime('-' . $i . ' month' . $dateJour));
             $currentYear = date("Y", strtotime('-' . $i . ' month' . $dateJour));
-            $filterDate = $currentYear . "-" . $currentMonth . "%";
+            // $filterDate = $currentYear . "-" . $currentMonth . "%";
             $criteria = new EMongoCriteria;
-            $regexString = '/[a-z]{3} ' . $currentMonth . ' [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [a-z]{3} ' . $currentYear . '/i';
+            $regexString = "/([a-z]{3} $currentMonth [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [a-z]{3} $currentYear)|($currentYear-$currentMonthDigits-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})/i";
             $criteria->date_import = new MongoRegex($regexString);
 
             $monthCount = FileImported::model()->count($criteria);

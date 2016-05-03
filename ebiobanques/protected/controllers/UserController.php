@@ -92,6 +92,8 @@ class UserController extends Controller
             if ($model->validate()) {
                 if ($model->update()) {
                     Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
+                    //send email if status change to validated
+                    
                     $this->redirect(array('view', 'id' => $model->_id));
                 }
             }

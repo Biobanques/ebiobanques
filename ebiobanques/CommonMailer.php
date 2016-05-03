@@ -148,8 +148,8 @@ class CommonMailer
 								<tr>
 								<td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
 								<a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-								ebiobanques.fr </a> - copyright BioSoftware Factory
-								<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
+								ebiobanques.fr </a> 
+								<a href=\"http://www.biobanques.eu/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
 								</td>
 								</tr>
 								</table>
@@ -194,13 +194,13 @@ class CommonMailer
     }
 
     /**
-     * send an email to indicate to the admin that there is a new user to confirm
+     * send an email to indicate to the manager that there is a new user to confirm
      * @param type $user
      * @return type
      */
     public static function sendSubscribeAdminMail($user) {
         $base = CommonTools::isInDevMode() ? CommonMailer::DEV_URL : CommonMailer::PROD_URL;
-        $to = Yii::app()->params['adminEmail'];
+        $to = Yii::app()->params['managerEmail'];
         $subject = "Inscription d'un nouvel utilisateur sur ebiobanques.fr";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {

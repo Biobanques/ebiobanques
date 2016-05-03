@@ -103,6 +103,13 @@ return array(
 // using Yii::app()->params['paramName']
     'params' => array(
 // this is used in contact page
+        /**
+         * manager email : common manager user to administrate users
+         */
+        'managerEmail' => CommonProperties::$MANAGER_EMAIL,
+        /**
+         * admin email : common admin user to receive logs
+         */
         'adminEmail' => CommonProperties::$ADMIN_EMAIL,
         //variable pour activer systeme de mail
         'mailSystemActif' => CommonProperties::$MAIL_SYSTEM_ACTIVE,

@@ -38,7 +38,7 @@ class SendMailCommand extends CConsoleCommand
                 else
                     echo 'pb sending mail';
             }
-            echo "mails sent\n";
+            //echo "mails sent\n";
         }else {
             echo 'Le système d\'envoi de mail n\'est pas activé';
         }

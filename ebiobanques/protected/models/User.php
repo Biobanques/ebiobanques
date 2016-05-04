@@ -101,8 +101,14 @@ class User extends LoggableActiveRecord
 
         foreach ($this->getSafeAttributeNames()as $attribute) {
             if ($this->$attribute != null && $attribute != 'preferences') {
-                if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id')
-                    $criteria->addCond($attribute, '==', $this->$attribute);
+                if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id'){
+                    $var=$this->$attribute;
+                    if ($attribute == 'profil' || $attribute == 'inactif'){
+                        $var =intval($this->$attribute);
+                    }
+                    $criteria->addCond($attribute, '==', $var);
+                }
+                
                 else
                     $criteria->addCond($attribute, '==', new MongoRegex('/' . $this->$attribute . '*/i'));
             }

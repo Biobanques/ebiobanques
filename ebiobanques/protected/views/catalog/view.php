@@ -1,6 +1,7 @@
 <?php
 /* @var $this BiobankController */
 /* @var $model Biobank */
+/* @var $samples Sample */
 
 try {
     $logo = isset($model->activeLogo) && $model->activeLogo != null && $model->activeLogo != "" ? Logo::model()->findByPk(new MongoId($model->activeLogo)) : null;
@@ -143,7 +144,7 @@ foreach ($attributes as $attributeName => $attributeValue) {
     <?php
     $imageTick = CHtml::image(Yii::app()->baseUrl . '/images/tick.png', "available");
     $cut = 9;
-    //affichage des pathaologies en ligne
+    //affichage des pathologies en ligne
     echo "<table><tr>";
     $i = 0;
     foreach ($attributes_diagnostic_availables as $attDiag) {
@@ -173,6 +174,19 @@ foreach ($attributes as $attributeName => $attributeValue) {
     ?>
     <div><br></div>
     <h4>Nombre d'échantillons collectés</h4>
+    <?php
+    if ($aggsamples!=NULL)
+        $this->widget('zii.widgets.CDetailView', array(
+        'data' => $aggsamples,
+        'attributes' => array('_id',
+            array(
+            'name'=>'origin',
+            'type'=>'text',
+            'value'=>implode(" \r ", $aggsamples->origin)),
+        'countmen','countwomen','countnot'),
+    ));
+    //var_dump($aggsamples);
+    ?>
     <div class="grid-nbs"><b>Types</b></div><div class="grid-nbs-nb"><b>Affected</b></div><div class="grid-nbs-nb"><b>Relatives</b></div>
     <div style="clear:both;"></div>
     <?php

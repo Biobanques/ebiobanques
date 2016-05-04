@@ -79,8 +79,16 @@ class CatalogController extends Controller
      */
     public function actionView($id) {
         $this->layout = '//layouts/detailview';
+        Yii::log('valeur de lid : '.$id,Clogger::LEVEL_ERROR);
+        $criteria = new EMongoCriteria;
+        $criteria->_id = $id;
+        $aggsamples = Biobanksamples::model()->find($criteria);
+
+        // biobanque avec base aggregée 552fe5ef0175447b308b4642
+        //Yii::log('valeur de laggsamples : '.$aggsamples->_id,Clogger::LEVEL_ERROR);
+        //echo "<h1>" . $aggsamples->count . "</h1>";
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model' => $this->loadModel($id), 'aggsamples' => $aggsamples
         ));
     }
 

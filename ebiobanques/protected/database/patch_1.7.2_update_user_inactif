@@ -1,0 +1,24 @@
+<?php
+
+/* 
+ * Apply this command with mongo client to update db user inactif type
+ */
+db.user.update({"inactif":"0"},{'$set':{"inactif":0}},false,true);
+/**
+ * Apply this command with mongo
+ */
+db.user.update({"inactif":"1"},{'$set':{"inactif":0}},false,true);
+/**
+ * check if all ok
+ */
+db.user.find({"inactif":"0"}).count();
+//Must be 0 as result
+db.user.find({"inactif":"1"}).count();
+//Must be 0 as result
+db.user.find({"inactif":0}).count();
+//Must be number!=0 as result
+db.user.find({"inactif":1}).count();
+//Must be number!=0 as result
+?>
+
+

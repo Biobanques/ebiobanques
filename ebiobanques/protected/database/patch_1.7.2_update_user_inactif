@@ -7,7 +7,7 @@ db.user.update({"inactif":"0"},{'$set':{"inactif":0}},false,true);
 /**
  * Apply this command with mongo
  */
-db.user.update({"inactif":"1"},{'$set':{"inactif":0}},false,true);
+db.user.update({"inactif":"1"},{'$set':{"inactif":1}},false,true);
 /**
  * check if all ok
  */

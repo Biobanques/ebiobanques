@@ -71,6 +71,7 @@ c: fr
             $attributes = array();
 
             $attributes['biobankCountry'] = "FR";
+            $attributes['bioResourceReference'] = $biobank->identifier;
             $attributes['biobankID'] = "FR_" . $biobank->identifier;
             $attributes['biobankName'] = $biobank->name;
             $attributes['biobankAcronym'] = isset($biobank->acronym) ? $biobank->acronym : 'FALSE';

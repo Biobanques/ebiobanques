@@ -32,6 +32,28 @@ Yii::app()->clientScript->registerScript('test', "
  	$('#biobank_info').toggle(true);
  	return false;
  });
+  $('#partenaires').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_partners').toggle(true);
+ 	return false;
+ });
+ $('#materiel').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_material').toggle(true);
+ 	return false;
+ });
+
+ $('#reseau').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_network').toggle(true);
+ 	return false;
+ });
  $('#other').click(function(){
   $('.testonglets').removeClass('active');
  $(this).addClass('active');
@@ -98,10 +120,43 @@ $attributes_info = array(
     'connector_installed',
     'connector_version',
 );
+$attributes_network = [
+    'networkAcronym',
+    'NetworkCommonCharter',
+    'NetworkCommonCollectionFocus',
+    'NetworkCommonDataAccessPolicy',
+    'NetworkCommonMTA',
+    'NetworkCommonRepresentation',
+    'NetworkCommonSampleAccessPolicy',
+    'NetworkCommonSOPs',
+    'NetworkCommonURL',
+    'NetworkDescription',
+    'NetworkJuridicalPerson',
+    'NetworkName',
+    'NetworkURL',
+];
 
+
+
+$attributes_partners = [
+
+    'PartnerCharterSigned',
+    'collaborationPartnersCommercial',
+    'collaborationPartnersNonforprofit',
+];
+
+
+$attributes_material = [
+
+    'materialStoredDNA',
+    'materialStoredPlasma',
+    'materialStoredSerum',
+    'materialStoredTissueFFPE',
+    'materialStoredTissueFrozen',
+];
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, $attributes_network, $attributes_partners, $attributes_material, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine', 'location'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {
@@ -123,6 +178,9 @@ foreach ($attributes as $attributeName => $attributeValue)
         <li class="testonglets" id="qualite"><a href="#"> Qualité </a></li>
         <li class="testonglets" id="cims"><a href="#"> Codes CIM </a></li>
         <li class="testonglets" id="informatique"><a href="#"> Informatique </a></li>
+        <li class="testonglets" id="reseau"><a href="#"> Reseau </a></li>
+        <li class="testonglets" id="partenaires"><a href="#"> Partenaires </a></li>
+        <li class="testonglets" id="materiel"><a href="#"> Materiel </a></li>
         <li class="testonglets" id="other"><a href="#"> Autres </a></li>
     </ul>
 </div>
@@ -161,6 +219,33 @@ foreach ($attributes as $attributeName => $attributeValue)
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
         'attributes' => $attributes_info
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_partners" style="display: none">
+
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_partners
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_material" style="display: none">
+
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_material
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_network" style="display: none">
+
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_network
     ));
     ?>
 </div>

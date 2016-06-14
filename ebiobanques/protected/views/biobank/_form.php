@@ -171,6 +171,7 @@ $attributes_oblig = array(
 
 $attributes_facult = array(
     'website',
+    'acronym',
     // 'vitrine',
     'folder_reception',
     'folder_done',
@@ -198,7 +199,7 @@ $listOnglets['codes_cim'] = $cims;
 $attributes_info = array(
     array('attributeName' => 'gest_software', 'value' => CommonTools::getSoftwareList()),
     'other_software',
-    array('attributeName' => 'connector_installed', 'value' => array('Oui' => 'Oui', 'Non' => 'Non')),
+    array('attributeName' => 'connector_installed', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
     'connector_version',
 );
 $listOnglets['info'] = $attributes_info;
@@ -232,9 +233,44 @@ $attributes_sampling = array(
 );
 $listOnglets['sampling'] = $attributes_sampling;
 
+$attributes_network = [
+    'networkAcronym',
+    array('attributeName' => 'NetworkCommonCharter', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonCollectionFocus', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonDataAccessPolicy', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonMTA', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonRepresentation', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonSampleAccessPolicy', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonSOPs', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'NetworkCommonURL', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    'NetworkDescription',
+    'NetworkJuridicalPerson',
+    'NetworkName',
+    'NetworkURL',
+];
+$listOnglets['Network'] = $attributes_network;
+
+
+$attributes_partners = [
+
+    array('attributeName' => 'PartnerCharterSigned', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'collaborationPartnersCommercial', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'collaborationPartnersNonforprofit', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+];
+$listOnglets['Partners-collaboration'] = $attributes_partners;
+
+$attributes_material = [
+
+    array('attributeName' => 'materialStoredDNA', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'materialStoredPlasma', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'materialStoredSerum', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'materialStoredTissueFFPE', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+    array('attributeName' => 'materialStoredTissueFrozen', 'value' => array('TRUE' => 'Oui', 'FALSE' => 'Non')),
+];
+$listOnglets['Material'] = $attributes_material;
 //make array of attributes stored but not defined in the common model
 $attributes_other = array();
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, $cims, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, $attributes_network, $attributes_partners, $attributes_material, $cims, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo'));
 
 $att = $model->getAttributes();
 foreach ($att as $attributeName => $attributeValue) {

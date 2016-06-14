@@ -69,10 +69,11 @@ c: fr
         $biobanks = Biobank::model()->findAll();
         foreach ($biobanks as $biobank) {
             $attributes = array();
+
             $attributes['biobankCountry'] = "FR";
             $attributes['biobankID'] = "FR_" . $biobank->identifier;
             $attributes['biobankName'] = $biobank->name;
-            $attributes['biobankAcronym'] = "FALSE";
+            $attributes['biobankAcronym'] = isset($biobank->acronym) ? $biobank->acronym : 'FALSE';
             $attributes['biobankJuridicalPerson'] = $biobank->getShortContact();
             if (isset($biobank->presentation_en))
                 $attributes['biobankDescription'] = $biobank->presentation_en;
@@ -88,8 +89,9 @@ c: fr
                 $attributes['geoLongitude'] = $biobank->longitude;
 
             //collaborationsStatus
-            $attributes['collaborationPartnersCommercial'] = "FALSE";
-            $attributes['collaborationPartnersNonforprofit'] = "FALSE";
+            $attributes['collaborationPartnersCommercial'] = isset($biobank->collaborationPartnersCommercial) ? $biobank->collaborationPartnersCommercial : "FALSE";
+            $attributes['collaborationPartnersNonforprofit'] = isset($biobank->collaborationPartnersNonforprofit) ? $biobank->collaborationPartnersNonforprofit : "FALSE";
+
 
             $attributes['collectionIDRef'] = "FALSE";
             $attributes['biobankNetworkIDRef'] = "FALSE";
@@ -99,22 +101,22 @@ c: fr
             $attributes['biobankHISAvailable'] = "FALSE";
 
             //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
-            $attributes['biobankPartnerCharterSigned'] = "FALSE";
+            $attributes['biobankPartnerCharterSigned'] = isset($biobank->PartnerCharterSigned) ? $biobank->PartnerCharterSigned : "FALSE";
 
 
             //Biobank material
             //TODO flase in cappital
-            $attributes['materialStoredDNA'] = "FALSE";
-            $attributes['materialStoredPlasma'] = "FALSE";
-            $attributes['materialStoredSerum'] = "FALSE";
+            $attributes['materialStoredDNA'] = isset($biobank->materialStoredDNA) ? $biobank->materialStoredDNA : "FALSE";
+            $attributes['materialStoredPlasma'] = isset($biobank->materialStoredPlasma) ? $biobank->materialStoredPlasma : "FALSE";
+            $attributes['materialStoredSerum'] = isset($biobank->materialStoredSerum) ? $biobank->materialStoredSerum : "FALSE";
             $attributes['materialStoredUrine'] = "FALSE";
             $attributes['materialStoredSaliva'] = "FALSE";
             $attributes['materialStoredFaeces'] = "FALSE";
             $attributes['materialStoredOther'] = "FALSE";
             $attributes['materialStoredRNA'] = "FALSE";
             $attributes['materialStoredBlood'] = "FALSE";
-            $attributes['materialStoredTissueFrozen'] = "FALSE";
-            $attributes['materialStoredTissueFFPE'] = "FALSE";
+            $attributes['materialStoredTissueFrozen'] = isset($biobank->materialStoredTissueFrozen) ? $biobank->materialStoredTissueFrozen : "FALSE";
+            $attributes['materialStoredTissueFFPE'] = isset($biobank->materialStoredTissueFFPE) ? $biobank->materialStoredTissueFFPE : "FALSE";
             $attributes['materialStoredCellLines'] = "FALSE";
             $attributes['materialStoredPathogen'] = "FALSE";
 
@@ -138,19 +140,20 @@ c: fr
             //Biobank Network
 
             $attributes['biobankNetworkID'] = "FALSE";
-            $attributes['biobankNetworkName'] = "FALSE";
-            $attributes['biobankNetworkAcronym'] = "FALSE";
-            $attributes['biobankNetworkDescription'] = "FALSE";
-            $attributes['biobankNetworkCommonCollectionFocus'] = "FALSE";
-            $attributes['biobankNetworkCommonCharter'] = "FALSE";
-            $attributes['biobankNetworkCommonSOPs'] = "FALSE";
-            $attributes['biobankNetworkCommonDataAccessPolicy'] = "FALSE";
-            $attributes['biobankNetworkCommonSampleAccessPolicy'] = "FALSE";
-            $attributes['biobankNetworkCommonMTA'] = "FALSE";
-            $attributes['biobankNetworkCommonRepresentation'] = "FALSE";
-            $attributes['biobankNetworkCommonURL'] = "FALSE";
-            $attributes['biobankNetworkURL'] = "FALSE";
-            $attributes['biobankNetworkJuridicalPerson'] = "FALSE";
+            $attributes['biobankNetworkName'] = isset($biobank->NetworkName) ? $biobank->NetworkName : "FALSE";
+            $attributes['biobankNetworkAcronym'] = isset($biobank->networkAcronym) ? $biobank->networkAcronym : "FALSE";
+            $attributes['biobankNetworkDescription'] = isset($biobank->NetworkDescription) ? $biobank->NetworkDescription : "FALSE";
+            $attributes['biobankNetworkCommonCollectionFocus'] = isset($biobank->NetworkCommonCollectionFocus) ? $biobank->NetworkCommonCollectionFocus : "FALSE";
+            $attributes['biobankNetworkCommonCharter'] = isset($biobank->NetworkCommonCharter) ? $biobank->NetworkCommonCharter : "FALSE";
+            $attributes['biobankNetworkCommonSOPs'] = isset($biobank->NetworkCommonSOPs) ? $biobank->NetworkCommonSOPs : "FALSE";
+            $attributes['biobankNetworkCommonDataAccessPolicy'] = isset($biobank->NetworkCommonDataAccessPolicy) ? $biobank->NetworkCommonDataAccessPolicy : "FALSE";
+            $attributes['biobankNetworkCommonSampleAccessPolicy'] = isset($biobank->NetworkCommonSampleAccessPolicy) ? $biobank->NetworkCommonSampleAccessPolicy : "FALSE";
+            $attributes['biobankNetworkCommonMTA'] = isset($biobank->NetworkCommonMTA) ? $biobank->NetworkCommonMTA : "FALSE";
+            $attributes['biobankNetworkCommonRepresentation'] = isset($biobank->NetworkCommonRepresentation) ? $biobank->NetworkCommonRepresentation : "FALSE";
+            $attributes['biobankNetworkCommonURL'] = isset($biobank->NetworkCommonURL) ? $biobank->NetworkCommonURL : "FALSE";
+            $attributes['biobankNetworkURL'] = isset($biobank->NetworkURL) ? $biobank->NetworkURL : "FALSE";
+            $attributes['biobankNetworkJuridicalPerson'] = isset($biobank->NetworkJuridicalPerson) ? $biobank->NetworkJuridicalPerson : "FALSE";
+
 
             //Collection
 
@@ -158,13 +161,13 @@ c: fr
             $attributes['collectionAcronym'] = "FALSE";
             $attributes['collectionName'] = $biobank->collection_name;
             $attributes['collectionDescription'] = "FALSE";
-            $attributes['collectionSexMale'] = "FALSE";
-            $attributes['collectionSexFemale'] = "FALSE";
+            $attributes['collectionSexMale'] = "TRUE";
+            $attributes['collectionSexFemale'] = "TRUE";
             $attributes['collectionSexUnknown'] = "FALSE";
             $attributes['collectionAgeLow'] = "FALSE";
             $attributes['collectionAgeHigh'] = "FALSE";
             $attributes['collectionAgeUnit'] = "FALSE";
-            $attributes['collectionAvailableBiologicalSamples'] = "FALSE";
+            $attributes['collectionAvailableBiologicalSamples'] = "TRUE";
             $attributes['collectionAvailableSurveyData'] = "FALSE";
             $attributes['collectionAvailableImagingData'] = "FALSE";
             $attributes['collectionAvailableMedicalRecords'] = "FALSE";

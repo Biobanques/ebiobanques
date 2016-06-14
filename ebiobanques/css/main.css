@@ -328,7 +328,7 @@ width: 100%
         list-style-type : none;
         left : 50%;
         margin-top : 0;
-        width : 430px;
+        /*width : 430px;*/
 }
 
 #onglets li

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * find :  \$attributes\[\'(\w*)\'\] = (.*);
+ * replace : \$this\-\>addToEntry\(\$biobankEntry, '$1',$2\);
+ *
+ */
+
+
+require_once(Yii::app()->basePath . '/../../vendor/pear/net_ldap2/Net/LDAP2/LDIF.php');
+
 class ApiController extends Controller
 {
     /**
@@ -56,9 +65,17 @@ class ApiController extends Controller
      * get biobank infos and convert into an LDIF format
      * @return string
      */
+    public function addToEntry(Net_LDAP2_Entry $entry, $name, $value) {
+        if (isset($value) && $value != null && $value != '' && isset($name) && $name != null && $name != '')
+            $entry->add([$name => $value]);
+    }
+
+    /**
+     * get biobank infos and convert into an LDIF format
+     * @return string
+     */
     private function getBiobanksLDIF() {
-        $result = "
-dn: c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
+        $result = "dn: c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu
 objectClass: country
 objectClass: top
 c: fr
@@ -67,148 +84,174 @@ c: fr
         //FIXME Mandatory empty line here ( TODO use ldif exporter to check syntax)
 
         $biobanks = Biobank::model()->findAll();
+
+        $entries = [];
+        $first = new Net_LDAP2_Entry([], "c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu");
+        $first->add(['objectClass' => 'country']);
+        $first->add(['objectClass' => 'top']);
+        $first->add(['c' => 'fr']);
+        $entries[] = $first;
         foreach ($biobanks as $biobank) {
-            $attributes = array();
+            $biobankId = "FR_" . $biobank->identifier;
+            $collectionId = $biobank->collection_id;
 
-            $attributes['biobankCountry'] = "FR";
-            $attributes['bioResourceReference'] = $biobank->identifier;
-            $attributes['biobankID'] = "FR_" . $biobank->identifier;
-            $attributes['biobankName'] = $biobank->name;
-            $attributes['biobankAcronym'] = isset($biobank->acronym) ? $biobank->acronym : 'FALSE';
-            $attributes['biobankJuridicalPerson'] = $biobank->getShortContact();
+            /*
+             * Declare Entries for biobank, contact and Collection, and set reference to contact in biobank and collection entries
+             */
+            $biobankEntry = new Net_LDAP2_Entry([], "biobankID=bbmri-eric:ID:" . trim($biobankId) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n");
+            $collectionEntry = new Net_LDAP2_Entry([], "collectionID=bbmri-eric:ID:" . trim($biobankId) . ":collection:" . str_replace(' ', '', $collectionId) . ",biobankID=bbmri-eric:ID:" . trim($biobankId) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n");
+            $contactEntry = new Net_LDAP2_Entry([], "contactID=bbmri-eric:contact:" . trim($biobankId) . ",c=fr,ou=contacts,dc=directory,dc=bbmri-eric,dc=eu\n");
+
+
+
+            $this->addToEntry($biobankEntry, 'objectClass', "biobank");
+            $this->addToEntry($biobankEntry, 'objectClass', "biobankClinical");
+            $this->addToEntry($biobankEntry, 'contactIDRef', "bbmri-eric:contact:" . trim($biobankId));
+            $this->addToEntry($biobankEntry, 'contactPriority', 2);
+            $this->addToEntry($collectionEntry, 'objectClass', "collection");
+            $this->addToEntry($collectionEntry, 'contactIDRef', "bbmri-eric:contact:" . trim($biobankId));
+            $this->addToEntry($collectionEntry, 'contactPriority', 2);
+
+            $this->addToEntry($contactEntry, 'objectClass', 'contactInformation');
+            $this->addToEntry($biobankEntry, 'biobankCountry', 'FR');
+            $this->addToEntry($biobankEntry, 'bioResourceReference', $biobank->identifier);
+            $this->addToEntry($biobankEntry, 'biobankID', "FR_" . $biobank->identifier);
+            $this->addToEntry($biobankEntry, 'biobankName', $biobank->name);
+            $this->addToEntry($biobankEntry, 'biobankAcronym', isset($biobank->acronym) ? $biobank->acronym : 'FALSE');
+            $this->addToEntry($biobankEntry, 'biobankJuridicalPerson', $biobank->getShortContact());
             if (isset($biobank->presentation_en))
-                $attributes['biobankDescription'] = $biobank->presentation_en;
+                $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation_en);
             else if (isset($biobank->presentation))
-                $attributes['biobankDescription'] = $biobank->presentation;
+                $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation);
             if (isset($biobank->website))
-                $attributes['biobankURL'] = $biobank->getWebsiteWithHttp();
+                $this->addToEntry($biobankEntry, 'biobankURL', $biobank->getWebsiteWithHttp());
 
-            $attributes['biobankIDRef'] = "FALSE";
-            if (isset($biobank->latitude))
-                $attributes['geoLatitude'] = str_replace(',', '.', $biobank->latitude);
-            if (isset($biobank->longitude))
-                $attributes['geoLongitude'] = str_replace(',', '.', $biobank->longitude);
+            $this->addToEntry($biobankEntry, 'biobankIDRef', "FALSE");
+            if (isset($biobank->latitude) && preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $biobank->latitude))
+                $this->addToEntry($biobankEntry, 'geoLatitude', str_replace(',', '.', $biobank->latitude));
+            if (isset($biobank->longitude) && preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $biobank->longitude))
+                $this->addToEntry($biobankEntry, 'geoLongitude', str_replace(',', '.', $biobank->longitude));
 
             //collaborationsStatus
-            $attributes['collaborationPartnersCommercial'] = isset($biobank->collaborationPartnersCommercial) ? $biobank->collaborationPartnersCommercial : "FALSE";
-            $attributes['collaborationPartnersNonforprofit'] = isset($biobank->collaborationPartnersNonforprofit) ? $biobank->collaborationPartnersNonforprofit : "FALSE";
+            $this->addToEntry($biobankEntry, 'collaborationPartnersCommercial', isset($biobank->collaborationPartnersCommercial) ? $biobank->collaborationPartnersCommercial : "FALSE");
+            $this->addToEntry($biobankEntry, 'collaborationPartnersNonforprofit', isset($biobank->collaborationPartnersNonforprofit) ? $biobank->collaborationPartnersNonforprofit : "FALSE");
 
 
-            $attributes['collectionIDRef'] = "FALSE";
-            $attributes['biobankNetworkIDRef'] = "FALSE";
-            $attributes['biobankITSupportAvailable'] = "FALSE";
-            $attributes['biobankITStaffSize'] = "FALSE";
-            $attributes['biobankISAvailable'] = "FALSE";
-            $attributes['biobankHISAvailable'] = "FALSE";
+            $this->addToEntry($biobankEntry, 'collectionIDRef', "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkIDRef', "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankITSupportAvailable', "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankITStaffSize', "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankISAvailable', "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankHISAvailable', "FALSE");
 
             //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
-            $attributes['biobankPartnerCharterSigned'] = isset($biobank->PartnerCharterSigned) ? $biobank->PartnerCharterSigned : "FALSE";
+            $this->addToEntry($biobankEntry, 'biobankPartnerCharterSigned', isset($biobank->PartnerCharterSigned) ? $biobank->PartnerCharterSigned : "FALSE");
 
 
             //Biobank material
             //TODO flase in cappital
-            $attributes['materialStoredDNA'] = isset($biobank->materialStoredDNA) ? $biobank->materialStoredDNA : "FALSE";
-            $attributes['materialStoredPlasma'] = isset($biobank->materialStoredPlasma) ? $biobank->materialStoredPlasma : "FALSE";
-            $attributes['materialStoredSerum'] = isset($biobank->materialStoredSerum) ? $biobank->materialStoredSerum : "FALSE";
-            $attributes['materialStoredUrine'] = "FALSE";
-            $attributes['materialStoredSaliva'] = "FALSE";
-            $attributes['materialStoredFaeces'] = "FALSE";
-            $attributes['materialStoredOther'] = "FALSE";
-            $attributes['materialStoredRNA'] = "FALSE";
-            $attributes['materialStoredBlood'] = "FALSE";
-            $attributes['materialStoredTissueFrozen'] = isset($biobank->materialStoredTissueFrozen) ? $biobank->materialStoredTissueFrozen : "FALSE";
-            $attributes['materialStoredTissueFFPE'] = isset($biobank->materialStoredTissueFFPE) ? $biobank->materialStoredTissueFFPE : "FALSE";
-            $attributes['materialStoredCellLines'] = "FALSE";
-            $attributes['materialStoredPathogen'] = "FALSE";
+            $this->addToEntry($collectionEntry, 'materialStoredDNA', isset($biobank->materialStoredDNA) ? $biobank->materialStoredDNA : "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredPlasma', isset($biobank->materialStoredPlasma) ? $biobank->materialStoredPlasma : "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredSerum', isset($biobank->materialStoredSerum) ? $biobank->materialStoredSerum : "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredUrine', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredSaliva', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredFaeces', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredOther', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredRNA', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredBlood', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredTissueFrozen', isset($biobank->materialStoredTissueFrozen) ? $biobank->materialStoredTissueFrozen : "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredTissueFFPE', isset($biobank->materialStoredTissueFFPE) ? $biobank->materialStoredTissueFFPE : "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredCellLines', "FALSE");
+            $this->addToEntry($collectionEntry, 'materialStoredPathogen', "FALSE");
 
 
-            $attributes['temperatureRoom'] = "FALSE";
-            $attributes['temperature2to10'] = "FALSE";
-            $attributes['temperature-18to-35'] = "FALSE";
-            $attributes['temperature-60to-85'] = "FALSE";
-            $attributes['temperatureLN'] = "FALSE";
-            $attributes['temperatureOther'] = "FALSE";
+            $this->addToEntry($biobankEntry, 'temperatureRoom', "FALSE");
+            $this->addToEntry($biobankEntry, 'temperature2to10', "FALSE");
+            $this->addToEntry($biobankEntry, 'temperature18to35', "FALSE");
+            $this->addToEntry($biobankEntry, 'temperature60to85', "FALSE");
+            $this->addToEntry($biobankEntry, 'temperatureLN', "FALSE");
+            $this->addToEntry($biobankEntry, 'temperatureOther', "FALSE");
 
 
-            // $attributes['biobankMaterialStoredcDNAmRNA'] = "FALSE";
-            // $attributes['biobankMaterialStoredmicroRNA'] = "FALSE";
-            // $attributes['biobankMaterialStoredWholeBlood'] = "FALSE";
-            // $attributes['biobankMaterialStoredPBC'] = "FALSE";
-            // $attributes['biobankMaterialStoredTissueCryo'] = "FALSE";
-            // $attributes['biobankMaterialStoredTissueParaffin'] = "FALSE";
-            // $attributes['biobankMaterialStoredImmortalizedCellLines'] = "FALSE";
-            //  $attributes['biobankMaterialStoredIsolatedPathogen'] = "FALSE";
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredcDNAmRNA',"FALSE");
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredmicroRNA',"FALSE");
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredWholeBlood',"FALSE");
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredPBC',"FALSE");
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredTissueCryo',"FALSE");
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredTissueParaffin',"FALSE");
+            // $this->addToEntry($biobankEntry, 'biobankMaterialStoredImmortalizedCellLines',"FALSE");
+            //  $this->addToEntry($biobankEntry, 'biobankMaterialStoredIsolatedPathogen',"FALSE");
             //Biobank Network
 
-            $attributes['biobankNetworkID'] = "FALSE";
-            $attributes['biobankNetworkName'] = isset($biobank->NetworkName) ? $biobank->NetworkName : "FALSE";
-            $attributes['biobankNetworkAcronym'] = isset($biobank->networkAcronym) ? $biobank->networkAcronym : "FALSE";
-            $attributes['biobankNetworkDescription'] = isset($biobank->NetworkDescription) ? $biobank->NetworkDescription : "FALSE";
-            $attributes['biobankNetworkCommonCollectionFocus'] = isset($biobank->NetworkCommonCollectionFocus) ? $biobank->NetworkCommonCollectionFocus : "FALSE";
-            $attributes['biobankNetworkCommonCharter'] = isset($biobank->NetworkCommonCharter) ? $biobank->NetworkCommonCharter : "FALSE";
-            $attributes['biobankNetworkCommonSOPs'] = isset($biobank->NetworkCommonSOPs) ? $biobank->NetworkCommonSOPs : "FALSE";
-            $attributes['biobankNetworkCommonDataAccessPolicy'] = isset($biobank->NetworkCommonDataAccessPolicy) ? $biobank->NetworkCommonDataAccessPolicy : "FALSE";
-            $attributes['biobankNetworkCommonSampleAccessPolicy'] = isset($biobank->NetworkCommonSampleAccessPolicy) ? $biobank->NetworkCommonSampleAccessPolicy : "FALSE";
-            $attributes['biobankNetworkCommonMTA'] = isset($biobank->NetworkCommonMTA) ? $biobank->NetworkCommonMTA : "FALSE";
-            $attributes['biobankNetworkCommonRepresentation'] = isset($biobank->NetworkCommonRepresentation) ? $biobank->NetworkCommonRepresentation : "FALSE";
-            $attributes['biobankNetworkCommonURL'] = isset($biobank->NetworkCommonURL) ? $biobank->NetworkCommonURL : "FALSE";
-            $attributes['biobankNetworkURL'] = isset($biobank->NetworkURL) ? $biobank->NetworkURL : "FALSE";
-            $attributes['biobankNetworkJuridicalPerson'] = isset($biobank->NetworkJuridicalPerson) ? $biobank->NetworkJuridicalPerson : "FALSE";
+            $this->addToEntry($biobankEntry, 'biobankNetworkID', "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkName', isset($biobank->NetworkName) ? $biobank->NetworkName : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkAcronym', isset($biobank->networkAcronym) ? $biobank->networkAcronym : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkDescription', isset($biobank->NetworkDescription) ? $biobank->NetworkDescription : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonCollectionFocus', isset($biobank->NetworkCommonCollectionFocus) ? $biobank->NetworkCommonCollectionFocus : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonCharter', isset($biobank->NetworkCommonCharter) ? $biobank->NetworkCommonCharter : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonSOPs', isset($biobank->NetworkCommonSOPs) ? $biobank->NetworkCommonSOPs : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonDataAccessPolicy', isset($biobank->NetworkCommonDataAccessPolicy) ? $biobank->NetworkCommonDataAccessPolicy : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonSampleAccessPolicy', isset($biobank->NetworkCommonSampleAccessPolicy) ? $biobank->NetworkCommonSampleAccessPolicy : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonMTA', isset($biobank->NetworkCommonMTA) ? $biobank->NetworkCommonMTA : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonRepresentation', isset($biobank->NetworkCommonRepresentation) ? $biobank->NetworkCommonRepresentation : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkCommonURL', isset($biobank->NetworkCommonURL) ? $biobank->NetworkCommonURL : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkURL', isset($biobank->NetworkURL) ? $biobank->NetworkURL : "FALSE");
+            $this->addToEntry($biobankEntry, 'biobankNetworkJuridicalPerson', isset($biobank->NetworkJuridicalPerson) ? $biobank->NetworkJuridicalPerson : "FALSE");
 
 
             //Collection
 
-            $attributes['collectionID'] = "FR_" . $biobank->identifier . ':collection:' . $biobank->collection_id;
-            $attributes['collectionAcronym'] = "FALSE";
-            $attributes['collectionName'] = $biobank->collection_name;
-            $attributes['collectionDescription'] = "FALSE";
-            $attributes['collectionSexMale'] = "TRUE";
-            $attributes['collectionSexFemale'] = "TRUE";
-            $attributes['collectionSexUnknown'] = "FALSE";
-            $attributes['collectionAgeLow'] = "FALSE";
-            $attributes['collectionAgeHigh'] = "FALSE";
-            $attributes['collectionAgeUnit'] = "FALSE";
-            $attributes['collectionAvailableBiologicalSamples'] = "TRUE";
-            $attributes['collectionAvailableSurveyData'] = "FALSE";
-            $attributes['collectionAvailableImagingData'] = "FALSE";
-            $attributes['collectionAvailableMedicalRecords'] = "FALSE";
-            $attributes['collectionAvailableNationalRegistries'] = "FALSE";
-            $attributes['collectionAvailableGenealogicalRecords'] = "FALSE";
-            $attributes['collectionAvailablePhysioBiochemMeasurements'] = "FALSE";
-            $attributes['collectionAvailableOther'] = "FALSE";
+            $this->addToEntry($collectionEntry, 'collectionID', "FR_" . $biobank->identifier . ':collection:' . $biobank->collection_id);
+            $this->addToEntry($collectionEntry, 'collectionAcronym', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionName', $biobank->collection_name);
+            $this->addToEntry($collectionEntry, 'collectionDescription', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionSexMale', "TRUE");
+            $this->addToEntry($collectionEntry, 'collectionSexFemale', "TRUE");
+            $this->addToEntry($collectionEntry, 'collectionSexUnknown', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAgeLow', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAgeHigh', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAgeUnit', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableBiologicalSamples', "TRUE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableSurveyData', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableImagingData', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableMedicalRecords', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableNationalRegistries', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableGenealogicalRecords', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailablePhysioBiochemMeasurements', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionAvailableOther', "FALSE");
 
             //CollectionType
 
-            $attributes['collectionTypeCaseControl'] = "FALSE";
-            $attributes['collectionTypeCohort'] = "FALSE";
-            $attributes['collectionTypeCrossSectional'] = "FALSE";
-            $attributes['collectionTypeLongitudinal'] = "FALSE";
-            $attributes['collectionTypeTwinStudy'] = "FALSE";
-            $attributes['collectionTypeQualityControl'] = "FALSE";
-            $attributes['collectionTypePopulationBased'] = "FALSE";
-            $attributes['collectionTypeDiseaseSpecific'] = "FALSE";
-            $attributes['collectionTypeBirthCohort'] = "FALSE";
-            $attributes['collectionTypeOther'] = "FALSE";
+            $this->addToEntry($collectionEntry, 'collectionTypeCaseControl', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeCohort', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeCrossSectional', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeLongitudinal', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeTwinStudy', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeQualityControl', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypePopulationBased', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeDiseaseSpecific', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeBirthCohort', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionTypeOther', "FALSE");
 
 
-            $attributes['collectionSampleAccessFee'] = "FALSE";
-            $attributes['collectionSampleAccessJointProjects'] = "FALSE";
-            $attributes['collectionSampleAccessDescription'] = "FALSE";
-            $attributes['collectionDataAccessFee'] = "FALSE";
-            $attributes['collectionDataAccessJointProjects'] = "FALSE";
-            $attributes['collectionDataAccessDescription'] = "FALSE";
-            $attributes['collectionSampleAccessURI'] = "FALSE";
-            $attributes['collectionDataAccessURI'] = "FALSE";
-            $attributes['collectionOrderOfMagnitude'] = "FALSE";
-            $attributes['collectionSize'] = "FALSE";
-            $attributes['collectionSizeTimestamp'] = "FALSE";
+            $this->addToEntry($collectionEntry, 'collectionSampleAccessFee', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionSampleAccessJointProjects', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionSampleAccessDescription', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionDataAccessFee', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionDataAccessJointProjects', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionDataAccessDescription', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionSampleAccessURI', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionDataAccessURI', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionOrderOfMagnitude', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionSize', "FALSE");
+            $this->addToEntry($collectionEntry, 'collectionSizeTimestamp', "FALSE");
 
 
             //nmber of samples 10^n n=number
-            //$attributes['biobankSize'] = "1";
-            //$attributes['objectClass'] = "biobankClinical"; //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
+            //$this->addToEntry($biobankEntry, 'biobankSize',"1");
+            //$this->addToEntry($biobankEntry, 'objectClass',"biobankClinical"); //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
 
-            $attributes['diagnosisAvailable'] = "urn:miriam:icd:D*";
+            $this->addToEntry($collectionEntry, 'diagnosisAvailable', "urn:miriam:icd:D*");
 
 
             $contact = $biobank->getContact();
@@ -216,50 +259,79 @@ c: fr
             //TODO info de contact obligatoire lever un warning si pas affectée pour l export
             if ($contact != null) {
 
-                $attributes['collectionHeadFirstName'] = $contact->first_name;
-                $attributes['collectionHeadLastName'] = $contact->last_name;
-                $attributes['collectionHeadRole'] = "FALSE";
+                $this->addToEntry($biobankEntry, 'collectionHeadFirstName', $contact->first_name);
+                $this->addToEntry($biobankEntry, 'collectionHeadLastName', $contact->last_name);
+                $this->addToEntry($biobankEntry, 'collectionHeadRole', "FALSE");
 
-                $attributes['biobankHeadFirstName'] = $contact->first_name;
-                $attributes['biobankHeadLastName'] = $contact->last_name;
-                $attributes['biobankHeadRole'] = "Director";
+                $this->addToEntry($biobankEntry, 'biobankHeadFirstName', $contact->first_name);
+                $this->addToEntry($biobankEntry, 'biobankHeadLastName', $contact->last_name);
+                $this->addToEntry($biobankEntry, 'biobankHeadRole', "Director");
 
                 // contactInfomation
-                $attributes['contactID'] = $contact->id;
-                $attributes['contactFirstName'] = $contact->first_name;
-                $attributes['contactLastName'] = $contact->last_name;
-                $attributes['contactPhone'] = CommonTools::getIntPhone($contact->phone);
-                $attributes['contactAddress'] = $contact->adresse;
-                $attributes['contactZIP'] = $contact->code_postal;
-                $attributes['contactCity'] = $contact->ville;
-                //$attributes['contactCountry'] = $contact->pays ;
-                $attributes['contactCountry'] = "FR"; //TODO get pays avec FR pas integer $contact->pays;
-                $attributes['contactIDRef'] = "FALSE";
-                $attributes['contactPriority'] = "FALSE";
+                $this->addToEntry($contactEntry, 'contactID', $contact->id);
+                $this->addToEntry($contactEntry, 'contactFirstName', $contact->first_name);
+                $this->addToEntry($contactEntry, 'contactLastName', $contact->last_name);
+                $this->addToEntry($contactEntry, 'contactPhone', CommonTools::getIntPhone($contact->phone));
 
-
-
+                $this->addToEntry($contactEntry, 'contactAddress', $contact->adresse);
+                $this->addToEntry($contactEntry, 'contactZIP', $contact->code_postal);
+                $this->addToEntry($contactEntry, 'contactCity', $contact->ville);
+                //$this->addToEntry($contactEntry, 'contactCountry',$contact->pays );
+                $this->addToEntry($contactEntry, 'contactCountry', "FR"); //TODO get pays avec FR pas integer $contact->pays);
                 //TODO contact email need to be filled
                 if (isset($contact->email))
-                    $attributes['contactEmail'] = $contact->email;
+                    $this->addToEntry($contactEntry, 'contactEmail', $contact->email);
                 else
-                    $attributes['contactEmail'] = $contact->email;
+                    $this->addToEntry($contactEntry, 'contactEmail', 'N/A');
             } else {
-                $attributes['contactEmail'] = "N/A";
+                $this->addToEntry($contactEntry, 'contactEmail', "N/A");
                 Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
             }
-            $this->checkAttributesComplianceWithBBMRI($attributes);
-            $result.="dn: biobankID=" . trim($attributes['biobankID']) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu\n"; //TODO recuperer le diagnistique agréger
-            foreach ($attributes as $key => $value) {
-                if (isset($value))
-                    $result.=$key . ":: " . base64_encode(trim($value)) . "\n";
-                //    $result.=$key . ":: " . trim($value) . "\n";
-            }
-            //FIXME mandatory empty line
+
             $result.="objectClass: biobank\n\n";
+            $entries[] = $biobankEntry;
+            $entries[] = $collectionEntry;
+            $entries[] = $contactEntry;
+        }
+        $ldif = new Net_LDAP2_LDIF('protected/runtime/tmp.ldif', 'w');
+
+        $ldif->write_entry($entries);
+
+        $fh = fopen('protected/runtime/tmp.ldif', 'r');
+        $result = fread($fh, 10000000);
+//        fwrite($fh, $result);
+        fclose($fh);
+        $this->checkResult();
+        return $result;
+    }
+
+    public function checkResult($ldif = null) {
+        if ($ldif == null)
+            $ldif = new Net_LDAP2_LDIF('protected/runtime/tmp2.ldif', 'r');
+        if ($ldif->error()) {
+            $error_o = $ldif->error(); // get Net_LDAP2_Error object on error
+            die('ERROR: ' . $error_o->getMessage());
         }
 
-        return $result;
+// parse the entries of the LDIF file into objects
+        do {
+            $entry = $ldif->read_entry();
+            if ($ldif->error()) {
+                // in case of error, print error.
+                // here we use the shorthand parameter, so error()
+                // returns a string instead of a Net_LDAP2_Object
+                die('ERROR AT INPUT LINE ' . $ldif->error_lines() . ': ' . $ldif->error(true) . "\n");
+            } else {
+
+                $attributes = $entry->getValues();
+                //$this->checkAttributesComplianceWithBBMRI($attributes);
+                // Here we just print the entries DN
+                //  echo 'sucessfully parsed ' . $entry->dn() . "\n";
+            }
+        } while (!$ldif->eof());
+
+// We should call done() once we are finished
+        $ldif->done();
     }
 
     /**

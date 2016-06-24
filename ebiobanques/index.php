@@ -5,6 +5,7 @@ setlocale(LC_ALL, 'fr_FR.utf8', 'fra');
 //timezone des dates
 date_default_timezone_set('Europe/Paris');
 include dirname(__FILE__) . '/CommonProperties.php';
+require __DIR__ . '/../vendor/autoload.php';
 // change the following paths if necessary
 //$yii = dirname(__FILE__) . '/yii-1.1.16/framework/yii.php';
 $yii = dirname(__FILE__) . '/yii-1.1.17/framework/yii.php';

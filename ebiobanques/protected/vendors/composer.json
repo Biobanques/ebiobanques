@@ -1,0 +1,5 @@
+{
+  "require-dev": {
+        "pear/net_ldap2":"*"
+    }
+}

@@ -23,6 +23,120 @@ class ApiController extends Controller
     /**
      * Key which has to be in HTTP USERNAME and PASSWORD headers
      */
+    Const BOOLEANATTRIBUTES = [
+        'collectionSexFemale',
+        'collectionSexMale',
+        'collectionSexUndiferrentiated',
+        'collectionSexUnknown',
+        'biobankHISAvailable',
+        'biobankISAvailable',
+        'biobankITSupportAvailable',
+        'biobankNetworkCommonCharter',
+        'biobankNetworkCommonCollectionFocus',
+        'biobankNetworkCommonDataAccessPolicy',
+        'biobankNetworkCommonMTA',
+        'biobankNetworkCommonRepresentation',
+        'biobankNetworkCommonSampleAccessPolicy',
+        'biobankNetworkCommonSOPs',
+        'biobankNetworkCommonURL',
+        'biobankPartnerCharterSigned',
+        'collaborationPartnersCommercial',
+        'collaborationPartnersNonforprofit',
+        'collectionAvailableBiologicalSamples',
+        'collectionAvailableGenealogicalRecords',
+        'collectionAvailableImagingData',
+        'collectionAvailableMedicalRecords',
+        'collectionAvailableNationalRegistries',
+        'collectionAvailableOther',
+        'collectionAvailablePhysioBiochemMeasurements',
+        'collectionAvailableSurveyData',
+        'collectionDataAccessFee',
+        'collectionDataAccessJointProjects',
+        'collectionSampleAccessFee',
+        'collectionSampleAccessJointProjects',
+        'collectionTypeBirthCohort',
+        'collectionTypeCaseControl',
+        'collectionTypeCohort',
+        'collectionTypeCrossSectional',
+        'collectionTypeDiseaseSpecific',
+        'collectionTypeLongitudinal',
+        'collectionTypePopulationBased',
+        'collectionTypeQualityControl',
+        'collectionTypeTwinStudy',
+        'materialStoredBlood',
+        'materialStoredDNA',
+        'materialStoredFaeces',
+        'materialStoredImmortalizedCellLines',
+        'materialStoredIsolatedPathogen',
+        'materialStoredPlasma',
+        'materialStoredRNA',
+        'materialStoredSaliva',
+        'materialStoredSerum',
+        'materialStoredTissueFFPE',
+        'materialStoredTissueFrozen',
+        'materialStoredUrine',
+        'temperature18to35',
+        'temperature60to85',
+        'temperature2to10',
+        'temperatureLN',
+        'temperatureRoom'
+    ];
+    Const STRINGATTRIBUTES = [
+        'biobankAcronym',
+        'biobankDescription',
+        'biobankHeadFirstName',
+        'biobankHeadLastName',
+        'biobankHeadRole',
+        'biobankIDRef',
+        'biobankJuridicalPerson',
+        'biobankNetworkIDRef',
+        'biobankNetworkJuridicalPerson',
+        'biobankURL',
+        'bioresourceReference',
+        'collectionDataAccessDescription',
+        'collectionDataAccessURI',
+        'collectionHeadFirstName',
+        'collectionHeadLastName',
+        'collectionHeadRole',
+        'collectionIDRef',
+        'collectionSampleAccessDescription',
+        'collectionSampleAccessURI',
+        'collectionTypeOther',
+        'contactAddress',
+        'contactEmail',
+        'contactIDRef',
+        'diagnosisAvailable',
+        'materialStoredOther',
+        'temperatureOther',
+        'biobankID',
+        'biobankName',
+        'biobankNetworkAcronym',
+        'biobankNetworkDescription',
+        'biobankNetworkID',
+        'biobankNetworkName',
+        'biobankNetworkURL',
+        'collectionAcronym',
+        'collectionAgeUnit',
+        'collectionDescription',
+        'collectionID',
+        'collectionName',
+        'contactCity',
+        'contactFirstName',
+        'contactID',
+        'contactLastName',
+        'contactZIP',
+        'geoLatitude',
+        'geoLongitude',
+    ];
+    Const INTATTRIBUTES = [
+        'biobankITStaffSize',
+        'collectionAgeHigh',
+        'collectionAgeLow',
+        'collectionOrderOfMagnitude',
+        'collectionSize',
+        'collectionSizeTimestamp',
+        'contactPriority',
+    ];
     Const APPLICATION_ID = 'ASCCPE';
     /**
      * Default response format
@@ -70,8 +184,23 @@ class ApiController extends Controller
      */
     public function addToEntry(Net_LDAP2_Entry $entry, $name, $value) {
         if (isset($value) && $value != null && $value != '' && isset($name) && $name != null && $name != '')
-            $entry->add([$name => $value]);
+            if ($this->checktype($name, $value))
+                $entry->add([$name => $value]);
+            else {
+                Yii::log("Bad type : $name / $value", CLogger::LEVEL_WARNING);
+            }
+
         return $entry;
+    }
+
+    public function checkType($name, $value) {
+        if (in_array($name, ApiController::BOOLEANATTRIBUTES) && !in_array($value, ['FALSE', 'TRUE']))
+            return false;
+        if (in_array($name, ApiController::STRINGATTRIBUTES) && $name != 'FALSE' && !is_string($value))
+            return false;
+        if (in_array($name, ApiController::INTATTRIBUTES) && $value != 'FALSE' && !is_int($value))
+            return false;
+        return true;
     }
 
     /**
@@ -91,24 +220,25 @@ class ApiController extends Controller
         $first->add(['c' => 'fr']);
         $entries[] = $first;
         foreach ($biobanks as $biobank) {
-            $biobankId = "FR_" . $biobank->identifier;
-            $collectionId = $biobank->collection_id;
+            $biobankId = trim("FR_" . $biobank->identifier);
+            $collectionId = "bbmri-eric:ID:" . $biobankId . ":collection:" . str_replace(' ', '', $biobank->collection_id);
+            $contactId = "bbmri-eric:contact:" . $biobankId;
 
             /*
              * Declare Entries for biobank, contact and Collection, and set reference to contact in biobank and collection entries
              */
-            $biobankEntry = new Net_LDAP2_Entry([], "biobankID=bbmri-eric:ID:" . trim($biobankId) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu");
-            $collectionEntry = new Net_LDAP2_Entry([], "collectionID=bbmri-eric:ID:" . trim($biobankId) . ":collection:" . str_replace(' ', '', $collectionId) . ",biobankID=bbmri-eric:ID:" . trim($biobankId) . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu");
-            $contactEntry = new Net_LDAP2_Entry([], "contactID=bbmri-eric:contact:" . trim($biobankId) . ",c=fr,ou=contacts,dc=directory,dc=bbmri-eric,dc=eu");
+            $biobankEntry = new Net_LDAP2_Entry([], "biobankID=bbmri-eric:ID:" . $biobankId . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu");
+            $collectionEntry = new Net_LDAP2_Entry([], "collectionID=" . $collectionId . ",biobankID=bbmri-eric:ID:" . $biobankId . ",c=fr,ou=biobanks,dc=directory,dc=bbmri-eric,dc=eu");
+            $contactEntry = new Net_LDAP2_Entry([], "contactID=" . $contactId . ",c=fr,ou=contacts,dc=directory,dc=bbmri-eric,dc=eu");
 
 
 
             $biobankEntry = $this->addToEntry($biobankEntry, 'objectClass', ["biobank", "biobankClinical"]);
             // $biobankEntry=$this->addToEntry($biobankEntry, 'objectClass', "biobankClinical");
-            $biobankEntry = $this->addToEntry($biobankEntry, 'contactIDRef', "bbmri-eric:contact:" . trim($biobankId));
+            $biobankEntry = $this->addToEntry($biobankEntry, 'contactIDRef', "bbmri-eric:contact:" . $biobankId);
             $biobankEntry = $this->addToEntry($biobankEntry, 'contactPriority', 2);
             $collectionEntry = $this->addToEntry($collectionEntry, 'objectClass', "collection");
-            $collectionEntry = $this->addToEntry($collectionEntry, 'contactIDRef', "bbmri-eric:contact:" . trim($biobankId));
+            $collectionEntry = $this->addToEntry($collectionEntry, 'contactIDRef', "bbmri-eric:contact:" . $biobankId);
             $collectionEntry = $this->addToEntry($collectionEntry, 'contactPriority', 2);
 
             $contactEntry = $this->addToEntry($contactEntry, 'objectClass', 'contactInformation');
@@ -139,7 +269,8 @@ class ApiController extends Controller
             $biobankEntry = $this->addToEntry($biobankEntry, 'collectionIDRef', "FALSE");
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankNetworkIDRef', "FALSE");
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankITSupportAvailable', "FALSE");
-            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankITStaffSize', "FALSE");
+            //Must be an integer, usse 0 if no information
+            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankITStaffSize', 0);
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankISAvailable', "FALSE");
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankHISAvailable', "FALSE");
 
@@ -160,7 +291,7 @@ class ApiController extends Controller
             $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredBlood', "FALSE");
             $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredTissueFrozen', isset($biobank->materialStoredTissueFrozen) ? $biobank->materialStoredTissueFrozen : "FALSE");
             $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredTissueFFPE', isset($biobank->materialStoredTissueFFPE) ? $biobank->materialStoredTissueFFPE : "FALSE");
-            $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredCellLines', "FALSE");
+            $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredImmortalizedCellLines', "FALSE");
             $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredPathogen', "FALSE");
 
 
@@ -200,7 +331,7 @@ class ApiController extends Controller
 
             //Collection
 
-            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionID', "FR_" . $biobank->identifier . ':collection:' . $biobank->collection_id);
+            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionID', $collectionId);
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionAcronym', "FALSE");
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionName', $biobank->collection_name);
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDescription', "FALSE");
@@ -267,7 +398,8 @@ class ApiController extends Controller
                 $biobankEntry = $this->addToEntry($biobankEntry, 'biobankHeadRole', "Director");
 
                 // contactInfomation
-                $contactEntry = $this->addToEntry($contactEntry, 'contactID', $contact->id);
+                $contactEntry = $this->addToEntry($contactEntry, 'contactID', $contactId);
+
                 $contactEntry = $this->addToEntry($contactEntry, 'contactFirstName', $contact->first_name);
                 $contactEntry = $this->addToEntry($contactEntry, 'contactLastName', $contact->last_name);
                 $contactEntry = $this->addToEntry($contactEntry, 'contactPhone', CommonTools::getIntPhone($contact->phone));
@@ -292,8 +424,8 @@ class ApiController extends Controller
             $entries[] = $collectionEntry;
             $entries[] = $contactEntry;
         }
-//        $ldif = new Net_LDAP2_LDIF(ApiController::TEMPFILE, 'w');
-//        $ldif->write_entry($entries);
+        $ldif = new Net_LDAP2_LDIF(ApiController::TEMPFILE, 'w');
+        $ldif->write_entry($entries);
 
         $fh = fopen(ApiController::TEMPFILE, 'r');
         $result = fread($fh, 10000000);

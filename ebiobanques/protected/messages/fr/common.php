@@ -60,7 +60,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'inactive' => 'Inactif',
     'identifier' => 'Identifiant',
     'name' => 'Nom',
-    'collection_name' => 'Nom de la collection',
+    'collection_name' => 'Pathologie',
     'collection_id' => 'Id de la collection',
     'date_entry' => 'Date d\'entrée',
     'folder_reception' => 'Dossier de réception',

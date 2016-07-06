@@ -100,6 +100,7 @@ class Biobank extends LoggableActiveRecord
      * array of ICD codes
      */
     public $cims = array();
+    public $contact_search;
     protected $qualityCombinate;
 
     public function getQualityCombinate() {
@@ -233,7 +234,7 @@ class Biobank extends LoggableActiveRecord
             array('sampling_practice', 'length', 'max' => 2),
             array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('qualityCombinate,identifier, name,collection_id, collection_name,diagnosis_available, contact_id, address,responsable_op,responsable_qual,responsable_adj,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
+            array('qualityCombinate,identifier, name,collection_id, collection_name,diagnosis_available, contact_id, contact_search,address,address.city,responsable_op,responsable_qual,responsable_adj,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -416,7 +417,22 @@ class Biobank extends LoggableActiveRecord
             $criteria->addCond('keywords_MeSH', '==', new MongoRegex("/($regexId)/i"));
         }
         if ($this->contact_id != null && $this->contact_id != "")
-            $criteria->contact_id = $this->contact_id;
+            $criteria->contact_id = (string) $this->contact_id;
+        if ($this->contact_search != null && $this->contact_search != "") {
+            $contactCriteria = new EMongoCriteria();
+//            $contactCriteria->addOrGroup('globalName');
+            $contactCriteria->addCondToOrGroup('globalName', ['first_name' => new MongoRegex('/' . $this->contact_search . '/i')]);
+            $contactCriteria->addCondToOrGroup('globalName', ['last_name' => new MongoRegex('/' . $this->contact_search . '/i')]);
+            $contactCriteria->addOrGroup('globalName');
+            $contactCriteria->select(['_id' => true]);
+            $contacts = Contact::model()->findAll($contactCriteria);
+            $listIds = [];
+            foreach ($contacts as $contact) {
+                $listIds[] = (string) $contact->_id;
+            }
+            $criteria->addCond('contact_id', 'in', $listIds);
+        }
+
 
 
 

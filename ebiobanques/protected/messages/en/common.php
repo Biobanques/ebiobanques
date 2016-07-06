@@ -59,7 +59,7 @@ return array(
     'inactive' => 'Inactive',
     'identifier' => 'Identifier',
     'name' => 'Name',
-    'collection_name' => 'Collection name',
+    'collection_name' => 'Pathology',
     'collection_id' => 'Collection id',
     'date_entry' => 'Date of entry',
     'folder_reception' => 'Reception folder',

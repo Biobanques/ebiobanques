@@ -49,24 +49,25 @@ $this->widget('zii.widgets.grid.CGridView', array(
     // 'ajaxUpdate' => false,
     'columns' => array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
+//        array('name' => 'address.city', 'header' => 'Ville', 'value' => '$data->address->city'),
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
 //        array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id'), 'value' => '$data->getShortValue("collection_id")'),
         array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'),
-        array('name' => 'diagnosis_available', 'header' => $model->getAttributeLabel('diagnosis_available')),
-        array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name' => 'responsable_op', 'value' => '$data->getShortResponsableOp()', 'header' => $model->getAttributeLabel('responsable_op')),
-        array('name' => 'responsable_qual', 'value' => '$data->getShortResponsableQual()', 'header' => $model->getAttributeLabel('responsable_qual')),
-        array('name' => 'responsable_adj', 'value' => '$data->getShortResponsableAdj()', 'header' => $model->getAttributeLabel('responsable_adj')),
+//        array('name' => 'diagnosis_available', 'header' => $model->getAttributeLabel('diagnosis_available')),
+        array('name' => 'contact_search', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
+//        array('name' => 'responsable_op', 'value' => '$data->getShortResponsableOp()', 'header' => $model->getAttributeLabel('responsable_op')),
+//        array('name' => 'responsable_qual', 'value' => '$data->getShortResponsableQual()', 'header' => $model->getAttributeLabel('responsable_qual')),
+//        array('name' => 'responsable_adj', 'value' => '$data->getShortResponsableAdj()', 'header' => $model->getAttributeLabel('responsable_adj')),
         //  array('name' => 'website', 'value' => '$data->getFormattedWebsite()', 'header' => $model->getAttributeLabel('website')),
-        array(
-            'class' => 'CLinkColumn',
-            'labelExpression' => '$data->getWebsiteWithHttp()',
-            //'url' => '$data->getWebsite()',
-            'urlExpression' => '$data->getWebsiteWithHttp()',
-            'linkHtmlOptions' => array('target' => 'blank'),
-            'htmlOptions' => array('style' => "text-align:center"),
-            'header' => $model->getAttributeLabel('website')
-        ),
+//        array(
+//            'class' => 'CLinkColumn',
+//            'labelExpression' => '$data->getWebsiteWithHttp()',
+//            //'url' => '$data->getWebsite()',
+//            'urlExpression' => '$data->getWebsiteWithHttp()',
+//            'linkHtmlOptions' => array('target' => 'blank'),
+//            'htmlOptions' => array('style' => "text-align:center"),
+//            'header' => $model->getAttributeLabel('website')
+//        ),
         array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getRoundedTauxCompletude()."%"',
@@ -93,5 +94,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'afterDelete' => 'function(link,success,data){$("#flashMessages").html(data)}',
         ),
     ),
+    'filter' => $model,
 ));
 ?>

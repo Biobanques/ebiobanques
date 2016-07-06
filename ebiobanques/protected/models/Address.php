@@ -60,7 +60,8 @@ class Address extends EMongoSoftEmbeddedDocument
         $result = array();
         $cities = $this->getOwner()->getCollection()->distinct('address.city');
         foreach ($cities as $city) {
-            $result[str_replace('-', ' ', strtolower($city))] = str_replace('-', ' ', ucfirst($city));
+            $result[ucfirst($city)] = str_replace('-', ' ', ucfirst($city));
+//            $result[str_replace('-', ' ', strtolower($city))] = str_replace('-', ' ', ucfirst($city));
         }
         if (isset($result['']))
             unset($result['']);

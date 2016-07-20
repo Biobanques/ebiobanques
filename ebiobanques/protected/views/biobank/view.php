@@ -25,6 +25,13 @@ Yii::app()->clientScript->registerScript('test', "
  	$('#biobank_cims').toggle(true);
  	return false;
  });
+ $('#sampling').click(function(){
+  $('.testonglets').removeClass('active');
+ $(this).addClass('active');
+ $('.biobank_details').toggle(false);
+ 	$('#biobank_sampling').toggle(true);
+ 	return false;
+ });
  $('#informatique').click(function(){
   $('.testonglets').removeClass('active');
  $(this).addClass('active');
@@ -114,6 +121,37 @@ $attributes_qualite = array(
     'observations',
 );
 $cims = array('name' => 'cims', 'value' => nl2br(print_r($model->cims, true)), 'type' => 'raw',);
+
+$attributes_sampling = array(
+    'sampling_practice',
+    'nb_total_samples',
+    'sampling_disease_group',
+    'sampling_disease_group_code',
+    'nbs_dna_samples_affected',
+    'nbs_dna_samples_relatives',
+    'nbs_cdna_samples_affected',
+    'nbs_cdna_samples_relatives',
+    'nbs_wholeblood_samples_affected',
+    'nbs_wholeblood_samples_relatives',
+    'nbs_bloodcellisolates_samples_affected',
+    'nbs_bloodcellisolates_samples_relatives'
+    , 'nbs_serum_samples_affected'
+    , 'nbs_serum_samples_relatives'
+    , 'nbs_plasma_samples_affected'
+    , 'nbs_plasma_samples_relatives'
+    , 'nbs_fluids_samples_affected'
+    , 'nbs_fluids_samples_relatives'
+    , 'nbs_tissuescryopreserved_samples_affected'
+    , 'nbs_tissuescryopreserved_samples_relatives'
+    , 'nbs_tissuesparaffinembedded_samples_affected'
+    , 'nbs_tissuesparaffinembedded_samples_relatives'
+    , 'nbs_celllines_samples_affected'
+    , 'nbs_celllines_samples_relatives'
+    , 'nbs_other_samples_affected'
+    , 'nbs_other_samples_relatives', 'nbs_other_specification'
+);
+
+
 $attributes_info = array(
     'gest_software',
     'other_software',
@@ -138,6 +176,7 @@ $attributes_network = [
 
 
 
+
 $attributes_partners = [
 
     'PartnerCharterSigned',
@@ -156,7 +195,7 @@ $attributes_material = [
 ];
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, $attributes_network, $attributes_partners, $attributes_material, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine', 'location'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, $attributes_network, $attributes_partners, $attributes_material, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine', 'location', 'qualite', 'qualite_en'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {
@@ -177,6 +216,7 @@ foreach ($attributes as $attributeName => $attributeValue)
         <li class="testonglets active" id="facult"><?php echo CHtml::link('Facultatif', '#', array('class' => 'testonglets')); ?></li>
         <li class="testonglets" id="qualite"><a href="#"> Qualité </a></li>
         <li class="testonglets" id="cims"><a href="#"> Codes CIM </a></li>
+        <li class="testonglets" id="sampling"><a href="#"> Sampling </a></li>
         <li class="testonglets" id="informatique"><a href="#"> Informatique </a></li>
         <li class="testonglets" id="reseau"><a href="#"> Reseau </a></li>
         <li class="testonglets" id="partenaires"><a href="#"> Partenaires </a></li>
@@ -219,6 +259,15 @@ foreach ($attributes as $attributeName => $attributeValue)
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,
         'attributes' => $attributes_info
+    ));
+    ?>
+</div>
+<div class="biobank_details" id="biobank_sampling" style="display: none">
+
+    <?php
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => $attributes_sampling
     ));
     ?>
 </div>

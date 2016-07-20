@@ -206,6 +206,7 @@ $listOnglets['info'] = $attributes_info;
 
 $attributes_sampling = array(
     array('attributeName' => 'sampling_practice', 'value' => Biobank::model()->getArraySamplingPractice()),
+    'nb_total_samples',
     'sampling_disease_group',
     'sampling_disease_group_code',
     'nbs_dna_samples_affected',
@@ -270,7 +271,7 @@ $attributes_material = [
 $listOnglets['Material'] = $attributes_material;
 //make array of attributes stored but not defined in the common model
 $attributes_other = array();
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, $attributes_network, $attributes_partners, $attributes_material, $cims, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $attributes_info, $attributes_sampling, $attributes_network, $attributes_partners, $attributes_material, $cims, array('_id', 'contact_id', 'gest_software', 'connector_installed', 'vitrine', 'sampling_practice', 'location', 'activeLogo', 'qualite', 'qualite_en'));
 
 $att = $model->getAttributes();
 foreach ($att as $attributeName => $attributeValue) {

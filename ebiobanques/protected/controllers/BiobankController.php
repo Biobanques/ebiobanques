@@ -29,7 +29,7 @@ class BiobankController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats', 'removeCim', 'addCim'),
+                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportSelectedXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats', 'removeCim', 'addCim'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -279,7 +279,29 @@ class BiobankController extends Controller
 
 
         $model = new Biobank('search');
+
         $model->unsetAttributes();  // clear any default values
+//        if (!isset($model->textSearchValue))
+//            $model->initSoftAttribute('textSearchValue');
+//        if (!isset($model->textSearchField))
+//            $model->initSoftAttribute('textSearchField');
+        if (!isset($model->presentation))
+            $model->initSoftAttribute('presentation');
+        if (!isset($model->projetRecherche))
+            $model->initSoftAttribute('projetRecherche');
+        if (!isset($model->reseaux))
+            $model->initSoftAttribute('reseaux');
+        if (!isset($model->thematiques))
+            $model->initSoftAttribute('thematiques');
+        if (!isset($model->publications))
+            $model->initSoftAttribute('publications');
+        if (!isset($model->cert_ISO9001))
+            $model->initSoftAttribute('cert_ISO9001');
+        if (!isset($model->cert_NFS96900))
+            $model->initSoftAttribute('cert_NFS96900');
+
+
+
 
         if (isset($_GET['Biobank']))
             $model->attributes = $_GET['Biobank'];
@@ -428,20 +450,81 @@ class BiobankController extends Controller
 
                 if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
                     if (is_string($biobank->$attribute))
-                        $line[] = CommonTools::convertStringToAscii( $biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                        $line[] = CommonTools::convertStringToAscii($biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
                     else {
                         switch ($attribute) {
                             case "address":
                                 $line[] = CommonTools::convertStringToAscii($biobank->getAddress());
                                 break;
                             case "responsable_op":
-                                $line[] = CommonTools::convertStringToAscii( $biobank->getResponsableOp());
+                                $line[] = CommonTools::convertStringToAscii($biobank->getResponsableOp());
                                 break;
                             case "responsable_qual":
-                                $line[] = CommonTools::convertStringToAscii( $biobank->getResponsableQual());
+                                $line[] = CommonTools::convertStringToAscii($biobank->getResponsableQual());
                                 break;
                             case "responsable_adj":
-                                $line[] = CommonTools::convertStringToAscii( $biobank->getResponsableAdj());
+                                $line[] = CommonTools::convertStringToAscii($biobank->getResponsableAdj());
+                                break;
+                        }
+                    }
+                } else {
+                    $line[] = "-";
+                }
+            }
+            $data[] = $line;
+        }
+        Yii::import('application.extensions.phpexcel.JPhpExcel');
+        $xls = new JPhpExcel('UTF-8', true, 'Biobank list');
+        $xls->addArray($data);
+        $xls->generateXML('Biobank list');
+    }
+
+    public function actionExportSelectedXls() {
+        $model = new Biobank('search');
+        $model->unsetAttributes();
+        if (isset($_GET['Biobank']))
+            $model->attributes = $_GET['Biobank'];
+        if (isset($_SESSION['criteria']) && $_SESSION['criteria'] != null && $_SESSION['criteria'] instanceof EMongoCriteria) {
+            $criteria = $_SESSION['criteria'];
+        } else {
+            $criteria = new EMongoCriteria;
+        }
+        if (isset($_POST['fields']))
+            $fields = $_POST['fields'];
+        else
+            $fields = array_keys(Biobank::model()->attributeExportedLabels());
+
+        $biobanks = Biobank::model()->findAll($criteria);
+        $data = array(1 => $fields);
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+        foreach ($biobanks as $biobank) {
+            $line = array();
+            //echo "biobank:".$biobank->id;
+            //Yii::log('Pb converting string: : ' . $biobank->id, CLogger::LEVEL_ERROR);
+            foreach ($fields as $attribute) {
+
+                if (isset($biobank->$attribute) && $biobank->$attribute != null && !empty($biobank->$attribute)) {
+                    if (is_string($biobank->$attribute))
+                        switch ($attribute) {
+                            case'contact_id':
+                                $line[] = CommonTools::convertStringToAscii("$biobank->shortContactInv - $biobank->emailContact - $biobank->phoneContact");
+                                break;
+                            default:
+                                $line[] = CommonTools::convertStringToAscii($biobank->$attribute); //solution la moins pire qui ne fait pas bugge les accents mais les convertit en caractere generique
+                                break;
+                        } else {
+                        switch ($attribute) {
+                            case "address":
+                                $line[] = CommonTools::convertStringToAscii($biobank->getAddress());
+                                break;
+                            case "responsable_op":
+                                $line[] = CommonTools::convertStringToAscii($biobank->getResponsableOp());
+                                break;
+                            case "responsable_qual":
+                                $line[] = CommonTools::convertStringToAscii($biobank->getResponsableQual());
+                                break;
+                            case "responsable_adj":
+                                $line[] = CommonTools::convertStringToAscii($biobank->getResponsableAdj());
                                 break;
                         }
                     }

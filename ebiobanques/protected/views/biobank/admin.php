@@ -1,8 +1,10 @@
+
 <?php
 /* @var $this BiobankController */
 /* @var $model Biobank */
 
 $flashRoute = Yii::app()->createAbsoluteUrl('biobank/deleteFlashMsg');
+
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -10,15 +12,41 @@ $('.search-button').click(function(){
 });
 $('.search-form form').submit(function(){
 	$('#biobank-grid').yiiGridView('update', {
-		data: $(this).serialize()
+		data: $(this).serialize(),
 	});
 	return false;
+});
+
+$('#XLSExport').click(function(){
+$('#dialog').dialog('open');
+	return false;
+
 });
 
 
 ");
 ?>
-
+<?php
+//widget de selection des colonnes à afficher
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id' => 'dialog',
+    // additional javascript options for the dialog plugin
+    'options' => array(
+        'title' => 'Choix des champs à exporter ',
+        'autoOpen' => false,
+        'width' => '850px'
+    ),
+));
+?>
+<div class="prefs-form" >
+    <?php
+    $this->renderPartial('_exportedFieldsForm'
+    );
+    ?>
+</div>
+<?php
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
 <h1>Gestion des Biobanques</h1>
 <?php
 //var_dump(        $model->getRespDropdownList('responsable_op'));

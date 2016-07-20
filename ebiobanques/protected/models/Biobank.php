@@ -383,21 +383,28 @@ class Biobank extends LoggableActiveRecord
             $regexId = substr($regexId, 0, -1);
             $criteria->addCond('collection_id', '==', new MongoRegex("/($regexId)/i"));
         }
-        if ($this->qualityCombinate != null && $this->qualityCombinate != "") {
-            $listWords = explode(" ", $this->qualityCombinate);
-            $regexId = "";
-            foreach ($listWords as $word) {
-                $regexId.="$word|";
-            }
-            $regexId = substr($regexId, 0, -1);
-
-            $criteria->createOrGroup('qualite');
-            $criteria->addCondToOrGroup('qualite', array('quality' => new MongoRegex("/($regexId)/i")));
-            $criteria->addCondToOrGroup('qualite', array('cert_ISO9001' => new MongoRegex("/($regexId)/i")));
-            $criteria->addCondToOrGroup('qualite', array('cert_NFS96900' => new MongoRegex("/($regexId)/i")));
-            $criteria->addCondToOrGroup('qualite', array('cert_autres' => new MongoRegex("/($regexId)/i")));
-            $criteria->addOrGroup('qualite');
+//        if ($this->qualityCombinate != null && $this->qualityCombinate != "") {
+//            $listWords = explode(" ", $this->qualityCombinate);
+//            $regexId = "";
+//            foreach ($listWords as $word) {
+//                $regexId.="$word|";
+//            }
+//            $regexId = substr($regexId, 0, -1);
+//
+//            $criteria->createOrGroup('qualite');
+//            $criteria->addCondToOrGroup('qualite', array('quality' => new MongoRegex("/($regexId)/i")));
+//            $criteria->addCondToOrGroup('qualite', array('cert_ISO9001' => new MongoRegex("/($regexId)/i")));
+//            $criteria->addCondToOrGroup('qualite', array('cert_NFS96900' => new MongoRegex("/($regexId)/i")));
+//            $criteria->addCondToOrGroup('qualite', array('cert_autres' => new MongoRegex("/($regexId)/i")));
+//            $criteria->addOrGroup('qualite');
+//        }
+        if (isset($this->cert_ISO9001) && $this->cert_ISO9001 != null && $this->cert_ISO9001 != []) {
+            $criteria->addCond('cert_ISO9001', 'in', $this->cert_ISO9001);
         }
+        if (isset($this->cert_ISO9001) && $this->cert_NFS96900 != null && $this->cert_NFS96900 != []) {
+            $criteria->addCond('cert_NFS96900', 'in', $this->cert_NFS96900);
+        }
+
         if ($this->diagnosis_available != null && $this->diagnosis_available != "") {
             $listWords = explode(" ", $this->diagnosis_available);
             $regexId = "";
@@ -474,12 +481,57 @@ class Biobank extends LoggableActiveRecord
                 $criteria->addCond('address.country', '==', new MongoRegex('/' . $this->address->country . '/i'));
             }
         }
+
+
+//        if (isset($this->textSearchField) && $this->textSearchField != null && $this->textSearchField != '' && isset($this->textSearchValue) && $this->textSearchValue != null && $this->textSearchValue != '') {
+//
+//            $resultDrop = $this->getDb()->selectCollection('biobank')->deleteIndexes();
+//            $this->getDb()->selectCollection('biobank')->createIndex([$this->textSearchField => 'text'], ['name' => 'TextSearchIndex']);
+//            $criteria->addCond('$text', '==', ['$search' => $this->textSearchValue]);
+//        }
+
+        if (isset($this->presentation) && $this->presentation != null && $this->presentation != '') {
+            $textCriteria = str_replace(' ', '||', $this->presentation);
+            $criteria->createOrGroup('presentation');
+            $criteria->addCondToOrGroup('presentation', ['presentation' => new MongoRegex("/$textCriteria/i")]);
+            $criteria->addCondToOrGroup('presentation', ['presentation_en' => new MongoRegex("/$textCriteria/i")]);
+            $criteria->addOrGroup('presentation');
+        }
+        if (isset($this->projetRecherche) && $this->projetRecherche != null && $this->projetRecherche != '') {
+            $textCriteria = str_replace(' ', '||', $this->projetRecherche);
+            $criteria->createOrGroup('projetRecherche');
+            $criteria->addCondToOrGroup('projetRecherche', ['projetRecherche' => new MongoRegex("/$textCriteria/i")]);
+            $criteria->addCondToOrGroup('projetRecherche', ['projetRecherche_en' => new MongoRegex("/$textCriteria/i")]);
+            $criteria->addOrGroup('projetRecherche');
+        }
+        if (isset($this->reseaux) && $this->reseaux != null && $this->reseaux != '') {
+            $textCriteria = str_replace(' ', '||', $this->reseaux);
+
+            $criteria->addCond('reseaux', '==', new MongoRegex("/$textCriteria/i"));
+        }
+        if (isset($this->thematiques) && $this->thematiques != null && $this->thematiques != '') {
+            $textCriteria = str_replace(' ', '||', $this->thematiques);
+            $criteria->createOrGroup('thematiques');
+            $criteria->addCondToOrGroup('thematiques', ['thematiques' => new MongoRegex("/$textCriteria/i")]);
+            $criteria->addCondToOrGroup('thematiques', ['thematiques_en' => new MongoRegex("/$textCriteria/i")]);
+            $criteria->addOrGroup('presentation');
+        }
+        if (isset($this->publications) && $this->publications != null && $this->publications != '') {
+            $textCriteria = str_replace(' ', '||', $this->publications);
+
+            $criteria->addCond('publications', '==', new MongoRegex("/$textCriteria/i"));
+        }
+
 //always sort with alphabetical order on name
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
         Yii::app()->session['criteria'] = $criteria;
-        return new EMongoDocumentDataProvider($this, array(
+
+
+        //$dataProvider = Biobank::model()->find($criteria->getConditions())
+        $dataProvider = new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
+        return $dataProvider;
     }
 
     public function getContact() {

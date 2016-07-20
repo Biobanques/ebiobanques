@@ -96,7 +96,7 @@ class CMenuBarLineWidget extends CWidget
             if (isset($this->actionExportXls)) {
                 $actionNameXls = $this->actionExportXls;
             }
-            echo "<span style=\"padding-left: 10px;\">" . CHtml::link($imageexportxls, array($this->controllerName . '/' . $actionNameXls)) . "</span>";
+            echo "<span id='XLSExport' style=\"padding-left: 10px;\">" . CHtml::link($imageexportxls, array($this->controllerName . '/' . $actionNameXls)) . "</span>";
             echo "</div>";
         }
         echo "</div>";

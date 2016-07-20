@@ -534,7 +534,7 @@ class CommonTools
         foreach ($mr['results'] as $mrResult) {
             $result[$mrResult['_id']] = $mrResult['_id'];
         }
-
+        natcasesort($result);
 
         return $result;
     }
@@ -626,7 +626,7 @@ class CommonTools
     public static function url($url) {
         $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
         $url = trim($url, "-");
-        $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
+        $url = @iconv("utf-8", "us-ascii//IGNORE", $url);
         $url = strtolower($url);
         $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
         return $url;
@@ -642,9 +642,10 @@ class CommonTools
      * @param type $string in UTF-8 format
      */
     public static function convertStringToAscii($string) {
+        setlocale(LC_ALL, 'en_GB');
         $result = "";
         try {
-            $result = iconv("UTF-8", "ASCII//IGNORE", $string);
+            $result = @iconv("UTF-8", "ASCII//TRANSLIT/", $string);
         } catch (Exception $ex) {
             Yii::log('Pb converting string: : ' . $string, CLogger::LEVEL_ERROR);
         }

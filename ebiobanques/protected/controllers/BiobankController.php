@@ -495,7 +495,11 @@ class BiobankController extends Controller
             $fields = array_keys(Biobank::model()->attributeExportedLabels());
 
         $biobanks = Biobank::model()->findAll($criteria);
-        $data = array(1 => $fields);
+        $fieldsLabels = [];
+        foreach ($fields as $key => $value) {
+            $fieldsLabels[$key] = $value;
+        }
+        $data = array(1 => $fieldsLabels);
         setlocale(LC_ALL, 'fr_FR.UTF-8');
         foreach ($biobanks as $biobank) {
             $line = array();

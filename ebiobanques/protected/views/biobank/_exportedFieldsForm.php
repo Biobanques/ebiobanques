@@ -8,7 +8,7 @@ Yii::app()->clientScript->registerCss('mycss', '
 ');
 $listFields = CommonTools::getAllFieldsarray('biobank');
 echo CHtml::beginForm(Yii::app()->createUrl('biobank/exportselectedxls'), 'POST');
-echo CHtml::checkBoxList('fields', $listFields, $listFields, ['separator' => ''
+echo CHtml::checkBoxList('fields', ['identifier', 'name'], $listFields, ['separator' => ''
     , 'template' => '<li>{input} {label}</li>',]);
 ?><div style="padding-top: 25px;float: left;width: 95%">
     <?php

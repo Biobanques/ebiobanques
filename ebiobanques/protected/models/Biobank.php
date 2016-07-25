@@ -138,20 +138,23 @@ class Biobank extends LoggableActiveRecord
         $listCims = [];
         if (isset($this->diagnosis_available) && $this->diagnosis_available != '') {
             $listWords = explode(" / ", $this->diagnosis_available);
-            foreach ($listWords as $word)
-                if ($word == 'Other')
+            foreach ($listWords as $word) {
+                if ($word == 'Other') {
                     $result['R00-Z99'] = 'R00-Z99';
-                else if (CommonTools::validateCimCodeFormat($word))
+                } else if (CommonTools::validateCimCodeFormat($word)) {
                     $result[$word] = $word;
+                }
+            }
         }
-        if (isset($this->cims) && !empty($this->cims)) {
-            foreach ($this->cims as $cim)
-                if ($cim['code'] == 'Other')
+        if (isset($this->cims) && $this->cims != []) {
+            foreach ($this->cims as $cim) {
+                if ($cim['code'] == 'Other') {
                     $result[$cim['code']] = $cim['R00-Z99'];
-                else if (CommonTools::validateCimCodeFormat($cim['code']))
+                } else if (CommonTools::validateCimCodeFormat($cim['code'])) {
                     $result[$cim['code']] = $cim['code'];
+                }
+            }
         }
-
         return $result;
     }
 

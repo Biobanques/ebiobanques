@@ -463,9 +463,16 @@ class ApiController extends Controller
             //nmber of samples 10^n n=number
             //$biobankEntry=$this->addToEntry($biobankEntry, 'biobankSize',"1");
             //$biobankEntry=$this->addToEntry($biobankEntry, 'objectClass',"biobankClinical"); //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
-
-            $collectionEntry = $collectionEntry = $this->addToEntry($collectionEntry, 'diagnosisAvailable', "urn:miriam:icd:D*");
-
+            $icdString = '';
+            if (!empty($biobank->getListOfIcd())) {
+                foreach ($biobank->getListOfIcd() as $icd) {
+                    $icdString .= "icd:$icd,";
+                }
+                $icdString = trim($icdString, ",");
+            } else {
+                $icdString = "icd:D*";
+            }
+            $collectionEntry = $this->addToEntry($collectionEntry, 'diagnosisAvailable', "urn:miriam:$icdString");
 
             $contact = $biobank->getContact();
 

@@ -252,7 +252,7 @@ class ApiController extends Controller
      * @return string
      */
     public function addToEntry(Net_LDAP2_Entry $entry, $name, $value) {
-        if (isset($value) && $value != null && $value != '' && isset($name) && $name != null && $name != '')
+        if (isset($value) && $value !== null && $value !== '' && isset($name) && $name != null && $name != '')
             if ($this->checktype($name, $value)) {
                 if ($value != 'FALSE' || in_array($name, $this->getMandatoryAttributes())) {
                     $entry->add([$name => $value]);
@@ -267,7 +267,7 @@ class ApiController extends Controller
     public function checkType($name, $value) {
         if (in_array($name, $this->getBooleanAttributes()) && !in_array($value, ['FALSE', 'TRUE']))
             return false;
-        if (in_array($name, $this->getStringAttributes()) && $name != 'FALSE' && !is_string($value))
+        if (in_array($name, $this->getStringAttributes()) && $value != 'FALSE' && !is_string($value))
             return false;
         if (in_array($name, $this->getIntAttributes()) && $value != 'FALSE' && !is_int($value))
             return false;
@@ -334,10 +334,15 @@ class ApiController extends Controller
 //[16:57:46] Petr Holub: i.e., biobankJuridicalPerson should be name of the institution hosting the biobank
 
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankJuridicalPerson', $biobank->getShortContact());
-            if (isset($biobank->presentation_en))
+            if (isset($biobank->presentation_en)) {
                 $biobankEntry = $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation_en);
-            else if (isset($biobank->presentation))
-                $biobankEntry = $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation);
+//                $biobankEntry = $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation_en);
+            } else {
+                if (isset($biobank->presentation)) {
+                    $biobankEntry = $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation);
+                }
+            }
+//                $biobankEntry = $this->addToEntry($biobankEntry, 'biobankDescription', $biobank->presentation);
             if (isset($biobank->website))
                 $biobankEntry = $this->addToEntry($biobankEntry, 'biobankURL', $biobank->getWebsiteWithHttp());
 
@@ -363,8 +368,9 @@ class ApiController extends Controller
             //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankPartnerCharterSigned', isset($biobank->PartnerCharterSigned) && $biobank->PartnerCharterSigned != '' ? $biobank->PartnerCharterSigned : "FALSE");
 
-            $entries[] = $biobankEntry;
-            //Biobank material
+
+//            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankSize', isset($biobank->nb_total_samples) && $biobank->nb_total_samples != '' ? $biobank->nb_total_samples : "1x10³");
+            //x  $biobankEntry = $this->addToEntry($biobankEntry, 'biobankSize', "1x10³");
             //TODO flase in cappital
             $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredDNA', isset($biobank->materialStoredDNA) && $biobank->materialStoredDNA != '' ? $biobank->materialStoredDNA : "FALSE");
             $collectionEntry = $this->addToEntry($collectionEntry, 'materialStoredPlasma', isset($biobank->materialStoredPlasma) && $biobank->materialStoredPlasma != '' ? $biobank->materialStoredPlasma : "FALSE");
@@ -457,26 +463,28 @@ class ApiController extends Controller
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessDescription', "FALSE");
             // $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessURI', "FALSE");
             // $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessURI', "FALSE");
-            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionOrderOfMagnitude', 0);
-            //   $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSize', "FALSE");
+            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionOrderOfMagnitude', 3);
+
+            //  $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSize', "FALSE");
             //   $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSizeTimestamp', "FALSE");
             //nmber of samples 10^n n=number
             //$biobankEntry=$this->addToEntry($biobankEntry, 'biobankSize',"1");
             //$biobankEntry=$this->addToEntry($biobankEntry, 'objectClass',"biobankClinical"); //TODO implementer la valeur de ce champ Si biobankClinical Diagnosis obligatoire
             $icdString = '';
             $listOfIcd = $biobank->getListOfIcd();
-            if (($listOfIcd) != []) {
-                foreach ($listOfIcd as $icd) {
-                    $icdString .= "icd:$icd,";
-                }
-                $icdString = trim($icdString, ",");
-            } else {
-                $icdString = "icd:D*";
-            }
+//            if (($listOfIcd) != []) {
+//                foreach ($listOfIcd as $icd) {
+//                    $icdString .= "icd:$icd, ";
+//                }
+//                $icdString = trim($icdString, " ");
+//                $icdString = trim($icdString, ",");
+//            } else {
+            $icdString = "icd:D*";
+//            }
+
 
             $collectionEntry = $this->addToEntry($collectionEntry, 'diagnosisAvailable', "urn:miriam:$icdString");
 
-            $entries[] = $collectionEntry;
             $contact = $biobank->getContact();
 
             //TODO info de contact obligatoire lever un warning si pas affectée pour l export
@@ -507,10 +515,16 @@ class ApiController extends Controller
                     $contactEntry = $this->addToEntry($contactEntry, 'contactEmail', $contact->email);
                 else
                     $contactEntry = $this->addToEntry($contactEntry, 'contactEmail', 'N/A');
-                $entries[] = $contactEntry;
             } else {
 
-                Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->name, CLogger::LEVEL_WARNING, "application");
+                Yii::log("contact must be filled for export LDIF. Biobank without contact:" . $biobank->identifier . ' - ' . $biobank->name, CLogger::LEVEL_WARNING, "application");
+            }
+            if ($contact != null) {
+                $entries[] = $biobankEntry;
+
+                $entries[] = $collectionEntry;
+
+                $entries[] = $contactEntry;
             }
         }
 

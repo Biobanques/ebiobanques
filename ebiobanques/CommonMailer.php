@@ -203,20 +203,14 @@ class CommonMailer
         $base = CommonTools::isInDevMode() ? CommonMailer::DEV_URL : CommonMailer::PROD_URL;
         $to = Yii::app()->params['managerEmail'];
         $subject = "Inscription d'un nouvel utilisateur sur ebiobanques.fr";
-        $userDetails = '';
-        foreach ($user->getAttributes() as $label => $value) {
-            //Fix bug for Preferences
-            if ($label !== 'preferences')
-                $userDetails.="<li>$label : " . print_r($value, true) . "</li>";
-        }
+
         $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
 				<?xml version=\"1.0\" encoding=\"utf-8\"?>
 				<html><head>
 				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Inscription d'un nouvel utilisateur sur ebiobanques.fr</title>
 				</head><body>
 				$user->prenom $user->nom s'est inscrit sur le site ebiobanques.fr.<br>
-						Détails :<br>
-	<ul>$userDetails</ul><br>
+
 	Vous pouvez valider cet utilisateur en cliquant sur ce lien : <a href=$base/index.php/user/validate/id/$user->_id\">Valider l'utilisateur</a>, le <a href=$base/index.php/user/refuseRegistration/id/$user->_id\">désactiver</a>
 	 ou le retrouver dans <a href=$base/index.php/user/admin\">la liste des utilisateurs</a>.
 	</body>

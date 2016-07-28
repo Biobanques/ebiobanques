@@ -171,6 +171,7 @@ class CommonMailer
         if ($user != null) {
             $listEchantillons = '';
             $subject = Yii::t('common', 'mailDemandeSubject') . ' : ' . $title;
+
             if ($sampleList != null) {
                 foreach ($sampleList as $concernSample) {
                     $listEchantillons .= '<li>' . $concernSample->id_sample . '</li>';
@@ -204,6 +205,7 @@ class CommonMailer
         $subject = "Inscription d'un nouvel utilisateur sur ebiobanques.fr";
         $userDetails = '';
         foreach ($user->getAttributes() as $label => $value) {
+            //Fix bug for Preferences
             if ($label !== 'preferences')
                 $userDetails.="<li>$label : " . print_r($value, true) . "</li>";
         }

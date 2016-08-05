@@ -129,5 +129,6 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'qualityCombinate' => 'Champs qualité',
     'Map of biobanks' => "Carte des biobanques",
     'show map' => 'Voir la carte des biobanques',
+    'undefined' => 'Indéfini',
 );
 ?>

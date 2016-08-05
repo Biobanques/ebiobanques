@@ -29,7 +29,7 @@ class BiobankController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'create', 'admin', 'view', 'update', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportSelectedXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats', 'removeCim', 'addCim'),
+                'actions' => array('index', 'create', 'admin', 'view', 'update', 'oldUpdate', 'delete', 'deleteFlashMsg', 'print', 'exportXls', 'exportSelectedXls', 'exportCsv', 'exportPdf', 'globalStats', 'detailledStats', 'removeCim', 'addCim'),
                 'expression' => '$user->isAdmin()',
             ),
             array('deny', // deny all users
@@ -198,11 +198,80 @@ class BiobankController extends Controller
             $model->scenario = 'update';          // custom scenario
 
             $attributesPost = $_POST['Biobank'];
+            Yii::log('creating softattributes if not exists ', CLogger::LEVEL_WARNING);
+
             foreach ($attributesPost as $attName => $attValue) {
                 if (!in_array($attName, $model->attributeNames())) {
                     $model->initSoftAttribute($attName);
                 }
             }
+            Yii::log('setting biobank attributes from POST variable', CLogger::LEVEL_WARNING);
+            $model->attributes = $attributesPost;
+            if (isset($_FILES['Logo']) && $_FILES['Logo']['name']['filename'] != "") {
+
+                $model->initSoftAttribute('activeLogo');
+                $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
+            }
+            if (isset($_POST['Address'])) {
+
+                $model->address = $_POST['Address'];
+            }
+            if (isset($_POST['Op_resp']) && $_POST['Op_resp']['lastName'] != null && $_POST['Op_resp']['lastName'] != "") {
+                $model->responsable_op = $_POST['Op_resp'];
+            }
+            if (isset($_POST['Qual_resp']) && $_POST['Qual_resp']['lastName'] != null && $_POST['Qual_resp']['lastName'] != "") {
+                // if (isset($_POST['Qual_resp'])) {
+                $model->responsable_qual = $_POST['Qual_resp'];
+            }
+            if (isset($_POST['Adj_resp']) && $_POST['Adj_resp']['lastName'] != null && $_POST['Adj_resp']['lastName'] != "") {
+                //if (isset($_POST['Adj_resp'])) {
+                $model->responsable_adj = $_POST['Adj_resp'];
+            }$contact = $model->contact;
+            if (isset($_POST['Contact'])) {
+
+                foreach ($_POST['Contact'] as $contactAttrName => $contactAttrValue) {
+                    $contact->$contactAttrName = $contactAttrValue;
+                }
+            }
+            Yii::log('saving biobank', CLogger::LEVEL_WARNING);
+            if ($model->save()) {
+                if ($contact->save())
+                    Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+                else
+                    Yii::app()->user->setFlash('notice', 'La biobanque a bien été mise à jour. Les informations liées au coordinateur n\'ont pas pu être sauvegardées');
+
+                $model->contact = $contact;
+                // $this->redirect(array('view', 'id' => $model->_id));
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
+        }
+
+//        $this->render('update', array(
+//            'model' => $model,
+//        ));
+        $this->render('simplifiedUpdate', array(
+            'biobank' => $model,
+        ));
+    }
+
+    public function actionOldUpdate($id) {
+
+        /* @var $model Biobank */
+        $model = $this->loadModel($id);
+
+
+        if (isset($_POST['Biobank'])) {
+            $model->scenario = 'update';          // custom scenario
+
+            $attributesPost = $_POST['Biobank'];
+            Yii::log('creating softattributes if not exists ', CLogger::LEVEL_WARNING);
+
+            foreach ($attributesPost as $attName => $attValue) {
+                if (!in_array($attName, $model->attributeNames())) {
+                    $model->initSoftAttribute($attName);
+                }
+            }
+            Yii::log('setting biobank attributes from POST variable', CLogger::LEVEL_WARNING);
             $model->attributes = $attributesPost;
             if (isset($_FILES['Logo']) && $_FILES['Logo']['name']['filename'] != "") {
 
@@ -224,14 +293,20 @@ class BiobankController extends Controller
                 //if (isset($_POST['Adj_resp'])) {
                 $model->responsable_adj = $_POST['Adj_resp'];
             }
-
+            Yii::log('saving biobank', CLogger::LEVEL_WARNING);
             if ($model->save()) {
+
                 Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+
+
                 // $this->redirect(array('view', 'id' => $model->_id));
             } else
                 Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
         }
 
+//        $this->render('update', array(
+//            'model' => $model,
+//        ));
         $this->render('update', array(
             'model' => $model,
         ));

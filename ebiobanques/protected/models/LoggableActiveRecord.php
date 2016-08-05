@@ -47,7 +47,7 @@ abstract class LoggableActiveRecord extends EMongoSoftDocument
      */
     public function phoneValidator($attribute, $params) {
         if (!preg_match("#^\+33[0-9]{9}$#", $this->$attribute))
-            $this->addError($this->$attribute, Yii::t('common', 'InvalidPhoneNumber'));
+            $this->addError($attribute, Yii::t('common', 'InvalidPhoneNumber'));
     }
 
     public function getShortValue($attribute) {

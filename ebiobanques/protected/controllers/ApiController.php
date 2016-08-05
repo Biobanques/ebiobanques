@@ -366,7 +366,7 @@ class ApiController extends Controller
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankHISAvailable', "FALSE");
 
             //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
-            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankPartnerCharterSigned', isset($biobank->PartnerCharterSigned) && $biobank->PartnerCharterSigned != '' ? $biobank->PartnerCharterSigned : "FALSE");
+            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankPartnerCharterSigned', isset($biobank->PartnerCharterSigned) && $biobank->PartnerCharterSigned != '' ? $biobank->PartnerCharterSigned : "TRUE");
 
 
 //            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankSize', isset($biobank->nb_total_samples) && $biobank->nb_total_samples != '' ? $biobank->nb_total_samples : "1x10³");
@@ -455,11 +455,11 @@ class ApiController extends Controller
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionTypeOther', "FALSE");
 
 
-            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessFee', "FALSE");
-            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessJointProjects', "FALSE");
+            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessFee', $biobank->collectionSampleAccessFee);
+            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessJointProjects', $biobank->collectionSampleAccessJointProjects);
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessDescription', "FALSE");
-            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessFee', "FALSE");
-            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessJointProjects', "FALSE");
+            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessFee', $biobank->collectionDataAccessFee);
+            $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessJointProjects', $biobank->collectionDataAccessJointProjects);
             $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessDescription', "FALSE");
             // $collectionEntry = $this->addToEntry($collectionEntry, 'collectionSampleAccessURI', "FALSE");
             // $collectionEntry = $this->addToEntry($collectionEntry, 'collectionDataAccessURI', "FALSE");

@@ -19,7 +19,7 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord
+class Biobank_old extends LoggableActiveRecord
 {
     /*
      * Champs obligatoires
@@ -41,7 +41,6 @@ class Biobank extends LoggableActiveRecord
     public $passphrase;
     public $contact_id;
     public $diagnosis_available;
-    public $pathologies;
     public $longitude;
     public $latitude;
     public $location;
@@ -63,29 +62,8 @@ class Biobank extends LoggableActiveRecord
      * free text
      * @var type
      */
-    public $materialStoredPlasma;
-    public $materialStoredRNA;
-    public $materialStoredSaliva;
-    public $materialStoredSerum;
-    public $materialStoredTissueFFPE;
-    public $materialStoredTissueFrozen;
-    public $materialStoredUrine;
-    public $materialStoredBlood;
-    public $materialStoredDNA;
-    public $materialStoredFaeces;
-    public $materialStoredImmortalizedCellLines;
-    public $materialTumoralTissue;
-    public $materialHealthyTissue;
-    public $materialLCR;
-    public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
-    public $nb_total_samples;
-    public $collectionDataAccessFee = 'TRUE';
-    public $collectionDataAccessJointProjects = 'TRUE';
-    public $collectionSampleAccessFee = 'TRUE';
-    public $collectionSampleAccessJointProjects = 'TRUE';
-    public $PartnerCharterSigned = 'TRUE';
     /**
      * fields agregated relatives to the number of samples.
      * NBS : acronym of Number of Biological Samples
@@ -321,36 +299,10 @@ class Biobank extends LoggableActiveRecord
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'identifier' => Yii::t('biobank', 'identifier'), //
-            'name' => Yii::t('biobank', 'name'),
-            'acronym' => Yii::t('biobank', 'acronym'),
-            'presentation' => Yii::t('biobank', 'presentation'),
-            'collection_id' => Yii::t('biobank', 'collection_id'),
-            'materialStoredDNA' => Yii::t('biobank', 'materialStoredDNA'),
-            'materialStoredPlasma' => Yii::t('biobank', 'materialStoredPlasma'),
-            'materialStoredSerum' => Yii::t('biobank', 'materialStoredSerum'),
-            'materialStoredTissueFFPE' => Yii::t('biobank', 'materialStoredTissueFFPE'),
-            'materialStoredTissueFrozen' => Yii::t('biobank', 'materialStoredTissueFrozen'),
-            'materialStoredRNA' => Yii::t('biobank', 'materialStoredRNA'),
-            'materialStoredSaliva' => Yii::t('biobank', 'materialStoredSaliva'),
-            'materialStoredUrine' => Yii::t('biobank', 'materialStoredUrine'),
-            'materialStoredFaeces' => Yii::t('biobank', 'materialStoredFaeces'),
-            'materialStoredBlood' => Yii::t('biobank', 'materialStoredBlood'),
-            'materialStoredImmortalizedCellLines' => Yii::t('biobank', 'materialStoredImmortalizedCellLines'),
-            'materialTumoralTissue' => Yii::t('biobank', 'materialTumoralTissue'),
-            'materialHealthyTissue' => Yii::t('biobank', 'materialHealthyTissue'),
-            'materialLCR' => Yii::t('biobank', 'materialLCR'),
-            'materialOther' => Yii::t('biobank', 'materialOther'),
-            'cert_ISO9001' => Yii::t('biobank', 'cert_ISO9001'),
-            'cert_NFS96900' => Yii::t('biobank', 'cert_NFS96900'),
-            'cert_autres' => Yii::t('biobank', 'cert_autres'),
-            'nb_total_samples' => Yii::t('biobank', 'nb_total_samples'),
-            'website' => Yii::t('biobank', 'website'),
-            'keywords_MeSH' => Yii::t('biobank', 'keywords_MeSH'),
-            'diagnosis_available' => Yii::t('biobank', 'diagnosis_available'),
-            'pathologies' => Yii::t('biobank', 'pathologies'),
-            /* oldies */
+            'identifier' => Yii::t('common', 'identifier'), //
+            'name' => Yii::t('common', 'name'),
             'collection_name' => Yii::t('common', 'collection_name'),
+            'collection_id' => Yii::t('common', 'collection_id'),
             'date_entry' => Yii::t('common', 'date_entry'),
             'folder_reception' => Yii::t('common', 'folder_reception'),
             'folder_done' => Yii::t('common', 'folder_done'),
@@ -358,6 +310,8 @@ class Biobank extends LoggableActiveRecord
             'contact_id' => 'Contact',
             'vitrine[fr]' => 'Texte en francais',
             'vitrine[logo]' => 'Image logo',
+            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
+            'keywords_MeSH' => 'keywords MeSH',
             'sampling_disease_group' => 'Disease group',
             'sampling_disease_group_code' => 'Disease groupe code',
             'nbs_dna_samples_affected' => 'DNA samples affected',
@@ -387,6 +341,7 @@ class Biobank extends LoggableActiveRecord
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
+            'website' => Yii::t('common', 'website'),
             'qualityCombinate' => Yii::t('common', 'qualityCombinate'),
         );
     }
@@ -617,10 +572,6 @@ class Biobank extends LoggableActiveRecord
             }
         }
         return $result;
-    }
-
-    public function setContact(Contact $contact) {
-        $this->contact = $contact;
     }
 
     public function getDetailledStats() {

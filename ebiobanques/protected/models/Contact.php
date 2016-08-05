@@ -75,7 +75,7 @@ class Contact extends LoggableActiveRecord
             array('first_name, last_name, pays', 'alphaOnly'),
             array('pays', 'length', 'max' => 2),
             array('email', 'EMongoUniqueValidator'),
-            array('code_postal', 'numerical', 'integerOnly' => true),
+            // array('code_postal', 'numerical', 'integerOnly' => true),
             array('code_postal', 'length', 'max' => 5),
             /**
              * Global custom phone validator, defined in LoggableActiveRecord class
@@ -227,6 +227,14 @@ class Contact extends LoggableActiveRecord
         // $result["0"] = '--undefined--';
         natcasesort($result);
         return $result;
+    }
+
+    public function getPays() {
+        return strtolower($this->pays);
+    }
+
+    public function setPays($pays) {
+        $this->pays = $pays;
     }
 
 }

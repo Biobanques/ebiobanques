@@ -21,7 +21,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        
+
         <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
         <?php
         Yii::app()->clientScript->registerCoreScript('jquery');
@@ -87,7 +87,7 @@
         </div>
 
         <section class="main-body">
-            <div class="container-fluid" style="height:70%; background-color: white">
+            <div class="container-fluid" style="height:70%; background-color: white; padding: 0px">
                 <div id="flashMessages">
                     <?php
                     $flashMessages = Yii::app()->user->getFlashes();

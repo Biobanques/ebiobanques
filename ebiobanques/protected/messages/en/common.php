@@ -127,6 +127,7 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'InvalidPhoneNumber' => 'Invalid phone number.',
     'qualityCombinate' => 'Quality fields',
     'Map of biobanks' => "Map of biobanks",
-    'show map' => 'Show map of biobanks'
+    'show map' => 'Show map of biobanks',
+    'undefined' => 'Undefined',
 );
 ?>

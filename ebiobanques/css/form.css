@@ -172,3 +172,41 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	clear: left;
 	padding-left: 110px;
 }
+
+
+div.form .cols2
+{
+    width: 40%;
+    
+    margin-right:25px;
+   
+    float: left;
+}
+div.form .cols1
+{
+    width: 90%;
+    
+    margin-right:25px;
+   
+    float: left;
+}
+
+div.form .col-2-row{
+    clear: left;
+    height: auto;
+    /*margin-top: 25px;*/
+    display:block;
+    /*border: 1px black solid;*/
+}div.form .col-2-row input
+{
+   margin-bottom: 25px;
+}
+div.form .col-2-row textArea
+{
+    width: 80%;
+    height: 125px;
+      margin-bottom: 25px;
+    float: left;
+}
+
+

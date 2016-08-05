@@ -455,7 +455,7 @@ $listOnglets['other'] = $attributes_other;
             if (!isset($model->cims)) {
                 $model->initSoftAttribute('cims');
                 $model->cims = array();
-            } else {
+            } else if ($model->cims != [] && $model->cims != null) {
                 // $model->cims = array('A22', 'C52', 'B12');
                 foreach ($model->cims as $idCim => $cim) {
                     $count++;

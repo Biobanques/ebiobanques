@@ -259,7 +259,11 @@ div.search-form
     background-color: #D8E4F1;
 
 }
-
+.help-title{
+    display: block;
+        margin-left: 5px;
+    font-weight: bold;
+}
 .help>.help-title{
     display: block;
     margin-left: 5px;

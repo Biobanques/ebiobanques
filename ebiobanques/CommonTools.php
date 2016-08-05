@@ -504,7 +504,81 @@ class CommonTools
             'ca' => Yii::t('listCountries', 'ca'),
             'cn' => Yii::t('listCountries', 'cn'),
             'jp' => Yii::t('listCountries', 'jp'),
-            'tr' => Yii::t('listCountries', 'tr')
+            'tr' => Yii::t('listCountries', 'tr'),
+            'FR' => Yii::t('listCountries', 'fr'),
+            'UK' => Yii::t('listCountries', 'uk'),
+            'US' => Yii::t('listCountries', 'us'),
+            'ES' => Yii::t('listCountries', 'es'),
+            'DE' => Yii::t('listCountries', 'de'),
+            'AT' => Yii::t('listCountries', 'at'),
+            'BG' => Yii::t('listCountries', 'bg'),
+            'CY' => Yii::t('listCountries', 'cy'),
+            'HR' => Yii::t('listCountries', 'hr'),
+            'EE' => Yii::t('listCountries', 'ee'),
+            'FI' => Yii::t('listCountries', 'fi'),
+            'GR' => Yii::t('listCountries', 'gr'),
+            'HU' => Yii::t('listCountries', 'hu'),
+            'IE' => Yii::t('listCountries', 'ie'),
+            'IT' => Yii::t('listCountries', 'it'),
+            'LV' => Yii::t('listCountries', 'lv'),
+            'LT' => Yii::t('listCountries', 'lt'),
+            'LU' => Yii::t('listCountries', 'lu'),
+            'MT' => Yii::t('listCountries', 'mt'),
+            'CZ' => Yii::t('listCountries', 'cz'),
+            'RO' => Yii::t('listCountries', 'ro'),
+            'SK' => Yii::t('listCountries', 'sk'),
+            'SI' => Yii::t('listCountries', 'si'),
+            'SE' => Yii::t('listCountries', 'se'),
+            'IT' => Yii::t('listCountries', 'it'),
+            'RU' => Yii::t('listCountries', 'ru'),
+            'BE' => Yii::t('listCountries', 'be'),
+            'CH' => Yii::t('listCountries', 'ch'),
+            'PT' => Yii::t('listCountries', 'pt'),
+            'NL' => Yii::t('listCountries', 'nl'),
+            'PL' => Yii::t('listCountries', 'pl'),
+            'DB' => Yii::t('listCountries', 'dk'),
+            'UA' => Yii::t('listCountries', 'ua'),
+            'CA' => Yii::t('listCountries', 'ca'),
+            'CN' => Yii::t('listCountries', 'cn'),
+            'JP' => Yii::t('listCountries', 'jp'),
+            'TR' => Yii::t('listCountries', 'tr'),
+            'Fr' => Yii::t('listCountries', 'fr'),
+            'Uk' => Yii::t('listCountries', 'uk'),
+            'Us' => Yii::t('listCountries', 'us'),
+            'Es' => Yii::t('listCountries', 'es'),
+            'De' => Yii::t('listCountries', 'de'),
+            'At' => Yii::t('listCountries', 'at'),
+            'Bg' => Yii::t('listCountries', 'bg'),
+            'Cy' => Yii::t('listCountries', 'cy'),
+            'Hr' => Yii::t('listCountries', 'hr'),
+            'Ee' => Yii::t('listCountries', 'ee'),
+            'Fi' => Yii::t('listCountries', 'fi'),
+            'Gr' => Yii::t('listCountries', 'gr'),
+            'Hu' => Yii::t('listCountries', 'hu'),
+            'Ie' => Yii::t('listCountries', 'ie'),
+            'It' => Yii::t('listCountries', 'it'),
+            'Lv' => Yii::t('listCountries', 'lv'),
+            'Lt' => Yii::t('listCountries', 'lt'),
+            'Lu' => Yii::t('listCountries', 'lu'),
+            'Mt' => Yii::t('listCountries', 'mt'),
+            'Cz' => Yii::t('listCountries', 'cz'),
+            'Ro' => Yii::t('listCountries', 'ro'),
+            'Sk' => Yii::t('listCountries', 'sk'),
+            'Si' => Yii::t('listCountries', 'si'),
+            'Se' => Yii::t('listCountries', 'se'),
+            'It' => Yii::t('listCountries', 'it'),
+            'Ru' => Yii::t('listCountries', 'ru'),
+            'Be' => Yii::t('listCountries', 'be'),
+            'Ch' => Yii::t('listCountries', 'ch'),
+            'Pt' => Yii::t('listCountries', 'pt'),
+            'Nl' => Yii::t('listCountries', 'nl'),
+            'Pl' => Yii::t('listCountries', 'pl'),
+            'Dk' => Yii::t('listCountries', 'dk'),
+            'Ua' => Yii::t('listCountries', 'ua'),
+            'Ca' => Yii::t('listCountries', 'ca'),
+            'Cn' => Yii::t('listCountries', 'cn'),
+            'Jp' => Yii::t('listCountries', 'jp'),
+            'Tr' => Yii::t('listCountries', 'tr')
         );
     }
 
@@ -589,7 +663,7 @@ class CommonTools
     }
 
     public static function getLatLong($biobank, $saveAfterFind = true) {
-
+        Yii::log('Trying to get location from biobank ' . $biobank->identifier, CLogger::LEVEL_WARNING);
         if (isset($biobank->address->street) && isset($biobank->address->city) && isset($biobank->address->zip) && isset($biobank->address->country)) {
 
             $requestAddress = str_ireplace(' ', '+', $biobank->address->street) . '+' . $biobank->address->zip . '+' . str_ireplace(' ', '+', $biobank->address->city) . '+' . $biobank->address->country;
@@ -601,9 +675,11 @@ class CommonTools
 
             $response = $request->request('GET');
             $var = json_decode($response->getBody());
+            Yii::log(print_r($var, true), CLogger::LEVEL_WARNING);
+
             if ($var->status != "ZERO_RESULTS") {
-                echo "formated address : $requestAddress";
-                print_r($var->results[0]->geometry->location);
+                Yii::log("formated address : $requestAddress", CLogger::LEVEL_WARNING);
+                //  print_r($var->results[0]->geometry->location);
                 $biobank->latitude = $var->results[0]->geometry->location->lat;
                 $biobank->longitude = $var->results[0]->geometry->location->lng;
                 if (!property_exists($biobank, 'location'))
@@ -612,9 +688,9 @@ class CommonTools
                 if ($saveAfterFind)
                     $biobank->save();
             } else
-                Yii::log('Can\'t find coordinates from this adress : ' . print_r($biobank->address, true), CLogger::LEVEL_WARNING);
+                Yii::log('Can\'t find coordinates from adress for biobank :' . $biobank->identifier, CLogger::LEVEL_ERROR);
         } else {
-            Yii::log('Can\'t find coordinates from this adress : ' . print_r($biobank->address, true), CLogger::LEVEL_WARNING);
+            Yii::log('Can\'t find coordinates from adress for biobank :' . $biobank->identifier, CLogger::LEVEL_ERROR);
         }
     }
 
@@ -626,7 +702,8 @@ class CommonTools
     public static function url($url) {
         $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
         $url = trim($url, "-");
-        $url = @iconv("utf-8", "us-ascii//IGNORE", $url);
+        //  $url = @iconv("utf-8", "us-ascii//IGNORE", $url);
+        $url = $result = @iconv("UTF-8", "ASCII//TRANSLIT/", $url);
         $url = strtolower($url);
         $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
         return $url;

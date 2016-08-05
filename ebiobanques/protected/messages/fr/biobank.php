@@ -27,6 +27,7 @@ return [
     'keywords_MeSH' => 'Mots clés MeSH',
     'diagnosis_available' => 'Codes CIM disponibles',
     'pathologies' => 'Pathologies',
+    'email' => 'Email',
     /*
      *
      */
@@ -45,6 +46,9 @@ return [
     'help_keywords_MeSHContent' => 'Mots clés MeSH en anglais. Utiliser "/" comme séparateur<br><br><b>Ex :<br> Liver, neoplasm / Cardiovascular diseases</b>',
     'help_diagnosis_availableContent' => 'Utiliser "/" comme séparateur<br>Vous pouvez indiquer des codes seuls ou des plages<br><br><b>Ex: A15 / B00-B99 / C45</b>',
     'help_pathologiesContent' => 'Nom usuel des pathologies, en français. Utiliser "/" comme séparateur<br><b>Ex: Cancer / Maladies cardiovasculaires</b>',
+    'helpPhoneContent' => 'Numéro de télephone au format international :<br>'
+    . '+33123456789',
+    'helpEmailContent' => 'Email : abcde@xyz.com',
     /*
      * Update form - Main parts titles
      */
@@ -76,4 +80,5 @@ return [
     'materialHealthyTissue' => 'Tissus sains',
     'materialLCR' => 'LCR',
     'materialOther' => 'Autres',
+    'phone' => 'Télephone'
 ];

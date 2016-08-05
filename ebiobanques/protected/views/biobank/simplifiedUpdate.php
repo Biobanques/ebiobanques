@@ -167,37 +167,53 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
 
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'email'); ?>
-            <?php echo $form->textField($biobank->contact, 'email'); ?>
-            <?php echo $form->error($biobank->contact, 'email'); ?>
+            <?php
+            echo $form->textField($biobank->contact, 'email', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
+                $this->renderPartial('/site/_help_message', array(
+                    'title' => Yii::t('biobank', 'email'),
+                    'content' => Yii::t('biobank', 'helpEmailContent')
+                        ), true
+                )
+            ]);
+            ?>
+<?php echo $form->error($biobank->contact, 'email'); ?>
         </div>
 
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'phone'); ?>
-            <?php echo $form->textField($biobank->contact, 'phone'); ?>
+            <?php
+            echo $form->textField($biobank->contact, 'phone', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
+                $this->renderPartial('/site/_help_message', array(
+                    'title' => Yii::t('biobank', 'phone'),
+                    'content' => Yii::t('biobank', 'helpPhoneContent')
+                        ), true
+                )
+            ]);
+            ?>
             <?php echo $form->error($biobank->contact, 'phone'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'adresse'); ?>
-            <?php echo $form->textField($biobank->contact, 'adresse'); ?>
-            <?php echo $form->error($biobank->contact, 'adresse'); ?>
+<?php echo $form->textField($biobank->contact, 'adresse'); ?>
+<?php echo $form->error($biobank->contact, 'adresse'); ?>
         </div>
 
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'code_postal'); ?>
-            <?php echo $form->textField($biobank->contact, 'code_postal'); ?>
+<?php echo $form->textField($biobank->contact, 'code_postal'); ?>
             <?php echo $form->error($biobank->contact, 'code_postal'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'ville'); ?>
-            <?php echo $form->textField($biobank->contact, 'ville'); ?>
-            <?php echo $form->error($biobank->contact, 'ville'); ?>
+<?php echo $form->textField($biobank->contact, 'ville'); ?>
+<?php echo $form->error($biobank->contact, 'ville'); ?>
         </div>
 
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'pays'); ?>
 
-            <?php echo $form->dropDownList($biobank->contact, 'pays', CommonTools::getArrayCountriesSorted(), ($biobank->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : "")); ?>
-            <?php echo $form->error($biobank->contact, 'pays'); ?>
+<?php echo $form->dropDownList($biobank->contact, 'pays', CommonTools::getArrayCountriesSorted(), ($biobank->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : "")); ?>
+    <?php echo $form->error($biobank->contact, 'pays'); ?>
         </div>
     </div>
     <?php
@@ -213,32 +229,48 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='col-2-row'>
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'lastName'); ?>
-                <?php echo $form->textField($biobank->$resp, 'lastName'); ?>
-                <?php echo $form->error($biobank->$resp, 'lastName'); ?>
+    <?php echo $form->textField($biobank->$resp, 'lastName'); ?>
+    <?php echo $form->error($biobank->$resp, 'lastName'); ?>
             </div>
 
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'firstName'); ?>
-                <?php echo $form->textField($biobank->$resp, 'firstName'); ?>
-                <?php echo $form->error($biobank->$resp, 'firstName'); ?>
+    <?php echo $form->textField($biobank->$resp, 'firstName'); ?>
+    <?php echo $form->error($biobank->$resp, 'firstName'); ?>
             </div>
 
         </div>
         <div class='col-2-row'>
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'email'); ?>
-                <?php echo $form->textField($biobank->$resp, 'email'); ?>
-                <?php echo $form->error($biobank->$resp, 'email'); ?>
+                <?php
+                echo $form->textField($biobank->$resp, 'email', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
+                    $this->renderPartial('/site/_help_message', array(
+                        'title' => Yii::t('biobank', 'email'),
+                        'content' => Yii::t('biobank', 'helpEmailContent')
+                            ), true
+                    )
+                ]);
+                ?>
+    <?php echo $form->error($biobank->$resp, 'email'); ?>
             </div>
 
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'direct_phone'); ?>
-                <?php echo $form->textField($biobank->$resp, 'direct_phone'); ?>
-                <?php echo $form->error($biobank->$resp, 'direct_phone'); ?>
+                <?php
+                echo $form->textField($biobank->$resp, 'direct_phone', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
+                    $this->renderPartial('/site/_help_message', array(
+                        'title' => Yii::t('biobank', 'phone'),
+                        'content' => Yii::t('biobank', 'helpPhoneContent')
+                            ), true
+                    )
+                ]);
+                ?>
+    <?php echo $form->error($biobank->$resp, 'direct_phone'); ?>
             </div>
         </div>
 
-    <?php } ?>
+<?php } ?>
 
 
     <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_4'); ?></div>
@@ -288,7 +320,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                 )
             ]);
             ?>
-            <?php echo $form->error($biobank, 'name'); ?>
+<?php echo $form->error($biobank, 'name'); ?>
         </div>
 
     </div>
@@ -335,7 +367,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                 )
             ]);
             ?>
-            <?php echo $form->error($biobank, 'name'); ?>
+<?php echo $form->error($biobank, 'name'); ?>
         </div>
 
     </div>
@@ -343,19 +375,19 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_ISO9001'); ?>
-            <?php echo $form->dropDownList($biobank, 'cert_ISO9001', ['OUI' => 'Oui', 'NON' => 'NON', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
+<?php echo $form->dropDownList($biobank, 'cert_ISO9001', ['OUI' => 'Oui', 'NON' => 'NON', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
             <?php echo $form->error($biobank, 'cert_ISO9001'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_NFS96900'); ?>
-            <?php echo $form->dropDownList($biobank, 'cert_NFS96900', ['OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
-            <?php echo $form->error($biobank, 'cert_NFS96900'); ?>
+<?php echo $form->dropDownList($biobank, 'cert_NFS96900', ['OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
+<?php echo $form->error($biobank, 'cert_NFS96900'); ?>
         </div>
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'cert_autres'); ?>
-        <?php echo $form->textField($biobank, 'cert_autres'); ?>
-        <?php echo $form->error($biobank, 'cert_autres'); ?>
+    <?php echo $form->textField($biobank, 'cert_autres'); ?>
+    <?php echo $form->error($biobank, 'cert_autres'); ?>
     </div>
     <?php echo CHtml::submitButton('Mettre à jour') ?>
     <?php

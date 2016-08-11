@@ -121,7 +121,7 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'onlyAlphaNumeric' => 'Seuls les caractères alphanumériques sont autorisés pour ce champ.',
     'diagnosisAvailable' => 'Diagnostic disponible',
     'website' => 'Site Internet',
-    'catalog' => 'Catalogue',
+    'catalog' => 'Catalogue des biobanques',
     'shortContact' => 'Nom et prénom du contact',
     'emailContact' => 'Email du contact',
     'phoneContact' => 'Télephone du contact',

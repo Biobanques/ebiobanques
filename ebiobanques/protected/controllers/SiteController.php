@@ -45,7 +45,7 @@ class SiteController extends Controller
                     'accueil',
                     'questions',
                     'dashboard',
-                    'biobanks',
+
                     'login',
                     'logout',
                     'error',
@@ -72,6 +72,7 @@ class SiteController extends Controller
                 'users' => array(
                     '@'
                 )
+                
             ),
             array(
                 'deny', // deny all users
@@ -253,6 +254,8 @@ class SiteController extends Controller
 
     /**
      * affichage des infos de biobanques
+     * This page is deprecated.Not shown since v1.8
+     * @deprecated since version 1.8
      */
     public function actionBiobanks() {
         $model = new Biobank('search');

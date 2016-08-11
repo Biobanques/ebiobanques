@@ -44,8 +44,6 @@ class SiteController extends Controller
                     'index',
                     'accueil',
                     'questions',
-                    'dashboard',
-
                     'login',
                     'logout',
                     'error',

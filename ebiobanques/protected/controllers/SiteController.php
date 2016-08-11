@@ -62,7 +62,6 @@ class SiteController extends Controller
                 'actions' => array(
                     'catalog',
                     'search',
-                    'contacts',
                     'view',
                     'changerDemandeEchantillon',
                     'addDemandeAllEchantillon',

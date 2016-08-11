@@ -74,7 +74,6 @@
                         'linkOptions' => array('class' => 'bar')),
                     array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
                     array('label' => Yii::t('common', 'activities'), 'url' => array('/site/dashboard')),
-                    array('label' => Yii::t('common', 'contacts'), 'url' => array('/site/contacts')),
                     array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),
                     array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),

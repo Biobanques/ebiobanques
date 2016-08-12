@@ -46,6 +46,8 @@ class Biobank extends LoggableActiveRecord
     public $latitude;
     public $location;
     public $keywords_MeSH;
+    public $acronym;
+    public $presentation_en;
     /**
      * var array 'logo' 'fr' 'en'
      * @var array

@@ -327,6 +327,8 @@ class Biobank extends LoggableActiveRecord
             'name' => Yii::t('biobank', 'name'),
             'acronym' => Yii::t('biobank', 'acronym'),
             'presentation' => Yii::t('biobank', 'presentation'),
+            
+            'presentation_en' => Yii::t('common', 'presentation_en'),
             'collection_id' => Yii::t('biobank', 'collection_id'),
             'materialStoredDNA' => Yii::t('biobank', 'materialStoredDNA'),
             'materialStoredPlasma' => Yii::t('biobank', 'materialStoredPlasma'),
@@ -979,107 +981,6 @@ class Biobank extends LoggableActiveRecord
                 $match['address.city'] = new MongoRegex('/' . $cityCriteria . '/i');
             if ($countryCriteria != null)
                 $match['address.country'] = new MongoRegex('/' . $countryCriteria . '/i');
-//            $arrayQuery = array(
-//                array(
-//                    '$match' =>
-//                    $match
-//                ),
-//                array(
-//                    '$project' =>
-//                    array(
-//                        '_id' => 1,
-//                        'adresse' => '$address.street',
-//                        'city' => '$address.city',
-//                        'zip' => '$address.zip',
-//                        'country' => '$address.country',
-//                        $resp_type => 1,
-//                        'type' =>
-//                        array(
-//                            '$literal' =>
-//                            array(
-//                                $resp_type
-//                            ),
-//                        ),
-//                    ),
-//                ),
-//                array(
-//                    '$unwind' => '$type',
-//                ),
-//                array(
-//                    '$group' =>
-//                    array(
-//                        '_id' => '$_id',
-//                        'city' =>
-//                        array(
-//                            '$first' => '$city',
-//                        ),
-//                        'country' =>
-//                        array(
-//                            '$first' => '$country',
-//                        ),
-//                        'zip' =>
-//                        array(
-//                            '$first' => '$zip',
-//                        ),
-//                        'adresse' =>
-//                        array(
-//                            '$first' => '$adresse',
-//                        ),
-//                        $resp_type =>
-//                        array(
-//                            '$first' => '$' . $resp_type,
-//                        ),
-//                        'responsables' =>
-//                        array(
-//                            '$push' =>
-//                            array(
-//                                '$cond' =>
-//                                array(
-//                                    array(
-//                                        '$eq' =>
-//                                        array(
-//                                            '$type',
-//                                            $resp_type,
-//                                        ),
-//                                    ),
-//                                    '$' . $resp_type,
-//                                    false
-//                                ),
-//                            ),
-//                        ),
-//                    ),
-//                ),
-//                array(
-//                    '$project' =>
-//                    array(
-//                        '_id' => 1,
-//                        'adresse' => 1,
-//                        'zip' => 1,
-//                        'city' => 1,
-//                        'country' => 1,
-//                        'responsables' => 1,
-//                    ),
-//                ),
-//                array(
-//                    '$unwind' => '$responsables',
-//                ),
-//                array(
-//                    '$project' =>
-//                    array(
-//                        'biobank_id' => '$_id',
-//                        'adresse' => '$adresse',
-//                        'code_postal' => '$zip',
-//                        'pays' => '$country',
-//                        'ville' => '$city',
-//                        'civility' => '$responsables.civility',
-//                        'first_name' => '$responsables.firstName',
-//                        'last_name' => '$responsables.lastName',
-//                        'email' => '$responsables.email',
-//                        'phone' => '$responsables.direct_phone',
-//                        'contactType' => array('$literal' => $resp_type)
-//                    ),
-//                ),
-//            );
             $arrayQuery = array(
                 array(
                     '$match' =>

@@ -72,10 +72,12 @@
                 'htmlOptions' => array('class' => 'mainMenu last'),
                 'items' => array(
                     array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
-                    array('label' => Yii::t('common', 'catalog'), 'url' => array('/catalog/search')),
-                    array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search'),
-                        'itemOptions' => array('class' => 'visited'),
-                        'linkOptions' => array('class' => 'bar')),
+                   
+ array('label' => Yii::t('common', 'catalog'), 'url' => array('/catalog/search')),
+//uncomment this feature          after refactoring on the dataset    
+//      array('label' => Yii::t('common', 'searchsamples'), 'url' => array('/site/search'),
+        //                'itemOptions' => array('class' => 'visited'),
+         //               'linkOptions' => array('class' => 'bar')),
                     array('label' => Yii::t('common', 'FAQ'), 'url' => array('/site/questions')),
                     array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
                     array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),

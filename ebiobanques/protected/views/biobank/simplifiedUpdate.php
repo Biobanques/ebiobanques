@@ -1,8 +1,7 @@
 <?php
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Simplified update view
+ * @since 1.8
  *
  */
 Yii::app()->clientscript->registerCssFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/css/bootstrap.css');
@@ -191,29 +190,6 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             ]);
             ?>
             <?php echo $form->error($biobank->contact, 'phone'); ?>
-        </div>
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'adresse'); ?>
-<?php echo $form->textField($biobank->contact, 'adresse'); ?>
-<?php echo $form->error($biobank->contact, 'adresse'); ?>
-        </div>
-
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'code_postal'); ?>
-<?php echo $form->textField($biobank->contact, 'code_postal'); ?>
-            <?php echo $form->error($biobank->contact, 'code_postal'); ?>
-        </div>
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'ville'); ?>
-<?php echo $form->textField($biobank->contact, 'ville'); ?>
-<?php echo $form->error($biobank->contact, 'ville'); ?>
-        </div>
-
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'pays'); ?>
-
-<?php echo $form->dropDownList($biobank->contact, 'pays', CommonTools::getArrayCountriesSorted(), ($biobank->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : "")); ?>
-    <?php echo $form->error($biobank->contact, 'pays'); ?>
         </div>
     </div>
     <?php

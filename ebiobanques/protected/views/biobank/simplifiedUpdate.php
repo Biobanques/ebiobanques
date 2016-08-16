@@ -175,7 +175,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                 )
             ]);
             ?>
-<?php echo $form->error($biobank->contact, 'email'); ?>
+            <?php echo $form->error($biobank->contact, 'email'); ?>
         </div>
 
         <div class='cols2'>
@@ -205,14 +205,14 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='col-2-row'>
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'lastName'); ?>
-    <?php echo $form->textField($biobank->$resp, 'lastName'); ?>
-    <?php echo $form->error($biobank->$resp, 'lastName'); ?>
+                <?php echo $form->textField($biobank->$resp, 'lastName'); ?>
+                <?php echo $form->error($biobank->$resp, 'lastName'); ?>
             </div>
 
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'firstName'); ?>
-    <?php echo $form->textField($biobank->$resp, 'firstName'); ?>
-    <?php echo $form->error($biobank->$resp, 'firstName'); ?>
+                <?php echo $form->textField($biobank->$resp, 'firstName'); ?>
+                <?php echo $form->error($biobank->$resp, 'firstName'); ?>
             </div>
 
         </div>
@@ -228,7 +228,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                     )
                 ]);
                 ?>
-    <?php echo $form->error($biobank->$resp, 'email'); ?>
+                <?php echo $form->error($biobank->$resp, 'email'); ?>
             </div>
 
             <div class='cols2'>
@@ -242,11 +242,11 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                     )
                 ]);
                 ?>
-    <?php echo $form->error($biobank->$resp, 'direct_phone'); ?>
+                <?php echo $form->error($biobank->$resp, 'direct_phone'); ?>
             </div>
         </div>
 
-<?php } ?>
+    <?php } ?>
 
 
     <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_4'); ?></div>
@@ -344,7 +344,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                 )
             ]);
             ?>
-<?php echo $form->error($biobank, 'name'); ?>
+            <?php echo $form->error($biobank, 'name'); ?>
         </div>
 
     </div>
@@ -352,22 +352,25 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_ISO9001'); ?>
-<?php echo $form->dropDownList($biobank, 'cert_ISO9001', ['OUI' => 'Oui', 'NON' => 'NON', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
+            <?php echo $form->dropDownList($biobank, 'cert_ISO9001', ['OUI' => 'Oui', 'NON' => 'NON', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
             <?php echo $form->error($biobank, 'cert_ISO9001'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_NFS96900'); ?>
-<?php echo $form->dropDownList($biobank, 'cert_NFS96900', ['OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
-<?php echo $form->error($biobank, 'cert_NFS96900'); ?>
+            <?php echo $form->dropDownList($biobank, 'cert_NFS96900', ['OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
+            <?php echo $form->error($biobank, 'cert_NFS96900'); ?>
         </div>
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'cert_autres'); ?>
-    <?php echo $form->textField($biobank, 'cert_autres'); ?>
-    <?php echo $form->error($biobank, 'cert_autres'); ?>
+        <?php echo $form->textField($biobank, 'cert_autres'); ?>
+        <?php echo $form->error($biobank, 'cert_autres'); ?>
     </div>
     <?php echo CHtml::submitButton('Mettre à jour') ?>
     <?php
     $this->endWidget();
     ?>
+    <h3>Items archivés ( non modifiables)</h3>
+    <?php echo CHtml::link('Voir les items', array('biobank/oldupdate', "id" => $biobank->_id)); ?>
+  
 

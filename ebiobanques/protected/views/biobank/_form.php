@@ -495,7 +495,7 @@ border-color: black;
 border-width: 1px 0 0 0;
 border-radius: 5px;">'; ?>
         <?php echo CHtml::resetButton('Cancel', array('id' => 'resetButton')); ?>
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php //save is disabled echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
     <?php

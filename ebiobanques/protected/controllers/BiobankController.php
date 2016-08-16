@@ -1,7 +1,7 @@
 <?php
 
-class BiobankController extends Controller
-{
+class BiobankController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -293,15 +293,16 @@ class BiobankController extends Controller
                 //if (isset($_POST['Adj_resp'])) {
                 $model->responsable_adj = $_POST['Adj_resp'];
             }
-            Yii::log('saving biobank', CLogger::LEVEL_WARNING);
-            if ($model->save()) {
+            //Yii::log('saving biobank', CLogger::LEVEL_WARNING);
+            //Save is isabled to prevent problems with this old update
+            /*   if ($model->save()) {
 
-                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+              Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
 
 
-                // $this->redirect(array('view', 'id' => $model->_id));
-            } else
-                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
+              // $this->redirect(array('view', 'id' => $model->_id));
+              } else
+              Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour'); */
         }
 
 //        $this->render('update', array(

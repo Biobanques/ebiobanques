@@ -129,5 +129,6 @@ To participate to feeding of system, a simple request to the infrastructure Biob
     'Map of biobanks' => "Map of biobanks",
     'show map' => 'Show map of biobanks',
     'undefined' => 'Undefined',
+    'presentation_en'=>'Description in english'
 );
 ?>

@@ -35,11 +35,11 @@ return [
     /*
      * Help popup
      */
-    'helpAcronymContent' => 'Indiquez l\'acronyme de la biobanque si disponible.<br>ex : ANSES',
+    'helpAcronymContent' => 'Indiquez l\'acronyme de la biobanque si disponible.Cet attribut fait référence à l\'attribut MIABIS 2.0-02<br>ex : ANSES',
     'helpNameContent' => 'Indiquez le nom complet de la biobanque.<br>ex :  Agence nationale de sécurité sanitaire, de l\'alimentation, de l\'environnement et du travail',
     'helpPresentationContent' => 'Description de la biobanque <b>en français</b>.<br> Cette description pourra être utilisée dans une recherche par mots clés.',
     'helpPresentationEnContent' => 'Description de la biobanque <b>en anglais</b>.<br> Cette description pourra être utilisée dans une recherche par mots clés.',
-    'help_nb_total_samplesContent' => 'Nombre total d\'échantillons, approximatif. Ce nombre sera affiché dans une fourchette de valeurs.',
+    'help_nb_total_samplesContent' => 'Nombre total d\'échantillons,un nombre entier est requis, valeur approximative autorisée. Ce nombre sera affiché dans au format puissance de 10.',
     'helpWebsiteContent' => 'Indiquez ici l\'url du site Internet de la biobanque, sous la forme "http(s)://urlbiobanque.domaine".<br><br>Ex : https://ebiobanques.fr',
     'helpidentifierContent' => 'Le code BRIF est composé de la manière suivante :<br>'
     . 'BB-0033-00XXX',

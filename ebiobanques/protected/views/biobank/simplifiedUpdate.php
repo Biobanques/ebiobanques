@@ -287,6 +287,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'nb_total_samples'); ?>
+            <?php echo $form->error($biobank, 'nb_total_samples'); ?>
             <?php
             echo $form->textField($biobank, 'nb_total_samples', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
                 $this->renderPartial('/site/_help_message', array(
@@ -296,7 +297,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                 )
             ]);
             ?>
-<?php echo $form->error($biobank, 'name'); ?>
+
         </div>
 
     </div>

@@ -82,6 +82,11 @@ class Biobank extends LoggableActiveRecord
     public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
+    /**
+     * total number of samples, integer value only.
+     * Displayed in a format like 10^x.
+     * @var type 
+     */
     public $nb_total_samples;
     public $collectionDataAccessFee = 'TRUE';
     public $collectionDataAccessJointProjects = 'TRUE';
@@ -258,6 +263,12 @@ class Biobank extends LoggableActiveRecord
             array('name', 'length', 'max' => 50),
             array('long_name', 'length', 'max' => 500),
             array('folder_done', 'length', 'max' => 100),
+            /**
+             * nb_total_samples : integer postive only
+             */
+            array('nb_total_samples','numerical',
+    'integerOnly'=>true,
+    'min'=>1,),
             /*
              * sampling data agregated
              */

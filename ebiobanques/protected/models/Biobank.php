@@ -432,6 +432,12 @@ class Biobank extends LoggableActiveRecord {
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
             'qualityCombinate' => Yii::t('common', 'qualityCombinate'),
+            'last_name'=>Yii::t('common', 'lastname'),
+            'first_name'=>Yii::t('common', 'firstname'),
+            'phone'=>Yii::t('common', 'phone'),
+            'email'=>Yii::t('common', 'email'),
+            'zipcode'=>Yii::t('common', 'zipcode'),
+            'city'=>Yii::t('common', 'city'),
         );
     }
 

@@ -11,7 +11,7 @@ try {
 }
 ?>
 <div class="logoHeader">
-    <h1>View Biobank #<?php echo $model->id; ?></h1>
+    <h1>View Biobank #<?php echo $model->name; ?></h1>
     <div class="logo">
         <?php
         if ($logo != null) {
@@ -53,7 +53,7 @@ $attributes = $model->getAttributes();
             array('name' => 'phone', 'value' => $contact->phone),
             array('name' => 'email', 'value' => $contact->email),
             array('name' => 'address', 'value' => $contact->adresse),
-            array('name' => 'postal_code', 'value' => $contact->code_postal),
+            array('name' => 'zipcode', 'value' => $contact->code_postal),
             array('name' => 'city', 'value' => $contact->ville),
             array('name' => 'website', 'value' => $model->getFormattedWebsite(), 'type' => 'raw',),
         );

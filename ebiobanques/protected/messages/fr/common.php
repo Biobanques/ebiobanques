@@ -133,7 +133,7 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'presentation_en'=>'Description en anglais',
     'sample_information'=>'Informations des échantillons',
     'quality_information'=>'Informations qualité',
-    'contact_information'=>'Contact Information',
+    'contact_information'=>'Informations de contact',
     'en cours'=>'En cours',
     
     /*

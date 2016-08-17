@@ -102,6 +102,10 @@ It is also intended for anyone wishing to enhance their biological biobank mater
     'faq_c4' => 'The database and the web site are ebiobanques.fr maintained by the French national infrastructure Biobanks.
     Participating biobanks have their own tools for managing collections of biological samples, for which an automatic exporting tool is designed.
 To participate to feeding of system, a simple request to the infrastructure Biobanks is enough, then a connector is adapted to the biobank software to allow it to automatically export its useful and authorized information.',
+    'faq_t5' => 'Quelles aides peut m’apporter BIOBANQUES ?',
+    'faq_c5' => 'Dans le cadre des demandes d’échantillons, l’infrastructure BIOBANQUES dispose d’un service « Ethique et Réglementaire » pour vous accompagner dans vos démarches d’accès à l’échantillon (MTA, contrats de partenariat, questions éthique et réglementaire, droit international, etc.). <br><br>
+Dans le cadre de vos projets de recherche, BIOBANQUES propose des services experts et des plateformes techniques pour la mise en place des différentes étapes pour la réalisation de votre projet : http://www.biobanques.eu/fr/demande-de-prestations',
+    
     'forgotedPwd' => 'Forgot password',
     'atLeastOneField' => 'You have to fill at least one field to get your password back.',
     'recoverMessageSent' => 'A message with your credentials was sent at the following mail adress : {userEmail}',

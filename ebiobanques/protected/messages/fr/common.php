@@ -95,17 +95,19 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
 <li> &nbsp;&nbsp; Pour accéder à l’ensemble des onglets, une inscription préalable, en ligne, est demandée en cliquant sur l’onglet « <font style="font-weight: bold;color:purple;">connexion</font> ».<br> Cette inscription permet à BIOBANQUES de contrôler les utilisateurs du site dans un souci éthique relatif aux échantillons et données associées des biobanques.
 <li> &nbsp;&nbsp; Sous l’onglet <font style="font-weight: bold;color:purple;">Catalogue des biobanques</font>, vous trouverez les informations concernant les biobanques (CRB, tumorothèques, …), les pathologies des collections, les types d’échantillons et les contacts. 
 <li> &nbsp;&nbsp; Sous l’onglet « <font style="font-weight: bold;color:purple;">recherche des échantillons</font> » vous accéderez au formulaire de demande d’échantillon.</ul>',
-    'faq_t1' => 'A quoi sert le projet ebiobanques.fr?',
-    'faq_c1' => 'ebiobanques.fr permet de faciliter la recherche de matériel biologique issues des biobanques.',
-    'faq_t2' => 'A qui est destiné ebiobanques.fr?',
-    'faq_c2' => 'ebiobanques.fr est utile pour tout chercheur en médecine/biologie qui souhaite acquérir du matériel biologique dans le cadre de ses études.
-Il est aussi destiné à toute biobanque désireuse de valoriser son matériel biologique.',
-    'faq_t3' => 'Qui peut participer pour alimenter la base de données?',
-    'faq_c3' => 'La base de données ebiobanques.fr est alimentée automatiquement par les biobanques qui souhaitent valoriser leur matériel biologique dans un catalogue ouvert aux chercheurs.',
-    'faq_t4' => 'Comment est maintenu ce système?',
-    'faq_c4' => 'La base de données ainsi que le site web ebiobanques.fr sont maintenus par l\'infrastructure nationale française  Biobanques.
-    Les biobanques participantes au projet possèdent leurs propres outils de gestion de collections d\'échantillons biologiques, pour lesquelles un outil d\'export automatisé est conçu.
-    Pour participer à l\'alimentation de ce système, une simple demande auprès de l\'infrastructure Biobanques suffit, ensuite un connecteur est adapté au logiciel de la biobanque pour lui permettre d\'exporter automatiquement ces informations utiles et autorisées.',
+    'faq_t1' => 'Comment  trouver les échantillons utiles à mon projet de recherche ?',
+    'faq_c1' => 'La recherche se fait par pathologie, décrite par son nom usuel, par son code CIM10 ou mot clé MeSH soit dans le catalogue des biobanques/recherche avancée, soit dans « rechercher des échantillons » (en cours de construction)',
+    'faq_t2' => 'Comment faire une demande d’échantillons ?',
+    'faq_c2' => 'Une procédure explicative ainsi que les formulaires de demandes d’échantillons sont disponibles on line dans « rechercher des échantillons » et sur le site de l’infrastructure BIOBANQUES/espace professionnel/échantillons biologiques-demander des échantillons.',
+    'faq_t3' => 'Quel est le coût des échantillons ?',
+    'faq_c3' => 'Pour faciliter le partenariat entre les CRBs et les demandeurs (publics ou privés), BIOBANQUES propose une grille tarifaire qui permet d’évaluer les coûts en toute transparence sur des critères objectifs internationaux et une proposition de facturation en 3 niveaux selon le degré de collaboration et de partenariat : '
+    . '<a href="http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf">http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf</a>.<br>Chaque biobanque propose aussi une grille tarifaire précisant les conditions d’accès à leurs échantillons.',
+    'faq_t4' => 'Quel est le délai de réponse d’une demande d’échantillons ?',
+    'faq_c4' => 'Dès réception et validation de votre formulaire de demande d’échantillons, BIOBANQUES le diffuse à l’ensemble du réseau. Le délai de réponse des différents centres pouvant varier, nous effectuons un suivi (relance téléphonique, mail, élargissement au niveau européen) dans le mois qui suit afin de satisfaire au mieux le demandeur.',
+    'faq_t5' => 'Quelles aides peut m’apporter BIOBANQUES ?',
+    'faq_c5' => 'Dans le cadre des demandes d’échantillons, l’infrastructure BIOBANQUES dispose d’un service « Ethique et Réglementaire » pour vous accompagner dans vos démarches d’accès à l’échantillon (MTA, contrats de partenariat, questions éthique et réglementaire, droit international, etc.). <br><br>
+Dans le cadre de vos projets de recherche, BIOBANQUES propose des services experts et des plateformes techniques pour la mise en place des différentes étapes pour la réalisation de votre projet : <a href="http://www.biobanques.eu/fr/demande-de-prestations">http://www.biobanques.eu/fr/demande-de-prestations</a>',
+    
     'forgotedPwd' => 'Mot de passe oublié',
     'atLeastOneField' => 'Vous devez remplir au moins un champs pour récupérer votre mot de passe.',
     'recoverMessageSent' => 'Un message contenant vos identifiants de connexion a été envoyé à l\'adresse : {userEmail}',

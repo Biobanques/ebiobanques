@@ -18,6 +18,10 @@ $('#biobanks-grid').yiiGridView('update', {
     <h1><?php echo Yii::t('common', 'catalog') ?></h1>
 </div>
 
+<div>
+    <?php echo Yii::t('common', 'catalog_intro') ?>
+</div>
+<br>
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'searchCatalog', 'searchable' => true));
 ?>

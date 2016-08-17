@@ -197,5 +197,10 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'biobank.materialOther' => 'Autres',
     'biobank.phone' => 'Télephone',    
     'biobank.sample_type'=>'Types d \'échantillons',
+    'catalog_intro'=>'Dans cette rubrique, vous trouverez répertorié l’ensemble des biobanques du réseau.
+        Les informations majeures comme les pathologies sont identifiées soit par leur nom usuel,
+        par le code CIM 10 ou par les mots clés du MeSH. Les informations détaillées des échantillons (type, certification, etc.), sont disponibles en cliquant sur la loupe (colonne de droite).<br><br>
+Une sélection des biobanques de votre intérêt peut se faire par « recherche avancée »<br><br>
+Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuaire ou votre sélection (recherche avancée) par les boutons correspondants en haut à droite.',
 );
 ?>

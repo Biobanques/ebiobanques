@@ -368,7 +368,7 @@ class Biobank extends LoggableActiveRecord {
             'name' => Yii::t('common', 'biobank.name'),
             'acronym' => Yii::t('common', 'biobank.acronym'),
             'presentation' => Yii::t('common', 'biobank.presentation'),
-            'presentation_en' => Yii::t('common', 'presentation_en'),
+            'presentation_en' => Yii::t('common', 'biobank.presentation_en'),
             'collection_id' => Yii::t('common', 'biobank.collection_id'),
             'materialStoredDNA' => Yii::t('common', 'biobank.materialStoredDNA'),
             'materialStoredPlasma' => Yii::t('common', 'biobank.materialStoredPlasma'),

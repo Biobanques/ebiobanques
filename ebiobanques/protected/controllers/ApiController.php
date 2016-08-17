@@ -365,8 +365,9 @@ class ApiController extends Controller
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankISAvailable', "FALSE");
             $biobankEntry = $this->addToEntry($biobankEntry, 'biobankHISAvailable', "FALSE");
 
-            //TODO each biobank need to sign a chart between bbmri and the biobank (TODO to discuss)
-            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankPartnerCharterSigned', isset($biobank->PartnerCharterSigned) && $biobank->PartnerCharterSigned != '' ? $biobank->PartnerCharterSigned : "TRUE");
+            // each biobank need to sign a chart between bbmri and the biobank 
+            //Meeting Biobanques 03/08/2016 : decision : Yes always.
+            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankPartnerCharterSigned',  "TRUE");
 
 
 //            $biobankEntry = $this->addToEntry($biobankEntry, 'biobankSize', isset($biobank->nb_total_samples) && $biobank->nb_total_samples != '' ? $biobank->nb_total_samples : "1x10³");

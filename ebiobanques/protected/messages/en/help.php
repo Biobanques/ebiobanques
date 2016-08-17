@@ -20,5 +20,6 @@ Once selected samples, you only have to click on the "proceed application" link 
     'helpPhoneContent' => 'Numéro de télephone au format international :<br>'
     . '+33123456789',
     'helpEmailContent' => 'Email : abcde@xyz.com',
+    'help_others_certifications'=>'This field must contains the declaration of others certifications done, separated by a comma.It must contains / to indicate that no other certification has been done. <br> Ex : Certification ISO 10001, Certification AFNOR 032'
 );
 ?>

@@ -20,5 +20,7 @@ return array (
     'helpPhoneContent' => 'Numéro de télephone au format international :<br>'
     . '+33123456789',
     'helpEmailContent' => 'Email : abcde@xyz.com',
+    'help_others_certifications'=>'Ce champ doit contenir uniquement les declarations d\'autres certifications effectuées, séparées par une virgule, en anglais.Il peut contenir / pour indiquer qu\'aucune autre certification n\'a été déclarée. <br> Ex : Certification ISO 10001, Certification AFNOR 032'
+
 );
 ?>

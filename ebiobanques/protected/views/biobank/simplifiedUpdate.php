@@ -248,7 +248,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'cert_autres'); ?>
-        <?php echo $form->textField($biobank, 'cert_autres'); ?>
+        <?php echo $form->textField($biobank, 'cert_autres',CommonDisplayTools::getHelpBox('biobank.cert_autres', 'help_others_certifications', $this)); ?>
         <?php echo $form->error($biobank, 'cert_autres'); ?>
     </div>
     <?php echo CHtml::submitButton('Mettre à jour') ?>

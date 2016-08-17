@@ -61,14 +61,14 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation', CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
+        echo $form->textArea($biobank, 'presentation', array('style'=>'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation'); ?>
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation_en'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation_en', CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
+        echo $form->textArea($biobank, 'presentation_en', array('style'=>'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation_en'); ?>
     </div>

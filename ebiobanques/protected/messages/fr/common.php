@@ -130,6 +130,10 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'Map of biobanks' => "Carte des biobanques",
     'show map' => 'Voir la carte des biobanques',
     'undefined' => 'Indéfini',
-    'presentation_en'=>'Description en anglais'
+    'presentation_en'=>'Description en anglais',
+    'sample_information'=>'Informations des échantillons',
+    'quality_information'=>'Informations qualité',
+    'contact_information'=>'Contact Information',
+    'en cours'=>'En cours'
 );
 ?>

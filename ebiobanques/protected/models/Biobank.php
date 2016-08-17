@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord
-{
+class Biobank extends LoggableActiveRecord {
     /*
      * Champs obligatoires
      */
+
     public $id;
     public $identifier;
     public $name;
@@ -48,6 +48,7 @@ class Biobank extends LoggableActiveRecord
     public $keywords_MeSH;
     public $acronym;
     public $presentation_en;
+
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -56,11 +57,13 @@ class Biobank extends LoggableActiveRecord
     /**
      * fields agregated related to the sampling activity
      */
+
     /**
      * values fixed: general population, disease
      * @var type
      */
     public $sampling_practice;
+
     /**
      * free text
      * @var type
@@ -82,6 +85,7 @@ class Biobank extends LoggableActiveRecord
     public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
+
     /**
      * total number of samples, integer value only.
      * Displayed in a format like 10^x.
@@ -93,6 +97,7 @@ class Biobank extends LoggableActiveRecord
     public $collectionSampleAccessFee = 'TRUE';
     public $collectionSampleAccessJointProjects = 'TRUE';
     public $PartnerCharterSigned = 'TRUE';
+
     /**
      * fields agregated relatives to the number of samples.
      * NBS : acronym of Number of Biological Samples
@@ -125,12 +130,37 @@ class Biobank extends LoggableActiveRecord
      * specify the type of samples if other. Free text.
      */
     public $nbs_other_specification;
+
     /**
      * array of ICD codes
      */
     public $cims = array();
     public $contact_search;
     protected $qualityCombinate;
+
+    /**
+     * get the array of material types
+     * @since 1.8.0
+     */
+    public function getAttributesMaterial() {
+        return [
+            'materialStoredDNA',
+            'materialStoredPlasma',
+            'materialStoredSerum',
+            'materialStoredUrine',
+            'materialStoredSaliva',
+            'materialStoredFaeces',
+            'materialStoredRNA',
+            'materialStoredBlood',
+            'materialStoredTissueFrozen',
+            'materialStoredTissueFFPE',
+            'materialStoredImmortalizedCellLines',
+            'materialTumoralTissue',
+            'materialHealthyTissue',
+            'materialLCR',
+            'materialOther',
+        ];
+    }
 
     public function getQualityCombinate() {
         return $this->qualityCombinate;
@@ -266,9 +296,9 @@ class Biobank extends LoggableActiveRecord
             /**
              * nb_total_samples : integer postive only
              */
-            array('nb_total_samples','numerical',
-    'integerOnly'=>true,
-    'min'=>1,),
+            array('nb_total_samples', 'numerical',
+                'integerOnly' => true,
+                'min' => 1,),
             /*
              * sampling data agregated
              */
@@ -338,7 +368,6 @@ class Biobank extends LoggableActiveRecord
             'name' => Yii::t('biobank', 'name'),
             'acronym' => Yii::t('biobank', 'acronym'),
             'presentation' => Yii::t('biobank', 'presentation'),
-            
             'presentation_en' => Yii::t('common', 'presentation_en'),
             'collection_id' => Yii::t('biobank', 'collection_id'),
             'materialStoredDNA' => Yii::t('biobank', 'materialStoredDNA'),
@@ -446,7 +475,7 @@ class Biobank extends LoggableActiveRecord
         if ($this->identifier != null)
             $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '/i'));
         if ($this->responsable_op != null) {
-
+            
         }
 
         if ($this->name != null)
@@ -1017,6 +1046,67 @@ class Biobank extends LoggableActiveRecord
             $result = array_merge($result, $partialResult['result']);
         }
         return $result;
+    }
+
+    /**
+     * get the number of samples in a formatted text.
+     * ex : 1 000 - 10 000
+     * @since 1.8.1
+     */
+    public function getSampleNumberFormatted() {
+        $res = "1 - 1 000";
+        if ($this->nb_total_samples > 1000)
+            $res = "1 000 - 10 000";
+        if ($this->nb_total_samples > 10000)
+            $res = "10 000 - 100 000";
+        if ($this->nb_total_samples > 100000)
+            $res = ">100 000";
+        return $res;
+    }
+
+    /**
+     * get the available types of samples in the biobank
+     * ex : DNA,Cells 
+     * @since 1.8.1
+     * @TODO remove ", " at the end of th emethod by replacing characters (find the good php function) 
+     */
+    public function getSampleTypeFormatted() {
+        $res = "";
+        foreach ($this->getAttributesMaterial() as $material) {
+            if ($this->$material == "TRUE") {
+                if (strlen($res) > 2) {
+                    $res.=", ";
+                }
+                $res.=Yii::t('biobank', $material);
+            }
+        }
+        return $res;
+    }
+
+    /**
+     * get the available options to answer on the status of certification.
+     * @return array of status
+     * @since 1.8.1
+     */
+    public function getCertificationOptions() {
+        return ['OUI' => Yii::t('common', 'oui'), 'NON' => Yii::t('common', 'non'), 'EN COURS' => Yii::t('common', 'en cours')];
+    }
+
+    /**
+     * get the certification of the biobank in a formatted text
+     * ex : NFS96900, ISO9001
+     * @since 1.8.1
+     * @TODO remove ", " at the end of th emethod by replacing characters (find the good php function) 
+     */
+    public function getCertificationFormatted() {
+        $res = "";
+        if ($this->cert_ISO9001 == "OUI")
+            $res.="ISO9001";
+        if ($this->cert_NFS96900 == "OUI")
+            $res.="NFS96900";
+        if (isset($this->cert_autres))
+            $res.=$this->cert_autres;
+        return $res;
     }
 
 }

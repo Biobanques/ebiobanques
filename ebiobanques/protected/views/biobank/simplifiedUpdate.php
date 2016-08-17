@@ -252,29 +252,11 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_4'); ?></div>
     <div class='col-2-row'>
 
-        <?php
-        $attributes_material = [
-            'materialStoredDNA',
-            'materialStoredPlasma',
-            'materialStoredSerum',
-            'materialStoredUrine',
-            'materialStoredSaliva',
-            'materialStoredFaeces',
-            'materialStoredRNA',
-            'materialStoredBlood',
-            'materialStoredTissueFrozen',
-            'materialStoredTissueFFPE',
-            'materialStoredImmortalizedCellLines',
-            'materialTumoralTissue',
-            'materialHealthyTissue',
-            'materialLCR',
-            'materialOther',
-        ];
-        ?>
+  
         <?php echo CHtml::label(Yii::t('biobank', 'material_types'), false); ?>
 
         <?php
-        foreach ($attributes_material as $type) {
+        foreach ($biobank->getAttributesMaterial() as $type) {
             echo '<div style="display: inline-block;float:left;width:30%;">';
             echo $form->checkBox($biobank, $type, ['value' => 'TRUE', 'uncheckValue' => 'FALSE', 'style' => 'margin-top:10px;margin-bottom:10px;margin-right:5px']);
             echo $form->label($biobank, $type, ['style' => 'display:inline-block']);
@@ -352,12 +334,12 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_ISO9001'); ?>
-            <?php echo $form->dropDownList($biobank, 'cert_ISO9001', ['OUI' => 'Oui', 'NON' => 'NON', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
+            <?php echo $form->dropDownList($biobank, 'cert_ISO9001', $biobank->getCertificationOptions(), ['prompt' => Yii::t('common', 'undefined')]); ?>
             <?php echo $form->error($biobank, 'cert_ISO9001'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_NFS96900'); ?>
-            <?php echo $form->dropDownList($biobank, 'cert_NFS96900', ['OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours'], ['prompt' => Yii::t('common', 'undefined')]); ?>
+            <?php echo $form->dropDownList($biobank, 'cert_NFS96900', $biobank->getCertificationOptions(), ['prompt' => Yii::t('common', 'undefined')]); ?>
             <?php echo $form->error($biobank, 'cert_NFS96900'); ?>
         </div>
     </div>

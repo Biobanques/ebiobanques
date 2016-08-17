@@ -80,5 +80,6 @@ return [
     'materialHealthyTissue' => 'Tissus sains',
     'materialLCR' => 'LCR',
     'materialOther' => 'Autres',
-    'phone' => 'Télephone'
+    'phone' => 'Télephone',    
+    'sample_type'=>'Types d \'échantillons',
 ];

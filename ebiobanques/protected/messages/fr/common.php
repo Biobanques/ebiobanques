@@ -134,6 +134,66 @@ Il est aussi destiné à toute biobanque désireuse de valoriser son matériel b
     'sample_information'=>'Informations des échantillons',
     'quality_information'=>'Informations qualité',
     'contact_information'=>'Contact Information',
-    'en cours'=>'En cours'
+    'en cours'=>'En cours',
+    
+    /*
+     * BIOBANQUE
+     */
+    /*
+     * Properties labels
+     */
+    'biobank.name' => 'Nom de la biobanque',
+    'biobank.identifier' => 'Code BRIF',
+    'biobank.collection_id' => 'Identifiant de la collection',
+    'biobank.acronym' => 'Acronyme de la biobanque',
+    'biobank.presentation' => 'Description de la biobanque en français',
+    'biobank.presentation_en' => 'Description de la biobanque en anglais',
+    'biobank.cert_ISO9001' => 'Certification ISO-9001',
+    'biobank.cert_NFS96900' => 'Certification NFS-96900',
+    'biobank.cert_autres' => 'Autres certifications',
+    'biobank.nb_total_samples' => 'Nombre total d\'échantillons',
+    'biobank.website' => 'Site Internet',
+    'biobank.keywords_MeSH' => 'Mots clés MeSH',
+    'biobank.diagnosis_available' => 'Codes CIM disponibles',
+    'biobank.pathologies' => 'Pathologies',
+    'biobank.email' => 'Email',
+    /*
+     *
+     */
+    'biobank.updateTitle' => 'Mise à jour de la biobanque {name}',
+
+    /*
+     * Update form - Main parts titles
+     */
+    'biobank.form_part_1' => 'Nom et descriptions',
+    'biobank.form_part_2' => 'Adresse',
+    'biobank.form_part_3' => 'Coordinateur',
+    'biobank.form_part_4' => 'Materiel biologique disponible',
+    'biobank.form_part_responsable_adj' => 'Responsable adjoint',
+    'biobank.form_part_responsable_op' => 'Responsable opérationnel',
+    'biobank.form_part_responsable_qual' => 'Responsable qualité',
+    'biobank.form_part_quality' => 'Qualité et certifications',
+    'biobank.form_part_keywords' => 'Mots clés et codifications',
+    /*
+     * Misc
+     */
+    'biobank.material_types' => 'Type de matériel biologique stocké',
+    'biobank.materialStoredDNA' => 'ADN',
+    'biobank.materialStoredPlasma' => 'Plasma',
+    'biobank.materialStoredSerum' => 'Sérum',
+    'biobank.materialStoredTissueFFPE' => 'Tissus en paraffine',
+    'biobank.materialStoredTissueFrozen' => 'Tissus congelés',
+    'biobank.materialStoredRNA' => 'ARN',
+    'biobank.materialStoredSaliva' => 'Salive',
+    'biobank.materialStoredUrine' => 'Urine',
+    'biobank.materialStoredBlood' => 'Sang',
+    'biobank.materialStoredFaeces' => 'Fécès',
+    'biobank.materialStoredImmortalizedCellLines' => 'Lignées cellulaires',
+    'biobank.materialTumoralTissue' => 'Tissus tumoraux',
+    'biobank.materialHealthyTissue' => 'Tissus sains',
+    'biobank.materialLCR' => 'LCR',
+    'biobank.materialOther' => 'Autres',
+    'biobank.phone' => 'Télephone',    
+    'biobank.sample_type'=>'Types d \'échantillons',
 );
 ?>

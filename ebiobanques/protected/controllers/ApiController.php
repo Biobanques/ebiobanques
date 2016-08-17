@@ -353,6 +353,7 @@ class ApiController extends Controller
                 $biobankEntry = $this->addToEntry($biobankEntry, 'geoLongitude', str_replace(',', '.', $biobank->longitude));
 
             //collaborationsStatus
+            // Meeting Biobanques 03/08/2016 : decision : Yes by default for biobanks partner collaboration
             $biobankEntry = $this->addToEntry($biobankEntry, 'collaborationPartnersCommercial', isset($biobank->collaborationPartnersCommercial) && $biobank->collaborationPartnersCommercial != "" ? $biobank->collaborationPartnersCommercial : 'TRUE');
             $biobankEntry = $this->addToEntry($biobankEntry, 'collaborationPartnersNonforprofit', isset($biobank->collaborationPartnersNonforprofit) && $biobank->collaborationPartnersNonforprofit != '' ? $biobank->collaborationPartnersNonforprofit : 'TRUE');
 

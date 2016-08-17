@@ -42,6 +42,7 @@ $attributes = $model->getAttributes();
     ));
     ?>
 </div>
+
 <div id="contact" style="padding-left:20px;width:330px;float:left;">
     <h3><?php echo Yii::t('common', 'contact_information'); ?></h3>
     <?php

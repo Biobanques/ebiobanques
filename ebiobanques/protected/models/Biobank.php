@@ -1102,10 +1102,18 @@ class Biobank extends LoggableActiveRecord {
         $res = "";
         if ($this->cert_ISO9001 == "OUI")
             $res.="ISO9001";
-        if ($this->cert_NFS96900 == "OUI")
+        if ($this->cert_NFS96900 == "OUI") {
+            if (strlen($res) > 0) {
+                $res.=", ";
+            }
             $res.="NFS96900";
-        if (isset($this->cert_autres))
+        }
+        if (isset($this->cert_autres) && $this->cert_autres!="/") {
+            if (strlen($res) > 0) {
+                $res.=", ";
+            }
             $res.=$this->cert_autres;
+        }
         return $res;
     }
 

@@ -13,11 +13,9 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
                 trigger: \"hover\" });
 });"
 );
-
-
 /* @var $biobank Biobank */
 ?>
-<h1><?php echo Yii::t('biobank', 'updateTitle', ['{name}' => $biobank->name]) ?></h1>
+<h1><?php echo Yii::t('common', 'biobank.updateTitle', ['{name}' => $biobank->name]) ?></h1>
 <div class='form'>
     <?php
     /* @var $form CactiveForm */
@@ -27,32 +25,19 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
     ));
     ?>
-
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_1'); ?></div>
+    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_1'); ?></div>
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'acronym'); ?>
             <?php
-            echo $form->textField($biobank, 'acronym', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'acronym'),
-                    'content' => Yii::t('biobank', 'helpAcronymContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'acronym', CommonDisplayTools::getHelpBox('biobank.acronym', 'helpAcronymContent', $this));
             ?>
             <?php echo $form->error($biobank, 'acronym'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'name'); ?>
             <?php
-            echo $form->textField($biobank, 'name', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'name'),
-                    'content' => Yii::t('biobank', 'helpNameContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'name', CommonDisplayTools::getHelpBox('biobank.name', 'helpNameContent', $this));
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
@@ -61,64 +46,34 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='cols2'>
             <?php echo $form->label($biobank, 'website'); ?>
             <?php
-            echo $form->textField($biobank, 'website', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'website'),
-                    'content' => Yii::t('biobank', 'helpWebsiteContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'website', CommonDisplayTools::getHelpBox('biobank.website', 'helpWebsiteContent', $this));
             ?>
             <?php echo $form->error($biobank, 'website'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'identifier'); ?>
             <?php
-            echo $form->textField($biobank, 'identifier', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'identifier'),
-                    'content' => Yii::t('biobank', 'helpidentifierContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'identifier', CommonDisplayTools::getHelpBox('biobank.identifier', 'helpidentifierContent', $this));
             ?>
             <?php echo $form->error($biobank, 'identifier'); ?>
         </div>
     </div>
-
-
-
-
-
     <div class='col-2-row'>
-
         <?php echo $form->label($biobank, 'presentation'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-            $this->renderPartial('/site/_help_message', array(
-                'title' => Yii::t('biobank', 'presentation'),
-                'content' => Yii::t('biobank', 'helpPresentationContent')
-                    ), true
-            )
-        ]);
+        echo $form->textArea($biobank, 'presentation', CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation'); ?>
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation_en'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation_en', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-            $this->renderPartial('/site/_help_message', array(
-                'title' => Yii::t('biobank', 'presentation_en'),
-                'content' => Yii::t('biobank', 'helpPresentationEnContent')
-                    ), true
-            )
-        ]);
+        echo $form->textArea($biobank, 'presentation_en', CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation_en'); ?>
     </div>
 
-    <div class = 'help help-title' style = "clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_2');
+    <div class = 'help help-title' style = "clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_2');
         ?></div>
     <div class='col-2-row'>
         <div class='cols2'>
@@ -149,7 +104,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     </div>
 
 
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_3'); ?></div>
+    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_3'); ?></div>
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'last_name'); ?>
@@ -167,13 +122,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'email'); ?>
             <?php
-            echo $form->textField($biobank->contact, 'email', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'email'),
-                    'content' => Yii::t('biobank', 'helpEmailContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank->contact, 'email', CommonDisplayTools::getHelpBox('biobank.email', 'helpEmailContent', $this));
             ?>
             <?php echo $form->error($biobank->contact, 'email'); ?>
         </div>
@@ -181,13 +130,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='cols2'>
             <?php echo $form->label($biobank->contact, 'phone'); ?>
             <?php
-            echo $form->textField($biobank->contact, 'phone', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'phone'),
-                    'content' => Yii::t('biobank', 'helpPhoneContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank->contact, 'phone', CommonDisplayTools::getHelpBox('phone', 'helpPhoneContent', $this));
             ?>
             <?php echo $form->error($biobank->contact, 'phone'); ?>
         </div>
@@ -201,7 +144,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     foreach ($resps as $resp) {
         ?>
 
-        <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_' . $resp); ?></div>
+        <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_' . $resp); ?></div>
         <div class='col-2-row'>
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'lastName'); ?>
@@ -220,13 +163,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'email'); ?>
                 <?php
-                echo $form->textField($biobank->$resp, 'email', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                    $this->renderPartial('/site/_help_message', array(
-                        'title' => Yii::t('biobank', 'email'),
-                        'content' => Yii::t('biobank', 'helpEmailContent')
-                            ), true
-                    )
-                ]);
+                echo $form->textField($biobank->$resp, 'email', CommonDisplayTools::getHelpBox('biobank.email', 'helpEmailContent', $this));
                 ?>
                 <?php echo $form->error($biobank->$resp, 'email'); ?>
             </div>
@@ -234,13 +171,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             <div class='cols2'>
                 <?php echo $form->label($biobank->$resp, 'direct_phone'); ?>
                 <?php
-                echo $form->textField($biobank->$resp, 'direct_phone', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                    $this->renderPartial('/site/_help_message', array(
-                        'title' => Yii::t('biobank', 'phone'),
-                        'content' => Yii::t('biobank', 'helpPhoneContent')
-                            ), true
-                    )
-                ]);
+                echo $form->textField($biobank->$resp, 'direct_phone', CommonDisplayTools::getHelpBox('phone', 'helpPhoneContent', $this));
                 ?>
                 <?php echo $form->error($biobank->$resp, 'direct_phone'); ?>
             </div>
@@ -249,11 +180,11 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <?php } ?>
 
 
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_4'); ?></div>
+    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_4'); ?></div>
     <div class='col-2-row'>
 
-  
-        <?php echo CHtml::label(Yii::t('biobank', 'material_types'), false); ?>
+
+        <?php echo CHtml::label(Yii::t('common', 'biobank.material_types'), false); ?>
 
         <?php
         foreach ($biobank->getAttributesMaterial() as $type) {
@@ -261,7 +192,6 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             echo $form->checkBox($biobank, $type, ['value' => 'TRUE', 'uncheckValue' => 'FALSE', 'style' => 'margin-top:10px;margin-bottom:10px;margin-right:5px']);
             echo $form->label($biobank, $type, ['style' => 'display:inline-block']);
             echo '</div>';
-            //    echo $form->radioButtonList($biobank, $type['attributeName'], $type['value']);
         }
         ?>
 
@@ -271,66 +201,39 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             <?php echo $form->label($biobank, 'nb_total_samples'); ?>
             <?php echo $form->error($biobank, 'nb_total_samples'); ?>
             <?php
-            echo $form->textField($biobank, 'nb_total_samples', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'nb_total_samples'),
-                    'content' => Yii::t('biobank', 'help_nb_total_samplesContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'nb_total_samples', CommonDisplayTools::getHelpBox('biobank.nb_total_samples', 'help_nb_total_samplesContent', $this));
             ?>
 
         </div>
-
     </div>
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_keywords'); ?></div>
+    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_keywords'); ?></div>
     <div class='col-2-row'>
-
-
     </div>
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'keywords_MeSH'); ?>
             <?php
-            echo $form->textField($biobank, 'keywords_MeSH', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'keywords_MeSH'),
-                    'content' => Yii::t('biobank', 'help_keywords_MeSHContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'keywords_MeSH', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH', 'help_keywords_MeSHContent', $this));
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'diagnosis_available'); ?>
             <?php
-            echo $form->textField($biobank, 'diagnosis_available', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'diagnosis_available'),
-                    'content' => Yii::t('biobank', 'help_diagnosis_availableContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
             ?>
             <?php echo $form->error($biobank, 'diagnosis_available'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'pathologies'); ?>
             <?php
-            echo $form->textField($biobank, 'pathologies', ['class' => 'helpedInput', 'data-toggle' => "hover", "popover-title" => "Popover Header", 'data-content' =>
-                $this->renderPartial('/site/_help_message', array(
-                    'title' => Yii::t('biobank', 'pathologies'),
-                    'content' => Yii::t('biobank', 'help_pathologiesContent')
-                        ), true
-                )
-            ]);
+            echo $form->textField($biobank, 'pathologies', CommonDisplayTools::getHelpBox('biobank.pathologies', 'help_pathologiesContent', $this));
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
 
     </div>
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('biobank', 'form_part_quality'); ?></div>
+    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_quality'); ?></div>
     <div class='col-2-row'>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'cert_ISO9001'); ?>

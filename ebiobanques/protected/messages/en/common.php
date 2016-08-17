@@ -91,7 +91,6 @@ return array(
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr: Improving research of biological material',
     'indexContent_p1' => 'ebiobanques.fr is designed by biobanks for biobanks to enhance the application of biological material.',
-    'indexContent_p2' => 'Catalog of samples is fed automatically by biobanks and is a valuable source of research information for researchers in medicine and biology. ',
     'faq_t1' => 'What is the ebiobanques.fr project?',
     'faq_c1' => 'ebiobanques.fr facilitates the search oh biological material from biobanks.',
     'faq_t2' => 'For who is made ebiobanques.fr?',

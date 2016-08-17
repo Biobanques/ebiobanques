@@ -91,8 +91,10 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'idUser' => 'Id utilisateur',
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr : Améliorer la recherche de matériel biologique',
-    'indexContent_p1' => 'ebiobanques.fr est une application conçue par les biobanques pour les biobanques afin de valoriser le matériel biologique.',
-    'indexContent_p2' => 'Le catalogue d\'échantillons est alimenté automatiquement par les biobanques et est une source précieuse de recherche d\'informations pour les chercheurs en médecine et biologie.',
+    'indexContent_p1' => '<ul><li> &nbsp;&nbsp; ebiobanques est un outil catalogue qui regroupe les informations des 91 Centres de Ressources Biologiques, membres du réseau français BIOBANQUES, rassemblant ainsi près de 6 000 000 d’échantillons.
+<li> &nbsp;&nbsp; Pour accéder à l’ensemble des onglets, une inscription préalable, en ligne, est demandée en cliquant sur l’onglet « <font style="font-weight: bold;color:purple;">connexion</font> ».<br> Cette inscription permet à BIOBANQUES de contrôler les utilisateurs du site dans un souci éthique relatif aux échantillons et données associées des biobanques.
+<li> &nbsp;&nbsp; Sous l’onglet <font style="font-weight: bold;color:purple;">Catalogue des biobanques</font>, vous trouverez les informations concernant les biobanques (CRB, tumorothèques, …), les pathologies des collections, les types d’échantillons et les contacts. 
+<li> &nbsp;&nbsp; Sous l’onglet « <font style="font-weight: bold;color:purple;">recherche des échantillons</font> » vous accéderez au formulaire de demande d’échantillon.</ul>',
     'faq_t1' => 'A quoi sert le projet ebiobanques.fr?',
     'faq_c1' => 'ebiobanques.fr permet de faciliter la recherche de matériel biologique issues des biobanques.',
     'faq_t2' => 'A qui est destiné ebiobanques.fr?',

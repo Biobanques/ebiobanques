@@ -91,20 +91,16 @@ return array(
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr: Improving research of biological material',
     'indexContent_p1' => 'ebiobanques.fr is designed by biobanks for biobanks to enhance the application of biological material.',
-    'faq_t1' => 'What is the ebiobanques.fr project?',
-    'faq_c1' => 'ebiobanques.fr facilitates the search oh biological material from biobanks.',
-    'faq_t2' => 'For who is made ebiobanques.fr?',
-    'faq_c2' => 'ebiobanques.fr is util for any researcher in medicine / biology who wishes to acquire biological materials as part of his studies.
-It is also intended for anyone wishing to enhance their biological biobank material.',
-    'faq_t3' => 'Who can participate to feed the database?',
-    'faq_c3' => 'Based ebiobanques.fr data is fed automatically by biobanks wishing to exploit their biological material in a catalog open to researchers.',
-    'faq_t4' => 'How this system is kept?',
-    'faq_c4' => 'The database and the web site are ebiobanques.fr maintained by the French national infrastructure Biobanks.
-    Participating biobanks have their own tools for managing collections of biological samples, for which an automatic exporting tool is designed.
-To participate to feeding of system, a simple request to the infrastructure Biobanks is enough, then a connector is adapted to the biobank software to allow it to automatically export its useful and authorized information.',
-    'faq_t5' => 'Quelles aides peut m’apporter BIOBANQUES ?',
-    'faq_c5' => 'Dans le cadre des demandes d’échantillons, l’infrastructure BIOBANQUES dispose d’un service « Ethique et Réglementaire » pour vous accompagner dans vos démarches d’accès à l’échantillon (MTA, contrats de partenariat, questions éthique et réglementaire, droit international, etc.). <br><br>
-Dans le cadre de vos projets de recherche, BIOBANQUES propose des services experts et des plateformes techniques pour la mise en place des différentes étapes pour la réalisation de votre projet : http://www.biobanques.eu/fr/demande-de-prestations',
+    'faq_t1' => ' ',
+    'faq_c1' => ' ',
+    'faq_t2' => ' ',
+    'faq_c2' => ' ',
+    'faq_t3' => ' ',
+    'faq_c3' => ' ',
+    'faq_t4' => ' ',
+    'faq_c4' => ' ',
+    'faq_t5' => ' ',
+    'faq_c5' => ' ',
     
     'forgotedPwd' => 'Forgot password',
     'atLeastOneField' => 'You have to fill at least one field to get your password back.',
@@ -198,6 +194,7 @@ Dans le cadre de vos projets de recherche, BIOBANQUES propose des services exper
     'biobank.sample_type'=>'Sample type',
     'catalog_intro'=>' ',
     'icd_example'=>'(ICD code, ex: C00)',
-    'biobank_information'=>'Biobank information'
+    'biobank_information'=>'Biobank information',
+    'profil'=>'Profile'
 );
 ?>

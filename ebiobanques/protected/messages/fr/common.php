@@ -211,5 +211,6 @@ Une sélection des biobanques de votre intérêt peut se faire par « recherche 
 Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuaire ou votre sélection (recherche avancée) par les boutons correspondants en haut à droite.',
 
     'icd_example'=>'(Codification CIM, ex: C00)',
-    'biobank_information'=>'Informations de la biobanque');
+    'biobank_information'=>'Informations de la biobanque',
+    'profil'=>'Profil');
 ?>

@@ -39,7 +39,7 @@
             <td>
                 <?php echo $form->label($model, 'diagnosis_available'); ?>
                 <?php echo $form->textField($model, 'diagnosis_available', array('size' => 30, 'maxlength' => 45)); ?>
-                <br> (Codification CIM, ex: C00)
+                <br> <?php echo Yii::t('common', 'icd_example');?>
             </td>
 
             <td>

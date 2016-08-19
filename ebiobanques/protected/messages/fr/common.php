@@ -209,5 +209,6 @@ Les informations détaillées des échantillons (type, certification, etc.), son
 Une sélection des biobanques de votre intérêt peut se faire par « recherche avancée »
 <br><br>
 Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuaire ou votre sélection (recherche avancée) par les boutons correspondants en haut à droite.',
-);
+
+    'icd_example'=>'(Codification CIM, ex: C00)');
 ?>

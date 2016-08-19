@@ -143,8 +143,8 @@ Dans le cadre de vos projets de recherche, BIOBANQUES propose des services exper
     /*
      * Properties labels
      */
-    'biobank.name' => 'Nom de la biobanque',
-    'biobank.identifier' => 'Code BRIF',
+    'biobank.name' => 'Name of biobank',
+    'biobank.identifier' => 'Identifier',
     'biobank.collection_id' => 'Identifiant de la collection',
     'biobank.acronym' => 'Acronyme de la biobanque',
     'biobank.presentation' => 'Description de la biobanque en français',
@@ -154,8 +154,8 @@ Dans le cadre de vos projets de recherche, BIOBANQUES propose des services exper
     'biobank.cert_autres' => 'Autres certifications',
     'biobank.nb_total_samples' => 'Sample number',
     'biobank.website' => 'Site Internet',
-    'biobank.keywords_MeSH' => 'Mots clés MeSH',
-    'biobank.diagnosis_available' => 'Codes CIM disponibles',
+    'biobank.keywords_MeSH' => 'MeSH keywords',
+    'biobank.diagnosis_available' => 'ICD code available',
     'biobank.pathologies' => 'Pathologies',
     'biobank.email' => 'Email',
     /*
@@ -196,10 +196,7 @@ Dans le cadre de vos projets de recherche, BIOBANQUES propose des services exper
     'biobank.materialOther' => 'Autres',
     'biobank.phone' => 'Télephone',
     'biobank.sample_type'=>'Sample type',
-    'catalog_intro'=>'Dans cette rubrique, vous trouverez répertorié l’ensemble des biobanques du réseau.
-        Les informations majeures comme les pathologies sont identifiées soit par leur nom usuel,
-        par le code CIM 10 ou par les mots clés du MeSH. Les informations détaillées des échantillons (type, certification, etc.), sont disponibles en cliquant sur la loupe (colonne de droite).<br><br>
-Une sélection des biobanques de votre intérêt peut se faire par « recherche avancée »<br><br>
-Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuaire ou votre sélection (recherche avancée) par les boutons correspondants en haut à droite.',
+    'catalog_intro'=>' ',
+    'icd_example'=>'(ICD code, ex: C00)'
 );
 ?>

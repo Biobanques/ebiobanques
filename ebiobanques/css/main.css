@@ -241,7 +241,15 @@ div.search-form
 }
 
 .faq{
-    margin-top: 10px;
+    margin-top: 25px;
+    margin-bottom:20px;
+}
+.faq-title{
+    margin-top: 8px;
+    margin-bottom:5px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color:black;
 }
 
 .image-main-menu{

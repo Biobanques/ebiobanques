@@ -98,15 +98,19 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'faq_t1' => 'Comment  trouver les échantillons utiles à mon projet de recherche ?',
     'faq_c1' => 'La recherche se fait par pathologie, décrite par son nom usuel, par son code CIM10 ou mot clé MeSH soit dans le catalogue des biobanques/recherche avancée, soit dans « rechercher des échantillons » (en cours de construction)',
     'faq_t2' => 'Comment faire une demande d’échantillons ?',
-    'faq_c2' => 'Une procédure explicative ainsi que les formulaires de demandes d’échantillons sont disponibles on line dans « rechercher des échantillons » et sur le site de l’infrastructure BIOBANQUES/espace professionnel/échantillons biologiques-demander des échantillons.',
+    'faq_c2' => 'Une procédure explicative ainsi que les formulaires de demandes d’échantillons sont disponibles on line dans « rechercher des échantillons » et sur le site de l’infrastructure BIOBANQUES <a href="http://www.biobanques.eu/fr/offre-de-services/demande-d-echantillon">à cette adresse.</a>',
     'faq_t3' => 'Quel est le coût des échantillons ?',
-    'faq_c3' => 'Pour faciliter le partenariat entre les CRBs et les demandeurs (publics ou privés), BIOBANQUES propose une grille tarifaire qui permet d’évaluer les coûts en toute transparence sur des critères objectifs internationaux et une proposition de facturation en 3 niveaux selon le degré de collaboration et de partenariat : '
-    . '<a href="http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf">http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf</a>.<br>Chaque biobanque propose aussi une grille tarifaire précisant les conditions d’accès à leurs échantillons.',
+    'faq_c3' => 'Pour faciliter le partenariat entre les CRBs et les demandeurs (publics ou privés), BIOBANQUES propose une <a href="http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf.">grille tarifaire</a> qui permet d’évaluer les coûts en toute transparence sur des critères objectifs internationaux et une proposition de facturation en 3 niveaux selon le degré de collaboration et de partenariat. Chaque biobanque propose aussi une grille tarifaire précisant les conditions d’accès à leurs échantillons.',
     'faq_t4' => 'Quel est le délai de réponse d’une demande d’échantillons ?',
     'faq_c4' => 'Dès réception et validation de votre formulaire de demande d’échantillons, BIOBANQUES le diffuse à l’ensemble du réseau. Le délai de réponse des différents centres pouvant varier, nous effectuons un suivi (relance téléphonique, mail, élargissement au niveau européen) dans le mois qui suit afin de satisfaire au mieux le demandeur.',
-    'faq_t5' => 'Quelles aides peut m’apporter BIOBANQUES ?',
-    'faq_c5' => 'Dans le cadre des demandes d’échantillons, l’infrastructure BIOBANQUES dispose d’un service « Ethique et Réglementaire » pour vous accompagner dans vos démarches d’accès à l’échantillon (MTA, contrats de partenariat, questions éthique et réglementaire, droit international, etc.). <br><br>
-Dans le cadre de vos projets de recherche, BIOBANQUES propose des services experts et des plateformes techniques pour la mise en place des différentes étapes pour la réalisation de votre projet : <a href="http://www.biobanques.eu/fr/demande-de-prestations">http://www.biobanques.eu/fr/demande-de-prestations</a>',
+    'faq_t5' => 'Quelle aide peut m’apporter BIOBANQUES ?',
+    'faq_c5' => 'Dans le cadre des demandes d’échantillons,
+        l’infrastructure BIOBANQUES dispose d’un service « <a href="http://www.biobanques.eu/fr/offre-de-services/ethique-reglementation">Ethique et Réglementaire</a> » 
+        pour vous accompagner dans vos démarches d’accès à l’échantillon 
+        (MTA, contrats de partenariat, questions éthique et réglementaire, droit international, etc.). <br><br>
+Dans le cadre de vos projets de recherche, BIOBANQUES propose des services experts 
+et des plateformes techniques pour la mise en place des différentes étapes pour
+la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de-prestations">Contactez-nous</a>',
     
     'forgotedPwd' => 'Mot de passe oublié',
     'atLeastOneField' => 'Vous devez remplir au moins un champs pour récupérer votre mot de passe.',

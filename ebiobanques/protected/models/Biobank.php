@@ -1084,7 +1084,7 @@ class Biobank extends LoggableActiveRecord {
                 if (strlen($res) > 2) {
                     $res.=", ";
                 }
-                $res.=Yii::t('biobank', $material);
+                $res.=Yii::t('common', 'biobank.'.$material);
             }
         }
         return $res;

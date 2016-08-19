@@ -34,7 +34,7 @@ $attributes_oblig = array(
 $attributes = $model->getAttributes();
 ?>
 <div id="biobank_oblig" style="width:550px;float:left;">
-    <h3>Informations de la biobanque</h3>
+    <h3><?php echo Yii::t('common', 'biobank_information'); ?></h3>
     <?php
     $this->widget('zii.widgets.CDetailView', array(
         'data' => $model,

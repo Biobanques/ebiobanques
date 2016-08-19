@@ -198,7 +198,7 @@ Dans le cadre de vos projets de recherche, BIOBANQUES propose des services exper
     'biobank.materialLCR' => 'LCR',
     'biobank.materialOther' => 'Autres',
     'biobank.phone' => 'Télephone',    
-    'biobank.sample_type'=>'Types d \'échantillons',
+    'biobank.sample_type'=>'Type d \'échantillons',
     'catalog_intro'=>'Dans cette rubrique, vous trouverez répertorié l’ensemble des biobanques du réseau. Les pathologies sont identifiées soit par leur nom usuel, par le code CIM 10 ou par les mots clés du MeSH.<br><br>
 Les informations détaillées des échantillons (type, certification, etc.), sont disponibles en cliquant sur la loupe (colonne de droite).
 <br><br>

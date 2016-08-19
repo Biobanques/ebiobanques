@@ -11,7 +11,7 @@ try {
 }
 ?>
 <div class="logoHeader">
-    <h1>View Biobank #<?php echo $model->name; ?></h1>
+    <h1>#<?php echo $model->name; ?></h1>
     <div class="logo">
         <?php
         if ($logo != null) {
@@ -80,6 +80,8 @@ $attributes = $model->getAttributes();
     ));
     ?>
 </div>
+<div style="clear:both;"></div>
+<br><br>
 <div  id="biobank_qualite">
     <h3><?php echo Yii::t('common', 'quality_information'); ?></h3>
     <?php

@@ -438,6 +438,7 @@ class Biobank extends LoggableActiveRecord {
             'email'=>Yii::t('common', 'email'),
             'zipcode'=>Yii::t('common', 'zipcode'),
             'city'=>Yii::t('common', 'city'),
+            'sample_type' => Yii::t('common', 'biobank.sample_type'),
         );
     }
 

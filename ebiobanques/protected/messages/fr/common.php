@@ -147,7 +147,7 @@ Dans le cadre de vos projets de recherche, BIOBANQUES propose des services exper
      * Properties labels
      */
     'biobank.name' => 'Nom de la biobanque',
-    'biobank.identifier' => 'Code BRIF',
+    'biobank.identifier' => 'Identifiant',
     'biobank.collection_id' => 'Identifiant de la collection',
     'biobank.acronym' => 'Acronyme de la biobanque',
     'biobank.presentation' => 'Description de la biobanque en français',

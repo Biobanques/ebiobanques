@@ -12,7 +12,7 @@ return array (
     'helpPresentationEnContent' => 'Description de la biobanque <b>en anglais</b>.<br> Cette description pourra être utilisée dans une recherche par mots clés.',
     'help_nb_total_samplesContent' => 'Nombre total d\'échantillons,un nombre entier est requis, valeur approximative autorisée. Ce nombre sera affiché dans au format puissance de 10.',
     'helpWebsiteContent' => 'Indiquez ici l\'url du site Internet de la biobanque, sous la forme "http(s)://urlbiobanque.domaine".<br><br>Ex : https://ebiobanques.fr',
-    'helpidentifierContent' => 'Le code BRIF est composé de la manière suivante :<br>'
+    'helpidentifierContent' => 'L\'identifiant utilisé est le code BRIF.Le code BRIF est composé de la manière suivante :<br>'
     . 'BB-0033-00XXX',
     'help_keywords_MeSHContent' => 'Mots clés MeSH en anglais. Utiliser "/" comme séparateur<br><br><b>Ex :<br> Liver, neoplasm / Cardiovascular diseases</b>',
     'help_diagnosis_availableContent' => 'Utiliser "/" comme séparateur<br>Vous pouvez indiquer des codes seuls ou des plages<br><br><b>Ex: A15 / B00-B99 / C45</b>',

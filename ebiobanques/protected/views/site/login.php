@@ -57,9 +57,9 @@
         </td>
         <td>
             <div align='center'>
-                <?php echo Yii::t('common', 'noAccount') ?><br><br>
+                <div style="color:red;font-size:2em;font-weight:bold;"><?php echo Yii::t('common', 'noAccount') ?></div><br><br>
                 <?php
-                echo CHtml::button(Yii::t('common', 'subscribe'), array(
+                echo CHtml::button(Yii::t('common', 'subscribe'), array('style' => 'width: 150px;font-size:1.5em; ',
                     'submit' => array_merge(array("site/subscribe"), isset($_GET['layout']) ? array('layout' => $_GET['layout']) : array())
                 ));
                 ?>

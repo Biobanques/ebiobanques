@@ -41,14 +41,14 @@ $this->Widget('bootstrap.widgets.TbGridView', array(
     'id' => 'biobanks-grid',
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->search(),
-// 	'filter'=>$model,
     'columns' => array(
-        array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
-        array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
-        array('name' => 'city', 'header' => $model->address->getAttributeLabel('city'), 'value' => '$data->address->city'),
-        array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id')),
+        array('name' => 'identifier','htmlOptions'=>array('width'=>'40'),
+ 'header' => $model->getAttributeLabel('identifier')),
+        array('name' => 'name','htmlOptions'=>array('width'=>'150'), 'header' => $model->getAttributeLabel('name')),
+        array('name' => 'city','htmlOptions'=>array('width'=>'20'), 'header' => $model->address->getAttributeLabel('city'), 'value' => '$data->address->city'),
+        array('name' => 'pathologies','htmlOptions'=>array('width'=>'120'), 'header' => $model->getAttributeLabel('pathologies')),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name'=>'diagnosis_available','header' => $model->getAttributeLabel('diagnosis_available')),
+        array('name'=>'diagnosis_available','htmlOptions'=>array('width'=>'150'),'header' => $model->getAttributeLabel('diagnosis_available')),
         array('name'=>'keywords_MeSH','header' => $model->getAttributeLabel('keywords_MeSH')),
                
 //button to view biobank infos

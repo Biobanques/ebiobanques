@@ -105,7 +105,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'faq_c4' => 'Dès réception et validation de votre formulaire de demande d’échantillons, BIOBANQUES le diffuse à l’ensemble du réseau. Le délai de réponse des différents centres pouvant varier, nous effectuons un suivi (relance téléphonique, mail, élargissement au niveau européen) dans le mois qui suit afin de satisfaire au mieux le demandeur.',
     'faq_t5' => 'Quelle aide peut m’apporter BIOBANQUES ?',
     'faq_c5' => 'Dans le cadre des demandes d’échantillons,
-        l’infrastructure BIOBANQUES dispose d’un service « <a href="http://www.biobanques.eu/fr/offre-de-services/ethique-reglementation">Ethique et Réglementaire</a> » 
+        l’infrastructure BIOBANQUES dispose d’un service « <a href="http://www.biobanques.eu/fr/offre-de-services/ethique-reglementation">Ethique et Réglementation</a> » 
         pour vous accompagner dans vos démarches d’accès à l’échantillon 
         (MTA, contrats de partenariat, questions éthique et réglementaire, droit international, etc.). <br><br>
 Dans le cadre de vos projets de recherche, BIOBANQUES propose des services experts 

@@ -11,7 +11,7 @@ try {
 }
 ?>
 <div class="logoHeader">
-    <h1>#<?php echo $model->name; ?></h1>
+    <h1><?php echo $model->name; ?></h1>
     <div class="logo">
         <?php
         if ($logo != null) {

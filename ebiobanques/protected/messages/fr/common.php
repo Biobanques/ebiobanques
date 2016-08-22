@@ -91,10 +91,10 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'idUser' => 'Id utilisateur',
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr : Améliorer la recherche de matériel biologique',
-    'indexContent_p1' => '<ul><li> &nbsp;&nbsp; ebiobanques est un outil catalogue qui regroupe les informations des 91 Centres de Ressources Biologiques, membres du réseau français BIOBANQUES, rassemblant ainsi près de 6 000 000 d’échantillons.
-<li> &nbsp;&nbsp; Pour accéder aux informations, une inscription préalable, en ligne, est nécessaire en cliquant sur l’onglet « <a href="./index.php/site/login">connexion</a> ». Vous recevrez sous 24h un email qui confirmera votre inscription.<br> Cette inscription permet à BIOBANQUES de contrôler les utilisateurs du site dans un souci éthique relatif aux échantillons et données associées des biobanques.
-<li> &nbsp;&nbsp; Sous l’onglet <a href="./index.php/catalog/search/">Catalogue des biobanques</a>, vous trouverez les informations concernant les biobanques (CRB, tumorothèques, …), les pathologies des collections, les types d’échantillons et les contacts. 
-</ul>',
+    'indexContent_p1' => ' &nbsp;&nbsp; ebiobanques est un outil catalogue qui regroupe les informations des 91 Centres de Ressources Biologiques, membres du réseau français BIOBANQUES, rassemblant ainsi près de 6 000 000 d’échantillons.
+ <br><br>&nbsp;&nbsp; Pour accéder aux informations, une inscription préalable, en ligne, est nécessaire en cliquant sur l’onglet « <a href="/index.php/site/login">connexion</a> ». Vous recevrez sous 24h un email qui confirmera votre inscription.<br> Cette inscription permet à BIOBANQUES de contrôler les utilisateurs du site dans un souci éthique relatif aux échantillons et données associées des biobanques.
+ <br><br>&nbsp;&nbsp; Sous l’onglet <a href="/index.php/catalog/search/">Catalogue des biobanques</a>, vous trouverez les informations concernant les biobanques (CRB, tumorothèques, …), les pathologies des collections, les types d’échantillons et les contacts. 
+',
     'faq_t1' => 'Comment  trouver les échantillons utiles à mon projet de recherche ?',
     'faq_c1' => 'La recherche se fait par pathologie, décrite par son nom usuel, par son code CIM10 ou mot clé MeSH soit dans le catalogue des biobanques/recherche avancée, soit dans « rechercher des échantillons » (en cours de construction)',
     'faq_t2' => 'Comment faire une demande d’échantillons ?',

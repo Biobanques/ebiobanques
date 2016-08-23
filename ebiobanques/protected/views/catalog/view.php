@@ -26,7 +26,7 @@
     </div>
         
     </div>
-        <div style="text-align:right;top: 0px;right: 0px;">
+        <div style="float:right;width:25%;text-align:right;top: 0px;right: 0px;">
             <?php
             if ($logo != null) {
                 echo $logo->toHtml();

@@ -51,12 +51,15 @@ class Logo extends EMongoGridFS
 
     /**
      * display th ecurrent logo into html.
+     * NB : don't fix here a static height or width to img. Set the width or height on the encapsulating div. 
+     * For exaxmple : <div style="float:right;width:25%;">
+     * Will send the image on the line, at right, with a width function of the global line width.
      * @return html img
      */
     public function toHtml() {
         $splitStringArray = split(".", $this->filename);
         $extension = end($splitStringArray);
-        $result = "<img src=\"" . CommonTools::data_uri($this->getBytes(), "image/" . $extension) . "\"\" alt=\"1 photo\" style=\"height:120px;\"/>";
+        $result = "<img src=\"" . CommonTools::data_uri($this->getBytes(), "image/" . $extension) . "\"\" alt=\"1 photo\" style=\"width: 100%;max-height: 100%\"/>";
         return $result;
     }
 

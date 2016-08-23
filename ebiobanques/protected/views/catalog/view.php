@@ -13,7 +13,7 @@
     ?>
     <div style="padding:10px;">
     <div style="float:left;width:70%;margin-right:20px;text-align: justify;">
-        <div><h1>&nbsp;&nbsp;<?php echo $model->name; ?></h1></div>
+        <div><h1><?php echo $model->name; ?></h1></div>
         <div >
         <?php
 //display presentation in each lang, function of the lang selected, default english

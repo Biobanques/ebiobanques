@@ -215,14 +215,21 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             <?php
             echo $form->textField($biobank, 'keywords_MeSH', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH', 'help_keywords_MeSHContent', $this));
             ?>
-            <?php echo $form->error($biobank, 'name'); ?>
+            <?php echo $form->error($biobank, 'keywords_MeSH'); ?>
         </div>
         <div class='cols2'>
-            <?php echo $form->label($biobank, 'diagnosis_available'); ?>
+            <?php echo $form->label($biobank, 'keywords_MeSH_fr'); ?>
             <?php
-            echo $form->textField($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
+            echo $form->textField($biobank, 'keywords_MeSH_fr', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH_fr', 'help_keywords_MeSHFRContent', $this));
             ?>
-            <?php echo $form->error($biobank, 'diagnosis_available'); ?>
+            <?php echo $form->error($biobank, 'keywords_MeSH_fr'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'pathologies_en'); ?>
+            <?php
+            echo $form->textField($biobank, 'pathologies_en', CommonDisplayTools::getHelpBox('biobank.pathologies_en', 'help_pathologiesenContent', $this));
+            ?>
+            <?php echo $form->error($biobank, 'pathologies_en'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'pathologies'); ?>
@@ -231,7 +238,14 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
-
+        
+<div class='cols2'>
+            <?php echo $form->label($biobank, 'diagnosis_available'); ?>
+            <?php
+            echo $form->textField($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
+            ?>
+            <?php echo $form->error($biobank, 'diagnosis_available'); ?>
+        </div>
     </div>
     <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_quality'); ?></div>
     <div class='col-2-row'>

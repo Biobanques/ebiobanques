@@ -41,11 +41,22 @@ class Biobank extends LoggableActiveRecord {
     public $passphrase;
     public $contact_id;
     public $diagnosis_available;
+    /**
+     * pathologies are stored in french and english
+     * @var type 
+     */
     public $pathologies;
+    public $pathologies_en;
+    
     public $longitude;
     public $latitude;
     public $location;
+    /**
+     * keywords mesh are stored in english and french
+     * @var type 
+     */
     public $keywords_MeSH;
+    public $keywords_MeSH_fr;
     public $acronym;
     public $presentation_en;
 
@@ -391,8 +402,10 @@ class Biobank extends LoggableActiveRecord {
             'nb_total_samples' => Yii::t('common', 'biobank.nb_total_samples'),
             'website' => Yii::t('common', 'biobank.website'),
             'keywords_MeSH' => Yii::t('common', 'biobank.keywords_MeSH'),
+            'keywords_MeSH_fr' => Yii::t('common', 'biobank.keywords_MeSH_fr'),
             'diagnosis_available' => Yii::t('common', 'biobank.diagnosis_available'),
             'pathologies' => Yii::t('common', 'biobank.pathologies'),
+            'pathologies_en' => Yii::t('common', 'biobank.pathologies_en'),
             /* oldies */
             'collection_name' => Yii::t('common', 'collection_name'),
             'date_entry' => Yii::t('common', 'date_entry'),

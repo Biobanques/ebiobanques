@@ -161,9 +161,11 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'biobank.cert_autres' => 'Autres certifications',
     'biobank.nb_total_samples' => 'Nombre total d\'échantillons',
     'biobank.website' => 'Site Internet',
-    'biobank.keywords_MeSH' => 'Mots clés MeSH',
+    'biobank.keywords_MeSH' => 'Mots clés MeSH en anglais',
+    'biobank.keywords_MeSH_fr' => 'Mots clés MeSH',
     'biobank.diagnosis_available' => 'Codes CIM disponibles',
     'biobank.pathologies' => 'Pathologies',
+    'biobank.pathologies_en' => 'Pathologies en anglais',
     'biobank.email' => 'Email',
     /*
      *

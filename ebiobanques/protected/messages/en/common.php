@@ -151,8 +151,10 @@ return array(
     'biobank.nb_total_samples' => 'Sample number',
     'biobank.website' => 'Website',
     'biobank.keywords_MeSH' => 'MeSH keywords',
+    'biobank.keywords_MeSH_fr' => 'MeSH keywords in french',
     'biobank.diagnosis_available' => 'ICD code available',
-    'biobank.pathologies' => 'Pathologies',
+    'biobank.pathologies' => 'Pathologies in french',
+    'biobank.pathologies_en' => 'Pathologies',
     'biobank.email' => 'Email',
     /*
      *

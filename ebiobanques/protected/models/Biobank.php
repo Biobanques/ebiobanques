@@ -1070,17 +1070,23 @@ class Biobank extends LoggableActiveRecord {
 
     /**
      * get the number of samples in a formatted text.
-     * ex : 1 000 - 10 000
+     * ex : 10 000 - 50 000
      * @since 1.8.1
      */
     public function getSampleNumberFormatted() {
-        $res = "1 - 1 000";
-        if ($this->nb_total_samples > 1000)
-            $res = "1 000 - 10 000";
+        $res = "< 10 000";
         if ($this->nb_total_samples > 10000)
-            $res = "10 000 - 100 000";
+            $res = "10 000 - 50 000";
+        if ($this->nb_total_samples > 50000)
+            $res = "50 000 - 100 000";
         if ($this->nb_total_samples > 100000)
-            $res = ">100 000";
+            $res = "100 000 - 300 000";
+        if ($this->nb_total_samples > 300000)
+            $res = "300 000 - 500 000";
+        if ($this->nb_total_samples > 500000)
+            $res = "500 000 - 1 000 000";
+        if ($this->nb_total_samples > 1000000)
+            $res = "> 1 000 000";
         return $res;
     }
 

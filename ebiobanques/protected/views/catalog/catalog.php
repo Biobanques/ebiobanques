@@ -57,7 +57,7 @@ $this->Widget('bootstrap.widgets.TbGridView', array(
             'buttons' => array(
                 'view' => array(
                     'url' => 'Yii::app()->createUrl("catalog/view",array("id"=>"$data->_id", "asDialog"=>1))',
-                    'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=yes, scrollbars=yes, resizable=yes, location=no");return false;}'
+                    'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=1024,height=768,toolbar=yes, scrollbars=yes, resizable=yes, location=no");return false;}'
                 ),
             ),
         ))

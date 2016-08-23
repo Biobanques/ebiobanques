@@ -41,16 +41,17 @@ class Biobank extends LoggableActiveRecord {
     public $passphrase;
     public $contact_id;
     public $diagnosis_available;
+
     /**
      * pathologies are stored in french and english
      * @var type 
      */
     public $pathologies;
     public $pathologies_en;
-    
     public $longitude;
     public $latitude;
     public $location;
+
     /**
      * keywords mesh are stored in english and french
      * @var type 
@@ -445,12 +446,12 @@ class Biobank extends LoggableActiveRecord {
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
             'qualityCombinate' => Yii::t('common', 'qualityCombinate'),
-            'last_name'=>Yii::t('common', 'lastname'),
-            'first_name'=>Yii::t('common', 'firstname'),
-            'phone'=>Yii::t('common', 'phone'),
-            'email'=>Yii::t('common', 'email'),
-            'zipcode'=>Yii::t('common', 'zipcode'),
-            'city'=>Yii::t('common', 'city'),
+            'last_name' => Yii::t('common', 'lastname'),
+            'first_name' => Yii::t('common', 'firstname'),
+            'phone' => Yii::t('common', 'phone'),
+            'email' => Yii::t('common', 'email'),
+            'zipcode' => Yii::t('common', 'zipcode'),
+            'city' => Yii::t('common', 'city'),
             'sample_type' => Yii::t('common', 'biobank.sample_type'),
         );
     }
@@ -574,11 +575,6 @@ class Biobank extends LoggableActiveRecord {
             }
             $criteria->addCond('contact_id', 'in', $listIds);
         }
-
-
-
-
-
         if (isset($this->responsable_adj) && $this->responsable_adj->lastName != null) {
             $criteria->addCond('responsable_adj.lastName', '==', new MongoRegex('/' . $this->responsable_adj->lastName . '/i'));
         }
@@ -597,11 +593,6 @@ class Biobank extends LoggableActiveRecord {
         if (isset($this->responsable_qual) && $this->responsable_qual->firstName != null) {
             $criteria->addCond('responsable_qual.firstName', '==', new MongoRegex('/' . $this->responsable_qual->firstName . '/i'));
         }
-
-
-
-
-
         if (isset($this->address) && $this->address->city != null) {
             if ($this->address->city == '0') {
                 $criteria->address->city = null;
@@ -649,7 +640,7 @@ class Biobank extends LoggableActiveRecord {
             $criteria->createOrGroup('thematiques');
             $criteria->addCondToOrGroup('thematiques', ['thematiques' => new MongoRegex("/$textCriteria/i")]);
             $criteria->addCondToOrGroup('thematiques', ['thematiques_en' => new MongoRegex("/$textCriteria/i")]);
-            $criteria->addOrGroup('presentation');
+            $criteria->addOrGroup('thematiques');
         }
         if (isset($this->publications) && $this->publications != null && $this->publications != '') {
             $textCriteria = str_replace(' ', '||', $this->publications);
@@ -657,6 +648,67 @@ class Biobank extends LoggableActiveRecord {
             $criteria->addCond('publications', '==', new MongoRegex("/$textCriteria/i"));
         }
 
+//always sort with alphabetical order on name
+        $criteria->sort('name', EMongoCriteria::SORT_ASC);
+        Yii::app()->session['criteria'] = $criteria;
+
+
+        //$dataProvider = Biobank::model()->find($criteria->getConditions())
+        $dataProvider = new EMongoDocumentDataProvider($this, array(
+            'criteria' => $criteria
+        ));
+        return $dataProvider;
+    }
+
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * Get the keywords searched and analyze each term
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function searchCatalogue($keywords, $caseSensitive = false) {
+        $criteria = new EMongoCriteria;
+        Yii::log('new  search catalog ',Clogger::LEVEL_INFO);
+        if ($keywords != null && isset($keywords)) {
+            //split des mots cles
+            $tabKeywords = explode(" ", $keywords);
+            //display keywords:
+            Yii::log('keywords for search : '.$keywords,Clogger::LEVEL_INFO);
+            //search if each keywords is present into one field (or codition)
+            $i=0;
+            foreach ($tabKeywords as $keyword) {
+                Yii::log('search word: '.$keyword,Clogger::LEVEL_INFO);
+                $orGroupName='orGroup'.$i;
+                $criteria->createOrGroup($orGroupName);
+                $criteria->addCondToOrGroup($orGroupName, ['identifier' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['name' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['keywords_MeSH' => new MongoRegex('/' .$keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['keywords_MeSH_fr' => new MongoRegex('/' .$keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['collection_name' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['collection_id' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['diagnosis_available' => new MongoRegex('/' . $keyword . '/i')]);
+                  
+
+                  $criteria->addCondToOrGroup('globalName', ['responsable_adj.lastName', '==', new MongoRegex('/' . $keywords . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['responsable_adj.firstName', '==', new MongoRegex('/' . $keywords . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['responsable_op.lastName', '==', new MongoRegex('/' . $keywords . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['responsable_op.firstName', '==', new MongoRegex('/' . $keywords . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['responsable_qual.lastName', '==', new MongoRegex('/' . $keywords . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['responsable_qual.firstName', '==', new MongoRegex('/' . $keywords . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['address.city', '==', new MongoRegex('/' . $this->address->city . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['presentation' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['presentation_en' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['projetRecherche' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['projetRecherche_en' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['reseaux' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['thematiques' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['thematiques_en' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['publications' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['pathologies' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup('globalName', ['pathologies_en' => new MongoRegex('/' . $keyword . '/i')]); 
+                $criteria->addOrGroup($orGroupName);
+                $i++;
+            }
+        }
 //always sort with alphabetical order on name
         $criteria->sort('name', EMongoCriteria::SORT_ASC);
         Yii::app()->session['criteria'] = $criteria;
@@ -1103,7 +1155,7 @@ class Biobank extends LoggableActiveRecord {
                 if (strlen($res) > 2) {
                     $res.=", ";
                 }
-                $res.=Yii::t('common', 'biobank.'.$material);
+                $res.=Yii::t('common', 'biobank.' . $material);
             }
         }
         return $res;
@@ -1134,7 +1186,7 @@ class Biobank extends LoggableActiveRecord {
             }
             $res.="NFS96900";
         }
-        if (isset($this->cert_autres) && $this->cert_autres!="/") {
+        if (isset($this->cert_autres) && $this->cert_autres != "/") {
             if (strlen($res) > 0) {
                 $res.=", ";
             }

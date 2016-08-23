@@ -62,14 +62,21 @@ class CatalogController extends Controller
      * display catalog of biobanks with contacts and agregated infos
      */
     public function actionSearch() {
+         Yii::log('controller catalog search- ',Clogger::LEVEL_INFO);
         $model = new Biobank('search');
-        $model->unsetAttributes(); // clear any default values
-        if (isset($_GET ['Biobank']))
-            $model->attributes = $_GET ['Biobank'];
-        //make the search
-        //render the biobanks
+        $form = new CatalogForm ();
+        if (isset($_GET ['CatalogForm'])) {
+            $model->unsetAttributes();
+            $form->attributes = $_GET ['CatalogForm'];
+            Yii::log('form attributes setted ',Clogger::LEVEL_INFO);
+           /* if (Yii::app()->session ['keywords'] != $catalogForm->keywords) {
+                $this->logSmartSearch($smartForm->keywords);
+            }*/
+            //Yii::app()->session ['keywords'] = $smartForm->keywords;
+        }
         $this->render('catalog', array(
-            'model' => $model
+            'model' => $model,
+            'smartForm' => $form
         ));
     }
 

@@ -27,8 +27,8 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 ?>
 <div class="search-form" style="display:none">
     <?php
-    $this->renderPartial('_search_catalog', array(
-        'model' => $model,
+    $this->renderPartial('_search_catalog_easymode', array(
+        'modelForm' => $smartForm,
     ));
     ?>
 </div><!-- search-form -->
@@ -36,11 +36,10 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 <?php
 
 $imageSelect = CHtml::image(Yii::app()->baseUrl . '/images/table-icone.png', Yii::t('common', 'prefsSelect'));
-    
 $this->Widget('bootstrap.widgets.TbGridView', array(
     'id' => 'biobanks-grid',
     'type' => 'striped bordered condensed',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model->searchCatalogue($smartForm->keywords),
     'columns' => array(
         array('name' => 'identifier','htmlOptions'=>array('width'=>'40'),
  'header' => $model->getAttributeLabel('identifier')),

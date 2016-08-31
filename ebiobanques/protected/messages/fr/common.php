@@ -100,7 +100,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'faq_t2' => 'Comment faire une demande d’échantillons ?',
     'faq_c2' => 'Une procédure explicative ainsi que les formulaires de demandes d’échantillons sont disponibles on line dans « rechercher des échantillons » et sur le site de l’infrastructure BIOBANQUES <a href="http://www.biobanques.eu/fr/offre-de-services/demande-d-echantillon">à cette adresse.</a>',
     'faq_t3' => 'Quel est le coût des échantillons ?',
-    'faq_c3' => 'Pour faciliter le partenariat entre les CRBs et les demandeurs (publics ou privés), BIOBANQUES propose une <a href="http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf">grille tarifaire</a> qui permet d’évaluer les coûts en toute transparence sur des critères objectifs internationaux et une proposition de facturation en 3 niveaux selon le degré de collaboration et de partenariat. Chaque biobanque propose aussi une grille tarifaire précisant les conditions d’accès à leurs échantillons.',
+    'faq_c3' => 'Pour faciliter le partenariat entre les CRBs et les demandeurs (publics ou privés), BIOBANQUES propose une <a href="http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf">grille tarifaire</a> qui permet d’évaluer les coûts en toute transparence sur des critères objectifs internationaux et une proposition de facturation en 3 niveaux selon le degré de collaboration et de partenariat.',
     'faq_t4' => 'Quel est le délai de réponse d’une demande d’échantillons ?',
     'faq_c4' => 'Dès réception et validation de votre formulaire de demande d’échantillons, BIOBANQUES le diffuse à l’ensemble du réseau. Le délai de réponse des différents centres pouvant varier, nous effectuons un suivi (relance téléphonique, mail, élargissement au niveau européen) dans le mois qui suit afin de satisfaire au mieux le demandeur.',
     'faq_t5' => 'Quelle aide peut m’apporter BIOBANQUES ?',
@@ -206,7 +206,7 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'biobank.phone' => 'Télephone',    
     'biobank.sample_type'=>'Type d \'échantillons',
     'catalog_intro'=>'Dans cette rubrique, vous trouverez répertorié l’ensemble des biobanques du réseau. Les pathologies sont identifiées soit par leur nom usuel, par le code CIM 10 ou par les mots clés du MeSH.<br><br>
-Les informations détaillées des échantillons (type, certification, etc.), sont disponibles en cliquant sur la loupe (colonne de droite).
+Les informations détaillées (type, certification, etc.), sont disponibles en cliquant sur la loupe (colonne de droite).
 <br><br>
 Une sélection des biobanques de votre intérêt peut se faire par « recherche avancée »
 <br><br>

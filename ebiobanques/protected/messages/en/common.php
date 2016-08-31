@@ -90,17 +90,23 @@ return array(
     'idUser' => 'User id',
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr: Improving research of biological material',
-    'indexContent_p1' => 'ebiobanques.fr is designed by biobanks for biobanks to enhance the application of biological material.',
-    'faq_t1' => ' ',
-    'faq_c1' => ' ',
-    'faq_t2' => ' ',
-    'faq_c2' => ' ',
-    'faq_t3' => ' ',
-    'faq_c3' => ' ',
-    'faq_t4' => ' ',
-    'faq_c4' => ' ',
-    'faq_t5' => ' ',
-    'faq_c5' => ' ',
+    'indexContent_p1' => '&nbsp;&nbsp; <b>ebiobanques</b>.fr</b> is a catalog of the BIOBANQUES network containing information collected from its 91 members and allowing access to 6 millions of biological samples.
+
+<br><br>&nbsp;&nbsp; To explore ebiobanques, you need to be a registered user. Please click on <a href="/index.php/site/login">login</a> then “subscribe” to create your account.
+A validation email will be sent to you within 24h.
+
+<br><br>&nbsp;&nbsp; <a href="/index.php/catalog/search/">In Catalog of biobanks</a>, you will find information on biobanks, pathologies, sample types and biobank relevant contacts.',
+    'faq_t1' => 'How can I find biological samples for my research project? ',
+    'faq_c1' => ' Search samples by pathology in the Catalog of biobanks (use Advanced search)',
+    'faq_t2' => ' How can I request biological samples?',
+    'faq_c2' => ' For the process and request form, please click <a href="http://www.biobanques.eu/en/services/biospecimen-request">here</a>. The request form is also available on the top button. ',
+    'faq_t3' => ' How much do samples cost?',
+    'faq_c3' => ' To promote partnerships between BCRs and sample requesters, as well as transparency, BIOBANQUES implemented a <a href="http://www.biobanques.eu/files/grille-tarifaire-biobanques-pd-96YV5RLABE.pdf">tarification grid</a> to evaluate cost. This grid is based on objective international criteria and offers 3 billing levels corresponding to 3 levels of partnerships.',
+    'faq_t4' => ' How does it take to receive my samples?',
+    'faq_c4' => ' Following reception and validation of your request form, BIOBANQUES sends it to its network. Response times from BRCs can vary. We however closely follow up with centers of our network (phone, email, request at European level if necessary) in the following month to ensure that you promptly receive your samples for your research project.',
+    'faq_t5' => ' How can BIOBANQUES help me?',
+    'faq_c5' => 'When requesting biological samples, BIOBANQUES can also provide you with <a href="http://www.biobanques.eu/en/offre-de-services/ethics-regulations">Ethics and Regulatory</a> services to facilitate all the steps necessary for accessing samples (Material Transfer Agreement, partnership contract, ethics questions, international laws,…)
+BIOBANQUES can offer you several expert services and technical platforms for setting up all the steps of your research project. <a href="http://www.biobanques.eu/en/service-request">Contact us for more information.</a> ',
     
     'forgotedPwd' => 'Forgot password',
     'atLeastOneField' => 'You have to fill at least one field to get your password back.',
@@ -194,7 +200,10 @@ return array(
     'biobank.materialOther' => 'Others',
     'biobank.phone' => 'Phone',
     'biobank.sample_type'=>'Sample type',
-    'catalog_intro'=>' ',
+    'catalog_intro'=>'This part of the website lists all the biobanks of the French network. Pathologies are identified by their usual name, ICD 10 code or MeSH keywords.
+<br><br>Biobank information details (sample type, certification, etc.) are available by clicking on the magnifying glass symbol (right column).
+<br><br>Search for specific pieces of information from all biobanks can be done using “Advanced search”
+<br><br>You can print or export (pdf, csv, excel) the entire directory or the information you selected using the top-right button of the table.',
     'icd_example'=>'(ICD code, ex: C00)',
     'biobank_information'=>'Biobank information',
     'profil'=>'Profile'

@@ -206,6 +206,7 @@ BIOBANQUES can offer you several expert services and technical platforms for set
 <br><br>You can print or export (pdf, csv, excel) the entire directory or the information you selected using the top-right button of the table.',
     'icd_example'=>'(ICD code, ex: C00)',
     'biobank_information'=>'Biobank information',
-    'profil'=>'Profile'
+    'profil'=>'Profile',
+    'button_ask_samples'=>'Request biological samples',
 );
 ?>

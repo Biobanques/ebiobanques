@@ -214,5 +214,7 @@ Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuair
 
     'icd_example'=>'(Codification CIM, ex: C00)',
     'biobank_information'=>'Informations de la biobanque',
-    'profil'=>'Profil');
+    'profil'=>'Profil',
+    'button_ask_samples'=>'Demande d\'échantillons biologiques',
+    );
 ?>

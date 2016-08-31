@@ -9,6 +9,8 @@
         <meta name="author" content="biobanques.eu">
         <link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 
+         
+        
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
@@ -23,6 +25,10 @@
         <!-- use the link below to test cdn instead of local lib -->
         <!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/font-awesome-4.6.3/css/font-awesome.min.css" />
+        
+        <!-- use bootstrap -->
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+       
         
         <!-- use the link below to test cdn instead of local lib. -->
         <!--<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>-->
@@ -39,8 +45,9 @@
         </div>
         <div style="float:left;">
             <?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/ebiobanques.fr.png', 'nddlogo', array('height' => 60, 'width' => 400)); ?>
-
         </div>
+        
+        
         <div style="float:right;padding-right:20px;padding-top:20px;">
             <div >
                 <?php
@@ -63,6 +70,9 @@
             <div style="float:right;padding-top:10px;">
                 <?php echo CHtml::link(Yii::t('common', 'contactus'), array('site/contactus')); ?>
             </div>
+        </div>
+        <div style="float:right;padding-right:20px;padding-top:20px;">
+            <a class="btn btn-primary" href="/biospecimen_preliminary_request_form.docx" role="button" style="background-color:#C96CB6;border-color:white;"><?php echo Yii::t('common', 'button_ask_samples'); ?></a>
         </div>
         <div id="mainmenu" style="clear:both;">
             <?php

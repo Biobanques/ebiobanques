@@ -29,7 +29,12 @@
  
  <property name="src" value="${basedir}/ebiobanques/protected"/> 
 
- <target name="full-build"
+ <!-- build is the common target to check unit tests -->
+ <target name="build"
+         depends="prepare,phpunit,-check-failure"
+         description="clean and runs the tests"/>
+
+ <target name="build-analysis"
          depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
          description="Performs static analysis, runs the tests, and generates project documentation"/>
 

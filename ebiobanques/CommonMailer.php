@@ -353,7 +353,7 @@ A bientôt sur ebiobanques.fr
      * @param type $attachmentPath - default no null, string for path to the attached file
      * @param type $attachmentString - default to null, array(string 'data'=>$data, string 'name'=>$name
      */
-    public function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null, $cleanAfterSend = true) {
+    public static function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null, $cleanAfterSend = true) {
         $imagesLog = null;
         Yii::import('application.extensions.phpmailer.JPhpMailer');
 

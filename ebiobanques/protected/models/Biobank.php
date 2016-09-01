@@ -676,6 +676,9 @@ class Biobank extends LoggableActiveRecord {
             //search if each keywords is present into one field (or codition)
             $i=0;
             foreach ($tabKeywords as $keyword) {
+                //check if the keyword is an ICD10 code 
+                //if yes add a search condition
+                
                 Yii::log('search word: '.$keyword,Clogger::LEVEL_INFO);
                 $orGroupName='orGroup'.$i;
                 $criteria->createOrGroup($orGroupName);
@@ -683,28 +686,37 @@ class Biobank extends LoggableActiveRecord {
                 $criteria->addCondToOrGroup($orGroupName, ['name' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['keywords_MeSH' => new MongoRegex('/' .$keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['keywords_MeSH_fr' => new MongoRegex('/' .$keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['collection_name' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['collection_id' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['diagnosis_available' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['collection_name' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['collection_id' => new MongoRegex('/' . $keyword . '/i')]);
+                 
+                  $criteria->addCondToOrGroup($orGroupName, ['responsable_adj.lastName' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['responsable_adj.firstName' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['responsable_op.lastName'=> new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['responsable_op.firstName'=> new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['responsable_qual.lastName'=> new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['responsable_qual.firstName'=> new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['address.city'=> new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['presentation' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['presentation_en' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['projetRecherche' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['projetRecherche_en' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['reseaux' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['thematiques' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['thematiques_en' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['publications' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['pathologies' => new MongoRegex('/' . $keyword . '/i')]);
+                  $criteria->addCondToOrGroup($orGroupName, ['pathologies_en' => new MongoRegex('/' . $keyword . '/i')]); 
                   
-
-                  $criteria->addCondToOrGroup('globalName', ['responsable_adj.lastName', '==', new MongoRegex('/' . $keywords . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['responsable_adj.firstName', '==', new MongoRegex('/' . $keywords . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['responsable_op.lastName', '==', new MongoRegex('/' . $keywords . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['responsable_op.firstName', '==', new MongoRegex('/' . $keywords . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['responsable_qual.lastName', '==', new MongoRegex('/' . $keywords . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['responsable_qual.firstName', '==', new MongoRegex('/' . $keywords . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['address.city', '==', new MongoRegex('/' . $this->address->city . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['presentation' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['presentation_en' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['projetRecherche' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['projetRecherche_en' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['reseaux' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['thematiques' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['thematiques_en' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['publications' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['pathologies' => new MongoRegex('/' . $keyword . '/i')]);
-                  $criteria->addCondToOrGroup('globalName', ['pathologies_en' => new MongoRegex('/' . $keyword . '/i')]); 
+                 // $criteria->addCondToOrGroup($orGroupName, ['diagnosis_available' => new MongoRegex('/C00-D48/i')]); 
+                  
+                  
+                  if(ICDComparator::isICDCode($keyword)){
+                    $ICD10Group=  ICDComparator::getGroup($keyword);
+                    if($ICD10Group!=null){
+                        Yii::log('add criteria diagnosis avaialbale on icdcode: '.$ICD10Group,Clogger::LEVEL_INFO);
+                        $criteria->addCondToOrGroup($orGroupName, ['diagnosis_available' => new MongoRegex('/' . $ICD10Group. '/i')]); 
+                    }
+                }
                 $criteria->addOrGroup($orGroupName);
                 $i++;
             }

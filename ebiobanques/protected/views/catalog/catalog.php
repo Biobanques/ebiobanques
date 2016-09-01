@@ -36,6 +36,11 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 <?php
 
 $imageSelect = CHtml::image(Yii::app()->baseUrl . '/images/table-icone.png', Yii::t('common', 'prefsSelect'));
+//if lang = en display pathologies_en, otherwise pathologies
+$pathosName = "pathologies";
+if(Yii::app()->language=="en"){
+    $pathosName = "pathologies_en";
+}
 $this->Widget('bootstrap.widgets.TbGridView', array(
     'id' => 'biobanks-grid',
     'type' => 'striped bordered condensed',
@@ -45,7 +50,7 @@ $this->Widget('bootstrap.widgets.TbGridView', array(
  'header' => $model->getAttributeLabel('identifier')),
         array('name' => 'name','htmlOptions'=>array('width'=>'150'), 'header' => $model->getAttributeLabel('name')),
         array('name' => 'city','htmlOptions'=>array('width'=>'20'), 'header' => $model->address->getAttributeLabel('city'), 'value' => '$data->address->city'),
-        array('name' => 'pathologies','htmlOptions'=>array('width'=>'120'), 'header' => $model->getAttributeLabel('pathologies')),
+        array('name' => $pathosName,'htmlOptions'=>array('width'=>'120'), 'header' => $model->getAttributeLabel($pathosName)),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
         array('name'=>'diagnosis_available','htmlOptions'=>array('width'=>'150'),'header' => $model->getAttributeLabel('diagnosis_available')),
         array('name'=>'keywords_MeSH','header' => $model->getAttributeLabel('keywords_MeSH')),

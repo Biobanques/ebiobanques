@@ -682,6 +682,7 @@ class Biobank extends LoggableActiveRecord {
                 Yii::log('search word: ' . $keyword, Clogger::LEVEL_INFO);
                 $orGroupName = 'orGroup' . $i;
                 $criteria->createOrGroup($orGroupName);
+                $criteria->addCondToOrGroup($orGroupName, ['acronym' => new MongoRegex('/' . $keyword . '/i')]);   
                 $criteria->addCondToOrGroup($orGroupName, ['identifier' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['name' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['keywords_MeSH' => new MongoRegex('/' . $keyword . '/i')]);
@@ -697,6 +698,8 @@ class Biobank extends LoggableActiveRecord {
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_qual.lastName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_qual.firstName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['address.city' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['address.zip' => new MongoRegex('/' . $keyword . '/i')]);
+                
                 $criteria->addCondToOrGroup($orGroupName, ['presentation' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['presentation_en' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['projetRecherche' => new MongoRegex('/' . $keyword . '/i')]);
@@ -707,6 +710,8 @@ class Biobank extends LoggableActiveRecord {
                 $criteria->addCondToOrGroup($orGroupName, ['publications' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['pathologies' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['pathologies_en' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['website' => new MongoRegex('/' . $keyword . '/i')]);
+                
                 if (ICDComparator::isICDCode($keyword)) {
                     $ICD10Group = ICDComparator::getGroup($keyword);
                     if ($ICD10Group != null) {

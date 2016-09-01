@@ -216,15 +216,6 @@ class User extends LoggableActiveRecord
             $this->addError('gsm', Yii::t('common', 'atLeastOneTel'));
     }
 
-    /**
-     * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only.
-     */
-    public function alphaOnly() {
-        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->nom))
-            $this->addError('nom', Yii::t('common', 'onlyAlpha'));
-        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->prenom))
-            $this->addError('prenom', Yii::t('common', 'onlyAlpha'));
-    }
 
     /**
      * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric

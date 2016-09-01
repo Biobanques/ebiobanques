@@ -44,7 +44,7 @@ class ICDComparator {
         //verify if the code is correct
         if (strlen($ICD10code) == 3) {
             //get the first character
-            $letter = substr($ICD10code, 0);
+            $letter = substr($ICD10code, 0,1);
             $number = substr($ICD10code, 1, 2);
             if (ctype_alpha($letter)) {
                 //recompose the score, with the value of the letter and the suffixe the number part
@@ -62,6 +62,24 @@ class ICDComparator {
             throw new Exception('ICD10 Code length error');
         }
         return $group;
+    }
+
+    /**
+     * check if a string is an ICD Code.
+     * ICD code is always 1 letter + 2 digits
+     */
+    public static function isICDCode($string) {
+        $result = false;
+        if (strlen($string) == 3) {
+            $letter = substr($string, 0,1);
+            $number = substr($string, 1, 2);
+            if (ctype_alpha($letter)) {
+                if (ctype_digit($number)) {
+                    $result = true;
+                }
+            }
+        }
+        return $result;
     }
 
 }

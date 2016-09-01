@@ -31,7 +31,7 @@
 
  <!-- build is the common target to check unit tests -->
  <target name="build"
-         depends="prepare,phpunit,-check-failure"
+         depends="prepare,phpunit"
          description="clean and runs the tests"/>
 
  <target name="build-analysis"

@@ -14,7 +14,7 @@ class SmartResearcherTool
      * @param unknown $keywords
      * @return $model sample model with search parameters setted
      */
-    public function search($keywords, $biobank_id = null) {
+    public static function search($keywords, $biobank_id = null) {
         //pour chaque mot clé, on cherche une correspondance avec des valeurs possibels d echamps
         $model = new Sample('search');
         if ($biobank_id != null)

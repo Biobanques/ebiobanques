@@ -1,14 +1,11 @@
 
 <?php $this->beginContent('//layouts/main'); ?>
 <div class="left_menu_container">
-    <div id ='menu' class='menu'>
+   <!-- <div id ='menu' class='menu'>
 
         <?php
-        $this->beginWidget('zii.widgets.CPortlet', array(
+        /*$this->beginWidget('zii.widgets.CPortlet', array(
             'title' => Yii::t('common', 'bbadmin'),
-//            'htmlOptions' => array(
-//                'style' => 'height:280px'
-//            )
         ));
         $items = array(
             array('label' => Yii::t("common", "accueil"), 'url' => array('/mybiobank/index')),
@@ -29,18 +26,15 @@
         $items[] = array('label' => 'Importer un fichier d\'échantillons', 'url' => array('/uploadedFile/admin'), 'template' => '<hr> {menu}');
         $items[] = array('label' => 'Historique des imports', 'url' => array('/mybiobank/logImports'));
         $this->widget('zii.widgets.CMenu', array(
-            /* 'type'=>'list', */
             'encodeLabel' => false,
             'items' => $items
         ));
-        $this->endWidget();
+        $this->endWidget();*/
         ?>
     </div>
-
-    <!-- Include content pages -->
-
+-->
     <div id="content" class='content'style="padding : 0px 5px 5px 5px;">
         <?php echo $content; ?>
-    </div><!-- content -->
+    </div>
 </div>
 <?php $this->endContent(); ?>

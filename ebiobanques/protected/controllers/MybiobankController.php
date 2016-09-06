@@ -66,11 +66,45 @@ class MybiobankController extends Controller {
             }
             $_SESSION['biobank_id'] = $id;
         }
-       // $this->indexForBiobank($_SESSION['biobank_id']);
+            $model = $this->loadModel($_SESSION['biobank_id']);
+
+
+        if (isset($_POST['Biobank'])) {
+            $model->scenario = 'update';          // custom scenario
+
+            $attributesPost = $_POST['Biobank'];
+            Yii::log('setting biobank attributes from POST variable', CLogger::LEVEL_WARNING);
+            $model->attributes = $attributesPost;
+            if (isset($_POST['Address'])) {
+                $model->address = $_POST['Address'];
+            }
+            if (isset($_POST['Op_resp']) && $_POST['Op_resp']['lastName'] != null && $_POST['Op_resp']['lastName'] != "") {
+                $model->responsable_op = $_POST['Op_resp'];
+            }
+            if (isset($_POST['Qual_resp']) && $_POST['Qual_resp']['lastName'] != null && $_POST['Qual_resp']['lastName'] != "") {
+                $model->responsable_qual = $_POST['Qual_resp'];
+            }
+            if (isset($_POST['Adj_resp']) && $_POST['Adj_resp']['lastName'] != null && $_POST['Adj_resp']['lastName'] != "") {
+                $model->responsable_adj = $_POST['Adj_resp'];
+            }$contact = $model->contact;
+            if (isset($_POST['Contact'])) {
+                foreach ($_POST['Contact'] as $contactAttrName => $contactAttrValue) {
+                    $contact->$contactAttrName = $contactAttrValue;
+                }
+            }
+            Yii::log('saving biobank', CLogger::LEVEL_WARNING);
+            if ($model->save()) {
+                if ($contact->save())
+                    Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+                else
+                    Yii::app()->user->setFlash('notice', 'La biobanque a bien été mise à jour. Les informations liées au coordinateur n\'ont pas pu être sauvegardées');
+                $model->contact = $contact;
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
+        }
         $this->render('simplifiedUpdate', array(
-            'biobank' => $this->loadModel($_SESSION['biobank_id']),
+            'biobank' => $model,
         ));
-    
     }
 
     /**

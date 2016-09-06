@@ -53,8 +53,8 @@ $this->Widget('bootstrap.widgets.TbGridView', array(
         array('name' => $pathosName,'htmlOptions'=>array('width'=>'170'), 'header' => $model->getAttributeLabel($pathosName)),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
         array('name'=>'diagnosis_available','htmlOptions'=>array('width'=>'100'),'header' => $model->getAttributeLabel('diagnosis_available')),
-        array('name'=>'keywords_MeSH','header' => $model->getAttributeLabel('keywords_MeSH')),
-        array('header' => $model->getAttributeLabel('sample_type'), 'htmlOptions'=>array('width'=>'120'),'value' => '$data->getSampleTypeFormatted()'),
+        //array('name'=>'keywords_MeSH','header' => $model->getAttributeLabel('keywords_MeSH')),
+        array('header' => $model->getAttributeLabel('sample_type'), 'htmlOptions'=>array('width'=>'150'),'value' => '$data->getSampleTypeFormatted()'),
                
 //button to view biobank infos
         array('class' => 'CButtonColumn',

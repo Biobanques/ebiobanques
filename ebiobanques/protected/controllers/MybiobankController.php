@@ -66,7 +66,11 @@ class MybiobankController extends Controller {
             }
             $_SESSION['biobank_id'] = $id;
         }
-        $this->indexForBiobank($_SESSION['biobank_id']);
+       // $this->indexForBiobank($_SESSION['biobank_id']);
+        $this->render('simplifiedUpdate', array(
+            'biobank' => $this->loadModel($_SESSION['biobank_id']),
+        ));
+    
     }
 
     /**

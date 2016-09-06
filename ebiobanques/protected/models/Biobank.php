@@ -776,10 +776,10 @@ class Biobank extends LoggableActiveRecord {
                 // foreach ($biobank->getAttributesMaterial() as $type) {
                 //if the keyword given is in the list of sample types keywords, add a condition on the attribute associated
                 foreach ($keywordsAutorizedSampleType as $kwk => $attr) {
-                    if (strcasecmp ($kwk ,$keyword)==0) {
+                    if (strcasecmp($kwk, $keyword) == 0) {
                         Yii::log('keyword match sample type: ' . $kwk, Clogger::LEVEL_INFO);
                         if (is_array($attr)) {
-                            foreach($attr as $attr0){
+                            foreach ($attr as $attr0) {
                                 $criteria->addCondToOrGroup($orGroupName, [$attr0 => new MongoRegex('/TRUE/i')]);
                             }
                         } else {
@@ -791,15 +791,50 @@ class Biobank extends LoggableActiveRecord {
                  * add search on sample number. if keyword is a number
                  * add bounds to add two conditions
                  */
-                if(is_numeric($keyword)){
+                if (is_numeric($keyword)) {
                     Yii::log('keyword nb total samples: ' . $keyword, Clogger::LEVEL_INFO);
                     $bound = $this->getSampleNumberInfBound($keyword);
-                    Yii::log('bounds: '.$bound, Clogger::LEVEL_INFO);
+                    Yii::log('bounds: ' . $bound, Clogger::LEVEL_INFO);
                     //FIXME bug ou inefficace?
-                    $criteria->addCondToOrGroup($orGroupName, ["nb_total_samples"=>['greaterEq'=>$bound]]);
+                    $criteria->addCondToOrGroup($orGroupName, ["nb_total_samples" => ['greaterEq' => $bound]]);
                 }
+                /**
+                 * add condition on certification NFS
+                 * 
+                 */
+                $keywordsAutorizedCertifsNFS900 = [
+                    "NFS" => 'cert_NFS96900',
+                    "96" => 'cert_NFS96900',
+                    "900" => 'cert_NFS96900',
+                    "96900" => 'cert_NFS96900',
+                ];
+                // foreach ($biobank->getAttributesMaterial() as $type) {
+                //if the keyword given is in the list of sample types keywords, add a condition on the attribute associated
+                foreach ($keywordsAutorizedCertifsNFS900 as $kwk => $attr) {
+                    if (strcasecmp($kwk, $keyword) == 0) {
+                        Yii::log('keyword match certifNFS: ' . $kwk, Clogger::LEVEL_INFO);
+                        $criteria->addCondToOrGroup($orGroupName, [$attr => new MongoRegex('/OUI/i')]);
+                    }
+                }
+                /**
+                 * add condition on certif ISO
+                 */
+                $keywordsAutorizedCertifsISO = [
+                    "ISO9001" => 'cert_ISO9001',
+                    "ISO" => 'cert_ISO9001',
+                    "9001" => 'cert_ISO9001',
+                ];
+                // foreach ($biobank->getAttributesMaterial() as $type) {
+                //if the keyword given is in the list of sample types keywords, add a condition on the attribute associated
+                foreach ($keywordsAutorizedCertifsISO as $kwk => $attr) {
+                    if (strcasecmp($kwk, $keyword) == 0) {
+                        Yii::log('keyword match certifISO: ' . $kwk, Clogger::LEVEL_INFO);
+                        $criteria->addCondToOrGroup($orGroupName, [$attr => new MongoRegex('/OUI/i')]);
+                    }
+                }
+
                 $criteria->addOrGroup($orGroupName);
-                
+
                 $i++;
             }
         }
@@ -1235,13 +1270,13 @@ class Biobank extends LoggableActiveRecord {
             $res = "> 1 000 000";
         return $res;
     }
-    
+
     /**
      * get the bounds of a sample number, given by the defined intervale
      * @param type $number
      * 
      */
-    public function getSampleNumberInfBound($number){
+    public function getSampleNumberInfBound($number) {
         $res = 0;
         if ($number > 10000)
             $res = 10000;
@@ -1257,26 +1292,26 @@ class Biobank extends LoggableActiveRecord {
             $res = 1000000;
         return $res;
     }
-    
+
     /**
      * get the bounds of a sample number, given by the defined intervale
      * @param type $number
      * 
      */
-    public function getSampleNumberBounds($number){
-        $res = [0,10000];
+    public function getSampleNumberBounds($number) {
+        $res = [0, 10000];
         if ($number > 10000)
-            $res = [10000,50000];
+            $res = [10000, 50000];
         if ($number > 50000)
-            $res = [50000,100000];
+            $res = [50000, 100000];
         if ($number > 100000)
             $res = [100000, 300000];
         if ($number > 300000)
-            $res = [300000,500000];
+            $res = [300000, 500000];
         if ($number > 500000)
-            $res = [500000,1000000];
+            $res = [500000, 1000000];
         if ($number > 1000000)
-            $res = [1000000,100000000];
+            $res = [1000000, 100000000];
         return $res;
     }
 

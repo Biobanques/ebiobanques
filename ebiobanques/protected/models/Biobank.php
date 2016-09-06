@@ -832,6 +832,10 @@ class Biobank extends LoggableActiveRecord {
                         $criteria->addCondToOrGroup($orGroupName, [$attr => new MongoRegex('/OUI/i')]);
                     }
                 }
+                /**
+                 * add cond others certifs
+                 */
+                $criteria->addCondToOrGroup($orGroupName, ['cert_autres' => new MongoRegex('/' . $keyword . '/i')]);
 
                 $criteria->addOrGroup($orGroupName);
 

@@ -787,7 +787,19 @@ class Biobank extends LoggableActiveRecord {
                         }
                     }
                 }
+                /**
+                 * add search on sample number. if keyword is a number
+                 * add bounds to add two conditions
+                 */
+                if(is_numeric($keyword)){
+                    Yii::log('keyword nb total samples: ' . $keyword, Clogger::LEVEL_INFO);
+                    $bound = $this->getSampleNumberInfBound($keyword);
+                    Yii::log('bounds: '.$bound, Clogger::LEVEL_INFO);
+                    //FIXME bug ou inefficace?
+                    $criteria->addCondToOrGroup($orGroupName, ["nb_total_samples"=>['greaterEq'=>$bound]]);
+                }
                 $criteria->addOrGroup($orGroupName);
+                
                 $i++;
             }
         }
@@ -1221,6 +1233,50 @@ class Biobank extends LoggableActiveRecord {
             $res = "500 000 - 1 000 000";
         if ($this->nb_total_samples > 1000000)
             $res = "> 1 000 000";
+        return $res;
+    }
+    
+    /**
+     * get the bounds of a sample number, given by the defined intervale
+     * @param type $number
+     * 
+     */
+    public function getSampleNumberInfBound($number){
+        $res = 0;
+        if ($number > 10000)
+            $res = 10000;
+        if ($number > 50000)
+            $res = 50000;
+        if ($number > 100000)
+            $res = 100000;
+        if ($number > 300000)
+            $res = 300000;
+        if ($number > 500000)
+            $res = 500000;
+        if ($number > 1000000)
+            $res = 1000000;
+        return $res;
+    }
+    
+    /**
+     * get the bounds of a sample number, given by the defined intervale
+     * @param type $number
+     * 
+     */
+    public function getSampleNumberBounds($number){
+        $res = [0,10000];
+        if ($number > 10000)
+            $res = [10000,50000];
+        if ($number > 50000)
+            $res = [50000,100000];
+        if ($number > 100000)
+            $res = [100000, 300000];
+        if ($number > 300000)
+            $res = [300000,500000];
+        if ($number > 500000)
+            $res = [500000,1000000];
+        if ($number > 1000000)
+            $res = [1000000,100000000];
         return $res;
     }
 

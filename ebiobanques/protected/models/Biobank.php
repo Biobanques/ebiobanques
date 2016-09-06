@@ -682,7 +682,7 @@ class Biobank extends LoggableActiveRecord {
                 Yii::log('search word: ' . $keyword, Clogger::LEVEL_INFO);
                 $orGroupName = 'orGroup' . $i;
                 $criteria->createOrGroup($orGroupName);
-                $criteria->addCondToOrGroup($orGroupName, ['acronym' => new MongoRegex('/' . $keyword . '/i')]);   
+                $criteria->addCondToOrGroup($orGroupName, ['acronym' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['identifier' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['name' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['keywords_MeSH' => new MongoRegex('/' . $keyword . '/i')]);
@@ -699,7 +699,7 @@ class Biobank extends LoggableActiveRecord {
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_qual.firstName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['address.city' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['address.zip' => new MongoRegex('/' . $keyword . '/i')]);
-                
+
                 $criteria->addCondToOrGroup($orGroupName, ['presentation' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['presentation_en' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['projetRecherche' => new MongoRegex('/' . $keyword . '/i')]);
@@ -711,12 +711,80 @@ class Biobank extends LoggableActiveRecord {
                 $criteria->addCondToOrGroup($orGroupName, ['pathologies' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['pathologies_en' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['website' => new MongoRegex('/' . $keyword . '/i')]);
-                
+
                 if (ICDComparator::isICDCode($keyword)) {
                     $ICD10Group = ICDComparator::getGroup($keyword);
                     if ($ICD10Group != null) {
                         Yii::log('add criteria diagnosis avaialbale on icdcode: ' . $ICD10Group, Clogger::LEVEL_INFO);
                         $criteria->addCondToOrGroup($orGroupName, ['diagnosis_available' => new MongoRegex('/' . $ICD10Group . '/i')]);
+                    }
+                }
+                //criteria sample type by keyword association keyword-label attribute ( $biobank->getAttributesMaterial())
+                /**
+                 * 'materialStoredDNA',
+                  'materialStoredPlasma',
+                  'materialStoredSerum',
+                  'materialStoredUrine',
+                  'materialStoredSaliva',
+                  'materialStoredFaeces',
+                  'materialStoredRNA',
+                  'materialStoredBlood',
+                  'materialStoredTissueFrozen',
+                  'materialStoredTissueFFPE',
+                  'materialStoredImmortalizedCellLines',
+                  'materialTumoralTissue',
+                  'materialHealthyTissue',
+                  'materialLCR',
+                  'materialOther',
+                 */
+                $keywordsAutorizedSampleType = [
+                    "ADN" => 'materialStoredDNA',
+                    "DNA" => 'materialStoredDNA',
+                    "plasma" => 'materialStoredPlasma',
+                    "sérum" => 'materialStoredSerum',
+                    "serum" => 'materialStoredSerum',
+                    "urine" => 'materialStoredUrine',
+                    "salive" => 'materialStoredSaliva',
+                    "saliva" => 'materialStoredSaliva',
+                    "fécès " => 'materialStoredFaeces',
+                    "stool" => 'materialStoredFaeces',
+                    "RNA" => 'materialStoredRNA',
+                    "ARN" => 'materialStoredRNA',
+                    "sang" => 'materialStoredBlood',
+                    "blood" => 'materialStoredBlood',
+                    "tissu" => ['materialStoredTissueFrozen', 'materialStoredTissueFFPE', 'materialStoredTissueFFPE', 'materialTumoralTissue', 'materialHealthyTissue'],
+                    "tissus" => ['materialStoredTissueFrozen', 'materialStoredTissueFFPE', 'materialStoredTissueFFPE', 'materialTumoralTissue', 'materialHealthyTissue'],
+                    "tissue" => ['materialStoredTissueFrozen', 'materialStoredTissueFFPE', 'materialStoredTissueFFPE', 'materialTumoralTissue', 'materialHealthyTissue'],
+                    "congelés" => 'materialStoredTissueFrozen',
+                    "frozen" => 'materialStoredTissueFrozen',
+                    "paraffine" => 'materialStoredTissueFFPE',
+                    "FFPE" => 'materialStoredTissueFFPE',
+                    "lignées" => 'materialStoredImmortalizedCellLines',
+                    "line" => 'materialStoredImmortalizedCellLines',
+                    "cellulaires" => 'materialStoredImmortalizedCellLines',
+                    "cellule" => 'materialStoredImmortalizedCellLines',
+                    "Cell" => 'materialStoredImmortalizedCellLines',
+                    "tumoraux" => 'materialTumoralTissue',
+                    "tumoral" => 'materialTumoralTissue',
+                    "tumeur" => 'materialTumoralTissue',
+                    "sain" => 'materialHealthyTissue',
+                    "health" => 'materialHealthyTissue',
+                    "LCR" => 'materialLCR',
+                    "CSF" => 'materialLCR',
+                    "autre" => 'materialOther',
+                    "other" => 'materialOther'];
+                // foreach ($biobank->getAttributesMaterial() as $type) {
+                //if the keyword given is in the list of sample types keywords, add a condition on the attribute associated
+                foreach ($keywordsAutorizedSampleType as $kwk => $attr) {
+                    if (strcasecmp ($kwk ,$keyword)==0) {
+                        Yii::log('keyword match sample type: ' . $kwk, Clogger::LEVEL_INFO);
+                        if (is_array($attr)) {
+                            foreach($attr as $attr0){
+                                $criteria->addCondToOrGroup($orGroupName, [$attr0 => new MongoRegex('/TRUE/i')]);
+                            }
+                        } else {
+                            $criteria->addCondToOrGroup($orGroupName, [$attr => new MongoRegex('/TRUE/i')]);
+                        }
                     }
                 }
                 $criteria->addOrGroup($orGroupName);

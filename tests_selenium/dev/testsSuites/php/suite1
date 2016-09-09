@@ -1,0 +1,14 @@
+<phpunit>
+  <testsuites>
+    <testsuite name='Suite1'>
+      <file>accueilTestCase<file>
+      <file>rechercheEchantillonsSansConnexionTestCase<file>
+      <file>questionsFrequentesTestCase<file>
+      <file>activitesTestCase<file>
+      <file>biobanquesTestCase<file>
+      <file>contactsTestCase<file>
+      <file>contactUsTestCase<file>
+      <file>subscribe<file>
+    </testsuite>
+  </testsuites>
+</phpunit>

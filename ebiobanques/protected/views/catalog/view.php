@@ -12,20 +12,20 @@
     }
     ?>
     <div style="padding:10px;">
-    <div style="float:left;width:70%;margin-right:20px;text-align: justify;">
-        <div><h1><?php echo $model->name; ?></h1></div>
-        <div >
-        <?php
+        <div style="float:left;width:70%;margin-right:20px;text-align: justify;">
+            <div><h1><?php echo $model->name; ?></h1></div>
+            <div >
+                <?php
 //display presentation in each lang, function of the lang selected, default english
-        if (Yii::app()->language == "fr") {
-            echo $model->presentation;
-        } else {
-            echo $model->presentation_en;
-        }
-        ?>
-    </div>
-        
-    </div>
+                if (Yii::app()->language == "fr") {
+                    echo $model->presentation;
+                } else {
+                    echo $model->presentation_en;
+                }
+                ?>
+            </div>
+
+        </div>
         <div style="float:right;width:25%;text-align:right;top: 0px;right: 0px;">
             <?php
             if ($logo != null) {
@@ -35,13 +35,13 @@
         </div>
         <div style="clear:both;"></div>
     </div>
-    
+
 
     <?php
     $attributes_oblig = array(
         'identifier',
         'name',
-        'keywords_MeSH',
+        Yii::app()->language == "fr" ? 'keywords_MeSH' : null,
         'diagnosis_available',
         'pathologies',
             // array('name' => 'address', 'value' => nl2br($model->getAddress()), 'type' => 'raw',)

@@ -40,4 +40,6 @@ class CommonProperties
     public static $SMTP_SENDER_PASSWORD = '';
     public static $SMTP_SENDER_FROM_EMAIL = '';
     public static $GMAPS_KEY = "";
+    public static $TESTBROWSER = 'chrome';
+    public static $LAUNCHSELENIUM = true;
 }

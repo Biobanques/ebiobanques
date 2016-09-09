@@ -244,6 +244,7 @@ class Biobank extends LoggableActiveRecord {
     public function embeddedDocuments() {
         return array(
             'address' => 'Address',
+            'contact_resp' => 'Contact_resp',
             'responsable_op' => 'Op_resp',
             'responsable_qual' => 'Qual_resp',
             'responsable_adj' => 'Adj_resp',
@@ -413,7 +414,7 @@ class Biobank extends LoggableActiveRecord {
             'folder_reception' => Yii::t('common', 'folder_reception'),
             'folder_done' => Yii::t('common', 'folder_done'),
             'passphrase' => Yii::t('common', 'passphrase'),
-            'contact_id' => 'Contact',
+            'contact_id' => 'Contact', ///modificar
             'vitrine[fr]' => 'Texte en francais',
             'vitrine[logo]' => 'Image logo',
             'sampling_disease_group' => 'Disease group',
@@ -441,10 +442,11 @@ class Biobank extends LoggableActiveRecord {
             'nbs_other_samples_affected' => 'Other samples affected',
             'nbs_other_samples_relatives' => 'Other samples relatives',
             'sampling_practice' => 'General sampling practice',
-            'address' => Yii::t('adress', 'address'),
+            'address' => Yii::t('adress', 'address'), //modificar
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
+            //'contact' => Yii::t('responsible', 'contact_resp'),
             'qualityCombinate' => Yii::t('common', 'qualityCombinate'),
             'last_name' => Yii::t('common', 'lastname'),
             'first_name' => Yii::t('common', 'firstname'),
@@ -482,6 +484,7 @@ class Biobank extends LoggableActiveRecord {
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
+           // 'contact' => Yii::t('responsible', 'contact_resp'),
         );
     }
 

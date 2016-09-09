@@ -59,7 +59,6 @@ class SiteController extends Controller
                 'allow', // allow authenticated user to perform 'search' actions
                 'actions' => array(
                     'catalog',
-                    'search',
                     'view',
                     'changerDemandeEchantillon',
                     'addDemandeAllEchantillon',

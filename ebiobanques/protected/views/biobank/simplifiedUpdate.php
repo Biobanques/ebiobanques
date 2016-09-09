@@ -61,18 +61,36 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation', array('style'=>'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
+        echo $form->textArea($biobank, 'presentation', array('style' => 'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation'); ?>
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation_en'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation_en', array('style'=>'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
+        echo $form->textArea($biobank, 'presentation_en', array('style' => 'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation_en'); ?>
     </div>
 
+    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_quality'); ?></div>
+    <div class='col-2-row'>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'cert_ISO9001'); ?>
+            <?php echo $form->dropDownList($biobank, 'cert_ISO9001', $biobank->getCertificationOptions(), ['prompt' => Yii::t('common', 'undefined')]); ?>
+            <?php echo $form->error($biobank, 'cert_ISO9001'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'cert_NFS96900'); ?>
+            <?php echo $form->dropDownList($biobank, 'cert_NFS96900', $biobank->getCertificationOptions(), ['prompt' => Yii::t('common', 'undefined')]); ?>
+            <?php echo $form->error($biobank, 'cert_NFS96900'); ?>
+        </div>
+    </div>
+    <div class='col-2-row'>
+        <?php echo $form->label($biobank, 'cert_autres'); ?>
+        <?php echo $form->textField($biobank, 'cert_autres', CommonDisplayTools::getHelpBox('biobank.cert_autres', 'help_others_certifications', $this)); ?>
+        <?php echo $form->error($biobank, 'cert_autres'); ?>
+    </div>
     <div class = 'help help-title' style = "clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_2');
         ?></div>
     <div class='col-2-row'>
@@ -238,8 +256,8 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
-        
-<div class='cols2'>
+
+        <div class='cols2'>
             <?php echo $form->label($biobank, 'diagnosis_available'); ?>
             <?php
             echo $form->textField($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
@@ -247,28 +265,13 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             <?php echo $form->error($biobank, 'diagnosis_available'); ?>
         </div>
     </div>
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_quality'); ?></div>
     <div class='col-2-row'>
-        <div class='cols2'>
-            <?php echo $form->label($biobank, 'cert_ISO9001'); ?>
-            <?php echo $form->dropDownList($biobank, 'cert_ISO9001', $biobank->getCertificationOptions(), ['prompt' => Yii::t('common', 'undefined')]); ?>
-            <?php echo $form->error($biobank, 'cert_ISO9001'); ?>
-        </div>
-        <div class='cols2'>
-            <?php echo $form->label($biobank, 'cert_NFS96900'); ?>
-            <?php echo $form->dropDownList($biobank, 'cert_NFS96900', $biobank->getCertificationOptions(), ['prompt' => Yii::t('common', 'undefined')]); ?>
-            <?php echo $form->error($biobank, 'cert_NFS96900'); ?>
-        </div>
-    </div>
-    <div class='col-2-row'>
-        <?php echo $form->label($biobank, 'cert_autres'); ?>
-        <?php echo $form->textField($biobank, 'cert_autres',CommonDisplayTools::getHelpBox('biobank.cert_autres', 'help_others_certifications', $this)); ?>
-        <?php echo $form->error($biobank, 'cert_autres'); ?>
-    </div>
     <?php echo CHtml::submitButton('Mettre à jour') ?>
+    </div>
     <?php
     $this->endWidget();
     ?>
+</div>
     <h3>Items archivés ( non modifiables)</h3>
     <?php echo CHtml::link('Voir les items', array('biobank/oldupdate', "id" => $biobank->_id)); ?>
   

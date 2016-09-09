@@ -69,6 +69,7 @@ input[type=radio] + label:after{
     clear:both;
     
 }
+input[type="text"]{ height: 28px; }
 
 div.form .row
 {
@@ -193,7 +194,7 @@ div.form .cols1
 
 div.form .col-2-row{
     clear: left;
-    height: auto;
+    /*height: auto;*/
     /*margin-top: 25px;*/
     display:block;
     /*border: 1px black solid;*/

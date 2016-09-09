@@ -25,3 +25,5 @@
 /ebiobanques/protected/commands/testbbcpCommand.php
 /ebiobanques/CommonProperties.php
 /nbproject/private/
+/ebiobanques/protected/vendors/composer.lock
+/ebiobanques/protected/tests/report/

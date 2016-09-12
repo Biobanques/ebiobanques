@@ -59,6 +59,11 @@ class Biobank extends LoggableActiveRecord {
     public $keywords_MeSH;
     public $keywords_MeSH_fr;
     public $acronym;
+    /**
+     * fields "presentation" to describe the biobank.
+     * @var type 
+     */
+    public $presentation;
     public $presentation_en;
 
     /**
@@ -149,7 +154,13 @@ class Biobank extends LoggableActiveRecord {
     public $cims = array();
     public $contact_search;
     protected $qualityCombinate;
-
+    /**
+     * certificatins fields
+     */
+    public $cert_ISO9001;
+    public $cert_NFS96900;
+    public $cert_autres;
+    
     /**
      * get the array of material types
      * @since 1.8.0

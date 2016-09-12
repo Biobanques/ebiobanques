@@ -36,14 +36,13 @@
         <div style="clear:both;"></div>
     </div>
 
-
     <?php
     $attributes_oblig = array(
         'identifier',
         'name',
-        Yii::app()->language == "fr" ? 'keywords_MeSH' : null,
+        Yii::app()->language == "fr" ? 'keywords_MeSH_fr' : 'keywords_MeSH',
         'diagnosis_available',
-        'pathologies',
+        Yii::app()->language == "fr" ? 'pathologies' : 'pathologies_en',
             // array('name' => 'address', 'value' => nl2br($model->getAddress()), 'type' => 'raw',)
     );
 

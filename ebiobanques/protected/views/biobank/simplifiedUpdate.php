@@ -231,28 +231,28 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='cols2'>
             <?php echo $form->label($biobank, 'keywords_MeSH'); ?>
             <?php
-            echo $form->textField($biobank, 'keywords_MeSH', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH', 'help_keywords_MeSHContent', $this));
+            echo $form->textArea($biobank, 'keywords_MeSH', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH', 'help_keywords_MeSHContent', $this));
             ?>
             <?php echo $form->error($biobank, 'keywords_MeSH'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'keywords_MeSH_fr'); ?>
             <?php
-            echo $form->textField($biobank, 'keywords_MeSH_fr', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH_fr', 'help_keywords_MeSHFRContent', $this));
+            echo $form->textArea($biobank, 'keywords_MeSH_fr', CommonDisplayTools::getHelpBox('biobank.keywords_MeSH_fr', 'help_keywords_MeSHFRContent', $this));
             ?>
             <?php echo $form->error($biobank, 'keywords_MeSH_fr'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'pathologies_en'); ?>
             <?php
-            echo $form->textField($biobank, 'pathologies_en', CommonDisplayTools::getHelpBox('biobank.pathologies_en', 'help_pathologiesenContent', $this));
+            echo $form->textArea($biobank, 'pathologies_en', CommonDisplayTools::getHelpBox('biobank.pathologies_en', 'help_pathologiesenContent', $this));
             ?>
             <?php echo $form->error($biobank, 'pathologies_en'); ?>
         </div>
         <div class='cols2'>
             <?php echo $form->label($biobank, 'pathologies'); ?>
             <?php
-            echo $form->textField($biobank, 'pathologies', CommonDisplayTools::getHelpBox('biobank.pathologies', 'help_pathologiesContent', $this));
+            echo $form->textArea($biobank, 'pathologies', CommonDisplayTools::getHelpBox('biobank.pathologies', 'help_pathologiesContent', $this));
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
@@ -260,19 +260,19 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         <div class='cols2'>
             <?php echo $form->label($biobank, 'diagnosis_available'); ?>
             <?php
-            echo $form->textField($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
+            echo $form->textArea($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
             ?>
             <?php echo $form->error($biobank, 'diagnosis_available'); ?>
         </div>
     </div>
     <div class='col-2-row'>
-    <?php echo CHtml::submitButton('Mettre à jour') ?>
+        <?php echo CHtml::submitButton('Mettre à jour') ?>
     </div>
     <?php
     $this->endWidget();
     ?>
 </div>
-    <h3>Items archivés ( non modifiables)</h3>
-    <?php echo CHtml::link('Voir les items', array('biobank/oldupdate', "id" => $biobank->_id)); ?>
-  
+<h3>Items archivés ( non modifiables)</h3>
+<?php echo CHtml::link('Voir les items', array('biobank/oldupdate', "id" => $biobank->_id)); ?>
+
 

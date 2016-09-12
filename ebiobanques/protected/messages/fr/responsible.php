@@ -2,6 +2,7 @@
 
 return array(
     'civility' => 'Civilité',
+    'contact_resp'=> 'Contact',
     'responsible_op' => 'Responsable opérationnel',
     'responsible_qual' => 'Responsable qualité',
     'responsable_adj' => 'Responsable adjoint',

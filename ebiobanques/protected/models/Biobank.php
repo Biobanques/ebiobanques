@@ -446,7 +446,7 @@ class Biobank extends LoggableActiveRecord {
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
-            //'contact' => Yii::t('responsible', 'contact_resp'),
+            'contact_resp' => Yii::t('responsible', 'contact_resp'),
             'qualityCombinate' => Yii::t('common', 'qualityCombinate'),
             'last_name' => Yii::t('common', 'lastname'),
             'first_name' => Yii::t('common', 'firstname'),
@@ -1106,6 +1106,9 @@ class Biobank extends LoggableActiveRecord {
 
     public function getResponsableQual() {
         return ( Yii::t('responsible', $this->responsable_qual->civility) . " " . $this->responsable_qual->firstName . " " . $this->responsable_qual->lastName . "\n" . $this->responsable_qual->email . "\n" . $this->responsable_qual->direct_phone);
+    }
+    public function getContactResp() {
+            return ( Yii::t('responsible', $this->contact_resp->first_name) . " " . $this->contact_resp->last_name . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->phone);
     }
 
     /**

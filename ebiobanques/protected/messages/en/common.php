@@ -174,6 +174,7 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'biobank.form_part_2' => 'Adresse',
     'biobank.form_part_3' => 'Coordinateur',
     'biobank.form_part_4' => 'Materiel biologique disponible',
+    'biobank.form_part_contact_resp' => 'Contact',
     'biobank.form_part_responsable_adj' => 'Responsable adjoint',
     'biobank.form_part_responsable_op' => 'Responsable opérationnel',
     'biobank.form_part_responsable_qual' => 'Responsable qualité',

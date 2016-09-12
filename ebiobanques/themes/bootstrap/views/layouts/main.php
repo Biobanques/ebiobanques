@@ -80,7 +80,7 @@
             $destButtonRequestForm = "http://www.biobanques.eu/en/services/biospecimen-request";
         }
             ?>
-            }
+            
             <div style="float:right;padding-right:20px;padding-top:20px;">
                 <a class="btn btn-primary" href="<?=$destButtonRequestForm ?>" role="button" style="background-color:#C96CB6;border-color:white;"><?php echo Yii::t('common', 'button_ask_samples'); ?></a>
             </div>

@@ -95,9 +95,10 @@ $attributes_oblig = array(
     'collection_name',
     'collection_id',
     'biobank_class',
-    array('name' => 'contact', 'value' => $model->getShortContact()),
+    //array('name' => 'contact', 'value' => $model->getShortContact()),
     'diagnosis_available',
     array('name' => 'address', 'value' => nl2br($model->getAddress()), 'type' => 'raw',),
+    array('name' => 'contact_resp', 'value' => nl2br($model->getContactResp()), 'type' => 'raw',),
     array('name' => 'responsable_op', 'value' => nl2br($model->getResponsableOp()), 'type' => 'raw',),
     array('name' => 'responsable_qual', 'value' => nl2br($model->getResponsableQual()), 'type' => 'raw',),
     array('name' => 'responsable_adj', 'value' => nl2br($model->getResponsableAdj()), 'type' => 'raw',),
@@ -195,7 +196,7 @@ $attributes_material = [
 ];
 $attributes_other = array(
 );
-$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, $attributes_network, $attributes_partners, $attributes_material, array('_id', 'contact_id', 'address', 'website', 'responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine', 'location', 'qualite', 'qualite_en'));
+$definedAttributes = array_merge($attributes_oblig, $attributes_facult, $attributes_qualite, $cims, $attributes_info, $attributes_network, $attributes_partners, $attributes_material, array('_id', 'contact_id', 'address', 'website', 'contact_resp','responsable_op', 'responsable_qual', 'responsable_adj', 'vitrine', 'location', 'qualite', 'qualite_en'));
 $attributes = $model->getAttributes();
 foreach ($attributes as $attributeName => $attributeValue)
     if (!in_array($attributeName, $definedAttributes)) {

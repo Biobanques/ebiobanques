@@ -162,8 +162,9 @@ $attributes_oblig = array(
     'collection_name',
     'biobank_class',
     'diagnosis_available',
-    array('attributeName' => 'contact_id', 'value' => Contact::model()->getArrayContacts()),
+   // array('attributeName' => 'contact_id', 'value' => Contact::model()->getArrayContacts()),
     'address',
+    'contact_resp',
     'responsable_op',
     'responsable_qual',
     'responsable_adj'

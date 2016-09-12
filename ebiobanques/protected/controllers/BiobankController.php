@@ -157,6 +157,10 @@ class BiobankController extends Controller {
                 $model->address = new Address('insert');
                 $model->address = $_POST['Address'];
             }
+            if (isset($_POST['Contact_resp']) && $_POST['Contact_resp']['lastName'] != null && $_POST['Contact_resp']['lastName'] != "") {
+                $model->contact_resp = new Op_resp('insert');
+                $model->contact_resp = $_POST['Contact_resp'];
+            }
             if (isset($_POST['Op_resp']) && $_POST['Op_resp']['lastName'] != null && $_POST['Op_resp']['lastName'] != "") {
                 $model->responsable_op = new Op_resp('insert');
                 $model->responsable_op = $_POST['Op_resp'];
@@ -463,6 +467,9 @@ class BiobankController extends Controller {
                             case "responsable_adj":
                                 $datas[$attribute] = $model->getResponsableAdj();
                                 break;
+                           /* case "contact_resp":
+                                $datas[$attribute] = $model->getContactResp();
+                                break;*/
                         }
                     }
                 } else {

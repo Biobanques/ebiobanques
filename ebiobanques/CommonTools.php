@@ -707,14 +707,14 @@ class CommonTools
         try {
             $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
             $url = trim($url, "-");
-            $url = @iconv("utf-8", "us-ascii//IGNORE", $url);
-            //$url = @iconv("UTF-8", "ASCII//TRANSLIT/", $url);
+            //$url = @iconv("utf-8", "us-ascii//IGNORE", $url);
+            $url = @iconv("UTF-8", "ASCII//TRANSLIT/", $url);
             $url = strtolower($url);
             $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
-            Yii::log("Formated url :" . $url);
+            Yii::log("Formated url :" . $url, CLogger::LEVEL_ERROR);
             return $url;
         } catch (Exception $ex) {
-            Yii::log("Can't format this url" . $ex->getTraceAsString(), LOGG);
+            Yii::log("Can't format this url" . $ex->getTraceAsString(), CLogger::LEVEL_ERROR);
         }
     }
 

@@ -667,28 +667,32 @@ class CommonTools
         if (isset($biobank->address->street) && isset($biobank->address->city) && isset($biobank->address->zip) && isset($biobank->address->country)) {
 
             $requestAddress = str_ireplace(' ', '+', $biobank->address->street) . '+' . $biobank->address->zip . '+' . str_ireplace(' ', '+', $biobank->address->city) . '+' . $biobank->address->country;
+            try {
+                $requestAddress = CommonTools::url($requestAddress);
 
-            $requestAddress = CommonTools::url($requestAddress);
+                $completeAddress = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $requestAddress;
+                $request = new EHttpClient($completeAddress);
 
-            $completeAddress = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $requestAddress;
-            $request = new EHttpClient($completeAddress);
+                $response = $request->request('GET');
+                $var = json_decode($response->getBody());
+                Yii::log(print_r($var, true), CLogger::LEVEL_WARNING);
 
-            $response = $request->request('GET');
-            $var = json_decode($response->getBody());
-            Yii::log(print_r($var, true), CLogger::LEVEL_WARNING);
-
-            if ($var->status != "ZERO_RESULTS") {
-                Yii::log("formated address : $requestAddress", CLogger::LEVEL_WARNING);
-                //  print_r($var->results[0]->geometry->location);
-                $biobank->latitude = $var->results[0]->geometry->location->lat;
-                $biobank->longitude = $var->results[0]->geometry->location->lng;
-                if (!property_exists($biobank, 'location'))
-                    $biobank->initSoftAttribute('location');
-                $biobank->location = array('type' => 'Point', 'coordinates' => array($biobank->longitude, $biobank->latitude));
-                if ($saveAfterFind)
-                    $biobank->save();
-            } else
-                Yii::log('Can\'t find coordinates from adress for biobank :' . $biobank->identifier, CLogger::LEVEL_ERROR);
+                if ($var->status != "ZERO_RESULTS" && $var->status != "INVALID_REQUEST") {
+                    Yii::log("formated address : $requestAddress", CLogger::LEVEL_WARNING);
+                    Yii::log("complete google url: $completeAddress", CLogger::LEVEL_WARNING);
+                    //  print_r($var->results[0]->geometry->location);
+                    $biobank->latitude = $var->results[0]->geometry->location->lat;
+                    $biobank->longitude = $var->results[0]->geometry->location->lng;
+                    if (!property_exists($biobank, 'location'))
+                        $biobank->initSoftAttribute('location');
+                    $biobank->location = array('type' => 'Point', 'coordinates' => array($biobank->longitude, $biobank->latitude));
+                    if ($saveAfterFind)
+                        $biobank->save();
+                } else
+                    Yii::log('Can\'t find coordinates from adress for biobank :' . $biobank->identifier, CLogger::LEVEL_ERROR);
+            } catch (Exception $ex) {
+                Yii::log("An exception occured, coordinates can't be set from google API \n " . $ex->getTraceAsString(), CLogger::LEVEL_WARNING);
+            }
         } else {
             Yii::log('Can\'t find coordinates from adress for biobank :' . $biobank->identifier, CLogger::LEVEL_ERROR);
         }
@@ -700,13 +704,18 @@ class CommonTools
      * @return type
      */
     public static function url($url) {
-        $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
-        $url = trim($url, "-");
-        //  $url = @iconv("utf-8", "us-ascii//IGNORE", $url);
-        $url = $result = @iconv("UTF-8", "ASCII//TRANSLIT/", $url);
-        $url = strtolower($url);
-        $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
-        return $url;
+        try {
+            $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
+            $url = trim($url, "-");
+            $url = @iconv("utf-8", "us-ascii//IGNORE", $url);
+            //$url = @iconv("UTF-8", "ASCII//TRANSLIT/", $url);
+            $url = strtolower($url);
+            $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
+            Yii::log("Formated url :" . $url);
+            return $url;
+        } catch (Exception $ex) {
+            Yii::log("Can't format this url" . $ex->getTraceAsString(), LOGG);
+        }
     }
 
     /**

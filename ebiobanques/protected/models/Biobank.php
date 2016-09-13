@@ -59,11 +59,6 @@ class Biobank extends LoggableActiveRecord {
     public $keywords_MeSH;
     public $keywords_MeSH_fr;
     public $acronym;
-    /**
-     * fields "presentation" to describe the biobank.
-     * @var type 
-     */
-    public $presentation;
     public $presentation_en;
 
     /**
@@ -154,13 +149,7 @@ class Biobank extends LoggableActiveRecord {
     public $cims = array();
     public $contact_search;
     protected $qualityCombinate;
-    /**
-     * certificatins fields
-     */
-    public $cert_ISO9001;
-    public $cert_NFS96900;
-    public $cert_autres;
-    
+
     /**
      * get the array of material types
      * @since 1.8.0
@@ -349,7 +338,7 @@ class Biobank extends LoggableActiveRecord {
             array('sampling_practice', 'length', 'max' => 2),
             array('nbs_other_specification', 'length', 'max' => 50),
             array('date_entry', 'type', 'type' => 'date', 'message' => '{attribute}: is invalid  date(dd/mm/yyyy)!', 'dateFormat' => 'dd/MM/yyyy'),
-            array('qualityCombinate,identifier, name,collection_id, collection_name,diagnosis_available, contact_id, contact_search,address,address.city,responsable_op,responsable_qual,responsable_adj,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
+            array('qualityCombinate,identifier, name,collection_id, collection_name,diagnosis_available, contact_id, contact_search,address,address.city,responsable_op,responsable_qual,responsable_adj,contact_resp,keywords_MeSH,tauxCompletude', 'safe', 'on' => 'search'),
             /**
              * Custom validator, for validation if some value
              */
@@ -495,7 +484,7 @@ class Biobank extends LoggableActiveRecord {
             'responsable_op' => Yii::t('responsible', 'responsible_op'),
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
-           // 'contact' => Yii::t('responsible', 'contact_resp'),
+            'contact_resp' => Yii::t('responsible', 'contact_resp'),
         );
     }
 
@@ -1119,7 +1108,7 @@ class Biobank extends LoggableActiveRecord {
         return ( Yii::t('responsible', $this->responsable_qual->civility) . " " . $this->responsable_qual->firstName . " " . $this->responsable_qual->lastName . "\n" . $this->responsable_qual->email . "\n" . $this->responsable_qual->direct_phone);
     }
     public function getContactResp() {
-            return ( Yii::t('responsible', $this->contact_resp->first_name) . " " . $this->contact_resp->last_name . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->phone);
+            return ( Yii::t('responsible', $this->contact_resp->firstName) . " " . $this->contact_resp->lastName . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->direct_phone);
     }
 
     /**

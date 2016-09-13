@@ -38,6 +38,7 @@ class Op_resp extends EMongoSoftEmbeddedDocument
     public function rules() {
         return array(
             array('civility,firstName,lastName,email,direct_phone', 'safe'),
+            //array('lastName,firstName','alphaOnly'),
             array('email', 'CEmailValidator', 'allowEmpty' => true),
             array('direct_phone', 'phoneValidator', 'language' => 'fr'),
         );
@@ -78,4 +79,10 @@ class Op_resp extends EMongoSoftEmbeddedDocument
     }
 
     // NOTE: for embedded documents we do not define static model method!
+    
+    public function alphaOnly($attribute) {
+
+        if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ -]*$/i", $this->$attribute))
+            $this->addError($this->$attribute, Yii::t('common', 'onlyAlpha'));
+    }
 }

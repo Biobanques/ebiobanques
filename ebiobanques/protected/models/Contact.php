@@ -95,10 +95,10 @@ class Contact extends LoggableActiveRecord
     /**
      * Alphabetic case unsensitive characters, including accentued characters, spaces and '-' only. + numeric
      */
-    public function alphaNumericOnly() {
+   /* public function alphaNumericOnly() {
         if (!preg_match("/^[a-zàâçéèêëîïôûùüÿñæœ0-9 -]*$/i", $this->nom))
             $this->addError('login', Yii::t('common', 'onlyAlphaNumeric'));
-    }
+    }/*
 
     /**
      * @return array customized attribute labels (name=>label)

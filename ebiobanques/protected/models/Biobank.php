@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord {
+class Biobank extends LoggableActiveRecord
+{
     /*
      * Champs obligatoires
      */
-
     public $id;
     public $identifier;
     public $name;
@@ -41,26 +41,28 @@ class Biobank extends LoggableActiveRecord {
     public $passphrase;
     public $contact_id;
     public $diagnosis_available;
-
     /**
      * pathologies are stored in french and english
-     * @var type 
+     * @var type
      */
     public $pathologies;
     public $pathologies_en;
     public $longitude;
     public $latitude;
     public $location;
-
     /**
      * keywords mesh are stored in english and french
-     * @var type 
+     * @var type
      */
     public $keywords_MeSH;
     public $keywords_MeSH_fr;
     public $acronym;
+    /**
+     * fields "presentation" to describe the biobank.
+     * @var type
+     */
+    public $presentation;
     public $presentation_en;
-
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -69,13 +71,11 @@ class Biobank extends LoggableActiveRecord {
     /**
      * fields agregated related to the sampling activity
      */
-
     /**
      * values fixed: general population, disease
      * @var type
      */
     public $sampling_practice;
-
     /**
      * free text
      * @var type
@@ -97,11 +97,10 @@ class Biobank extends LoggableActiveRecord {
     public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
-
     /**
      * total number of samples, integer value only.
      * Displayed in a format like 10^x.
-     * @var type 
+     * @var type
      */
     public $nb_total_samples;
     public $collectionDataAccessFee = 'TRUE';
@@ -109,7 +108,6 @@ class Biobank extends LoggableActiveRecord {
     public $collectionSampleAccessFee = 'TRUE';
     public $collectionSampleAccessJointProjects = 'TRUE';
     public $PartnerCharterSigned = 'TRUE';
-
     /**
      * fields agregated relatives to the number of samples.
      * NBS : acronym of Number of Biological Samples
@@ -142,13 +140,18 @@ class Biobank extends LoggableActiveRecord {
      * specify the type of samples if other. Free text.
      */
     public $nbs_other_specification;
-
     /**
      * array of ICD codes
      */
     public $cims = array();
     public $contact_search;
     protected $qualityCombinate;
+    /**
+     * certificatins fields
+     */
+    public $cert_ISO9001;
+    public $cert_NFS96900;
+    public $cert_autres;
 
     /**
      * get the array of material types
@@ -499,7 +502,7 @@ class Biobank extends LoggableActiveRecord {
         if ($this->identifier != null)
             $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '/i'));
         if ($this->responsable_op != null) {
-            
+
         }
 
         if ($this->name != null)
@@ -679,7 +682,7 @@ class Biobank extends LoggableActiveRecord {
             //search if each keywords is present into one field (or codition)
             $i = 0;
             foreach ($tabKeywords as $keyword) {
-                //check if the keyword is an ICD10 code 
+                //check if the keyword is an ICD10 code
                 //if yes add a search condition
 
                 Yii::log('search word: ' . $keyword, Clogger::LEVEL_INFO);
@@ -803,7 +806,7 @@ class Biobank extends LoggableActiveRecord {
                 }
                 /**
                  * add condition on certification NFS
-                 * 
+                 *
                  */
                 $keywordsAutorizedCertifsNFS900 = [
                     "NFS" => 'cert_NFS96900',
@@ -1107,8 +1110,9 @@ class Biobank extends LoggableActiveRecord {
     public function getResponsableQual() {
         return ( Yii::t('responsible', $this->responsable_qual->civility) . " " . $this->responsable_qual->firstName . " " . $this->responsable_qual->lastName . "\n" . $this->responsable_qual->email . "\n" . $this->responsable_qual->direct_phone);
     }
+
     public function getContactResp() {
-            return ( Yii::t('responsible', $this->contact_resp->firstName) . " " . $this->contact_resp->lastName . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->direct_phone);
+        return ( Yii::t('responsible', $this->contact_resp->firstName) . " " . $this->contact_resp->lastName . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->direct_phone);
     }
 
     /**
@@ -1284,7 +1288,7 @@ class Biobank extends LoggableActiveRecord {
     /**
      * get the bounds of a sample number, given by the defined intervale
      * @param type $number
-     * 
+     *
      */
     public function getSampleNumberInfBound($number) {
         $res = 0;
@@ -1306,7 +1310,7 @@ class Biobank extends LoggableActiveRecord {
     /**
      * get the bounds of a sample number, given by the defined intervale
      * @param type $number
-     * 
+     *
      */
     public function getSampleNumberBounds($number) {
         $res = [0, 10000];
@@ -1327,9 +1331,9 @@ class Biobank extends LoggableActiveRecord {
 
     /**
      * get the available types of samples in the biobank
-     * ex : DNA,Cells 
+     * ex : DNA,Cells
      * @since 1.8.1
-     * @TODO remove ", " at the end of th emethod by replacing characters (find the good php function) 
+     * @TODO remove ", " at the end of th emethod by replacing characters (find the good php function)
      */
     public function getSampleTypeFormatted() {
         $res = "";
@@ -1357,7 +1361,7 @@ class Biobank extends LoggableActiveRecord {
      * get the certification of the biobank in a formatted text
      * ex : NFS96900, ISO9001
      * @since 1.8.1
-     * @TODO remove ", " at the end of th emethod by replacing characters (find the good php function) 
+     * @TODO remove ", " at the end of th emethod by replacing characters (find the good php function)
      */
     public function getCertificationFormatted() {
         $res = "";

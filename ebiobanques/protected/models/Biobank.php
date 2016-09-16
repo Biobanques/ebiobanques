@@ -870,6 +870,11 @@ class Biobank extends LoggableActiveRecord {
         return $dataProvider;
     }
 
+    /**
+     * 
+     * @return type
+     * @deprecated Use contact_resp instad of this relational structure
+     */
     public function getContact() {
         $result = null;
         //check if the string is a mongo id string
@@ -884,6 +889,9 @@ class Biobank extends LoggableActiveRecord {
         return $result;
     }
 
+     /**
+     * @deprecated Use contact_resp instad of this relational structure
+     */
     public function setContact(Contact $contact) {
         $this->contact = $contact;
     }

@@ -706,7 +706,8 @@ class Biobank extends LoggableActiveRecord {
                 $criteria->addCondToOrGroup($orGroupName, ['collection_name' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['collection_id' => new MongoRegex('/' . $keyword . '/i')]);
 
-                //TODO fix pb with contact in a separate collection ( responsible)
+                $criteria->addCondToOrGroup($orGroupName, ['contact_resp.lastName' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['contact_resp.firstName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_adj.lastName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_adj.firstName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_op.lastName' => new MongoRegex('/' . $keyword . '/i')]);

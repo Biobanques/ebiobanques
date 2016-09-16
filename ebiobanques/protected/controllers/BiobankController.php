@@ -220,6 +220,10 @@ class BiobankController extends Controller {
 
                 $model->address = $_POST['Address'];
             }
+            //update contacts embedded documents
+            if (isset($_POST['Contact_resp']) && $_POST['Contact_resp']['lastName'] != null && $_POST['Contact_resp']['lastName'] != "") {
+                $model->contact_resp = $_POST['Contact_resp'];
+            }
             if (isset($_POST['Op_resp']) && $_POST['Op_resp']['lastName'] != null && $_POST['Op_resp']['lastName'] != "") {
                 $model->responsable_op = $_POST['Op_resp'];
             }
@@ -230,21 +234,19 @@ class BiobankController extends Controller {
             if (isset($_POST['Adj_resp']) && $_POST['Adj_resp']['lastName'] != null && $_POST['Adj_resp']['lastName'] != "") {
                 //if (isset($_POST['Adj_resp'])) {
                 $model->responsable_adj = $_POST['Adj_resp'];
-            }$contact = $model->contact;
-            if (isset($_POST['Contact'])) {
+            }
+           // $contact = $model->contact;
+            /*if (isset($_POST['Contact'])) {
 
                 foreach ($_POST['Contact'] as $contactAttrName => $contactAttrValue) {
                     $contact->$contactAttrName = $contactAttrValue;
                 }
-            }
+            }*/
             Yii::log('saving biobank', CLogger::LEVEL_WARNING);
             if ($model->save()) {
-                if ($contact->save())
-                    Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
-                else
-                    Yii::app()->user->setFlash('notice', 'La biobanque a bien été mise à jour. Les informations liées au coordinateur n\'ont pas pu être sauvegardées');
-
-                $model->contact = $contact;
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+                
+      
                 // $this->redirect(array('view', 'id' => $model->_id));
             } else
                 Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');

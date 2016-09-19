@@ -266,7 +266,7 @@ class Biobank extends LoggableActiveRecord
      * @return boolean
      */
     public function beforeValidate() {
-        if (isset($this->address) && $this->address != null && (!isset($this->location) || $this->location == null)) {
+        if (isset($this->address) && $this->address != null) {
             CommonTools::getLatLong($this, false);
         }
 

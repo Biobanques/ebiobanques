@@ -49,10 +49,22 @@ class CommonTools
         return CommonProperties::$DEV_MODE;
     }
 
+    /**
+     * get user from session user id
+     * Cannot be unit tested because requires connected user
+     * TODO : Refactor app to remove this part of code, probably obsolete
+     * @codeCoverageIgnore
+     * @return User
+     */
     public static function getConnectedUser() {
         return User::model()->findByPk(Yii::app()->user->id);
     }
 
+    /**
+     * @codeCoverageIgnore
+     * TODO : Refactor app to remove this part of code, probably obsolete
+     * @return array
+     */
     public static function getPreferences() {
 
         $user = CommonTools::getConnectedUser();
@@ -62,9 +74,14 @@ class CommonTools
         return $result;
     }
 
+    /**
+     * Return array of regex to validate phone number, by country
+     * TODO implement other countries phone number
+     * @return array
+     */
     public function getPhoneRegex() {
         $regexArray = array(
-            'fr' => array('regex' => '#^\+33[0-9]{9}$#', 'readable' => '+33 123456789'),
+            'fr' => array('regex' => '/^\+33 [0-9]{9}$/', 'readable' => '+33 123456789'),
                 // 'en' => array('regex' => '#^\+33[0-9]{9}$#', 'readable' => '+33 123456789'),
         );
         return $regexArray;
@@ -662,9 +679,15 @@ class CommonTools
         return $result;
     }
 
+    /**
+     * Get coordinates from address, using Google Maps API. Need a valid key, defined in COmmonProperties $GMAPS_KEY variable.
+     *
+     * @param Biobank $biobank
+     * @param boolean $saveAfterFind
+     */
     public static function getLatLong($biobank, $saveAfterFind = true) {
         Yii::log('Trying to get location from biobank ' . $biobank->identifier, CLogger::LEVEL_WARNING);
-        if (isset($biobank->address->street) && isset($biobank->address->city) && isset($biobank->address->zip) && isset($biobank->address->country)) {
+        if (isset($biobank->address->street) || isset($biobank->address->city) || isset($biobank->address->zip) || isset($biobank->address->country) || $biobank->address->street != "" || $biobank->address->city != "" || $biobank->address->zip != "" || $biobank->address->country != "") {
 
             $requestAddress = str_ireplace(' ', '+', $biobank->address->street) . '+' . $biobank->address->zip . '+' . str_ireplace(' ', '+', $biobank->address->city) . '+' . $biobank->address->country;
             try {
@@ -700,8 +723,8 @@ class CommonTools
 
     /**
      * Format url for google API
-     * @param type $url
-     * @return type
+     * @param string $url
+     * @return string
      */
     public static function url($url) {
         try {

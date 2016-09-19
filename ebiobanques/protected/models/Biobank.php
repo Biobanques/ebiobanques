@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord
-{
+class Biobank extends LoggableActiveRecord {
     /*
      * Champs obligatoires
      */
+
     public $id;
     public $identifier;
     public $name;
@@ -41,6 +41,7 @@ class Biobank extends LoggableActiveRecord
     public $passphrase;
     public $contact_id;
     public $diagnosis_available;
+
     /**
      * pathologies are stored in french and english
      * @var type
@@ -50,6 +51,7 @@ class Biobank extends LoggableActiveRecord
     public $longitude;
     public $latitude;
     public $location;
+
     /**
      * keywords mesh are stored in english and french
      * @var type
@@ -57,12 +59,14 @@ class Biobank extends LoggableActiveRecord
     public $keywords_MeSH;
     public $keywords_MeSH_fr;
     public $acronym;
+
     /**
      * fields "presentation" to describe the biobank.
      * @var type
      */
     public $presentation;
     public $presentation_en;
+
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -71,11 +75,13 @@ class Biobank extends LoggableActiveRecord
     /**
      * fields agregated related to the sampling activity
      */
+
     /**
      * values fixed: general population, disease
      * @var type
      */
     public $sampling_practice;
+
     /**
      * free text
      * @var type
@@ -97,6 +103,7 @@ class Biobank extends LoggableActiveRecord
     public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
+
     /**
      * total number of samples, integer value only.
      * Displayed in a format like 10^x.
@@ -108,6 +115,7 @@ class Biobank extends LoggableActiveRecord
     public $collectionSampleAccessFee = 'TRUE';
     public $collectionSampleAccessJointProjects = 'TRUE';
     public $PartnerCharterSigned = 'TRUE';
+
     /**
      * fields agregated relatives to the number of samples.
      * NBS : acronym of Number of Biological Samples
@@ -140,12 +148,14 @@ class Biobank extends LoggableActiveRecord
      * specify the type of samples if other. Free text.
      */
     public $nbs_other_specification;
+
     /**
      * array of ICD codes
      */
     public $cims = array();
     public $contact_search;
     protected $qualityCombinate;
+
     /**
      * certificatins fields
      */
@@ -502,7 +512,7 @@ class Biobank extends LoggableActiveRecord
         if ($this->identifier != null)
             $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '/i'));
         if ($this->responsable_op != null) {
-
+            
         }
 
         if ($this->name != null)
@@ -696,7 +706,8 @@ class Biobank extends LoggableActiveRecord
                 $criteria->addCondToOrGroup($orGroupName, ['collection_name' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['collection_id' => new MongoRegex('/' . $keyword . '/i')]);
 
-                //TODO fix pb with contact in a separate collection ( responsible)
+                $criteria->addCondToOrGroup($orGroupName, ['contact_resp.lastName' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['contact_resp.firstName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_adj.lastName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_adj.firstName' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['responsable_op.lastName' => new MongoRegex('/' . $keyword . '/i')]);
@@ -860,6 +871,11 @@ class Biobank extends LoggableActiveRecord
         return $dataProvider;
     }
 
+    /**
+     * 
+     * @return type
+     * @deprecated Use contact_resp instad of this relational structure
+     */
     public function getContact() {
         $result = null;
         //check if the string is a mongo id string
@@ -874,6 +890,9 @@ class Biobank extends LoggableActiveRecord
         return $result;
     }
 
+     /**
+     * @deprecated Use contact_resp instad of this relational structure
+     */
     public function setContact(Contact $contact) {
         $this->contact = $contact;
     }
@@ -891,13 +910,18 @@ class Biobank extends LoggableActiveRecord
     }
 
     /**
-     * retourne le contact formaté en chaine courte.
+     * retourne le contact principal (coordinateur)formaté en chaine courte.
      * Vide si null
      */
     public function getShortContact() {
-        $contact = $this->getContact();
-        if ($contact != null)
-            return $contact != null ? $contact->last_name . " " . $contact->first_name : "";
+        $result = "";
+        $contact = $this->contact_resp;
+        if ($contact != null && $contact->lastName != null) {
+            $result = $contact->lastName;
+            if ($contact->firstName != null)
+                $result.=" ".$contact->firstName;
+        }
+        return $result;
     }
 
     /**

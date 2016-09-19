@@ -122,39 +122,10 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     </div>
 
 
-    <div class='help help-title' style="clear: both;margin-bottom: 15px"><?php echo Yii::t('common', 'biobank.form_part_3'); ?></div>
-    <div class='col-2-row'>
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'last_name'); ?>
-            <?php echo $form->textField($biobank->contact, 'last_name'); ?>
-            <?php echo $form->error($biobank->contact, 'last_name'); ?>
-        </div>
-
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'first_name'); ?>
-            <?php echo $form->textField($biobank->contact, 'first_name'); ?>
-            <?php echo $form->error($biobank->contact, 'first_name'); ?>
-        </div>
-
-
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'email'); ?>
-            <?php
-            echo $form->textField($biobank->contact, 'email', CommonDisplayTools::getHelpBox('biobank.email', 'helpEmailContent', $this));
-            ?>
-            <?php echo $form->error($biobank->contact, 'email'); ?>
-        </div>
-
-        <div class='cols2'>
-            <?php echo $form->label($biobank->contact, 'phone'); ?>
-            <?php
-            echo $form->textField($biobank->contact, 'phone', CommonDisplayTools::getHelpBox('phone', 'helpPhoneContent', $this));
-            ?>
-            <?php echo $form->error($biobank->contact, 'phone'); ?>
-        </div>
-    </div>
+    
     <?php
     $resps = [
+        'contact_resp',
         'responsable_adj',
         'responsable_op',
         'responsable_qual',

@@ -176,6 +176,7 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'biobank.form_part_2' => 'Adresse',
     'biobank.form_part_3' => 'Coordinateur',
     'biobank.form_part_4' => 'Materiel biologique disponible',
+    'biobank.form_part_contact_resp' => 'Coordinateur',
     'biobank.form_part_responsable_adj' => 'Responsable adjoint',
     'biobank.form_part_responsable_op' => 'Responsable opérationnel',
     'biobank.form_part_responsable_qual' => 'Responsable qualité',

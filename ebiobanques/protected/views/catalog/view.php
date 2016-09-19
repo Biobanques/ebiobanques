@@ -61,18 +61,20 @@
     <div id="contact" style="padding-left:20px;width:330px;float:left;">
         <h3><?php echo Yii::t('common', 'contact_information'); ?></h3>
         <?php
-        $contact = $model->getContact();
-        if (isset($contact)) {
+        $contact = $model->contact_resp;
+        $address = $model->address;
+        if (isset($contact)&& isset($address)) {
             $attributes_contact = array(
-                array('name' => 'last_name', 'value' => $contact->last_name),
-                array('name' => 'first_name', 'value' => $contact->first_name),
-                array('name' => 'phone', 'value' => $contact->phone),
+                array('name' => 'lastName', 'value' => $contact->lastName),
+                array('name' => 'firstName', 'value' => $contact->firstName),
+                array('name' => 'phone', 'value' => $contact->direct_phone),
                 array('name' => 'email', 'value' => $contact->email),
-                array('name' => 'address', 'value' => $contact->adresse),
-                array('name' => 'zipcode', 'value' => $contact->code_postal),
-                array('name' => 'city', 'value' => $contact->ville),
+                array('name' => 'address', 'value' => $address->street),
+                array('name' => 'zipcode', 'value' => $address->zip),
+                array('name' => 'city', 'value' => $address->city),
                 array('name' => 'website', 'value' => $model->getFormattedWebsite(), 'type' => 'raw',),
             );
+            
             $this->widget('zii.widgets.CDetailView', array(
                 'data' => $model,
                 'attributes' => $attributes_contact

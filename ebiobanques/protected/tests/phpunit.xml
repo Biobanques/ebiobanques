@@ -31,6 +31,8 @@
          <whitelist processUncoveredFilesFromWhitelist="true">
     <directory suffix=".php">../models/</directory>
        <directory suffix=".php">../controllers/</directory>
+       <file>../../CommonTools.php</file>
+       <file>../../CommonMailer.php</file>
   </whitelist>
     </filter>
 <!--    <selenium>

@@ -18,6 +18,7 @@ class User extends LoggableActiveRecord
     public $inactif;
     public $biobank_id;
     protected $verifyCode;
+    public $inscription_date;
 
     public function getPasswordCompare() {
         return $this->passwordCompare;
@@ -76,7 +77,7 @@ class User extends LoggableActiveRecord
             array('prenom, nom, login, password, email', 'length', 'max' => 250),
             array('gsm', 'telPresent'),
             array('gsm, telephone', 'length', 'min' => 8),
-            array('prenom, nom, login, password, email', 'required'),
+            array('prenom, nom, login, password, email,inscription_date', 'required'),
             array('email', 'CEmailValidator', 'allowEmpty' => false),
             array('login', 'EMongoUniqueValidator', 'on' => 'subscribe,create'),
             array('password', 'pwdStrength'),
@@ -85,6 +86,7 @@ class User extends LoggableActiveRecord
             array('biobank_id,preferences', 'safe'),
             array('passwordCompare', 'safe', 'on' => 'subscribe,userUpdate'),
             array('passwordCompare', 'required', 'on' => 'subscribe,userUpdate'),
+            array('inscription_date', 'safe', 'on' => 'insert,update'),
         );
         if (!CommonProperties::$DEV_MODE)
             $result[] = array('email', 'EMongoUniqueValidator');
@@ -101,15 +103,13 @@ class User extends LoggableActiveRecord
 
         foreach ($this->getSafeAttributeNames()as $attribute) {
             if ($this->$attribute != null && $attribute != 'preferences') {
-                if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id'){
-                    $var=$this->$attribute;
-                    if ($attribute == 'profil' || $attribute == 'inactif'){
-                        $var =intval($this->$attribute);
+                if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id') {
+                    $var = $this->$attribute;
+                    if ($attribute == 'profil' || $attribute == 'inactif') {
+                        $var = intval($this->$attribute);
                     }
                     $criteria->addCond($attribute, '==', $var);
-                }
-                
-                else
+                } else
                     $criteria->addCond($attribute, '==', new MongoRegex('/' . $this->$attribute . '*/i'));
             }
         }
@@ -216,8 +216,6 @@ class User extends LoggableActiveRecord
             $this->addError('gsm', Yii::t('common', 'atLeastOneTel'));
     }
 
-
-
     protected function beforeSave() {
         if (parent::beforeSave()) {
             // something happens here
@@ -226,6 +224,19 @@ class User extends LoggableActiveRecord
             return true;
         } else
             return false;
+    }
+
+    /**
+     * Set inscription date if model is new record, or extract it from MongoId if not already set.
+     * @return boolean
+     */
+    protected function beforeValidate() {
+        if ($this->getIsNewRecord()) {
+            $this->inscription_date = new MongoDate ();
+        } else if (!isset($this->inscription_date) || $this->inscription_date == '') {
+            $this->inscription_date = new MongoDate($this->_id->getTimestamp());
+        }
+        return parent::beforeValidate();
     }
 
     /**

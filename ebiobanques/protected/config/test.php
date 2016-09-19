@@ -1,3 +1,4 @@
+
 <?php
 
 $mergeWith = dirname(__FILE__) . '/main.php';
@@ -14,7 +15,6 @@ return CMap::mergeArray(
                 ),
                 'mongodb' => array(
                     'class' => 'EMongoDB',
-                    // 'connectionString' => CommonProperties::$CONNECTION_DEMO_STRING,
                     'connectionString' => CommonProperties::$CONNECTION_STRING,
                     'dbName' => 'interop',
                     'fsyncFlag' => true,

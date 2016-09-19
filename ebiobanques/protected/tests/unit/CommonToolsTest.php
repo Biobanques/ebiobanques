@@ -69,5 +69,36 @@ class CommonToolsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("27/12/2000", CommonTools::toDate("d/m/Y", $madate));
     }
 
+    /**
+     * Test of extraction date method
+     */
+    public function testExtractDate() {
+        $user = new User();
+        $user->_id = new MongoId();
+        $user->prenom = 'prenomTest';
+        $user->nom = 'nomTest';
+        $user->login = 'loginTest';
+        $user->password = 'pawdTest';
+        $user->email = 'emailTest@test.mail';
+        $user->telephone = '0101020201';
+        $user->gsm = '0606070706';
+        $user->profil = '1';
+        $user->inactif = '0';
+        $user->biobank_id = null;
+
+        $this->assertNull($user->inscription_date);
+        CommonTools::extractDate($user);
+        $dateInserted = $user->inscription_date;
+        $this->assertNotNull($dateInserted);
+        //Check if method override existing inscription date
+        $newDate = new MongoDate();
+        $user->inscription_date = $newDate;
+        $this->assertNotEquals($dateInserted, $newDate);
+        $this->assertEquals($user->inscription_date, $newDate);
+        CommonTools::extractDate($user);
+        $this->assertNotEquals($dateInserted, $user->inscription_date);
+        $this->assertEquals($user->inscription_date, $newDate);
+    }
+
 }
 ?>

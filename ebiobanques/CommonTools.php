@@ -761,4 +761,16 @@ class CommonTools
         return $result;
     }
 
+    /**
+     * Extract user inscription date from mongoId, if inscription_date is not already set,and save user
+     *
+     * @param User $model
+     */
+    public function extractDate(User $model) {
+        if (!isset($model->inscription_date) || $model->inscription_date == "") {
+            $date = $model->_id->getTimestamp();
+            $model->inscription_date = new MongoDate($date);
+        }
+    }
+
 }

@@ -234,8 +234,9 @@ class User extends LoggableActiveRecord
         if ($this->getIsNewRecord()) {
             $this->inscription_date = new MongoDate ();
         } else if (!isset($this->inscription_date) || $this->inscription_date == '') {
-            $this->inscription_date = new MongoDate($this->_id->getTimestamp());
+            CommonTools::extractDate($this);
         }
+
         return parent::beforeValidate();
     }
 

@@ -6,7 +6,8 @@ $mergeWith = dirname(__FILE__) . '/main.php';
 return CMap::mergeArray(
                 require($mergeWith), array(
             'import' => array(
-                'application.controllers.*'
+                'application.controllers.*',
+                'ext.captchaExtended.*'
             ),
             'components' => array(
                 'fixture' => array(

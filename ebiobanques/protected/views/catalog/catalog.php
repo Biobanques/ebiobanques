@@ -34,11 +34,10 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 </div><!-- search-form -->
 
 <?php
-
 $imageSelect = CHtml::image(Yii::app()->baseUrl . '/images/table-icone.png', Yii::t('common', 'prefsSelect'));
 //if lang = en display pathologies_en, otherwise pathologies
 $pathosName = "pathologies";
-if(Yii::app()->language=="en"){
+if (Yii::app()->language == "en") {
     $pathosName = "pathologies_en";
 }
 $this->Widget('bootstrap.widgets.TbGridView', array(
@@ -46,16 +45,15 @@ $this->Widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'dataProvider' => $model->searchCatalogue($smartForm->keywords),
     'columns' => array(
-        array('name' => 'identifier','htmlOptions'=>array('width'=>'40'),
- 'header' => $model->getAttributeLabel('identifier')),
-        array('name' => 'name','htmlOptions'=>array('width'=>'100'), 'header' => $model->getAttributeLabel('name')),
-        array('name' => 'city','htmlOptions'=>array('width'=>'20'), 'header' => $model->address->getAttributeLabel('city'), 'value' => '$data->address->city'),
-        array('name' => $pathosName,'htmlOptions'=>array('width'=>'170'), 'header' => $model->getAttributeLabel($pathosName)),
+        array('name' => 'identifier', 'htmlOptions' => array('width' => '40'),
+            'header' => $model->getAttributeLabel('identifier')),
+        array('name' => 'name', 'htmlOptions' => array('width' => '100'), 'header' => $model->getAttributeLabel('name')),
+        array('name' => 'city', 'htmlOptions' => array('width' => '20'), 'header' => $model->address->getAttributeLabel('city'), 'value' => '$data->address->city'),
+        array('name' => $pathosName, 'htmlOptions' => array('width' => '170'), 'header' => $model->getAttributeLabel($pathosName)),
         array('name' => 'contact', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-        array('name'=>'diagnosis_available','htmlOptions'=>array('width'=>'100'),'header' => $model->getAttributeLabel('diagnosis_available')),
+        array('name' => 'diagnosis_available', 'htmlOptions' => array('width' => '100'), 'header' => $model->getAttributeLabel('diagnosis_available')),
         //array('name'=>'keywords_MeSH','header' => $model->getAttributeLabel('keywords_MeSH')),
-        array('header' => $model->getAttributeLabel('sample_type'), 'htmlOptions'=>array('width'=>'150'),'value' => '$data->getSampleTypeFormatted()'),
-               
+        array('header' => $model->getAttributeLabel('sample_type'), 'htmlOptions' => array('width' => '150'), 'value' => '$data->getSampleTypeFormatted()'),
 //button to view biobank infos
         array('class' => 'CButtonColumn',
             'template' => '{view}',

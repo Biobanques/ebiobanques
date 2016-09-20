@@ -1,0 +1,5 @@
+{
+    "require": {
+        "nmalservet/php-requirements-checker": "1.1"
+    }
+}

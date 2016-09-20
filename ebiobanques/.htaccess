@@ -1,0 +1,6 @@
+<FilesMatch "dependencies_checker.php">
+AuthName "Admin Only"
+AuthType Basic
+AuthUserFile /var/www/passwd.txt
+require valid-user
+</FilesMatch> 

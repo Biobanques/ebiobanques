@@ -1,0 +1,42 @@
+[
+    {
+        "name": "nmalservet/php-requirements-checker",
+        "version": "1.1",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nmalservet/php-requirements-checker.git",
+            "reference": "e7743125db342f5511ff6af0bf8e111be2046f11"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nmalservet/php-requirements-checker/zipball/e7743125db342f5511ff6af0bf8e111be2046f11",
+            "reference": "e7743125db342f5511ff6af0bf8e111be2046f11",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3"
+        },
+        "time": "2016-09-14 14:28:31",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL v3"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Malservet",
+                "homepage": "http://malservet.eu",
+                "role": "Developer"
+            }
+        ],
+        "description": "tiny library to check requirements into your PHP application. You must write in the config file  my-requirements.php which libraries need to be installed, which folders and files need to be created, then you can execute the script that will show you the status of each requirements.",
+        "homepage": "https://github.com/nmalservet/php-requirements-checker",
+        "keywords": [
+            "check",
+            "dependencies",
+            "requirements"
+        ]
+    }
+]

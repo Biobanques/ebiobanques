@@ -1,13 +1,12 @@
 {
-  "require-dev": {
-      
-              "phpunit/phpunit": "5.*",
+    "require-dev": {
+        "phpunit/phpunit": "5.*",
         "phpunit/dbunit": ">=1.2",
         "phpunit/php-invoker": "*",
         "sebastian/phpcpd": "*",
-        "phpmd/phpmd" : "2.0.*",
-        "facebook/webdriver":"*",
-          "phpunit/php-code-coverage": "*",
-        "pear/net_ldap2":"*"
+        "phpmd/phpmd": "2.0.*",
+        "facebook/webdriver": "*",
+        "phpunit/php-code-coverage": "*",
+        "pear/net_ldap2": "*"
     }
 }

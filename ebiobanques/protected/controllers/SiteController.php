@@ -68,7 +68,6 @@ class SiteController extends Controller
                 'users' => array(
                     '@'
                 )
-                
             ),
             array(
                 'deny', // deny all users
@@ -525,8 +524,8 @@ class SiteController extends Controller
         $model->setScenario('subscribe');
         if (isset($_POST ['User'])) {
             $model->attributes = $_POST ['User'];
-            $model->profil = 0;
-            $model->inactif = 1;
+            $model->profil = '0';
+            $model->inactif = '1';
 
             if ($model->save()) {
                 CommonMailer::sendSubscribeAdminMail($model);

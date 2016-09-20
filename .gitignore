@@ -7,7 +7,6 @@
 /composer.lock
 /ebiobanques/CommonProperties_IntegrationJenkins.php
 /build/
-/ebiobanques/.htaccess
 /ebiobanques/yii-1.1.15/
 /ebiobanques/protected/extensions/YiiMongoDbSuite_old/
 /ebiobanques/protected/runtime/
@@ -31,3 +30,4 @@
 /ebiobanques/protected/tests/functional/converted/
 /ebiobanques/protected/tests/functional/CRUDUserTest
 /ebiobanques/protected/tests/functional/SimpleUserDiversTest.php
+/ebiobanques/composer.lock

@@ -61,7 +61,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Search'); ?>
+        <?php echo CHtml::submitButton('Search', ['id' => 'searchUserButton']); ?>
     </div>
 
     <?php $this->endWidget(); ?>

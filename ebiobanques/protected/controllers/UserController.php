@@ -66,6 +66,7 @@ class UserController extends Controller
      */
     public function actionCreate() {
         $model = new User;
+        $model->unsetAttributes();
         $model->setScenario('create');
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
@@ -93,7 +94,7 @@ class UserController extends Controller
                 if ($model->update()) {
                     Yii::app()->user->setFlash('success', 'L\'utilisateur a été enregistré avec succès.');
                     //send email if status change to validated
-                    
+
                     $this->redirect(array('view', 'id' => $model->_id));
                 }
             }
@@ -162,7 +163,7 @@ class UserController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        $model->inactif = 0;
+        $model->inactif = "0";
         if ($model->update()) {
             CommonMailer::sendUserRegisterConfirmationMail($model);
             Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été validé.');
@@ -189,7 +190,7 @@ class UserController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        $model->inactif = 1;
+        $model->inactif = "1";
         if ($model->update()) {
 
             Yii::app()->user->setFlash('success', 'L\'utilisateur n°' . $model->_id . ' (' . $model->prenom . ' ' . $model->nom . ') a bien été désactivé.');

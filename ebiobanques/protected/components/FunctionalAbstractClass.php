@@ -2,6 +2,7 @@
 
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\WebDriverBy;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -51,6 +52,8 @@ abstract class FunctionalAbstractClass extends PHPUnit_Framework_TestCase
                 default: $desiredCapabilities = DesiredCapabilities::chrome();
             }
             FunctionalAbstractClass::$webDriver = RemoteWebDriver::create($host, $desiredCapabilities);
+            FunctionalAbstractClass::$webDriver->manage()->timeouts()->implicitlyWait(2);
+            FunctionalAbstractClass::$webDriver->manage()->timeouts()->pageLoadTimeout(3);
         } catch (Exception $ex) {
             echo 'Setting of webdriver fails : ' . $ex->getMessage() . $ex->getTraceAsString();
         }
@@ -67,6 +70,19 @@ abstract class FunctionalAbstractClass extends PHPUnit_Framework_TestCase
         if (CommonProperties::$LAUNCHSELENIUM)
             shell_exec('fuser -k -n tcp 4444');
         parent::tearDownAfterClass();
+    }
+
+    public function takeScreenShot($label = null) {
+        $path = Yii::app()->basePath . "/tests/report/screenshots/$label/";
+
+        if (!is_dir($path)) {
+            if (mkdir($path, 0777, true)) {
+                echo $path . " created";
+            }
+        }
+        if (is_dir($path)) {
+            FunctionalAbstractClass::$webDriver->takeScreenshot($path . time());
+        }
     }
 
 }

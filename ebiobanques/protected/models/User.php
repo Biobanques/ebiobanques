@@ -14,10 +14,14 @@ class User extends LoggableActiveRecord
     public $email;
     public $telephone;
     public $gsm;
-    public $profil;
-    public $inactif;
+    public $profil = "0";
+    public $inactif = "1";
     public $biobank_id;
     protected $verifyCode;
+    /**
+     *
+     * @var MongoDate
+     */
     public $inscription_date;
 
     public function getPasswordCompare() {
@@ -36,7 +40,28 @@ class User extends LoggableActiveRecord
         $this->verifyCode = $code;
     }
 
-    // public $preferences;
+    public function getPrenom() {
+        return ucfirst($this->prenom);
+    }
+
+    public function getInscription_date() {
+        if (Yii::app()->language == 'fr')
+            return date('d/m/Y', $this->inscription_date->sec);
+        return date('Y-m-d', $this->inscription_date->sec);
+//        return date('d/m/Y', $this->inscription_date->sec);
+    }
+
+    public function getActifLink() {
+        if ($this->inactif === "0")
+            return array(
+                'label' => 'Désactiver', 'url' => Yii::app()->createAbsoluteUrl("user/desactivate", array("id" => "$this->_id")));
+        if ($this->inactif === "1")
+            return array(
+                'label' => 'Valider', 'url' => Yii::app()->createAbsoluteUrl("user/validate", array("id" => "$this->_id")));
+        return array('label' => 'check Value : error', 'url' => '');
+    }
+
+// public $preferences;
 
     /**
      * Returns the static model of the specified AR class.
@@ -86,7 +111,8 @@ class User extends LoggableActiveRecord
             array('biobank_id,preferences', 'safe'),
             array('passwordCompare', 'safe', 'on' => 'subscribe,userUpdate'),
             array('passwordCompare', 'required', 'on' => 'subscribe,userUpdate'),
-            array('inscription_date', 'safe', 'on' => 'insert,update'),
+            array('inscription_date', 'required', 'on' => 'insert,update'),
+            array('inscription_date', 'safe', 'on' => 'search'),
         );
         if (!CommonProperties::$DEV_MODE)
             $result[] = array('email', 'EMongoUniqueValidator');
@@ -103,21 +129,37 @@ class User extends LoggableActiveRecord
 
         foreach ($this->getSafeAttributeNames()as $attribute) {
             if ($this->$attribute != null && $attribute != 'preferences') {
-                if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id') {
-                    $var = $this->$attribute;
-                    if ($attribute == 'profil' || $attribute == 'inactif') {
-                        $var = intval($this->$attribute);
-                    }
-                    $criteria->addCond($attribute, '==', $var);
+                if ($attribute == 'inscription_date') {
+                    /**
+                     * @todo Implements search mechanism to search by year, month, exact date, with
+                     * automatic detection of date format
+                     */
+                    //$criteria->addCond($attribute, ">=", new MongoDate(strtotime($this->$attribute)));
+                } else if ($attribute == 'profil' || $attribute == 'inactif' || $attribute == 'biobank_id') {
+                    $criteria->addCond($attribute, '==', $this->$attribute);
                 } else
                     $criteria->addCond($attribute, '==', new MongoRegex('/' . $this->$attribute . '*/i'));
             }
         }
 
-        $criteria->sort('nom', EMongoCriteria::SORT_ASC);
+        $criteria->sort('inscription_date', EMongoCriteria::SORT_DESC);
         return new EMongoDocumentDataProvider($this, array(
-            'criteria' => $criteria
-        ));
+            'criteria' => $criteria,
+            'sort' => array(
+                'attributes' => array(
+                    'nom',
+                    'prenom',
+                    /**
+                     * @todo add custom comparator to sort by biobank name
+                     */
+                    //'biobank_id',
+                    'inscription_date',
+                    'profil',
+                    'inactif'
+                )
+            )
+                )
+        );
     }
 
     public function embeddedDocuments() {

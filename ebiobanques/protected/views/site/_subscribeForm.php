@@ -85,7 +85,7 @@
 
 
                 <div class="row buttons">
-                    <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save')); ?>
+                    <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common', 'subscribe') : Yii::t('common', 'save'), ['id' => 'subscribeButton']); ?>
                 </div>
             </td></tr></table>
     <?php $this->endWidget(); ?>

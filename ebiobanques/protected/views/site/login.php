@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="row buttons">
-                    <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('common', 'seconnecter'), ["id" => 'loginButton']); ?>
                 </div>
 
                 <?php

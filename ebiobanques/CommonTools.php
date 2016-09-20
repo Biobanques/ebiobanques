@@ -480,6 +480,17 @@ class CommonTools
             return $initialValue;
     }
 
+    public function getArrayCountriesSortedUnique() {
+        $countries = CommonTools::getArrayCountries();
+        $result = array();
+        foreach ($countries as $countryKey => $countryValue) {
+            $result[strtolower($countryKey)] = $countryValue;
+        }
+        $resArraySorted = new ArrayObject($result);
+        $resArraySorted->asort();
+        return $resArraySorted;
+    }
+
     /**
      * get an array of country used by dropDownList.
      */
@@ -687,7 +698,7 @@ class CommonTools
      */
     public static function getLatLong($biobank, $saveAfterFind = true) {
         Yii::log('Trying to get location from biobank ' . $biobank->identifier, CLogger::LEVEL_WARNING);
-        if (isset($biobank->address->street) || isset($biobank->address->city) || isset($biobank->address->zip) || isset($biobank->address->country) || $biobank->address->street != "" || $biobank->address->city != "" || $biobank->address->zip != "" || $biobank->address->country != "") {
+        if (isset($biobank->address->street) && isset($biobank->address->city) && isset($biobank->address->zip) && isset($biobank->address->country) && $biobank->address->street == "" && $biobank->address->city == "" && $biobank->address->zip == "" && $biobank->address->country == "") {
 
             $requestAddress = str_ireplace(' ', '+', $biobank->address->street) . '+' . $biobank->address->zip . '+' . str_ireplace(' ', '+', $biobank->address->city) . '+' . $biobank->address->country;
             try {

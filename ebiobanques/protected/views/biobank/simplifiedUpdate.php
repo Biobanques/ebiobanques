@@ -116,13 +116,13 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
 
         <div class='cols2'>
             <?php echo $form->label($biobank->address, 'country'); ?>
-            <?php echo $form->dropDownList($biobank->address, 'country', CommonTools::getArrayCountriesSorted(), ($biobank->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : "")); ?>
+            <?php echo $form->dropDownList($biobank->address, 'country', CommonTools::getArrayCountriesSortedUnique(), ($biobank->isNewRecord ? array('options' => array('fr' => array('selected' => true))) : "")); ?>
             <?php echo $form->error($biobank->address, 'country'); ?>
         </div>
     </div>
 
 
-    
+
     <?php
     $resps = [
         'contact_resp',

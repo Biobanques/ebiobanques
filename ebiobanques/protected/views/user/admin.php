@@ -94,7 +94,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
             ),
         )
     ),
-    'filter' => $model
         )
 );
 ?>

@@ -109,11 +109,12 @@ class NavBarBootstrap extends CWidget {
         <span class=\"icon-bar\"></span>
         <span class=\"icon-bar\"></span>
       </button>
-      <a class=\"navbar-brand\" href=\"index.php\">";
+      <a class=\"navbar-brand\" href=\"".$this->brandUrl."\">";
         if(isset($this->logoUrl)){
     echo "<img style=\"margin-top:-10px;height:60px;width:80px;\" alt=\"Logo\" src=\"".$this->logoUrl."\" class=\"pull-left\">";
         }
     echo"
+        <a class=\"navbar-brand\" href=\"".Yii::app()->baseUrl."\">
     <span class=\"stylelogo\">" . $brand . "</span>
 </a>
     </div>

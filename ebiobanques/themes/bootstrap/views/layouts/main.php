@@ -46,6 +46,7 @@
                 <?php
                 $this->widget('application.widgets.navbar.NavBarBootstrap', array(
                     'id' => 'navMainMenu',
+                    'brandUrl'=>'http://biobanques.eu',
                     'logoUrl'=>'/images/logobb.png',
                     'items' => array(
                         array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),

@@ -1,3 +1,4 @@
+./.gitignore
 /ebiobanques/protected/runtime/application.log
 /ebiobanques/assets/f9bf41b/
 /ebiobanques/assets/
@@ -27,3 +28,6 @@
 /nbproject/private/
 /ebiobanques/protected/vendors/composer.lock
 /ebiobanques/protected/tests/report/
+/ebiobanques/protected/tests/functional/converted/
+/ebiobanques/protected/tests/functional/CRUDUserTest
+/ebiobanques/protected/tests/functional/SimpleUserDiversTest.php

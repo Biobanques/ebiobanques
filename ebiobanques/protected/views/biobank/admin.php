@@ -1,10 +1,7 @@
-
 <?php
 /* @var $this BiobankController */
 /* @var $model Biobank */
-
 $flashRoute = Yii::app()->createAbsoluteUrl('biobank/deleteFlashMsg');
-
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -22,43 +19,44 @@ $('#dialog').dialog('open');
 	return false;
 
 });
-
-
 ");
 ?>
-<?php
-//widget de selection des colonnes à afficher
-$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-    'id' => 'dialog',
-    // additional javascript options for the dialog plugin
-    'options' => array(
-        'title' => 'Choix des champs à exporter ',
-        'autoOpen' => false,
-        'width' => '850px'
-    ),
-));
-?>
-<div class="prefs-form" >
-    <?php
-    $this->renderPartial('_exportedFieldsForm'
-    );
-    ?>
-</div>
-<?php
-$this->endWidget('zii.widgets.jui.CJuiDialog');
-?>
 <h1>Gestion des Biobanques</h1>
-<?php
-//var_dump(        $model->getRespDropdownList('responsable_op'));
-?>
-
-
-<?php echo CHtml::link('Biobanks global stats', 'globalStats'); ?>
-<br>
-<?php echo CHtml::link('Create biobank', 'create'); ?>
-<br>
-<?php echo CHtml::link('Manage fields of biobanks directory', array('/uploadForm/uploadAll')); ?>
-<br>
+<div class="row">
+    <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">
+        Choix des champs à exporter
+    </button>
+    <!--modal window to select items-->
+    <div id="myModal"  class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Choix des champs à exporter </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="prefs-form" >
+                        <?php
+                        $this->renderPartial('_exportedFieldsForm'
+                        );
+                        ?>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+<div class="row">
+    <div class="col-md-3"> 
+        <?php echo CHtml::link('Biobanks global stats', 'globalStats'); ?>
+    </div>
+    <div class="col-md-3">
+        <?php echo CHtml::link('Create biobank', 'create'); ?>
+    </div>
+    <div class="col-md-3">
+        <?php echo CHtml::link('Manage fields of biobanks directory', array('/uploadForm/uploadAll')); ?>
+    </div>
+</div>
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'biobank', 'searchable' => true));
 ?>
@@ -69,33 +67,15 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     ));
     ?>
 </div><!-- search-form -->
-
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'biobank-grid',
     'dataProvider' => $model->search(),
-    // 'ajaxUpdate' => false,
     'columns' => array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
-//        array('name' => 'address.city', 'header' => 'Ville', 'value' => '$data->address->city'),
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
-//        array('name' => 'collection_id', 'header' => $model->getAttributeLabel('collection_id'), 'value' => '$data->getShortValue("collection_id")'),
         array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'),
-//        array('name' => 'diagnosis_available', 'header' => $model->getAttributeLabel('diagnosis_available')),
         array('name' => 'contact_search', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
-//        array('name' => 'responsable_op', 'value' => '$data->getShortResponsableOp()', 'header' => $model->getAttributeLabel('responsable_op')),
-//        array('name' => 'responsable_qual', 'value' => '$data->getShortResponsableQual()', 'header' => $model->getAttributeLabel('responsable_qual')),
-//        array('name' => 'responsable_adj', 'value' => '$data->getShortResponsableAdj()', 'header' => $model->getAttributeLabel('responsable_adj')),
-        //  array('name' => 'website', 'value' => '$data->getFormattedWebsite()', 'header' => $model->getAttributeLabel('website')),
-//        array(
-//            'class' => 'CLinkColumn',
-//            'labelExpression' => '$data->getWebsiteWithHttp()',
-//            //'url' => '$data->getWebsite()',
-//            'urlExpression' => '$data->getWebsiteWithHttp()',
-//            'linkHtmlOptions' => array('target' => 'blank'),
-//            'htmlOptions' => array('style' => "text-align:center"),
-//            'header' => $model->getAttributeLabel('website')
-//        ),
         array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getRoundedTauxCompletude()."%"',

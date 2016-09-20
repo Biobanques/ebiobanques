@@ -102,6 +102,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'afterDelete' => 'function(link,success,data){$("#flashMessages").html(data)}',
         ),
     ),
-    'filter' => $model,
 ));
 ?>

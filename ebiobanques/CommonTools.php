@@ -766,7 +766,7 @@ class CommonTools
      *
      * @param User $model
      */
-    public function extractDate(User $model) {
+    public static function extractDate(User $model) {
         if (!isset($model->inscription_date) || $model->inscription_date == "") {
             $date = $model->_id->getTimestamp();
             $model->inscription_date = new MongoDate($date);

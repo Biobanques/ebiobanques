@@ -27,7 +27,7 @@ dependencies:
 #      - sudo service apache2 restart
 
 test: 
-    overide: 
+    override: 
         - mongo --version
 general:
   artifacts:

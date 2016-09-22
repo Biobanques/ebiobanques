@@ -14,6 +14,7 @@ class CommonProperties
      * if true activate some refrences to the server to localhost and send mails to the from mail ( admin mail)
      */
     public static $DEV_MODE = true;
+    public static $DEV_MAIL = 'mail@dev.com';
     /*
      * connection string used in ./protected/config/main_dev.php
      */
@@ -42,4 +43,5 @@ class CommonProperties
     public static $GMAPS_KEY = "";
     public static $TESTBROWSER = 'chrome';
     public static $LAUNCHSELENIUM = true;
+    public static $SERVERTESTURL = 'http://ebiobanques.local';
 }

@@ -16,7 +16,7 @@ class CommonMailerTest extends PHPUnit_Framework_TestCase
         $subject = "test send mail from unit test";
         $body = "Have a nice day!";
         //Fixme : activate after refactoring for continuous build
-       // $this->assertTrue(CommonMailer::sendMail($to, $subject, $body));
+        // $this->assertTrue(CommonMailer::sendMail($to, $subject, $body));
     }
 
     /**
@@ -38,8 +38,7 @@ class CommonMailerTest extends PHPUnit_Framework_TestCase
         $body = "This is a test mail body";
         $emailTo = CommonProperties::$ADMIN_EMAIL;
         //FIXME we can't send mail with continuous integration or create a whole environment...
- //$this->assertFalse(CommonMailer::directSend(null, $body, $emailTo, null, null, false));
-             
+        //$this->assertFalse(CommonMailer::directSend(null, $body, $emailTo, null, null, false));
 //  $this->assertTrue(CommonMailer::directSend($subject, $body, $emailTo, null, null, false));
     }
 

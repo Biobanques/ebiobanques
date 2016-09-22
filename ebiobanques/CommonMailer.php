@@ -49,56 +49,56 @@ class CommonMailer
 
     /**
      * envoi de mail inscription avec infos de connexion.
+
+      function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
+      $subject = "Bienvenue!";
+      $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
+      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Message de ebiobanques.fr</title>
+      </head><body>
+      <table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
+      <tr>
+      <td align=\"left\">
+      <a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/wp-content/uploads/2012/08/logo211.jpg\" style=\"border:none;\" ></a>
+      </td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+      <td align=\"left\">Bonjour <strong style=\"color:#DB3484;\">" . $prenom . " " . $nom . "</strong>,</td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+      <td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
+
+      Merci d'avoir cr&eacute;&eacute; un compte sur ebiobanques.fr. Voici un rappel de vos codes d'acc&egrave;s</td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+      <td align=\"left\">
+      Adresse e-mail : <strong><span style=\"color:#DB3484;\">" . $identifiant . "</span></strong>
+      <br >Mot de passe : <strong>" . $pass . "</strong>
+      </td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+      <td align=\"left\">
+      Vous pouvez d&egrave;s &agrave; pr&eacute;sent utiliser notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations de studios.
+      </td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr>
+      <td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
+      <a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
+      ebiobanques.fr </a> - copyright BioSoftware Factory
+      <a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
+      </td>
+      </tr>
+      </table>
+      </body>
+      </html>";
+
+      CommonMailer::sendMail($to, $subject, $body);
+      }
      */
-    function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
-        $subject = "Bienvenue!";
-        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
-				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Message de ebiobanques.fr</title>
-				</head><body>
-				<table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
-				<tr>
-				<td align=\"left\">
-				<a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/wp-content/uploads/2012/08/logo211.jpg\" style=\"border:none;\" ></a>
-				</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-				<td align=\"left\">Bonjour <strong style=\"color:#DB3484;\">" . $prenom . " " . $nom . "</strong>,</td>
-						</tr>
-						<tr><td>&nbsp;</td></tr>
-						<tr>
-						<td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
-
-						Merci d'avoir cr&eacute;&eacute; un compte sur ebiobanques.fr. Voici un rappel de vos codes d'acc&egrave;s</td>
-						</tr>
-						<tr><td>&nbsp;</td></tr>
-						<tr>
-						<td align=\"left\">
-						Adresse e-mail : <strong><span style=\"color:#DB3484;\">" . $identifiant . "</span></strong>
-								<br >Mot de passe : <strong>" . $pass . "</strong>
-										</td>
-										</tr>
-										<tr><td>&nbsp;</td></tr>
-										<tr>
-										<td align=\"left\">
-										Vous pouvez d&egrave;s &agrave; pr&eacute;sent utiliser notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations de studios.
-										</td>
-										</tr>
-										<tr><td>&nbsp;</td></tr>
-										<tr>
-										<td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
-										<a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-										ebiobanques.fr </a> - copyright BioSoftware Factory
-										<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
-										</td>
-										</tr>
-										</table>
-										</body>
-										</html>";
-
-        CommonMailer::sendMail($to, $subject, $body);
-    }
-
     /**
      * envoi de mail inscription avec infos de connexion.
      * TODO a complerter avec partiie inscription user.

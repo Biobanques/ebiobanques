@@ -15,6 +15,8 @@ database:
 #    - mysql -u ubuntu circle_test < /home/ubuntu/ebiobanques/ebiobanques/protected/data/dump_ebiobanques_v0.1.sql
 dependencies:
    pre:
+      - sudo apt-get install php-pear
+      - pecl install mongo
       - sudo unlink /usr/lib/apache2/modules/libphp5.so
       - sudo ln -s $PHPENV_ROOT/versions/$(phpenv global)/usr/lib/apache2/modules/libphp5.so /usr/lib/apache2/modules/libphp5.so
 

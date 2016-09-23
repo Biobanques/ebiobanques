@@ -45,6 +45,6 @@ class CommonProperties
     public static $IN_MAINTENANCE = false;
     public static $GMAPS_KEY = "";
     public static $TESTBROWSER = '';
-    public static $LAUNCHSELENIUM = false;
+    public static $LAUNCHSELENIUM = true;
     public static $SERVERTESTURL = 'http://ebiobanques.local';
 }

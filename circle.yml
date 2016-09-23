@@ -12,8 +12,8 @@ machine:
         ebiobanques.local: 127.0.0.1
 database:
   pre: 
-      - mongo localhost < ~/ebiobanques/ebiobanques/protected/datas/CI/initDB.js
-      - mongo localhost < ~/ebiobanques/ebiobanques/protected/datas/CI/insertTestData.js
+      - mongo interop < ~/ebiobanques/ebiobanques/protected/datas/CI/initDB.js
+      - mongo interop < ~/ebiobanques/ebiobanques/protected/datas/CI/insertTestData.js
       
   override:
 #    - mysql -u ubuntu circle_test < /home/ubuntu/ebiobanques/ebiobanques/protected/data/dump_ebiobanques_v0.1.sql
@@ -37,9 +37,9 @@ dependencies:
       - sudo a2ensite ebiobanques_apache_config.conf
       - sudo service apache2 restart
 
-#test: 
-#    override: 
-#        - mongo --version
+test: 
+    override: 
+        - phpunit -c ~/ebiobanques/ebiobanques/protected/tests/phpunit.xml 
 general:
   artifacts:
       - /home/ubuntu/ebiobanques/ebiobanques/protected/tests/report/coverage/dashboard.html

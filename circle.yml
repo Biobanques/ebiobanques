@@ -19,7 +19,8 @@ database:
 #    - mysql -u ubuntu circle_test < /home/ubuntu/ebiobanques/ebiobanques/protected/data/dump_ebiobanques_v0.1.sql
 dependencies:
    pre:
-      - sudo apt-get update & sudo apt-get install php-pear
+      - sudo apt-get update $ sudo apt-get -f install
+      - sudo apt-get install php-pear
       - yes '' | pecl install -f mongo
       - touch /etc/php5/apache2/conf.d/20_mongo.ini
       - echo 'extention = mongo.so' >> /etc/php5/apache2/conf.d/20_mongo.ini

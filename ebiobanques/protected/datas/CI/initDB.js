@@ -6,6 +6,6 @@
 
 
 db = db.getSiblingDB('interop');
-db.add({user:'circleUser',pwd:'circlePwd',roles:['readWriteAnyDatabase']})
+db.createUser({user:'circleUser',pwd:'circlePwd',roles:['readWriteAnyDatabase']})
 
 

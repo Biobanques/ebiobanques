@@ -3,6 +3,7 @@
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverDimension;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -54,6 +55,8 @@ abstract class FunctionalAbstractClass extends PHPUnit_Framework_TestCase
             FunctionalAbstractClass::$webDriver = RemoteWebDriver::create($host, $desiredCapabilities);
             FunctionalAbstractClass::$webDriver->manage()->timeouts()->implicitlyWait(2);
             FunctionalAbstractClass::$webDriver->manage()->timeouts()->pageLoadTimeout(3);
+            $dimension = new WebDriverDimension(1024, 768);
+            FunctionalAbstractClass::$webDriver->manage()->window()->setSize($dimension);
         } catch (Exception $ex) {
             echo 'Setting of webdriver fails : ' . $ex->getMessage() . $ex->getTraceAsString();
         }

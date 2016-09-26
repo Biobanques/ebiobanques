@@ -18,7 +18,7 @@ class AccueilTestTest extends FunctionalAbstractClass
         parent::$webDriver->get($this->baseUrl . "/");
         // assertElementPresent | link=Accueil |
         parent::takeScreenshot("AccueilTest");
-        $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Home")) != null);
+
         $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Accueil")) != null);
         // assertElementPresent | link=Catalogue des biobanques |
         $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Catalogue des biobanques")) != null);

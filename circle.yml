@@ -43,10 +43,9 @@ test:
         - phpunit -c ~/ebiobanques/ebiobanques/protected/tests/phpunit.xml 
 general:
   artifacts:
-      - /home/ubuntu/ebiobanques/ebiobanques/protected/tests/report/coverage/*
-      - /home/ubuntu/ebiobanques/ebiobanques/protected/tests/report/results/*
-      - /home/ubuntu/ebiobanques/ebiobanques/protected/runtime/application.log
-      - /var/log/apache2/ebiobanques.error_log
+      - "/home/ubuntu/ebiobanques/ebiobanques/protected/tests/report"
+      - "/home/ubuntu/ebiobanques/ebiobanques/protected/runtime/application.log"
+      - "/var/log/apache2/ebiobanques.error_log"
       
 
 

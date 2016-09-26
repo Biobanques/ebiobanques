@@ -1,5 +1,6 @@
 <?php
 
+use Facebook\WebDriver\Net\URLChecker;
 use Facebook\WebDriver\WebDriverBy;
 
 class AccueilTestTest extends FunctionalAbstractClass
@@ -12,6 +13,7 @@ class AccueilTestTest extends FunctionalAbstractClass
      */
     public function testAccueilTest() {
         // open | / |
+        URLChecker::waitUntilAvailable(1500, $this->baseUrl . '/');
         parent::$webDriver->get($this->baseUrl . "/");
         // assertElementPresent | link=Accueil |
 

@@ -44,7 +44,7 @@ class CommonProperties
     //   public static $IMPORTFOLDER = "/home/matthieu/Documents/inserm/dumps/biocap/";
     public static $IN_MAINTENANCE = false;
     public static $GMAPS_KEY = "";
-    public static $TESTBROWSER = '';
+    public static $TESTBROWSER = 'chrome';
     public static $LAUNCHSELENIUM = false;
-    public static $SERVERTESTURL = 'http://ebiobanques.local';
+    public static $SERVERTESTURL = 'http://ebiobanques.local:8080';
 }

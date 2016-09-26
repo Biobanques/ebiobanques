@@ -78,11 +78,17 @@ abstract class FunctionalAbstractClass extends PHPUnit_Framework_TestCase
         if (!is_dir($path)) {
             if (mkdir($path, 0777, true)) {
                 echo $path . " created";
+            } else {
+                echo $path . " NOT created";
             }
+        } else {
+            echo $path . " already exists";
         }
+
         if (is_dir($path)) {
             FunctionalAbstractClass::$webDriver->takeScreenshot($path . time());
-        }
+        } else
+            echo 'Can\'t take screenshot : ' . $path . ' is not an existing folder';
     }
 
 }

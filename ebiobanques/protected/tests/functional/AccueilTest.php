@@ -13,7 +13,8 @@ class AccueilTestTest extends FunctionalAbstractClass
      */
     public function testAccueilTest() {
         // open | / |
-        URLChecker::waitUntilAvailable(1500, $this->baseUrl . '/');
+        $checker = new URLChecker();
+        $checker->waitUntilAvailable(1500, $this->baseUrl . '/');
         parent::$webDriver->get($this->baseUrl . "/");
         // assertElementPresent | link=Accueil |
 

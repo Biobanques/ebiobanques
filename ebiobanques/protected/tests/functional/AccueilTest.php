@@ -31,7 +31,7 @@ class AccueilTestTest extends FunctionalAbstractClass
         // assertElementPresent | link=Nous contacter |
         $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Nous contacter")) != null);
         // assertElementPresent | css=img[alt="logo"] |
-        $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::cssSelector("img[alt=\"logo\"]")) != null);
+        $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::cssSelector("img.pull-left")) != null);
         // assertTitle | ebiobanques.fr - Site |
         $this->assertEquals("ebiobanques.fr - Site", parent::$webDriver->getTitle());
         // assertText | css=h3 | ebiobanques.fr : Améliorer la recherche de matériel biologique

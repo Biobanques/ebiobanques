@@ -72,7 +72,7 @@ abstract class FunctionalAbstractClass extends PHPUnit_Framework_TestCase
         parent::tearDownAfterClass();
     }
 
-    public function takeScreenShot($label = null) {
+    public function takeScreenShot($label = 'misc') {
         $path = Yii::app()->basePath . "/tests/report/screenshots/$label/";
 
         if (!is_dir($path)) {
@@ -86,7 +86,7 @@ abstract class FunctionalAbstractClass extends PHPUnit_Framework_TestCase
         }
 
         if (is_dir($path)) {
-            FunctionalAbstractClass::$webDriver->takeScreenshot($path . time());
+            FunctionalAbstractClass::$webDriver->takeScreenshot($path . time() . '.png');
         } else
             echo 'Can\'t take screenshot : ' . $path . ' is not an existing folder';
     }

@@ -17,7 +17,7 @@ class AccueilTestTest extends FunctionalAbstractClass
         $checker->waitUntilAvailable(1500, $this->baseUrl . '/');
         parent::$webDriver->get($this->baseUrl . "/");
         // assertElementPresent | link=Accueil |
-        parent::$webDriver->takeScreenshot();
+        parent::takeScreenshot("AccueilTest");
         $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Home")) != null);
         $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Accueil")) != null);
         // assertElementPresent | link=Catalogue des biobanques |

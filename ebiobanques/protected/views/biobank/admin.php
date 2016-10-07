@@ -64,6 +64,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
     <?php
     $this->renderPartial('_search', array(
         'model' => $model,
+       
     ));
     ?>
 </div><!-- search-form -->
@@ -71,6 +72,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'biobank-grid',
     'dataProvider' => $model->search(),
+    'ajaxUpdate' => false,
     'columns' => array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),

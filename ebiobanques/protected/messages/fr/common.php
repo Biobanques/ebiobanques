@@ -169,6 +169,7 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
      *
      */
     'biobank.updateTitle' => 'Mise à jour de la biobanque {name}',
+    'biobank.createTitle' => 'Création d\'une biobanque ',
     /*
      * Update form - Main parts titles
      */

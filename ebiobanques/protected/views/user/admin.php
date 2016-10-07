@@ -36,6 +36,7 @@ echo CHtml::link('Créer un utilisateur', Yii::app()->createUrl('user/create'));
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
+    'ajaxUpdate' => false,
     'columns' => array(
         array('name' => 'prenom', 'header' => Yii::t('common', 'firstname'), 'value' => '$data->getPrenom()'),
         'nom',

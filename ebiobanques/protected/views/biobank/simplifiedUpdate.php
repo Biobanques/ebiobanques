@@ -225,7 +225,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             <?php
             echo $form->textArea($biobank, 'pathologies', CommonDisplayTools::getHelpBox('biobank.pathologies', 'help_pathologiesContent', $this));
             ?>
-            <?php echo $form->error($biobank, 'name'); ?>
+            <?php echo $form->error($biobank, 'pathologies'); ?>
         </div>
 
         <div class='cols2'>

@@ -101,6 +101,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
         array(
             'class' => 'CButtonColumn',
+            'template'=>'{update}{delete}',
             'afterDelete' => 'function(link,success,data){$("#flashMessages").html(data)}',
         ),
     ),

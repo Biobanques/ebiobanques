@@ -16,5 +16,5 @@ $logo = isset($model->activeLogo) && $model->activeLogo != null ? Logo::model()-
 </div>
 
 <?php
-echo $this->renderPartial('_form', array('model' => $model));
+echo $this->renderPartial('_oldForm', array('model' => $model));
 ?>

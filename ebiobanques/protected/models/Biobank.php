@@ -282,8 +282,8 @@ class Biobank extends LoggableActiveRecord {
 
         if ($this->name == null) {
             Yii::log('Trying to store a biobank without name, operation refused', CLogger::LEVEL_WARNING);
-        } else {
-            if ($this->collection_name == null) {
+        } /* else {
+           if ($this->collection_name == null) {
                 Yii::log('Trying to store a biobank without collection name, attribute set as name.', CLogger::LEVEL_WARNING);
                 $this->collection_name = $this->name;
             }
@@ -291,7 +291,8 @@ class Biobank extends LoggableActiveRecord {
                 Yii::log('Trying to store a biobank without collection id, attribute set as collection name.', CLogger::LEVEL_WARNING);
                 $this->collection_id = $this->collection_name;
             }
-        } return true;
+        } */
+        return true;
     }
 
     public function rules() {
@@ -300,7 +301,7 @@ class Biobank extends LoggableActiveRecord {
             /**
              * mandatory attributes
              */
-            array('identifier,name,collection_name,collection_id', 'required', 'on' => 'insert,update'),
+            array('identifier,name,', 'required', 'on' => 'insert,update'),
             /**
              * Check unique in db
              * FIXME : EMONgoUniqueValidator doesn t work
@@ -355,7 +356,7 @@ class Biobank extends LoggableActiveRecord {
             /**
              * Custom validator, for validation if some value
              */
-            array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update'),
+          //  array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update'),
             /**
              * safes attributes : attributes not modified by th eapplication so without validation rule
              */

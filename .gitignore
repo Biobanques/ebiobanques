@@ -31,3 +31,4 @@
 /ebiobanques/protected/tests/functional/CRUDUserTest
 /ebiobanques/protected/tests/functional/SimpleUserDiversTest.php
 /ebiobanques/composer.lock
+/ebiobanques/nbproject/private/

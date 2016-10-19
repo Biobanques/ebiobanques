@@ -10,7 +10,7 @@
     $form = $this->beginWidget('CActiveForm', array(
         'id'=>'catalog-form',
         'enableAjaxValidation'=>false,
-        'method'=>'post',
+        'method'=>'get',
     ));
     ?>
     <table>

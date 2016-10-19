@@ -43,6 +43,10 @@ class User extends LoggableActiveRecord
     public function getPrenom() {
         return ucfirst($this->prenom);
     }
+    
+     public function getShortName() {
+         return ucfirst($this->nom ." ". $this->prenom);
+     }
 
     public function getInscription_date() {
         if (Yii::app()->language == 'fr')

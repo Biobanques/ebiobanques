@@ -166,6 +166,7 @@ BIOBANQUES can offer you several expert services and technical platforms for set
      *
      */
     'biobank.updateTitle' => 'Mise à jour de la biobanque {name}',
+    'biobank.createTitle' => 'Création d\'une biobanque ',
 
     /*
      * Update form - Main parts titles

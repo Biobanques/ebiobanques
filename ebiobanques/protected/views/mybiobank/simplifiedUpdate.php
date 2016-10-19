@@ -4,8 +4,8 @@
  * @since 1.8
  *
  */
-Yii::app()->clientscript->registerCssFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/css/bootstrap.css');
-Yii::app()->clientscript->registerScriptFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/js/bootstrap.js');
+//Yii::app()->clientscript->registerCssFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/css/bootstrap.css');
+//Yii::app()->clientscript->registerScriptFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/js/bootstrap.js');
 
 Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(function(){
 		$('.helpedInput').popover({
@@ -61,14 +61,14 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation', array('style'=>'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
+        echo $form->textArea($biobank, 'presentation', array('style' => 'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation', 'helpPresentationContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation'); ?>
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'presentation_en'); ?>
         <?php
-        echo $form->textArea($biobank, 'presentation_en', array('style'=>'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
+        echo $form->textArea($biobank, 'presentation_en', array('style' => 'width: 97%; height: 160px;'), CommonDisplayTools::getHelpBox('biobank.presentation_en', 'helpPresentationEnContent', $this));
         ?>
         <?php echo $form->error($biobank, 'presentation_en'); ?>
     </div>
@@ -238,8 +238,8 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             ?>
             <?php echo $form->error($biobank, 'name'); ?>
         </div>
-        
-<div class='cols2'>
+
+        <div class='cols2'>
             <?php echo $form->label($biobank, 'diagnosis_available'); ?>
             <?php
             echo $form->textField($biobank, 'diagnosis_available', CommonDisplayTools::getHelpBox('biobank.diagnosis_available', 'help_diagnosis_availableContent', $this));
@@ -262,12 +262,12 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     </div>
     <div class='col-2-row'>
         <?php echo $form->label($biobank, 'cert_autres'); ?>
-        <?php echo $form->textField($biobank, 'cert_autres',CommonDisplayTools::getHelpBox('biobank.cert_autres', 'help_others_certifications', $this)); ?>
+        <?php echo $form->textField($biobank, 'cert_autres', CommonDisplayTools::getHelpBox('biobank.cert_autres', 'help_others_certifications', $this)); ?>
         <?php echo $form->error($biobank, 'cert_autres'); ?>
     </div>
     <?php echo CHtml::submitButton('Mettre à jour') ?>
     <?php
     $this->endWidget();
     ?>
-   
+
 

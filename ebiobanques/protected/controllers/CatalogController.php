@@ -62,16 +62,16 @@ class CatalogController extends Controller
      * display catalog of biobanks with contacts and agregated infos
      */
     public function actionSearch() {
-         Yii::log('controller catalog search- ',Clogger::LEVEL_INFO);
+        Yii::log('controller catalog search- ', Clogger::LEVEL_INFO);
         $model = new Biobank('search');
         $form = new CatalogForm ();
-        if (isset($_GET ['CatalogForm'])) {
+        if (isset($_POST ['CatalogForm'])) {
             $model->unsetAttributes();
-            $form->attributes = $_GET ['CatalogForm'];
-            Yii::log('form attributes setted ',Clogger::LEVEL_INFO);
-           /* if (Yii::app()->session ['keywords'] != $catalogForm->keywords) {
-                $this->logSmartSearch($smartForm->keywords);
-            }*/
+            $form->attributes = $_POST ['CatalogForm'];
+            Yii::log('form attributes setted ', Clogger::LEVEL_INFO);
+            /* if (Yii::app()->session ['keywords'] != $catalogForm->keywords) {
+              $this->logSmartSearch($smartForm->keywords);
+              } */
             //Yii::app()->session ['keywords'] = $smartForm->keywords;
         }
         $this->render('catalog', array(
@@ -86,7 +86,7 @@ class CatalogController extends Controller
      */
     public function actionView($id) {
         $this->layout = '//layouts/detailview';
-        Yii::log('valeur de lid : '.$id,Clogger::LEVEL_ERROR);
+        Yii::log('valeur de lid : ' . $id, Clogger::LEVEL_ERROR);
         $criteria = new EMongoCriteria;
         $criteria->_id = $id;
         $aggsamples = Biobanksamples::model()->find($criteria);

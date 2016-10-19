@@ -47,7 +47,7 @@ $('#dialog').dialog('open');
     </div><!-- /.modal -->
 </div>
 <div class="row">
-    <div class="col-md-3"> 
+    <div class="col-md-3">
         <?php echo CHtml::link('Biobanks global stats', 'globalStats'); ?>
     </div>
     <div class="col-md-3">
@@ -71,6 +71,7 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => ar
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'biobank-grid',
     'dataProvider' => $model->search(),
+//    'ajaxUpdate' => false,
     'columns' => array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
@@ -99,6 +100,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
         array(
             'class' => 'CButtonColumn',
+            'deleteConfirmation' => "js:'Record with ID '+$(this).parent().parent().children(':first-child').text()+' will be deleted! Continue?'",
             'afterDelete' => 'function(link,success,data){$("#flashMessages").html(data)}',
         ),
     ),

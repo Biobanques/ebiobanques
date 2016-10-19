@@ -29,43 +29,59 @@ $.ajax({url : '" . Yii::app()->createUrl('uploadedFile/processFile', array('id' 
 
 $fileBase = CHtml::link('template_ebiobanques.xls', Yii::app()->baseUrl . '/protected/datas/template_ebiobanques.xls');
 
-$fileInfoBase = CHtml::link(Yii::t('myBiobank', 'uploadInfo'), '#', array('onclick' => '$("#infoPopup").dialog("open");return false;'));
+$fileInfoBase = CHtml::link(Yii::t('myBiobank', 'uploadInfo'), '#', array('data-toggle' => "modal", 'data-target' => "#infoPopup"));
 ?>
 
 
 <?php
-$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-    'id' => 'infoPopup',
-    // additional javascript options for the dialog plugin
-    'options' => array(
-        'title' => Yii::t('myBiobank', 'uploadInfo'),
-        'autoOpen' => false,
-        'width' => '90%'
-    ),
-        )
-);
-$this->renderPartial('/site/_help_message', array('title' => Yii::t('sampleProperty', 'uploadPopupHelpTitle'), 'content' => Yii::t('sampleProperty', 'uploadPopupHelpContent')));
+/*
+  $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+  'id' => 'infoPopup',
+  // additional javascript options for the dialog plugin
+  'options' => array(
+  'title' => Yii::t('myBiobank', 'uploadInfo'),
+  'autoOpen' => false,
+  'width' => '90%'
+  ),
+  )
+  ); */
+?>
+<div id="infoPopup" class="modal fade" role="dialog">
+    <div class ="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><?php echo Yii::t('myBiobank', 'uploadInfo') ?></h4>
+            </div>
+            <div class="modal-body">
+                <?php
+                $this->renderPartial('/site/_help_message', array('title' => Yii::t('sampleProperty', 'uploadPopupHelpTitle'), 'content' => Yii::t('sampleProperty', 'uploadPopupHelpContent')));
 
 
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'testId',
-    'dataProvider' => $dataProviderProperties,
-    'columns' => array(
-        array('name' => Yii::t('sampleProperty', 'name'),
-            'value' => '$data->name',
-            'htmlOptions' => array('class' => 'columnName')
-        ),
-        array('name' => Yii::t('sampleProperty', 'description'),
-            'value' => '$data->description',
-            'htmlOptions' => array('class' => 'columnDescription')
-        ),
-        array('name' => Yii::t('sampleProperty', 'values'),
-            'value' => '$data->values',
-            'htmlOptions' => array('class' => 'columnValues')),
-    ),
-));
-
-$this->endWidget("zii.widgets.jui.CJuiDialog");
+                $this->widget('zii.widgets.grid.CGridView', array(
+                    'id' => 'testId',
+                    'dataProvider' => $dataProviderProperties,
+                    'columns' => array(
+                        array('name' => Yii::t('sampleProperty', 'name'),
+                            'value' => '$data->name',
+                            'htmlOptions' => array('class' => 'columnName')
+                        ),
+                        array('name' => Yii::t('sampleProperty', 'description'),
+                            'value' => '$data->description',
+                            'htmlOptions' => array('class' => 'columnDescription')
+                        ),
+                        array('name' => Yii::t('sampleProperty', 'values'),
+                            'value' => '$data->values',
+                            'htmlOptions' => array('class' => 'columnValues')),
+                    ),
+                ));
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+//$this->endWidget("zii.widgets.jui.CJuiDialog");
 
 $this->renderPartial('/site/_help_message', array('title' => Yii::t('myBiobank', 'helpUploadTitle'), 'content' => Yii::t('myBiobank', 'helpUploadContent', array('fileBase' => $fileBase, 'fileInfoBase' => $fileInfoBase))));
 ?>

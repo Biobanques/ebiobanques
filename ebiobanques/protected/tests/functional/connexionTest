@@ -1,0 +1,36 @@
+<?php
+
+use Facebook\WebDriver\WebDriverBy;
+
+class ConnexionTestTest extends FunctionalAbstractClass
+{
+    protected $baseUrl;
+
+    /**
+     * Method testConnexionTest
+     * @test
+     */
+    public function testConnexionTest() {
+        // open | /index.php |
+        parent::$webDriver->get($this->baseUrl . "/index.php");
+        // click | link=Connexion |
+        parent::$webDriver->findElement(WebDriverBy::linkText("Connexion"))->click();
+        // type | id=LoginForm_username | login0
+        parent::$webDriver->findElement(WebDriverBy::id("LoginForm_username"))->clear()->sendKeys("login0");
+        // type | id=LoginForm_password | pwd@0
+        parent::$webDriver->findElement(WebDriverBy::id("LoginForm_password"))->clear()->sendKeys("pwd@0");
+        // click | id=LoginForm_rememberMe |
+        parent::$webDriver->findElement(WebDriverBy::id("LoginForm_rememberMe"))->click();
+        // click | id=loginButton |
+        parent::$webDriver->findElement(WebDriverBy::id("loginButton"))->click();
+        // assertElementPresent | link=Déconnexion (login0) |
+        $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Déconnexion (login0)")) != null);
+        // click | link=Catalogue des biobanques |
+        parent::$webDriver->findElement(WebDriverBy::linkText("Catalogue des biobanques"))->click();
+        // assertText | css=h1 | Catalogue des biobanques
+        $this->assertEquals("Catalogue des biobanques", parent::$webDriver->findElement(WebDriverBy::cssSelector("h1"))->getText());
+        // assertElementPresent | link=Recherche avancée |
+        $this->assertTrue(parent::$webDriver->findElements(WebDriverBy::linkText("Recherche avancée")) != null);
+    }
+
+}

@@ -4,8 +4,8 @@
  * @since 1.8
  *
  */
-Yii::app()->clientscript->registerCssFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/css/bootstrap.css');
-Yii::app()->clientscript->registerScriptFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/js/bootstrap.js');
+//Yii::app()->clientscript->registerCssFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/css/bootstrap.css');
+//Yii::app()->clientscript->registerScriptFile(Yii::app()->baseUrl . '/protected/extensions/bootstrap/assets/js/bootstrap.js');
 
 Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(function(){
 		$('.helpedInput').popover({

@@ -52,7 +52,7 @@ $scriptCB;
 <!--    <script type="text/javascript">
         function addEchToDemand(id) {
             jQuery.ajax({
-                'url': '<?php //echo Yii::app()->createUrl("site/changerDemandeEchantillon")               ?>',
+                'url': '<?php //echo Yii::app()->createUrl("site/changerDemandeEchantillon")                   ?>',
                 'data': {'id': id},
                 'type': 'post',
                 'cache': false,
@@ -66,7 +66,7 @@ $scriptCB;
                 var obj = document.getElementsByName('selectionCB[]');
                 for (var i = 0; i < obj.length; i++) {
                     jQuery.ajax({
-                        'url': '<?php //echo Yii::app()->createUrl("site/addDemandeAllEchantillon")               ?>',
+                        'url': '<?php //echo Yii::app()->createUrl("site/addDemandeAllEchantillon")                   ?>',
                         'data': {'id': obj[i].value},
                         'type': 'post',
                         'cache': false,
@@ -77,7 +77,7 @@ $scriptCB;
                 var obj = document.getElementsByName('selectionCB[]');
                 for (var i = 0; i < obj.length; i++) {
                     jQuery.ajax({
-                        'url': '<?php //echo Yii::app()->createUrl("site/removeDemandeAllEchantillon")               ?>',
+                        'url': '<?php //echo Yii::app()->createUrl("site/removeDemandeAllEchantillon")                   ?>',
                         'data': {'id': obj[i].value},
                         'type': 'post',
                         'cache': false,
@@ -89,7 +89,7 @@ $scriptCB;
         }
         function createNewDemand() {
             jQuery.ajax({
-                'url': '<?php //echo Yii::app()->createUrl("site/newDemand")               ?>',
+                'url': '<?php //echo Yii::app()->createUrl("site/newDemand")                   ?>',
                 //'data':{'newDemand':'newDemand'},
                 'type': 'post',
                 'cache': false,
@@ -153,40 +153,42 @@ $this->widget('application.widgets.menu.CMenuBarLineWidget', array(
 
 <?php
 //widget de selection des colonnes à afficher
-$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-    'id' => 'selectPopup',
-    // additional javascript options for the dialog plugin
-    'options' => array(
-        'title' => 'Choix des colonnes ',
-        'autoOpen' => false,
-        'width' => '220px'
-    ),
-        // 'htmlOptions' => array('style' => 'display:none')
-));
+//$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+//    'id' => 'selectPopup',
+//    // additional javascript options for the dialog plugin
+//    'options' => array(
+//        'title' => 'Choix des colonnes ',
+//        'autoOpen' => false,
+//        'width' => '220px'
+//    ),
+//        // 'htmlOptions' => array('style' => 'display:none')
+//));
+//
 ?>
-<div class="prefs-form" >
-    <?php
-    $this->renderPartial('_prefs_settings', array(
-        'model' => $prefs
-    ));
-    ?>
-</div>
+<!--<div class="prefs-form" >-->
 <?php
-$this->endWidget('zii.widgets.jui.CJuiDialog');
+//    $this->renderPartial('_prefs_settings', array(
+//        'model' => $prefs
+//    ));
+//
+?>
+<!--</div>-->
+<?php
+//$this->endWidget('zii.widgets.jui.CJuiDialog');
 
 $columns = array();
-$columns [] = array(
-    'class' => 'CCheckBoxColumn',
-    'id' => 'selectionCB',
-    'headerHtmlOptions' => array(
-        'onchange' => 'addAllEchToDemand()'
-    ),
-    'checkBoxHtmlOptions' => array(
-        'onchange' => 'addEchToDemand(this.value)'
-    ),
-    'selectableRows' => 2,
-    'checked' => '$data->isInDemand()'
-);
+//$columns [] = array(
+//    'class' => 'CCheckBoxColumn',
+//    'id' => 'selectionCB',
+//    'headerHtmlOptions' => array(
+//        'onchange' => 'addAllEchToDemand()'
+//    ),
+//    'checkBoxHtmlOptions' => array(
+//        'onchange' => 'addEchToDemand(this.value)'
+//    ),
+//    'selectableRows' => 2,
+//    'checked' => '$data->isInDemand()'
+//);
 //columns count displayed. if <1 then display a minimum
 $countDisplayedColumns;
 
@@ -241,20 +243,18 @@ foreach ($prefs as $property => $propertyValue) {
 }
 
 //popup de choix des colonnes à afficher
-
-
-$columns [] = array('class' => 'CButtonColumn',
-    'header' => CHtml::link($imageSelect, '#', array(
-        'onclick' => '$("#selectPopup").dialog("open");return false;'
-    )), // lien d'affichage de la popup
-    'template' => '{view},{update},{delete}',
-    'buttons' => array(
-        'view' => array(
-            'url' => 'Yii::app()->createUrl("site/view",array("id"=>"$data->_id", "asDialog"=>1))',
-            'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=1, location=no");return false;}'
-        ),
-    ),
-);
+//$columns [] = array('class' => 'CButtonColumn',
+//    'header' => CHtml::link($imageSelect, '#', array(
+//        'onclick' => '$("#selectPopup").dialog("open");return false;'
+//    )), // lien d'affichage de la popup
+//    'template' => '{view},{update},{delete}',
+//    'buttons' => array(
+//        'view' => array(
+//            'url' => 'Yii::app()->createUrl("site/view",array("id"=>"$data->_id", "asDialog"=>1))',
+//            'click' => 'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=1, location=no");return false;}'
+//        ),
+//    ),
+//);
 
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'sample-grid',

@@ -46,8 +46,8 @@
                 <?php
                 $this->widget('application.widgets.navbar.NavBarBootstrap', array(
                     'id' => 'navMainMenu',
-                    'brandUrl'=>'http://biobanques.eu',
-                    'logoUrl'=>'/images/logobb.png',
+                    'brandUrl' => 'http://biobanques.eu',
+                    'logoUrl' => '/images/logobb.png',
                     'items' => array(
                         array('label' => Yii::t('common', 'accueil'), 'url' => array('/site/accueil')),
                         array('label' => Yii::t('common', 'catalog'), 'url' => array('/catalog/search')),
@@ -55,8 +55,8 @@
                         array('label' => Yii::t('common', 'myaccount'), 'url' => array('/myaccount/index'), 'visible' => !Yii::app()->user->isGuest),
                         array('label' => Yii::t('common', 'bbadmin'), 'url' => array('/mybiobank/index'), 'visible' => Yii::app()->user->isBiobankAdmin()),
                         array('label' => Yii::t('common', 'administration'), 'url' => array('/administration/index'), 'visible' => Yii::app()->user->isAdmin()),
-                        array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest,'position'=>'right'),
-                        array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest,'position'=>'right'),
+                        array('label' => Yii::t('common', 'seconnecter'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest, 'position' => 'right'),
+                        array('label' => Yii::t('common', 'sedeconnecter') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest, 'position' => 'right'),
                     ),
                 ));
                 ?>
@@ -122,11 +122,11 @@
                 <?php require_once('tpl_footer.php') ?></div>
             <!-- end main container-->
         </div>
-            <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.12.4.min.js"></script>
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-        
+        <!-- Bootstrap core JavaScript
+================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.12.4.min.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
     </body>
 </html>

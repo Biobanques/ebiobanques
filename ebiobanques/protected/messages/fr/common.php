@@ -214,5 +214,15 @@ Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuair
     'biobank_information' => 'Informations de la biobanque',
     'profil' => 'Profil',
     'button_ask_samples' => 'Demande d\'échantillons biologiques',
+    'thematiques' => 'Thématiques',
+    'thematiques_en' => 'Thématiques en anglais',
+    'presentation' => 'Description ',
+    'presentation_en' => 'Description en anglais',
+    'projetRecherche' => 'Projets de recherche',
+    'projetRecherche_en' => 'Projets de recherche en anglais',
+    'publications' => 'Publications',
+    'reseaux' => 'Réseaux',
+    'qualite' => 'Qualité',
+    'qualite_en' => 'Qualité en anglais',
 );
 ?>

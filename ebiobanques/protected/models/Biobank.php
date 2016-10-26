@@ -19,11 +19,11 @@
  * @property Echantillon[] $echantillons
  * @property FileImported[] $fileImporteds
  */
-class Biobank extends LoggableActiveRecord {
+class Biobank extends LoggableActiveRecord
+{
     /*
      * Champs obligatoires
      */
-
     public $id;
     public $identifier;
     public $name;
@@ -41,7 +41,6 @@ class Biobank extends LoggableActiveRecord {
     public $passphrase;
     public $contact_id;
     public $diagnosis_available;
-
     /**
      * pathologies are stored in french and english
      * @var type
@@ -51,7 +50,6 @@ class Biobank extends LoggableActiveRecord {
     public $longitude;
     public $latitude;
     public $location;
-
     /**
      * keywords mesh are stored in english and french
      * @var type
@@ -59,14 +57,12 @@ class Biobank extends LoggableActiveRecord {
     public $keywords_MeSH;
     public $keywords_MeSH_fr;
     public $acronym;
-
     /**
      * fields "presentation" to describe the biobank.
      * @var type
      */
     public $presentation;
     public $presentation_en;
-
     /**
      * var array 'logo' 'fr' 'en'
      * @var array
@@ -75,13 +71,11 @@ class Biobank extends LoggableActiveRecord {
     /**
      * fields agregated related to the sampling activity
      */
-
     /**
      * values fixed: general population, disease
      * @var type
      */
     public $sampling_practice;
-
     /**
      * free text
      * @var type
@@ -103,7 +97,6 @@ class Biobank extends LoggableActiveRecord {
     public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
-
     /**
      * total number of samples, integer value only.
      * Displayed in a format like 10^x.
@@ -115,7 +108,6 @@ class Biobank extends LoggableActiveRecord {
     public $collectionSampleAccessFee = 'TRUE';
     public $collectionSampleAccessJointProjects = 'TRUE';
     public $PartnerCharterSigned = 'TRUE';
-
     /**
      * fields agregated relatives to the number of samples.
      * NBS : acronym of Number of Biological Samples
@@ -148,14 +140,12 @@ class Biobank extends LoggableActiveRecord {
      * specify the type of samples if other. Free text.
      */
     public $nbs_other_specification;
-
     /**
      * array of ICD codes
      */
     public $cims = array();
     public $contact_search;
     protected $qualityCombinate;
-
     /**
      * certificatins fields
      */
@@ -283,15 +273,15 @@ class Biobank extends LoggableActiveRecord {
         if ($this->name == null) {
             Yii::log('Trying to store a biobank without name, operation refused', CLogger::LEVEL_WARNING);
         } /* else {
-           if ($this->collection_name == null) {
-                Yii::log('Trying to store a biobank without collection name, attribute set as name.', CLogger::LEVEL_WARNING);
-                $this->collection_name = $this->name;
-            }
-            if ($this->collection_id == null) {
-                Yii::log('Trying to store a biobank without collection id, attribute set as collection name.', CLogger::LEVEL_WARNING);
-                $this->collection_id = $this->collection_name;
-            }
-        } */
+          if ($this->collection_name == null) {
+          Yii::log('Trying to store a biobank without collection name, attribute set as name.', CLogger::LEVEL_WARNING);
+          $this->collection_name = $this->name;
+          }
+          if ($this->collection_id == null) {
+          Yii::log('Trying to store a biobank without collection id, attribute set as collection name.', CLogger::LEVEL_WARNING);
+          $this->collection_id = $this->collection_name;
+          }
+          } */
         return true;
     }
 
@@ -356,7 +346,7 @@ class Biobank extends LoggableActiveRecord {
             /**
              * Custom validator, for validation if some value
              */
-          //  array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update'),
+            //  array('diagnosis_available', 'diagValidator', 'message' => '{attribute} is required when biobank_class is set to \'biobankClinical\'.', 'on' => 'insert,update'),
             /**
              * safes attributes : attributes not modified by th eapplication so without validation rule
              */
@@ -469,6 +459,16 @@ class Biobank extends LoggableActiveRecord {
             'zipcode' => Yii::t('common', 'zipcode'),
             'city' => Yii::t('common', 'city'),
             'sample_type' => Yii::t('common', 'biobank.sample_type'),
+            'presentation' => Yii::t('common', 'presentation'),
+            'thematiques' => Yii::t('common', 'thematiques'),
+            'presentation_en' => Yii::t('common', 'presentation_en'),
+            'thematiques_en' => Yii::t('common', 'thematiques_en'),
+            'projetRecherche' => Yii::t('common', 'projetRecherche'),
+            'projetRecherche_en' => Yii::t('common', 'projetRecherche_en'),
+            'publications' => Yii::t('common', 'publications'),
+            'reseaux' => Yii::t('common', 'reseaux'),
+            'qualite' => Yii::t('common', 'qualite'),
+            'qualite_en' => Yii::t('common', 'qualite_en'),
         );
     }
 
@@ -513,7 +513,7 @@ class Biobank extends LoggableActiveRecord {
         if ($this->identifier != null)
             $criteria->addCond('identifier', '==', new MongoRegex('/' . $this->identifier . '/i'));
         if ($this->responsable_op != null) {
-            
+
         }
 
         if ($this->name != null)
@@ -873,7 +873,7 @@ class Biobank extends LoggableActiveRecord {
     }
 
     /**
-     * 
+     *
      * @return type
      * @deprecated Use contact_resp instad of this relational structure
      */
@@ -891,7 +891,7 @@ class Biobank extends LoggableActiveRecord {
         return $result;
     }
 
-     /**
+    /**
      * @deprecated Use contact_resp instad of this relational structure
      */
     public function setContact(Contact $contact) {
@@ -920,7 +920,7 @@ class Biobank extends LoggableActiveRecord {
         if ($contact != null && $contact->lastName != null) {
             $result = $contact->lastName;
             if ($contact->firstName != null)
-                $result.=" ".$contact->firstName;
+                $result.=" " . $contact->firstName;
         }
         return $result;
     }

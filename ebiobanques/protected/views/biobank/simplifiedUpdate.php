@@ -235,13 +235,64 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             ?>
             <?php echo $form->error($biobank, 'diagnosis_available'); ?>
         </div>
+
     </div>
     <div class='col-2-row'>
-        <?php echo CHtml::submitButton('Mettre à jour') ?>
+
+
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'thematiques'); ?>
+            <?php echo $form->textArea($biobank, 'thematiques'); ?>
+            <?php echo $form->error($biobank, 'thematiques'); ?>
+        </div>
+
+
+
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'thematiques_en'); ?>
+            <?php echo $form->textArea($biobank, 'thematiques_en'); ?>
+            <?php echo $form->error($biobank, 'thematiques_en'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'projetRecherche'); ?>
+            <?php echo $form->textArea($biobank, 'projetRecherche'); ?>
+            <?php echo $form->error($biobank, 'projetRecherche'); ?>
+        </div>
+
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'projetRecherche_en'); ?>
+            <?php echo $form->textArea($biobank, 'projetRecherche_en'); ?>
+            <?php echo $form->error($biobank, 'projetRecherche_en'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'qualite'); ?>
+            <?php echo $form->textArea($biobank, 'qualite'); ?>
+            <?php echo $form->error($biobank, 'qualite'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'qualite_en'); ?>
+            <?php echo $form->textArea($biobank, 'qualite_en'); ?>
+            <?php echo $form->error($biobank, 'qualite_en'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'publications'); ?>
+            <?php echo $form->textArea($biobank, 'publications'); ?>
+            <?php echo $form->error($biobank, 'publications'); ?>
+        </div>
+        <div class='cols2'>
+            <?php echo $form->label($biobank, 'reseaux'); ?>
+            <?php echo $form->textArea($biobank, 'reseaux'); ?>
+            <?php echo $form->error($biobank, 'reseaux'); ?>
+        </div>
+
+
+        <div class='col-2-row'>
+            <?php echo CHtml::submitButton('Mettre à jour') ?>
+        </div>
+        <?php
+        $this->endWidget();
+        ?>
     </div>
-    <?php
-    $this->endWidget();
-    ?>
 </div>
 <h3>Items archivés ( non modifiables)</h3>
 <?php echo CHtml::link('Voir les items', array('biobank/oldupdate', "id" => $biobank->_id)); ?>

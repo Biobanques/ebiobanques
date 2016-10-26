@@ -107,7 +107,6 @@ A validation email will be sent to you within 24h.
     'faq_t5' => ' How can BIOBANQUES help me?',
     'faq_c5' => 'When requesting biological samples, BIOBANQUES can also provide you with <a href="http://www.biobanques.eu/en/offre-de-services/ethics-regulations">Ethics and Regulatory</a> services to facilitate all the steps necessary for accessing samples (Material Transfer Agreement, partnership contract, ethics questions, international laws,…)
 BIOBANQUES can offer you several expert services and technical platforms for setting up all the steps of your research project. <a href="http://www.biobanques.eu/en/service-request">Contact us for more information.</a> ',
-    
     'forgotedPwd' => 'Forgot password',
     'atLeastOneField' => 'You have to fill at least one field to get your password back.',
     'recoverMessageSent' => 'A message with your credentials was sent at the following mail adress : {userEmail}',
@@ -134,11 +133,11 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'Map of biobanks' => "Map of biobanks",
     'show map' => 'Show map of biobanks',
     'undefined' => 'Undefined',
-    'presentation_en'=>'Description in english',
-    'sample_information'=>'Sample Information',
-    'quality_information'=>'Quality Information',
-    'contact_information'=>'Contact Information',
-    'en cours'=>'Work in progress',
+    'presentation_en' => 'Description in english',
+    'sample_information' => 'Sample Information',
+    'quality_information' => 'Quality Information',
+    'contact_information' => 'Contact Information',
+    'en cours' => 'Work in progress',
     /*
      * BIOBANK
      */
@@ -167,7 +166,6 @@ BIOBANQUES can offer you several expert services and technical platforms for set
      */
     'biobank.updateTitle' => 'Mise à jour de la biobanque {name}',
     'biobank.createTitle' => 'Création d\'une biobanque ',
-
     /*
      * Update form - Main parts titles
      */
@@ -201,14 +199,24 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'biobank.materialLCR' => 'CSF',
     'biobank.materialOther' => 'Others',
     'biobank.phone' => 'Phone',
-    'biobank.sample_type'=>'Sample type',
-    'catalog_intro'=>'This part of the website lists all the biobanks of the French network. Pathologies are identified by their usual name, ICD 10 code or MeSH keywords.
+    'biobank.sample_type' => 'Sample type',
+    'catalog_intro' => 'This part of the website lists all the biobanks of the French network. Pathologies are identified by their usual name, ICD 10 code or MeSH keywords.
 <br><br>Biobank information details (sample type, certification, etc.) are available by clicking on the magnifying glass symbol (right column).
 <br><br>Search for specific pieces of information from all biobanks can be done using “Advanced search”
 <br><br>You can print or export (pdf, csv, excel) the entire directory or the information you selected using the top-right button of the table.',
-    'icd_example'=>'(ICD code, ex: C00)',
-    'biobank_information'=>'Biobank information',
-    'profil'=>'Profile',
-    'button_ask_samples'=>'Request biological samples',
+    'icd_example' => '(ICD code, ex: C00)',
+    'biobank_information' => 'Biobank information',
+    'profil' => 'Profile',
+    'button_ask_samples' => 'Request biological samples',
+    'thematiques' => 'Thematics in french',
+    'thematiques_en' => 'Thematics',
+    'presentation' => 'Description in french',
+    'presentation_en' => 'Description',
+    'projetRecherche' => 'Research projects in french',
+    'projetRecherche_en' => 'Research projects',
+    'publications' => 'Publications',
+    'reseaux' => 'Networks',
+    'qualite' => 'Quality in french',
+    'qualite_en' => 'Quality',
 );
 ?>

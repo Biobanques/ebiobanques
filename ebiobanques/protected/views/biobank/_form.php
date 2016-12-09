@@ -251,7 +251,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
         </div>
     </div>
     <div class='col-2-row'>
-         <?php echo CHtml::resetButton('Cancel', array('id' => 'resetButton')); ?>
+         <?php echo CHtml::resetButton('Reset', array('id' => 'resetButton')); ?>
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save') ?>
     </div>
     <?php

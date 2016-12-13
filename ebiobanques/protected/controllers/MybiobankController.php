@@ -13,7 +13,8 @@ class MybiobankController extends Controller {
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/menu_mybiobank';
+    public $layout = '//layouts/basic_column_layout';
+   // public $layout = '//layouts/menu_mybiobank';
 
     /**
      * @return array action filters

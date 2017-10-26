@@ -33,7 +33,7 @@ class Logo extends EMongoGridFS
 
     public function attributeLabels() {
         return array(
-            'filename' => 'Upload a logo'
+            'filename' => Yii::t('common', 'upload_a_logo')
         );
     }
 

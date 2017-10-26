@@ -34,13 +34,13 @@ $this->widget('ext.highcharts.HighchartsWidget', array(
                 'type' => 'column',
                 'name' => 'Champs manquants',
                 'data' => array(round($stats['fieldsMissing']['totalRate'] * 100, 2), round((1 - $statsGlobales['avgGCR']) * 100, 2)),
-                'color' => 'js:Highcharts.getOptions().colors[1]',
+                'color' => 'js:Highcharts.getOptions().colors[4]',
             ),
             array(
                 'type' => 'column',
                 'name' => 'Champs présents',
                 'data' => array(round($stats['fieldsPresent']['totalRate'] * 100, 2), round($statsGlobales['avgGCR'] * 100, 2)),
-                'color' => 'js:Highcharts.getOptions().colors[2]',
+                'color' => 'js:Highcharts.getOptions().colors[6]',
             ),
         ),
     )

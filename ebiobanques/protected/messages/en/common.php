@@ -1,4 +1,5 @@
 <?php
+$num_biobank = count(Biobank::model()->findAll()); 
 
 return array(
     'accueil' => 'Home',
@@ -10,8 +11,8 @@ return array(
     'FAQ' => 'Frequently asked questions',
     'activities' => 'Activities',
     'ChampsObligatoires' => 'Fields with <span class="required">*</span> are required.',
-    'oui' => 'Yes',
-    'non' => 'No',
+    'yes' => 'Yes',
+    'no' => 'No',
     'contactus' => 'Contact us',
     'contactus_phrase' => 'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.',
     'contactForm_name' => 'Name',
@@ -31,11 +32,11 @@ return array(
     'keywords' => 'Keywords',
     'smartsearchexplain' => 'Tool in beta version. You can use keywords like "male T4N2M0" to find samples quickly.<br>
 								At this time, the fields searchables by this tools are : Notes & Gender',
-    'firstname' => 'First Name',
-    'lastname' => 'Last Name',
+    'firstname' => 'First name',
+    'lastname' => 'Last name',
     'email' => 'Email',
     'phone' => 'Phone',
-    'adress' => 'Adress',
+    'address' => 'Address',
     'city' => 'City',
     'country' => 'Country',
     'zipcode' => 'Zip code',
@@ -44,6 +45,7 @@ return array(
     'bbadmin' => 'My biobank',
     'bbManage' => 'Manage biobank',
     'bbUpdate' => 'Update biobank',
+    'old_update' => 'old update',
     'echManage' => 'Manage samples',
     'benchmarking' => 'Benchmarking',
     'msgAnnulModif' => 'Warning : all updates will be lost at the next sending of data.',
@@ -51,12 +53,17 @@ return array(
     'createBtn' => 'Create',
     'requiredField' => 'Fields with <span class="required">*</span> are required.',
     'userUpdate' => 'Update user',
+    'user_view'=>'Profile user',
+    'create_user'=> 'Create user',
+    'manage_users'=> 'Manage users',
+    'inscription_date'=> 'Inscription date',
     'prefsSelect' => 'Select columns to display',
     'choseDemand' => 'Active application',
     'proceedApplication' => 'Proceed application',
     'success_register' => 'Your application has been send , you will receive an email when it will be approved.',
     'error_register' => 'An error occured during your registration, please try later.',
     'inactive' => 'Inactive',
+    'active' => 'Active',
     'identifier' => 'Identifier',
     'name' => 'Name',
     'collection_name' => 'Pathology',
@@ -90,7 +97,7 @@ return array(
     'idUser' => 'User id',
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr: Improving research of biological material',
-    'indexContent_p1' => '&nbsp;&nbsp; <b>ebiobanques</b>.fr</b> is a catalog of the BIOBANQUES network containing information collected from its 91 members and allowing access to 6 millions of biological samples.
+    'indexContent_p1' => '&nbsp;&nbsp; <b>ebiobanques</b>.fr</b> is a catalog of the BIOBANQUES network containing information collected from its '.$num_biobank.' members and allowing access to 6 millions of biological samples.
 
 <br><br>&nbsp;&nbsp; To explore ebiobanques, you need to be a registered user. Please click on <a href="/index.php/site/login">login</a> then “subscribe” to create your account.
 A validation email will be sent to you within 24h.
@@ -137,7 +144,7 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'sample_information' => 'Sample Information',
     'quality_information' => 'Quality Information',
     'contact_information' => 'Contact Information',
-    'en cours' => 'Work in progress',
+    'in_progress' => ' In progress',
     /*
      * BIOBANK
      */
@@ -158,27 +165,28 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'biobank.keywords_MeSH' => 'MeSH keywords',
     'biobank.keywords_MeSH_fr' => 'MeSH keywords in french',
     'biobank.diagnosis_available' => 'ICD code available',
+    'biobank.snomed_ct' => 'SNOMED-CT',
     'biobank.pathologies' => 'Pathologies in french',
     'biobank.pathologies_en' => 'Pathologies',
     'biobank.email' => 'Email',
     /*
      *
      */
-    'biobank.updateTitle' => 'Mise à jour de la biobanque {name}',
-    'biobank.createTitle' => 'Création d\'une biobanque ',
+    'biobank.updateTitle' => 'Update of the biobank {name}',
+    'biobank.createTitle' => 'Create a biobank ',
     /*
      * Update form - Main parts titles
      */
-    'biobank.form_part_1' => 'Nom et descriptions',
-    'biobank.form_part_2' => 'Adresse',
-    'biobank.form_part_3' => 'Coordinateur',
-    'biobank.form_part_4' => 'Materiel biologique disponible',
-    'biobank.form_part_contact_resp' => 'Coordinateur',
-    'biobank.form_part_responsable_adj' => 'Responsable adjoint',
-    'biobank.form_part_responsable_op' => 'Responsable opérationnel',
-    'biobank.form_part_responsable_qual' => 'Responsable qualité',
-    'biobank.form_part_quality' => 'Qualité et certifications',
-    'biobank.form_part_keywords' => 'Mots clés et codifications',
+    'biobank.form_part_1' => 'Name and description',
+    'biobank.form_part_2' => 'Address',
+    'biobank.form_part_3' => 'Coordinator',
+    'biobank.form_part_4' => 'Biological material available',
+    'biobank.form_part_contact_resp' => 'Coordinator',
+    'biobank.form_part_responsable_adj' => 'Deputy manager',
+    'biobank.form_part_responsable_op' => 'Operational manager',
+    'biobank.form_part_responsable_qual' => 'Quality manager',
+    'biobank.form_part_quality' => 'Quality and certifications',
+    'biobank.form_part_keywords' => 'Keywords and coding',
     /*
      * Misc
      */
@@ -197,6 +205,9 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'biobank.materialTumoralTissue' => 'Pathological Tissue',
     'biobank.materialHealthyTissue' => 'Healthy/control Tissue',
     'biobank.materialLCR' => 'CSF',
+    'biobank.materialPBMC' => 'PBMC',
+    'biobank.materialBuffyCoat' => 'Buffy coat',
+    'biobank.materialPrimaryCells' => 'Primary cells',
     'biobank.materialOther' => 'Others',
     'biobank.phone' => 'Phone',
     'biobank.sample_type' => 'Sample type',
@@ -207,6 +218,9 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'icd_example' => '(ICD code, ex: C00)',
     'biobank_information' => 'Biobank information',
     'profil' => 'Profile',
+    'standard_user'=> 'Standard user',
+    'system_admin'=> 'System admin',
+    'biobank_admin'=> 'Biobank admin',
     'button_ask_samples' => 'Request biological samples',
     'thematiques' => 'Thematics in french',
     'thematiques_en' => 'Thematics',
@@ -218,5 +232,42 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'reseaux' => 'Networks',
     'qualite' => 'Quality in french',
     'qualite_en' => 'Quality',
+    
+    'exported_fields'=> 'Exported Field',
+   
+    'create_biobank'=>'Create biobank',
+    'manage_fields_of_biobanks_directory' =>'Manage fields of biobanks directory',
+    'upload_a_logo'=>'Upload a logo',
+    'manages_biobanks' => 'Manage of biobanks',
+    'export_field'=> 'Export fields',
+    'admin_page' => 'Welcome to admin page',
+    'disable' =>' Disable',
+    'enable'=>'Enable',
+    'validate'=> 'Validate',
+    'resetBtn' => 'Reset',
+    'updateBtn' => 'Update',
+    
+    'system_log' => 'System log',
+    
+// Stats biobank
+    
+    'fields_biobank'=> 'different fields on these biobanks',
+    'average_rate_completeness'=>'The average rate of completeness per biobank is',
+    'rate_completeness'=> 'Rate of completeness per field',
+    'completion_rate'=> 'Completion rate',
+    'global_stats'=> 'Global stats',
+    'biobank_ base'=>'biobanks',
+    'missing_fields'=> 'Missing fields',
+    'present_fields'=> 'Present fields',
+    'biobanks_global_stats' => 'Biobanks global stats',
+    'detailed_stats_biobank' => 'Detailed statistics of the biobank',
+    'completion_rate' => 'Completion rate',
+    
+    'select_biobank'=> 'Select a biobank',
+    'biobank'=> 'Biobank',
+    
+    //flash message
+    
+    'error_create_biobank'=> 'The biobank has not been save!',
 );
 ?>

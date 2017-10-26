@@ -11,14 +11,14 @@
 //            )
             ));
             $items = array(
-                array('label' => 'Biobanks', 'url' => array('/biobank/admin')),
-                array('label' => 'Users', 'url' => array('/user/admin'))
+                array('label' => Yii::t('common','Biobanks'), 'url' => array('/biobank/admin')),
+                array('label' => Yii::t('common','Users'), 'url' => array('/user/admin'))
                     ,);
             if ($this->getAction()->getId() == 'update') {
-                $items[] = array('label' => 'old update', 'url' => array('/biobank/oldUpdate', 'id' => $this->getActionParams()['id']));
+                $items[] = array('label' => Yii::t('common','old_update'), 'url' => array('/biobank/oldUpdate', 'id' => $this->getActionParams()['id']));
             }
             if ($this->getAction()->getId() == 'oldUpdate') {
-                $items[] = array('label' => 'update', 'url' => array('/biobank/update', 'id' => $this->getActionParams()['id']));
+                $items[] = array('label' => Yii::t('common','update'), 'url' => array('/biobank/update', 'id' => $this->getActionParams()['id']));
             }
 
             $this->widget('zii.widgets.CMenu', array(
@@ -32,22 +32,22 @@
 
             <?php
             $this->beginWidget('zii.widgets.CPortlet', array(
-                'title' => 'Technical Operations',
+                'title' => Yii::t('common', 'Technical Operations'),
 //            'htmlOptions' => array(
 //                'style' => 'height:280px'
 //            )
             ));
             $items = array(
-                array('label' => 'Files ', 'url' => array('/fileImported/admin')),
-                array('label' => 'Samples', 'url' => array('/echantillon/admin')),
+                array('label' => Yii::t('common',  'Files '), 'url' => array('/fileImported/admin')),
+                array('label' =>  Yii::t('common','Samples'), 'url' => array('/echantillon/admin')),
                 //array('label' => 'Contacts', 'url' => array('/contact/admin')),
                 //array('label' => 'Export des contacts', 'url' => array('/contact/exportContact')),
-                array('label' => 'Log système', 'url' => array('/auditTrail/admin')),);
+                array('label' => Yii::t('common','system_log'), 'url' => array('/auditTrail/admin')),);
             if ($this->getAction()->getId() == 'update') {
-                $items[] = array('label' => 'old update', 'url' => array('/biobank/oldUpdate', 'id' => $this->getActionParams()['id']));
+                $items[] = array('label' => Yii::t('common','old_update'), 'url' => array('/biobank/oldUpdate', 'id' => $this->getActionParams()['id']));
             }
             if ($this->getAction()->getId() == 'oldUpdate') {
-                $items[] = array('label' => 'update', 'url' => array('/biobank/update', 'id' => $this->getActionParams()['id']));
+                $items[] = array('label' =>Yii::t('common','update'), 'url' => array('/biobank/update', 'id' => $this->getActionParams()['id']));
             }
 
             $this->widget('zii.widgets.CMenu', array(

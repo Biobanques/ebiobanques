@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 ?>
-<h1><?php echo "Statistiques détaillées de la biobanque $model->name" ?></h1>
+<h1><?php echo Yii::t('common','detailed_stats_biobank')." ".$model->name?></h1>
 
 <?php $this->renderPartial('_detailledCharts', array('stats' => $stats, 'statsGlobales' => $statsGlobales)) ?>
 <h3 style="margin-top: 25px;margin-bottom: 5px">Taux de completude de la biobanque : </h3>

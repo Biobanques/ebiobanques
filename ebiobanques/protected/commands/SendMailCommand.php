@@ -40,7 +40,7 @@ class SendMailCommand extends CConsoleCommand
                 if (CommonMailer::directSend($model->subject, $model->body, $model->emailto)) {
                     $model->delete();
                 } else
-                    echo 'pb sending mail';
+                    echo 'pb sending mail: ';
                 ;
             }
             //echo "mails sent\n";

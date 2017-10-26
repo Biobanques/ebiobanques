@@ -44,5 +44,12 @@ class Controller extends CController
             'CaptchaExtendedValidator' => Yii::getPathOfAlias('ext.captchaExtended') . DIRECTORY_SEPARATOR . 'CaptchaExtendedValidator.php'
         ));
     }
+    
+   /* public function beforeAction() {
+    if(Yii::app()->params['maintenance'] == true && Yii::app()->user->id != 1) {
+       $this->redirect('maintenance.html');
+      //  throw new CHttpException(404, 'Under Maintenance');
+    }
+}*/
 
 }

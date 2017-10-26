@@ -2,6 +2,7 @@
 
 return array(
     'civility' => 'Civility',
+    'contact_resp' => 'Contact',
     'responsible_op' => 'Operational manager',
     'responsible_qual' => 'Quality manager',
     'responsable_adj' => 'Assistant manager',

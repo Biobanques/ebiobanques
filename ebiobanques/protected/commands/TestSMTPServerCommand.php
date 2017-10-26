@@ -15,11 +15,11 @@ class TestSMTPServerCommand extends CConsoleCommand
         $mail->SMTPDebug = 1;
         $mail->Host = CommonProperties::$SMTP_SENDER_HOST;
         $mail->SMTPAuth = true;
-        $mail->Port = "587";
+        $mail->Port = "465";
         $mail->SetFrom(CommonProperties::$SMTP_SENDER_FROM_EMAIL);
         $mail->Username = CommonProperties::$SMTP_SENDER_USERNAME;
         $mail->Password = CommonProperties::$SMTP_SENDER_PASSWORD;
-        $mail->AddAddress("matthieu.penicaud@inserm.fr");
+        $mail->AddAddress("soraya.aakki@gmail.com");
         $mail->Body = "Test Réussi";
         $mail->Subject = "Mail de test pour la configuration SMTP";
         return $mail->Send();

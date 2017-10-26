@@ -5,15 +5,15 @@
  * and open the template in the editor.
  */
 ?>
-<h1><?php echo 'Statistiques globales'; ?></h1><?php
-echo $counts->nbBiobanks . " biobanques en base.";
+<h1><?php echo Yii::t('common', 'global_stats'); ?></h1><?php
+echo count(Biobank::model()->findAll())." ". Yii::t('common', 'biobank_ base'). ".";
 echo '<br>';
 echo '<br>';
-echo $counts->nbFields . " champs différents sur ces biobanques.";
+echo $counts->nbFields ." ". Yii::t('common', 'fields_biobank');
 echo '<br>';
 echo '<br>';
 
-echo "Le taux de complétude moyen par biobanque est de " . round($counts->avgGCR * 100, 2) . "%.";
+echo Yii::t('common', 'average_rate_completeness') ." ". round($counts->avgGCR * 100, 2) . "%.";
 echo '<br>';
 //foreach ($dataProvider as $key => $value) {
 //
@@ -53,7 +53,7 @@ $this->widget('ext.highcharts.HighchartsWidget', array(
             )
         ),
         'title' => array(
-            'text' => 'Taux de complétude par champ',
+            'text' =>  Yii::t('common', 'rate_completeness') ,
         ),
         'xAxis' => array(
             'categories' => $datas['categories'],
@@ -61,15 +61,15 @@ $this->widget('ext.highcharts.HighchartsWidget', array(
         'series' => array(
             array(
                 'type' => 'column',
-                'name' => 'Champs manquants',
+                'name' => Yii::t('common', 'missing_fields'),
                 'data' => $datas['missingFields'],
-                'color' => 'js:Highcharts.getOptions().colors[1]',
+                'color' => 'js:Highcharts.getOptions().colors[4]',
             ),
             array(
                 'type' => 'column',
-                'name' => 'Champs présents',
+                'name' => Yii::t('common', 'present_fields'),
                 'data' => $datas['presentFields'],
-                'color' => 'js:Highcharts.getOptions().colors[2]',
+                'color' => 'js:Highcharts.getOptions().colors[6]',
             ),
 //            array(
 //                'type' => 'spline',

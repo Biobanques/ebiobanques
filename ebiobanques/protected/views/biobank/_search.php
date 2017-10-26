@@ -35,14 +35,14 @@
     <div class="row" style='display: block'>
         <?php echo $form->label($model, 'cert_ISO9001'); ?>
         <?php // echo $form->textField($model, 'cert_ISO9001', array('size' => 20, 'maxlength' => 45)); ?>
-        <div style='float:left;width: 25%;'>  <?php echo $form->checkBoxList($model, 'cert_ISO9001', array('OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours')); ?>
+        <div style='float:left;width: 25%;'>  <?php echo $form->checkBoxList($model, 'cert_ISO9001', array('OUI' => Yii::t('common','yes'), 'NON' => Yii::t('common','no'), 'EN COURS' => Yii::t('common','in_progress'))); ?>
 
         </div>
     </div>
     <div class="row" style='display: block'>
         <?php echo $form->label($model, 'cert_NFS96900'); ?>
         <?php // echo $form->textField($model, 'cert_ISO9001', array('size' => 20, 'maxlength' => 45)); ?>
-        <div style='float:left;width: 25%;'>  <?php echo $form->checkBoxList($model, 'cert_NFS96900', array('OUI' => 'Oui', 'NON' => 'Non', 'EN COURS' => 'En cours')); ?>
+        <div style='float:left;width: 25%;'>  <?php echo $form->checkBoxList($model, 'cert_NFS96900', array('OUI' => Yii::t('common','yes'), 'NON' => Yii::t('common','no'), 'EN COURS' => Yii::t('common','in_progress'))); ?>
 
         </div>
     </div>
@@ -140,9 +140,9 @@
 
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Search'); ?>
+        <?php echo CHtml::submitButton(Yii::t('common','search')); ?>
 
-        <?php echo CHtml::resetButton('Reset'); ?>
+        <?php echo CHtml::resetButton(Yii::t('common','resetBtn')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

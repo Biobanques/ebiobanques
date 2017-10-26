@@ -13,12 +13,12 @@
     ?><div class="row">
         <div class="col-md-6">
             <?php
-            echo CHtml::submitButton('Exporter ces champs', ['class' => 'btn-primary']);
+            echo CHtml::submitButton(Yii::t('common','export_field'), ['class' => 'btn-primary']);
             ?>
         </div>
         <div class="col-md-6">
             <?php
-            echo CHtml::resetButton();
+            echo CHtml::resetButton(Yii::t('common','resetBtn'));
             ?>
         </div>
     </div><?php

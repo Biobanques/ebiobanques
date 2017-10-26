@@ -1,4 +1,5 @@
 <?php
+$num_biobank = count(Biobank::model()->findAll()); 
 
 return array(
     'accueil' => 'Accueil',
@@ -10,8 +11,8 @@ return array(
     'FAQ' => 'Questions fréquentes',
     'activities' => 'Activités',
     'ChampsObligatoires' => 'Les champs avec <span class="required">*</span> sont requis.',
-    'oui' => 'Oui',
-    'non' => 'Non',
+    'yes' => 'Oui',
+    'no' => 'Non',
     'contactus' => 'Nous contacter',
     'contactus_phrase' => '
 Si vous avez des questions commerciales ou autres , veuillez remplir le formulaire suivant pour nous contacter. Merci.',
@@ -23,7 +24,7 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'explain_verify_code' => 'Ce code de vérification nous sert à nous assurer que vous n\'êtes pas une machine.',
     'submit' => 'Envoyer',
     'searchsamples' => 'Rechercher des échantillons',
-    'biobanks' => 'Biobanques',
+    
     'contacts' => 'Contacts',
     'myaccount' => 'Mon compte',
     'administration' => 'Administration',
@@ -36,28 +37,40 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'lastname' => 'Nom',
     'email' => 'Email',
     'phone' => 'Téléphone',
-    'adress' => 'Adresse',
+    'address' => 'Adresse',
     'city' => 'Ville',
     'country' => 'Pays',
     'zipcode' => 'Code postal',
     'biobank' => 'Biobanque',
+    'Biobank' => 'Biobanque',
+    'Biobanks' => 'Biobanques',
+    'biobanks' => 'Biobanques',
     'search' => 'Rechercher',
     'bbadmin' => 'Ma biobanque',
     'bbUpdate' => 'Mise à jour de la biobanque',
+    'old_update' => 'Ancienne mise à jour',
+    'update' => 'Mise à jour',
+    'Update' => 'Mise à jour',
     'bbManage' => 'Administrer la biobanque',
     'echManage' => 'Gérer les échantillons',
     'benchmarking' => 'Analyse comparative',
     'msgAnnulModif' => 'Attention : toutes les modifications seront perdues lors du prochain envoi de données.',
     'saveBtn' => 'Enregistrer',
     'createBtn' => 'Créer',
+    'updateBtn' => 'Mettre à jour',
     'requiredField' => 'Les champs avec <span class="required">*</span> sont obligatoires.',
     'userUpdate' => 'Mise à jour de l\'utilisateur',
+    'user_view'=>'Profil utilisateur',
+    'manage_users'=> 'Gestion des utilisateurs',
+    'create_user'=>'Créer un utilisateur',
+    'inscription_date'=> 'Date d\'inscription',
     'prefsSelect' => 'Selectionner les colonnes à afficher',
     'choseDemand' => 'Visualiser ma demande d\'echantillons',
     'proceedApplication' => 'Finaliser ma demande d\'echantillons',
     'success_register' => 'Votre demande a été envoyée, vous recevrez un e-mail quand elle sera approuvée.',
     'error_register' => 'Une erreur s\'est produite lors de votre inscription, veuillez réessayer plus tard.',
     'inactive' => 'Inactif',
+    'active' => 'Actif',
     'identifier' => 'Identifiant',
     'name' => 'Nom',
     'collection_name' => 'Pathologie',
@@ -91,8 +104,8 @@ Si vous avez des questions commerciales ou autres , veuillez remplir le formulai
     'idUser' => 'Id utilisateur',
     'expression' => 'Expression',
     'indexTitle' => 'ebiobanques.fr : Améliorer la recherche de matériel biologique',
-    'indexContent_p1' => ' &nbsp;&nbsp; <b>ebiobanques</b> est un outil catalogue qui regroupe les informations des 91 Centres de Ressources Biologiques, membres du réseau français BIOBANQUES, rassemblant ainsi près de 6 000 000 d’échantillons.
- <br><br>&nbsp;&nbsp; Pour accéder aux informations, une inscription préalable, en ligne, est nécessaire en cliquant sur l’onglet <a href="/index.php/site/login">connexion</a>. Vous recevrez sous 24h un email qui confirmera votre inscription.<br>
+    'indexContent_p1' => ' &nbsp;&nbsp; <b>ebiobanques</b> est un outil catalogue qui regroupe les informations des '.$num_biobank.' Centres de Ressources Biologiques, membres du réseau français BIOBANQUES, rassemblant ainsi près de 6 000 000 d’échantillons.
+ <br><br>&nbsp;&nbsp; Pour accéder aux informations, une inscription préalable, en ligne, est nécessaire en cliquant sur l’onglet <a href="/ebiobanques/index.php/site/login">connexion</a>. Vous recevrez sous 24h un email qui confirmera votre inscription.<br>
  <br><br>&nbsp;&nbsp; Une fois connecté, sous l’onglet <a href="/index.php/catalog/search/">Catalogue des biobanques</a>, vous trouverez les informations concernant les biobanques (CRB, tumorothèques, …), les pathologies des collections, les types d’échantillons et les contacts.
 ',
     'faq_t1' => 'Comment trouver les échantillons utiles à mon projet de recherche&nbsp;?',
@@ -141,7 +154,14 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'sample_information' => 'Informations des échantillons',
     'quality_information' => 'Informations qualité',
     'contact_information' => 'Informations de contact',
-    'en cours' => 'En cours',
+    'in_progress' => 'En cours',
+    'Technical_Operations'=> 'Operations téchniques',
+    
+    'Users' => 'Utilisateurs',
+    'User' => 'Utilisateur',
+    'Files ' => 'Fichiers',
+    'File ' => 'Fichier',
+    'Samples' => 'Echantillons',
     /*
      * BIOBANQUE
      */
@@ -157,13 +177,14 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'biobank.cert_ISO9001' => 'Certification ISO-9001',
     'biobank.cert_NFS96900' => 'Certification NFS-96900',
     'biobank.cert_autres' => 'Autres certifications',
-    'biobank.nb_total_samples' => 'Nombre total d\'échantillons',
+    'biobank.nb_total_samples' => 'Nombre d\'échantillons disponibles',
     'biobank.website' => 'Site Internet',
     'biobank.keywords_MeSH' => 'Mots clés MeSH en anglais',
     'biobank.keywords_MeSH_fr' => 'Mots clés MeSH',
     'biobank.diagnosis_available' => 'Codes CIM disponibles',
     'biobank.pathologies' => 'Pathologies',
     'biobank.pathologies_en' => 'Pathologies en anglais',
+    'biobank.snomed_ct' => 'SNOMED-CT',
     'biobank.email' => 'Email',
     /*
      *
@@ -183,6 +204,7 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'biobank.form_part_responsable_qual' => 'Responsable qualité',
     'biobank.form_part_quality' => 'Qualité et certifications',
     'biobank.form_part_keywords' => 'Mots clés et codifications',
+    
     /*
      * Misc
      */
@@ -199,8 +221,11 @@ la réalisation de votre projet. <a href="http://www.biobanques.eu/fr/demande-de
     'biobank.materialStoredFaeces' => 'Fécès',
     'biobank.materialStoredImmortalizedCellLines' => 'Lignées cellulaires',
     'biobank.materialTumoralTissue' => 'Tissus pathologiques',
-    'biobank.materialHealthyTissue' => 'Tissus sains/contrôles',
+    'biobank.materialHealthyTissue' => 'Échantillons sains/contrôles',
     'biobank.materialLCR' => 'LCR',
+    'biobank.materialPBMC' => 'PBMC',
+    'biobank.materialBuffyCoat' => 'Buffy coat',
+    'biobank.materialPrimaryCells' => 'Cellules primaires',
     'biobank.materialOther' => 'Autres',
     'biobank.phone' => 'Télephone',
     'biobank.sample_type' => 'Type d \'échantillons',
@@ -213,6 +238,9 @@ Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuair
     'icd_example' => '(Codification CIM, ex: C00)',
     'biobank_information' => 'Informations de la biobanque',
     'profil' => 'Profil',
+    'standard_user'=> 'Utilisateur standard',
+    'system_admin'=> 'Admin système',
+    'biobank_admin'=> 'Admin de biobanque',
     'button_ask_samples' => 'Demande d\'échantillons biologiques',
     'thematiques' => 'Thématiques',
     'thematiques_en' => 'Thématiques en anglais',
@@ -224,5 +252,38 @@ Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuair
     'reseaux' => 'Réseaux',
     'qualite' => 'Qualité',
     'qualite_en' => 'Qualité en anglais',
+    
+    
+    'biobanks_global_stats' => 'Statistiques globales des biobanques ',
+    'create_biobank'=>'Créer une biobanque',
+    'manage_fields_of_biobanks_directory' =>'Gérer les champs des biobanques',
+    'upload_a_logo'=>'Ajouter logo',
+    'exported_fields'=> 'Choix des champs à exporter',
+    'manages_biobanks' => 'Gestion des Biobanques',
+    'export_field'=> 'Exporter ces champs',
+     'admin_page' => 'Bienvenue sur la page d\'administration',
+    
+    'disable' =>' Désactiver',
+    'enable'=>'Activer',
+    'validate'=> 'Valider',
+    'resetBtn' => 'Réinitialiser',
+  
+    'system_log' => 'Log système',
+    
+    //Stats biobanques
+    
+    'fields_biobank'=> 'champs différents sur ces biobanques',
+    'average_rate_completeness'=> 'Le taux de complétude moyen par biobanque est de',
+    'rate_completeness'=> 'Taux de complétude par champs',
+    'global_stats'=> 'Statistiques globales',
+     'biobank_ base'=>'biobanques en base',
+    'missing_fields'=> 'Champs manquants',
+    'present_fields'=> 'Champs présents',
+    'select_biobank'=> 'Sélectionner une biobanque',
+    'detailed_stats_biobank' => 'Statistiques détaillées de la biobanque',
+    'completion_rate' => 'Taux Complitude',
+    
+    //flash message
+    'error_create_biobank'=> 'La biobanque n\'a pas pu être enregistrée',
 );
 ?>

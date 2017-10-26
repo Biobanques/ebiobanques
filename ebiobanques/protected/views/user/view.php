@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View User #<?php echo $model->nom." ".$model->prenom; ?></h1>
+<h1><?php echo  Yii::t('common','user_view')." ".$model->nom." ".$model->prenom; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

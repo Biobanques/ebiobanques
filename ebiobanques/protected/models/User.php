@@ -58,10 +58,10 @@ class User extends LoggableActiveRecord
     public function getActifLink() {
         if ($this->inactif === "0")
             return array(
-                'label' => 'Désactiver', 'url' => Yii::app()->createAbsoluteUrl("user/desactivate", array("id" => "$this->_id")));
+                'label' => Yii::t('common','disable'), 'url' => Yii::app()->createAbsoluteUrl("user/desactivate", array("id" => "$this->_id")));
         if ($this->inactif === "1")
             return array(
-                'label' => 'Valider', 'url' => Yii::app()->createAbsoluteUrl("user/validate", array("id" => "$this->_id")));
+                'label' =>  Yii::t('common','validate'), 'url' => Yii::app()->createAbsoluteUrl("user/validate", array("id" => "$this->_id")));
         return array('label' => 'check Value : error', 'url' => '');
     }
 
@@ -187,8 +187,8 @@ class User extends LoggableActiveRecord
             'telephone' => Yii::t('common', 'phone'),
             'gsm' => Yii::t('common', 'gsm'),
             'profil' => Yii::t('common', 'profil'),
-            'inactif' => Yii::t('common', 'inactif'),
-            'biobank_id' => Yii::t('common', 'idBiobanque'),
+            'inactif' => Yii::t('common', 'inactive'),
+            'biobank_id' => Yii::t('common', 'biobank'),
             'verifyCode' => Yii::t('common', 'verifyCode'),
         );
     }
@@ -227,9 +227,9 @@ class User extends LoggableActiveRecord
      */
     public function getArrayProfil() {
         $res = array();
-        $res ["0"] = "standard user";
-        $res ["1"] = "admin systeme";
-        $res ["2"] = "admin de biobanque";
+        $res ["0"] = Yii::t('common','standard_user');
+        $res ["1"] = Yii::t('common','system_admin');
+        $res ["2"] = Yii::t('common','biobank_admin');
         return $res;
     }
 
@@ -238,8 +238,8 @@ class User extends LoggableActiveRecord
      */
     public function getArrayInactif() {
         $res = array();
-        $res ["0"] = "actif";
-        $res ["1"] = "inactif";
+        $res ["0"] = Yii::t('common','active');
+        $res ["1"] = Yii::t('common','inactive');
         return $res;
     }
 

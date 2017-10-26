@@ -65,9 +65,9 @@ class CatalogController extends Controller
         Yii::log('controller catalog search- ', Clogger::LEVEL_INFO);
         $model = new Biobank('search');
         $form = new CatalogForm ();
-        if (isset($_POST ['CatalogForm'])) {
+        if (isset($_GET['CatalogForm'])) {
             $model->unsetAttributes();
-            $form->attributes = $_POST ['CatalogForm'];
+            $form->attributes = $_GET ['CatalogForm'];
             Yii::log('form attributes setted ', Clogger::LEVEL_INFO);
             /* if (Yii::app()->session ['keywords'] != $catalogForm->keywords) {
               $this->logSmartSearch($smartForm->keywords);

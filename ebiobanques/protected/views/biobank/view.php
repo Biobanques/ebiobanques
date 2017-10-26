@@ -11,7 +11,7 @@ try {
 }
 ?>
 <div class="logoHeader">
-    <h1>View Biobank #<?php echo $model->id; ?></h1>
+    <h1>View Biobank <?php echo $model->name; ?></h1>
     <div class="logo">
         <?php
         if ($logo != null) {
@@ -135,7 +135,8 @@ $cims = array('name' => 'cims', 'value' => nl2br(print_r($model->cims, true)), '
             'keywords_MeSH_fr',
             'pathologies_en',
             'pathologies',
-            'diagnosis_available'
+            'diagnosis_available',
+            'snomed_ct'
         )
     ));
     ?>

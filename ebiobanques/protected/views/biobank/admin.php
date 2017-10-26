@@ -21,18 +21,18 @@ $('#dialog').dialog('open');
 });
 ");
 ?>
-<h1>Gestion des Biobanques</h1>
+<h1> <?php echo Yii::t('common','manages_biobanks')?> </h1>
 <div class="row">
     <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">
-        Choix des champs à exporter
+         <?php echo Yii::t('common','exported_fields')?> 
     </button>
     <!--modal window to select items-->
     <div id="myModal"  class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Choix des champs à exporter </h4>
+                    <h4 class="modal-title"> <?php echo Yii::t('common','exported_fields')?> </h4>
                 </div>
                 <div class="modal-body">
                     <div class="prefs-form" >
@@ -46,17 +46,19 @@ $('#dialog').dialog('open');
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+</br>
 <div class="row">
-    <div class="col-md-3">
-        <?php echo CHtml::link('Biobanks global stats', 'globalStats'); ?>
+    <div class="col-md-4">
+        <?php echo CHtml::link(Yii::t('common','biobanks_global_stats'), array('/biobank/globalStats')); ?>
     </div>
     <div class="col-md-3">
-        <?php echo CHtml::link('Create biobank', 'create'); ?>
+        <?php echo CHtml::link(Yii::t('common','create_biobank'), array('/biobank/create')); ?>
     </div>
-    <div class="col-md-3">
-        <?php echo CHtml::link('Manage fields of biobanks directory', array('/uploadForm/uploadAll')); ?>
+    <div class="col-md-5">
+        <?php echo CHtml::link(Yii::t('common','manage_fields_of_biobanks_directory'), array('/uploadForm/uploadAll')); ?>
     </div>
 </div>
+
 <?php
 $this->widget('application.widgets.menu.CMenuBarLineWidget', array('links' => array(), 'controllerName' => 'biobank', 'searchable' => true));
 ?>
@@ -77,18 +79,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'name', 'header' => $model->getAttributeLabel('name')),
         array('name' => 'identifier', 'header' => $model->getAttributeLabel('identifier')),
         array('name' => 'collection_name', 'header' => $model->getAttributeLabel('collection_name'), 'value' => '$data->getShortValue("collection_name")'),
-        array('name' => 'contact_search', 'value' => '$data->getShortContact()', 'header' => $model->getAttributeLabel('contact_id')),
+        array('name' => 'contact_resp', 'value' => '$data->getShortContactResp()', 'header' => $model->getAttributeLabel('contact_resp')),
         array(
             'class' => 'CLinkColumn',
             'labelExpression' => '$data->getRoundedTauxCompletude()."%"',
             'urlExpression' => 'Yii::app()->createUrl("biobank/detailledStats",array("id"=>$data->_id))',
             'htmlOptions' => array('style' => "text-align:center"),
-            'header' => $model->getAttributeLabel('TauxCompletude')
+            'header' => $model->getAttributeLabel('completion_rate')
         ),
         array(
             'class' => 'CLinkColumn',
             'label' => Yii::t('myBiobank', 'seeAsAdmin'),
-            'urlExpression' => 'Yii::app()->createUrl("mybiobank/index",array("id"=>$data->_id))',
+            'urlExpression' => 'Yii::app()->createUrl("mybiobank/update",array("id"=>$data->_id))',
             'htmlOptions' => array('style' => "text-align:center"),
             'header' => Yii::t('myBiobank', 'seeAsAdminHeader')
         ),

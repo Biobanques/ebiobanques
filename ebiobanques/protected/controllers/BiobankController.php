@@ -181,7 +181,7 @@ class BiobankController extends Controller {
 
                 $this->redirect(array('view', 'id' => $model->_id));
             } else
-                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être enregistrée');
+                Yii::app()->user->setFlash('error', Yii::t('common','error_create_biobank'));
         }
 
         $this->render('create', array(
@@ -221,17 +221,17 @@ class BiobankController extends Controller {
                 $model->address = $_POST['Address'];
             }
             //update contacts embedded documents
-            if (isset($_POST['Contact_resp']) && $_POST['Contact_resp']['lastName'] != null && $_POST['Contact_resp']['lastName'] != "") {
+            if (isset($_POST['Contact_resp']) ) {
                 $model->contact_resp = $_POST['Contact_resp'];
             }
-            if (isset($_POST['Op_resp']) && $_POST['Op_resp']['lastName'] != null && $_POST['Op_resp']['lastName'] != "") {
+            if (isset($_POST['Op_resp']) ) {
                 $model->responsable_op = $_POST['Op_resp'];
             }
-            if (isset($_POST['Qual_resp']) && $_POST['Qual_resp']['lastName'] != null && $_POST['Qual_resp']['lastName'] != "") {
+            if (isset($_POST['Qual_resp']) ) {
                 // if (isset($_POST['Qual_resp'])) {
                 $model->responsable_qual = $_POST['Qual_resp'];
             }
-            if (isset($_POST['Adj_resp']) && $_POST['Adj_resp']['lastName'] != null && $_POST['Adj_resp']['lastName'] != "") {
+            if (isset($_POST['Adj_resp']) ) {
                 //if (isset($_POST['Adj_resp'])) {
                 $model->responsable_adj = $_POST['Adj_resp'];
             }
@@ -399,7 +399,7 @@ class BiobankController extends Controller {
 
 
         $this->render('admin', array(
-            'model' => $model,
+            'model' => $model
         ));
     }
 

@@ -18,28 +18,30 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Gestion des utilisateurs</h1>
+<h1><?php echo  Yii::t('common','manage_users')?></h1>
 
 
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+
+<?php
+echo CHtml::link(Yii::t('common','create_user'), Yii::app()->createUrl('user/create'));
+?>
+<br>
+ <?php echo CHtml::link(Yii::t('common','advancedsearch'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
-    <?php
+   <?php 
     $this->renderPartial('_search', array(
         'model' => $model,
     ));
     ?>
 </div><!-- search-form -->
-<br>
 <?php
-echo CHtml::link('Créer un utilisateur', Yii::app()->createUrl('user/create'));
-
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
     'ajaxUpdate' => false,
     'columns' => array(
         array('name' => 'prenom', 'header' => Yii::t('common', 'firstname'), 'value' => '$data->getPrenom()'),
-        'nom',
+        array('name' => 'nom', 'header' => Yii::t('common', 'lastname')),
         array(
             'name' => 'inscription_date',
             'header' => Yii::t('common', 'inscription_date'),
@@ -53,12 +55,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
             //search on biobank name not available yet
             'filter' => false
         ),
-        'email',
-        array('header' => "Profil",
+        array('name' => 'email', 'header' => Yii::t('common', 'email')),
+        array('header' =>  Yii::t('common','profil'),
             'name' => 'profil',
             'value' => '$data->getProfil()'),
         array(
-            'name' => 'inactif',
+            'name' => Yii::t('common','inactive'),
             'type' => 'raw',
             'value' => 'CHtml::link($data->getActifLink()["label"],$data->getActifLink()["url"])'
         ),

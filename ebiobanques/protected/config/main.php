@@ -14,7 +14,8 @@ return array(
     'language' => 'fr',
     //'theme'=>'abound',
 // preloading 'log' component
-    'preload' => array('log'),
+ 'preload' => array('log', 'maintenanceMode'),
+   // 'preload' => array('log'), //activar para quitar modo mantenimiento
     // autoloading model and component classes
     'import' => array(
         'ext.*',
@@ -40,6 +41,11 @@ return array(
     ),
     // application components
     'components' => array(
+        // enable/disable maintenance mode 
+         'maintenanceMode' => array(
+            'class' => 'application.extensions.MaintenanceMode.MaintenanceMode',
+             'enabledMode' => false,
+        ),
         'user' => array(
 // enable cookie-based authentication
             'allowAutoLogin' => true,

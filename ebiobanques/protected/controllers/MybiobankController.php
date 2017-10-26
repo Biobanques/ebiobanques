@@ -59,11 +59,11 @@ class MybiobankController extends Controller {
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-        if (!isset($_SESSION['biobank_id'])) {
+       if (!isset($_SESSION['biobank_id'])) {
             if (Yii::app()->user->isAdmin() && isset($_GET['id'])) {
                 $id = $_GET['id'];
             } elseif (Yii::app()->user->isBiobankAdmin()) {
-                $id = Yii::app()->user->biobank_id;
+               $id = Yii::app()->user->biobank_id;
             }
             $_SESSION['biobank_id'] = $id;
         }
@@ -108,6 +108,82 @@ class MybiobankController extends Controller {
         ));
     }
 
+    
+    
+    
+    
+    
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+
+
+        if (isset($_POST['Biobank'])) {
+            $model->scenario = 'update';          // custom scenario
+
+            $attributesPost = $_POST['Biobank'];
+            Yii::log('creating softattributes if not exists ', CLogger::LEVEL_WARNING);
+
+            foreach ($attributesPost as $attName => $attValue) {
+                if (!in_array($attName, $model->attributeNames())) {
+                    $model->initSoftAttribute($attName);
+                }
+            }
+            Yii::log('setting biobank attributes from POST variable', CLogger::LEVEL_WARNING);
+            $model->attributes = $attributesPost;
+            if (isset($_FILES['Logo']) && $_FILES['Logo']['name']['filename'] != "") {
+
+                $model->initSoftAttribute('activeLogo');
+                $model->activeLogo = (string) $this->storeLogo($_FILES['Logo'], $model);
+            }
+            if (isset($_POST['Address'])) {
+
+                $model->address = $_POST['Address'];
+            }
+            //update contacts embedded documents
+            if (isset($_POST['Contact_resp']) && $_POST['Contact_resp']['lastName'] != null && $_POST['Contact_resp']['lastName'] != "") {
+                $model->contact_resp = $_POST['Contact_resp'];
+            }
+            if (isset($_POST['Op_resp']) && $_POST['Op_resp']['lastName'] != null && $_POST['Op_resp']['lastName'] != "") {
+                $model->responsable_op = $_POST['Op_resp'];
+            }
+            if (isset($_POST['Qual_resp']) && $_POST['Qual_resp']['lastName'] != null && $_POST['Qual_resp']['lastName'] != "") {
+                // if (isset($_POST['Qual_resp'])) {
+                $model->responsable_qual = $_POST['Qual_resp'];
+            }
+            if (isset($_POST['Adj_resp']) && $_POST['Adj_resp']['lastName'] != null && $_POST['Adj_resp']['lastName'] != "") {
+                //if (isset($_POST['Adj_resp'])) {
+                $model->responsable_adj = $_POST['Adj_resp'];
+            }
+           // $contact = $model->contact;
+            //if (isset($_POST['Contact'])) {
+            
+            //    foreach ($_POST['Contact'] as $contactAttrName => $contactAttrValue) {
+           //       $contact->$contactAttrName = $contactAttrValue;
+           //     }
+           // }
+            Yii::log('saving biobank', CLogger::LEVEL_WARNING);
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'La biobanque a bien été mise à jour.');
+                
+      
+                // $this->redirect(array('view', 'id' => $model->_id));
+            } else
+                Yii::app()->user->setFlash('error', 'La biobanque n\'a pas pu être mise à jour');
+        }
+
+//        $this->render('update', array(
+//            'model' => $model,
+//        ));
+        $this->render('simplifiedUpdate', array(
+            'biobank' => $model,
+        ));
+    }
+    
+    
+    
+    
+    
+    
     /**
      * affichage de la page d'update de la biobanque
      */
@@ -175,12 +251,16 @@ class MybiobankController extends Controller {
         ));
     }
 
+    
+    
+    
+    
     /**
      * Updates my biobank
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionEchUpdate($id) {
         $model = $this->loadEchModel($id);
         if (isset($_POST['Sample'])) {
             $model->attributes = $_POST['Sample'];

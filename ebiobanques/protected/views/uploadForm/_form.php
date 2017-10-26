@@ -86,7 +86,7 @@ Yii::app()->clientScript->registerScript('sendForm2', "
         $criteria = new EMongoCriteria;
         $criteria->sort('identifier', EMongoCriteria::SORT_ASC);
         echo $form->DropDownList($biobankIdentifier, 'identifier', CHtml::listData(Biobank::model()->findAll($criteria), 'identifier', 'identifierAndName'), array(
-            'empty' => 'select brif code',
+            'empty' => Yii::t('common','select_biobank'),
                 //    'onchange'=> 'this.form.submit()' //'js:validate_dropdown(this.value)'
                 /* 'ajax'=>array(
                   'type'=>'POST',
@@ -196,7 +196,7 @@ Yii::app()->clientScript->registerScript('sendForm2', "
 
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Enregistrer'); ?>
+        <?php echo CHtml::submitButton(Yii::t('common','saveBtn')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

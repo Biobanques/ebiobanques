@@ -79,7 +79,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('common','createBtn') : Yii::t('common','save')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

@@ -2,6 +2,7 @@
 /*
  * page d accueil pour présenter le projet
  */
+
 ?>
 <div>
     <h3><?php echo Yii::t('common', 'indexTitle') ?></h3>

@@ -32,16 +32,13 @@ class CommonMailer
             if (!CommonTools::isInDevMode()) {
                 $mailq->emailto = $to;
             } else {
-                $mailq->emailto = CommonProperties::$ADMIN_EMAIL;
-//                $mailq->emailto = CommonMailer::MAIL_FROM;
+                $mailq->emailto = CommonMailer::MAIL_FROM;
                 $subject = "Mail in dev_mod for $to : $subject";
             }
             $mailq->subject = $subject;
             $mailq->body = $body;
             $mailq->headers = $headers;
-            if (!$mailq->save()) {
-                Yii::log("Mail not saved", CLogger::LEVEL_ERROR);
-            }
+            return $mailq->save();
         } catch (Exception $e) {
             Yii::log("exception sur save mail", "error");
         }
@@ -49,154 +46,153 @@ class CommonMailer
 
     /**
      * envoi de mail inscription avec infos de connexion.
-
-      function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
-      $subject = "Bienvenue!";
-      $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
-      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Message de ebiobanques.fr</title>
-      </head><body>
-      <table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
-      <tr>
-      <td align=\"left\">
-      <a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/wp-content/uploads/2012/08/logo211.jpg\" style=\"border:none;\" ></a>
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\">Bonjour <strong style=\"color:#DB3484;\">" . $prenom . " " . $nom . "</strong>,</td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
-
-      Merci d'avoir cr&eacute;&eacute; un compte sur ebiobanques.fr. Voici un rappel de vos codes d'acc&egrave;s</td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\">
-      Adresse e-mail : <strong><span style=\"color:#DB3484;\">" . $identifiant . "</span></strong>
-      <br >Mot de passe : <strong>" . $pass . "</strong>
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\">
-      Vous pouvez d&egrave;s &agrave; pr&eacute;sent utiliser notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations de studios.
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
-      <a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-      ebiobanques.fr </a> - copyright BioSoftware Factory
-      <a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
-      </td>
-      </tr>
-      </table>
-      </body>
-      </html>";
-
-      CommonMailer::sendMail($to, $subject, $body);
-      }
      */
+    function sendMailInscriptionUser($to, $identifiant, $prenom, $nom, $pass) {
+        $subject = "Bienvenue!";
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\"><html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Message de ebiobanques.fr</title>
+				</head><body>
+				<table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
+				<tr>
+				<td align=\"left\">
+				<a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/wp-content/uploads/2012/08/logo211.jpg\" style=\"border:none;\" ></a>
+				</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+				<td align=\"left\">Bonjour <strong style=\"color:#DB3484;\">" . $prenom . " " . $nom . "</strong>,</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+						<td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
+
+						Merci d'avoir cr&eacute;&eacute; un compte sur ebiobanques.fr. Voici un rappel de vos codes d'acc&egrave;s</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+						<td align=\"left\">
+						Adresse e-mail : <strong><span style=\"color:#DB3484;\">" . $identifiant . "</span></strong>
+								<br >Mot de passe : <strong>" . $pass . "</strong>
+										</td>
+										</tr>
+										<tr><td>&nbsp;</td></tr>
+										<tr>
+										<td align=\"left\">
+										Vous pouvez d&egrave;s &agrave; pr&eacute;sent utiliser notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations de studios.
+										</td>
+										</tr>
+										<tr><td>&nbsp;</td></tr>
+										<tr>
+										<td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
+										<a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
+										ebiobanques.fr </a> - copyright BioSoftware Factory
+										<a href=\"http://www.gap-consulting.fr/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
+										</td>
+										</tr>
+										</table>
+										</body>
+										</html>";
+
+        CommonMailer::sendMail($to, $subject, $body);
+    }
+
     /**
      * envoi de mail inscription avec infos de connexion.
      * TODO a complerter avec partiie inscription user.
-
-      public static function sendMailConfirmationEmail($to, $identifiant, $prenom, $nom, $idUser) {
-      $base = CommonMailer::DEV_URL;
-      if (!CommonTools::isInDevMode()) {
-      $base = CommonMailer::PROD_URL;
-      }
-      $urlConfirm = "http://" . $base . "/index.php?r=site/confirmmail&arg1=" . $idUser . "&arg2=" . $identifiant;
-
-      $subject = "Confirmation de votre adresse email";
-      $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
-      <?xml version=\"1.0\" encoding=\"utf-8\"?>
-      <html><head>
-      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation email de ebiobanques.fr</title>
-      </head><body>
-      <table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
-      <tr>
-      <td align=\"left\">
-      <a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/logo211.jpg\" style=\"border:none;\" ></a>
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\">Bonjour <strong style=\"color:#DB3484;\">" . $prenom . " " . $nom . "</strong>,</td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
-
-      Pour pouvoir profiter pleinement des services de ebiobanques.fr, il nous faut confirmer votre adresse email.<br>
-      Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\">
-      <a href=\"" . $urlConfirm . "\">" . $urlConfirm . "</a>
-
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"left\">
-      Rendez-vous sur notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations d'échantillons biologiques.
-      </td>
-      </tr>
-      <tr><td>&nbsp;</td></tr>
-      <tr>
-      <td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
-      <a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
-      ebiobanques.fr </a>
-      <a href=\"http://www.biobanques.eu/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
-      </td>
-      </tr>
-      </table>
-      </body>
-      </html>";
-
-      CommonMailer::sendMail($to, $subject, $body);
-      }
      */
+    public static function sendMailConfirmationEmail($to, $identifiant, $prenom, $nom, $idUser) {
+        $base = CommonMailer::DEV_URL;
+        if (!CommonTools::isInDevMode()) {
+            $base = CommonMailer::PROD_URL;
+        }
+        $urlConfirm = "http://" . $base . "/index.php?r=site/confirmmail&arg1=" . $idUser . "&arg2=" . $identifiant;
+
+        $subject = "Confirmation de votre adresse email";
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+				<?xml version=\"1.0\" encoding=\"utf-8\"?>
+				<html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation email de ebiobanques.fr</title>
+				</head><body>
+				<table style=\"font-family:Verdana,sans-serif; font-size:11px; color:#374953; width: 550px;\">
+				<tr>
+				<td align=\"left\">
+				<a href=\"http://ebiobanques.fr/\" title=\"ebiobanques.fr\"><img alt=\"ebiobanques.fr\" height=\"70px\" width=\"458px\" src=\"http://www.ebiobanques.fr/logo211.jpg\" style=\"border:none;\" ></a>
+				</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+				<td align=\"left\">Bonjour <strong style=\"color:#DB3484;\">" . $prenom . " " . $nom . "</strong>,</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+						<td align=\"left\" style=\"background-color:#DB3484; color:#FFF; font-size: 12px; font-weight:bold; padding: 0.5em 1em;\">
+
+						Pour pouvoir profiter pleinement des services de ebiobanques.fr, il nous faut confirmer votre adresse email.<br>
+						Pouvez-vous cliquer sur le lien ci-dessous ou copier l'adresse dans votre navigateur afin de finaliser la proc&eacute;dure de confirmation:
+						</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+						<td align=\"left\">
+						<a href=\"" . $urlConfirm . "\">" . $urlConfirm . "</a>
+
+								</td>
+								</tr>
+								<tr><td>&nbsp;</td></tr>
+								<tr>
+								<td align=\"left\">
+								Rendez-vous sur notre site internet <a href=\"http://ebiobanques.fr/\">ebiobanques.fr</a> pour g&eacute;rer vos r&eacute;servations d'échantillons biologiques.
+								</td>
+								</tr>
+								<tr><td>&nbsp;</td></tr>
+								<tr>
+								<td align=\"center\" style=\"font-size:10px; border-top: 1px solid #D9DADE;\">
+								<a href=\"http://ebiobanques.fr/\" style=\"color:#DB3484; font-weight:bold; text-decoration:none;\">
+								ebiobanques.fr </a>
+								<a href=\"http://www.biobanques.eu/\" style=\"text-decoration:none; color:#374953;\">www.biobanques.eu</a>
+								</td>
+								</tr>
+								</table>
+								</body>
+								</html>";
+
+        CommonMailer::sendMail($to, $subject, $body);
+    }
+
     /**
      * envoi mail demande d'echantillons
-
-      function sendDemande($contact, $title, $detail, $sampleList) {
-      $to = Yii::app()->params ['adminEmail'];
-      if ($contact == null && $contact->email != null) {
-      $to = $contact->email;
-      }
-      $user = User::model()->findByPk(Yii::app()->user->id);
-      if ($user != null) {
-      $listEchantillons = '';
-      $subject = Yii::t('common', 'mailDemandeSubject') . ' : ' . $title;
-
-      if ($sampleList != null) {
-      foreach ($sampleList as $concernSample) {
-      $listEchantillons .= '<li>' . $concernSample->id_sample . '</li>';
-      }
-
-      $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
-      <?xml version=\"1.0\" encoding=\"utf-8\"?>
-      <html><head>
-      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation email de ebiobanques.fr</title>
-      </head><body>
-      Cet email est une demande d'échantillons de $user->prenom $user->nom, par le biais du site <a href = \"http://www.ebiobanques.fr\">" .
-      "ebiobanques.fr</a>.<br>Titre de la demande : $title <br>Détail de la demande : $detail<br>Cette demande concerne les échantillons suivants :" .
-      " <br><ul>$listEchantillons </ul><br>Merci de vous mettre en relation avec " .
-      "<a href=\"mailto:$user->email?subject=Re : Demande d'échantillons \"> $user->prenom $user->nom </a> pour avoir plus de détail sur cette demande.
-      <br><br>L'équipe <a href = \"http://www.ebiobanques.fr\">ebiobanques.fr</a>.</body>";
-      return CommonMailer::sendMail($to, $subject, $body);
-      } else {
-      return CommonMailer::sendMail(Yii::app()->params ['adminEmail'], $subject . ">anomalie : liste null", $body);
-      }
-      }
-      }
      */
+    function sendDemande($contact, $title, $detail, $sampleList) {
+        $to = Yii::app()->params ['adminEmail'];
+        if ($contact == null && $contact->email != null) {
+            $to = $contact->email;
+        }
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        if ($user != null) {
+            $listEchantillons = '';
+            $subject = Yii::t('common', 'mailDemandeSubject') . ' : ' . $title;
+
+            if ($sampleList != null) {
+                foreach ($sampleList as $concernSample) {
+                    $listEchantillons .= '<li>' . $concernSample->id_sample . '</li>';
+                }
+
+                $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+				<?xml version=\"1.0\" encoding=\"utf-8\"?>
+				<html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation email de ebiobanques.fr</title>
+				</head><body>
+				Cet email est une demande d'échantillons de $user->prenom $user->nom, par le biais du site <a href = \"http://www.ebiobanques.fr\">" .
+                        "ebiobanques.fr</a>.<br>Titre de la demande : $title <br>Détail de la demande : $detail<br>Cette demande concerne les échantillons suivants :" .
+                        " <br><ul>$listEchantillons </ul><br>Merci de vous mettre en relation avec " .
+                        "<a href=\"mailto:$user->email?subject=Re : Demande d'échantillons \"> $user->prenom $user->nom </a> pour avoir plus de détail sur cette demande.
+				<br><br>L'équipe <a href = \"http://www.ebiobanques.fr\">ebiobanques.fr</a>.</body>";
+                return CommonMailer::sendMail($to, $subject, $body);
+            } else {
+                return CommonMailer::sendMail(Yii::app()->params ['adminEmail'], $subject . ">anomalie : liste null", $body);
+            }
+        }
+    }
 
     /**
      * send an email to indicate to the manager that there is a new user to confirm
@@ -208,7 +204,17 @@ class CommonMailer
         $to = Yii::app()->params['managerEmail'];
         $subject = "Inscription d'un nouvel utilisateur sur ebiobanques.fr";
 
-        $body = CommonMailer::createBoby('subscribeAdminEmail', 'Inscription d\'un nouvel utilisateur sur ebiobanques.fr', array('user' => $user));
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+				<?xml version=\"1.0\" encoding=\"utf-8\"?>
+				<html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Inscription d'un nouvel utilisateur sur ebiobanques.fr</title>
+				</head><body>
+				$user->prenom $user->nom s'est inscrit sur le site ebiobanques.fr.<br>
+
+	Vous pouvez valider cet utilisateur en cliquant sur ce lien : <a href=$base/index.php/user/validate/id/$user->_id\">Valider l'utilisateur</a>, le <a href=$base/index.php/user/refuseRegistration/id/$user->_id\">désactiver</a>
+	 ou le retrouver dans <a href=$base/index.php/user/admin\">la liste des utilisateurs</a>.
+	</body>
+		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
@@ -219,9 +225,19 @@ class CommonMailer
      */
     public static function sendSubscribeUserMail($user) {
         $to = $user->email;
-        $subject = "Welcome on ebiobanques.fr $user->prenom $user->nom";
-        $body = CommonMailer::createBoby('subscribeUserEmail', "Welcome on ebiobanques.fr $user->prenom $user->nom", array('user' => $user));
-
+        $subject = "Welcome on ebiobanques.fr " . $user->prenom . " " . $user->nom;
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+				<?xml version=\"1.0\" encoding=\"utf-8\"?>
+				<html><head>
+				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+                                <title>Welcome " . $user->prenom . " " . $user->nom . " on ebiobanques.fr</title>
+				</head><body>
+                                Welcome " . $user->prenom . " " . $user->nom . " on ebiobanques.fr.
+			Your account is waiting for a validation by the administrator of ebiobanques.<br>
+                        If you have any problem during your experience with ebiobanques.fr feel free to send an email to " . Yii::app()->params['adminEmail'] . "<br>
+                            Best
+	</body>
+		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
@@ -233,43 +249,65 @@ class CommonMailer
     public static function sendUserRegisterConfirmationMail($user) {
         $to = $user->email;
         $subject = "Confirmation de votre inscription sur ebiobanques.fr";
-        $body = CommonMailer::createBoby('confirmRegistrationUserEmail', 'Confirmation de votre inscription sur ebiobanques.fr', array('user' => $user));
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+		<?xml version=\"1.0\" encoding=\"utf-8\"?>
+		<html><head>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur ebiobanques.fr</title>
+		</head><body>
+		Cher (Chère) $user->prenom $user->nom,<br><br>
+		Merci de vous être inscrit sur le site <a href=\"http://www.ebiobanques.fr/index.php\">ebiobanques.fr</a>.<br>
+		Vous pouvez vous connecter dès à présent sur le site avec vos identifiants : <br>
+		<ul><li>Nom d'utilisateur : $user->login </li>
+		<li>Mot de passe : $user->password </li></ul>
+		</body>
+		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
     public static function sendUserRegisterRefusedMail($user) {
         $to = $user->email;
         $subject = "Refus de votre inscription sur ebiobanques.fr";
-        $body = CommonMailer::createBoby('refuseRegistrationUserEmail', 'Refus de votre inscription sur ebiobanques.fr', array('user' => $user));
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+		<?xml version=\"1.0\" encoding=\"utf-8\"?>
+		<html><head>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Confirmation de votre inscription sur ebiobanques.fr</title>
+		</head><body>
+		Cher (Chère) $user->prenom $user->nom,<br><br>
+		Merci de vous être intéressé à la plate-forme <a href=\"http://www.ebiobanques.fr/index.php\">ebiobanques.fr</a>.<br>
+		Malheureusement, nous ne pouvons donner suite à votre inscription.<br>
+                Pour toute question, merci de contacter l'administrateur de la plate-forme.<br><br>
+                Cordialement<br>
+                L'équipe ebiobanques
+
+		</body>
+		";
         return CommonMailer::sendMail($to, $subject, $body);
     }
 
-    /**
-      public static function sendMailRelanceExport($contact, $lastImportDate, $nbJours) {
-      if (Yii::app()->params['mailRelanceExport'] == true) {
-      $to = $contact->email;
-      $fname = $contact->first_name;
-      $lname = $contact->last_name;
-      } else {
-      $to = 'contact@ebiobanques.fr';
-      $fname = 'Administrateur';
-      $lname = 'ebiobanques.fr';
-      }
-      $dateFormat = date('d/m/y', strtotime($lastImportDate));
-      $subject = "Exportez vos données";
-      $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
-      <?xml version=\"1.0\" encoding=\"utf-8\"?>
-      <html><head>
-      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur ebiobanques.fr</title>
-      </head><body>
-      Cher (Chère) $fname $lname,<br><br>
-      Nous n'avons reçu aucun export d'échantillon de votre biobanque depuis le $dateFormat, soit déjà $nbJours jours.<br>
-      N'oubliez pas de mettre régulièrement vos échantillons à jour sur notre plateforme.
-      </body>
-      ";
-      return CommonMailer::sendMail($to, $subject, $body);
-      }
-     */
+    public static function sendMailRelanceExport($contact, $lastImportDate, $nbJours) {
+        if (Yii::app()->params['mailRelanceExport'] == true) {
+            $to = $contact->email;
+            $fname = $contact->first_name;
+            $lname = $contact->last_name;
+        } else {
+            $to = 'contact@ebiobanques.fr';
+            $fname = 'Administrateur';
+            $lname = 'ebiobanques.fr';
+        }
+        $dateFormat = date('d/m/y', strtotime($lastImportDate));
+        $subject = "Exportez vos données";
+        $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+		<?xml version=\"1.0\" encoding=\"utf-8\"?>
+		<html><head>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur ebiobanques.fr</title>
+		</head><body>
+		Cher (Chère) $fname $lname,<br><br>
+		Nous n'avons reçu aucun export d'échantillon de votre biobanque depuis le $dateFormat, soit déjà $nbJours jours.<br>
+		N'oubliez pas de mettre régulièrement vos échantillons à jour sur notre plateforme.
+		</body>
+		";
+        return CommonMailer::sendMail($to, $subject, $body);
+    }
 
     /**
      * send a email to recover the password
@@ -281,9 +319,24 @@ class CommonMailer
             try {
 
                 $to = $user->email;
+                $fname = $user->prenom;
+                $lname = $user->nom;
+                $login = $user->login;
+                $password = $user->password;
                 $subject = "Informations perdues sur ebiobanques.fr";
-                $body = CommonMailer::createBoby('recoverPwdUserEmail', $subject, array('user' => $user));
-
+                $body = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">
+		<?xml version=\"1.0\" encoding=\"utf-8\"?>
+		<html><head>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">	<title>Vos exports sur ebiobanques.fr</title>
+		</head><body>
+		Cher (Chère) $fname $lname,<br><br>
+		Suite à votre demande effectuée sur le site ebiobanques.fr, nous vous rappelons vos codes d'accès :<br>
+                Identifiant : $login<br>
+                Password : $password <br>
+                Vous pouvez dès à présent vous connecter avec ces identifiants.
+A bientôt sur ebiobanques.fr
+		</body>
+		";
                 return CommonMailer::sendMail($to, $subject, $body);
             } catch (Exception $e) {
                 Yii::log("exception sur save mail", "error");
@@ -300,14 +353,16 @@ class CommonMailer
      * @param type $attachmentPath - default no null, string for path to the attached file
      * @param type $attachmentString - default to null, array(string 'data'=>$data, string 'name'=>$name
      */
-    public static function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null, $cleanAfterSend = true) {
+    public function directSend($subject, $body, $emailTo, $attachmentPath = null, $attachmentString = null, $cleanAfterSend = true) {
         $imagesLog = null;
         Yii::import('application.extensions.phpmailer.JPhpMailer');
 
         $mail = new JPhpMailer;
         $mail->IsSMTP();
+        $mail->SMTPDebug  = 1;
         $mail->Host = CommonProperties::$SMTP_SENDER_HOST;
-        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = "tls";
+        $mail->SMTPAuth = false;
         $mail->Port = CommonProperties::$SMTP_SENDER_PORT;
         $mail->Username = CommonProperties::$SMTP_SENDER_USERNAME;
         $mail->Password = CommonProperties::$SMTP_SENDER_PASSWORD;
@@ -332,19 +387,14 @@ class CommonMailer
 
         /*
          * Replace src img tags and attach images to mail
-         * /<img[^*]*src=[^>]"([^"\\]*)/i
-         *
          */
-//        preg_match_all('/<img[^>]*src="([^"]*)"/i', $mail->Body, $matches);
-        preg_match_all('/<img[^>]*src=["\\\]{1,2}([^"\\\]*)/i', $mail->Body, $matches);
+        preg_match_all('/<img[^>]*src="([^"]*)"/i', $mail->Body, $matches);
         if (isset($matches[0]))
             foreach ($matches[0] as $index => $img) {
                 // make cid
                 $id = 'img' . $index;
                 $src = $matches[1][$index];
-                $completeSrc = dirname(__FILE__) . $src;
-                echo $completeSrc;
-                if ($mail->AddEmbeddedImage($completeSrc, $id)) {
+                if ($mail->AddEmbeddedImage('../' . $src, $id)) {
 //                    //this replace might be improved
 //                    //as it could potentially replace stuff you dont want to replace
                     $mail->Body = str_replace($src, 'cid:' . $id, $mail->Body);
@@ -357,7 +407,7 @@ class CommonMailer
             Yii::log('report mail sent', CLogger::LEVEL_ERROR);
             if ($imagesLog) {
                 Yii::log('image WELL attached : src : ' . $src . ', id : ' . $id, CLogger::LEVEL_ERROR);
-            } else if ($imagesLog !== null)
+            } else if ($imagesLog != null)
                 Yii::log('image not attached : src : ' . '../' . $src . ', id : ' . $id, CLogger::LEVEL_ERROR);
         } else {
             Yii::log('Error sending mail', CLogger::LEVEL_ERROR);
@@ -368,18 +418,6 @@ class CommonMailer
             while (ob_get_level() > 0) {
                 ob_end_clean();
             }
-        return $result;
-    }
-
-    public static function createBoby($view, $title = null, $params = array()) {
-        $controller = new Controller('mail');
-        $controller->layout = '//layouts/mail_layout';
-
-        $controller->breadcrumbs['title'] = $title;
-
-        // $completeview = Yii::getPathOfAlias("application.views.mail.$view") . '.php';
-//        $result = $controller->render($completeview, $params, true);
-        $result = $controller->render($view, $params, true);
         return $result;
     }
 

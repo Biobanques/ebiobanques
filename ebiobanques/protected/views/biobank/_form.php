@@ -31,7 +31,7 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
     ?>
 
     <div class="row">
-    <?php echo $form->labelEx($logo, 'filename'); ?>
+    <?php echo $form->labelEx($logo,'filename'); ?>
     <?php echo $form->fileField($logo, 'filename'); ?>
     <?php echo $form->error($logo, 'filename'); ?>
     </div>
@@ -249,10 +249,20 @@ Yii::app()->clientscript->registerScript("popupScript", "$(document).ready(funct
             ?>
             <?php echo $form->error($model, 'diagnosis_available'); ?>
         </div>
+        
+        
+        <div class='cols2'>
+            <?php echo $form->label($model, 'snomed_ct'); ?>
+            <?php
+            echo $form->textArea($model, 'snomed_ct', CommonDisplayTools::getHelpBox('biobank.snomed_ct', 'help_snomed_ctContent', $this));
+            ?>
+            <?php echo $form->error($model, 'snomed_ct'); ?>
+        </div>
+        
     </div>
     <div class='col-2-row'>
-         <?php echo CHtml::resetButton('Reset', array('id' => 'resetButton')); ?>
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save') ?>
+         <?php echo CHtml::resetButton(Yii::t('common', 'resetBtn'), array('id' => 'resetButton')); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ?Yii::t('common', 'createBtn') : Yii::t('common', 'saveBtn')) ?>
     </div>
     <?php
     $this->endWidget();

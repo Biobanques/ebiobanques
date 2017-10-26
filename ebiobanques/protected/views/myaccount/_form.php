@@ -14,8 +14,10 @@
     ?>
 
     <p class="note"><?php echo Yii::t('common', 'requiredField') ?></p>
-
+    
+    <div style="clear:both;"></div>
     <?php echo $form->errorSummary($model); ?>
+    
     <div style="float:left;width:450px;padding-top:10px;">
         <div class="row" style="margin-left:0px;">
             <?php echo $form->labelEx($model, 'prenom'); ?>

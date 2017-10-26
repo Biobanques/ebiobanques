@@ -57,6 +57,14 @@ class Biobank extends LoggableActiveRecord
     public $keywords_MeSH;
     public $keywords_MeSH_fr;
     public $acronym;
+    
+    /**
+     * Field SNOMED Clinical Terms is a systematically organized computer processable collection of medical terms 
+     * providing codes, terms, synonyms and definitions used in clinical documentation and reporting. 
+     * @var type
+     */
+    
+    public $snomed_ct;
     /**
      * fields "presentation" to describe the biobank.
      * @var type
@@ -94,6 +102,9 @@ class Biobank extends LoggableActiveRecord
     public $materialTumoralTissue;
     public $materialHealthyTissue;
     public $materialLCR;
+    public $materialPBMC;
+    public $materialBuffyCoat;
+    public $materialPrimaryCells;
     public $materialOther;
     public $sampling_disease_group;
     public $sampling_disease_group_code;
@@ -155,24 +166,32 @@ class Biobank extends LoggableActiveRecord
 
     /**
      * get the array of material types
-     * @since 1.8.0
+     * @since 1.9.0
      */
     public function getAttributesMaterial() {
         return [
             'materialStoredDNA',
+            'materialLCR',
             'materialStoredPlasma',
+            
+            'materialStoredRNA',
+            'materialStoredImmortalizedCellLines',
+            'materialStoredTissueFrozen',
+            
+            'materialBuffyCoat',
+            'materialStoredSaliva',
+            'materialStoredTissueFFPE',
+            
+            'materialPrimaryCells',
+            'materialStoredBlood',
+            'materialTumoralTissue',
+            
+            'materialHealthyTissue',
             'materialStoredSerum',
             'materialStoredUrine',
-            'materialStoredSaliva',
+            
             'materialStoredFaeces',
-            'materialStoredRNA',
-            'materialStoredBlood',
-            'materialStoredTissueFrozen',
-            'materialStoredTissueFFPE',
-            'materialStoredImmortalizedCellLines',
-            'materialTumoralTissue',
-            'materialHealthyTissue',
-            'materialLCR',
+            'materialPBMC',
             'materialOther',
         ];
     }
@@ -401,6 +420,9 @@ class Biobank extends LoggableActiveRecord
             'materialTumoralTissue' => Yii::t('common', 'biobank.materialTumoralTissue'),
             'materialHealthyTissue' => Yii::t('common', 'biobank.materialHealthyTissue'),
             'materialLCR' => Yii::t('common', 'biobank.materialLCR'),
+            'materialPBMC'=> Yii::t('common', 'biobank.materialPBMC'),
+            'materialBuffyCoat'=> Yii::t('common', 'biobank.materialBuffyCoat'),
+            'materialPrimaryCells'=> Yii::t('common', 'biobank.materialPrimaryCells'),
             'materialOther' => Yii::t('common', 'biobank.materialOther'),
             'cert_ISO9001' => Yii::t('common', 'biobank.cert_ISO9001'),
             'cert_NFS96900' => Yii::t('common', 'biobank.cert_NFS96900'),
@@ -412,6 +434,7 @@ class Biobank extends LoggableActiveRecord
             'diagnosis_available' => Yii::t('common', 'biobank.diagnosis_available'),
             'pathologies' => Yii::t('common', 'biobank.pathologies'),
             'pathologies_en' => Yii::t('common', 'biobank.pathologies_en'),
+            'snomed_ct'=> Yii::t('common', 'biobank.snomed_ct'),
             /* oldies */
             'collection_name' => Yii::t('common', 'collection_name'),
             'date_entry' => Yii::t('common', 'date_entry'),
@@ -469,6 +492,7 @@ class Biobank extends LoggableActiveRecord
             'reseaux' => Yii::t('common', 'reseaux'),
             'qualite' => Yii::t('common', 'qualite'),
             'qualite_en' => Yii::t('common', 'qualite_en'),
+            'completion_rate' => Yii::t('common','completion_rate'),
         );
     }
 
@@ -477,6 +501,7 @@ class Biobank extends LoggableActiveRecord
             //'_id' => 'ID',
             'name' => Yii::t('common', 'name'),
             'identifier' => Yii::t('common', 'identifier'),
+            'acronym' => Yii::t('common', 'acronym'),
             //'collection_name' => Yii::t('common', 'collection_name'),
             // 'contact_id' =>Yii::t('common', 'contact'),
             'address' => Yii::t('adress', 'address'),
@@ -499,6 +524,9 @@ class Biobank extends LoggableActiveRecord
             'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
             'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
             'contact_resp' => Yii::t('responsible', 'contact_resp'),
+            'snomed_ct'=> Yii::t('common', 'biobank.snomed_ct'),
+
+            
         );
     }
 
@@ -575,6 +603,16 @@ class Biobank extends LoggableActiveRecord
             }
             $regexId = substr($regexId, 0, -1);
             $criteria->addCond('keywords_MeSH', '==', new MongoRegex("/($regexId)/i"));
+        }
+        
+         if ($this->snomed_ct != null && $this->snomed_ct != "") {
+            $listWords = explode(" ", $this->snomed_ct);
+            $regexId = "";
+            foreach ($listWords as $word) {
+                $regexId.="$word|";
+            }
+            $regexId = substr($regexId, 0, -1);
+            $criteria->addCond('snomed_ct', '==', new MongoRegex("/($regexId)/i"));
         }
         if ($this->contact_id != null && $this->contact_id != "")
             $criteria->contact_id = (string) $this->contact_id;
@@ -729,6 +767,8 @@ class Biobank extends LoggableActiveRecord
                 $criteria->addCondToOrGroup($orGroupName, ['pathologies' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['pathologies_en' => new MongoRegex('/' . $keyword . '/i')]);
                 $criteria->addCondToOrGroup($orGroupName, ['website' => new MongoRegex('/' . $keyword . '/i')]);
+                $criteria->addCondToOrGroup($orGroupName, ['snomed_ct' => new MongoRegex('/' . $keyword . '/i')]);
+
 
                 if (ICDComparator::isICDCode($keyword)) {
                     $ICD10Group = ICDComparator::getGroup($keyword);
@@ -789,6 +829,7 @@ class Biobank extends LoggableActiveRecord
                     "health" => 'materialHealthyTissue',
                     "LCR" => 'materialLCR',
                     "CSF" => 'materialLCR',
+                    "PBMC"=> 'materialPBMC',
                     "autre" => 'materialOther',
                     "other" => 'materialOther'];
                 // foreach ($biobank->getAttributesMaterial() as $type) {
@@ -1139,6 +1180,10 @@ class Biobank extends LoggableActiveRecord
     public function getContactResp() {
         return ( Yii::t('responsible', $this->contact_resp->firstName) . " " . $this->contact_resp->lastName . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->direct_phone);
     }
+    
+     public function getShortContactResp() {
+        return ( Yii::t('responsible', $this->contact_resp->firstName) . " " . $this->contact_resp->lastName);
+    }
 
     /**
      *
@@ -1379,7 +1424,7 @@ class Biobank extends LoggableActiveRecord
      * @since 1.8.1
      */
     public function getCertificationOptions() {
-        return ['OUI' => Yii::t('common', 'oui'), 'NON' => Yii::t('common', 'non'), 'EN COURS' => Yii::t('common', 'en cours')];
+        return ['OUI' => Yii::t('common', 'yes'), 'NON' => Yii::t('common', 'no'), 'EN COURS' => Yii::t('common', 'in_progress')];
     }
 
     /**

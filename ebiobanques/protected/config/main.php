@@ -112,7 +112,7 @@ return array(
         /**
          * manager email : common manager user to administrate users
          */
-        'managerEmail' => CommonProperties::$MANAGER_EMAIL,
+        //'managerEmail' => CommonProperties::$MANAGER_EMAIL,
         /**
          * admin email : common admin user to receive logs
          */

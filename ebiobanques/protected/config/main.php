@@ -1,6 +1,7 @@
 <?php
 
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
+Yii::setPathOfAlias('chartjs', dirname(__FILE__).'/../extensions/yii-chartjs');
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
@@ -14,7 +15,7 @@ return array(
     'language' => 'fr',
     //'theme'=>'abound',
 // preloading 'log' component
- 'preload' => array('log', 'maintenanceMode'),
+ 'preload' => array('log', 'maintenanceMode', 'chartjs'),
    // 'preload' => array('log'), //activar para quitar modo mantenimiento
     // autoloading model and component classes
     'import' => array(
@@ -75,6 +76,7 @@ return array(
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',
         ),
+        'chartjs' => array('class' => 'chartjs.components.ChartJs'),
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(

@@ -132,11 +132,38 @@ class UserController extends Controller
     public function actionAdmin() {
         $model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['User']))
+        if (isset($_GET['User'])) {
             $model->attributes = $_GET['User'];
+        }
+        $criteriaStandardUsers = new EMongoCriteria;
+        $criteriaStandardUsers->profil = "0";
+        $criteriaStandardUsers->inactif = "0";
+        $standardUsers = User::model()->findAll($criteriaStandardUsers);
+        $nbStandardUsers = count($standardUsers);
+        
+        $criteriaAdminSystUsers = new EMongoCriteria;
+        $criteriaAdminSystUsers->profil = "1";
+        $criteriaStandardUsers->inactif = "0";
+        $adminSystUsers = User::model()->findAll($criteriaAdminSystUsers);
+        $nbAdminSystUsers = count($adminSystUsers);
+        
+        $criteriaAdminBbqUsers = new EMongoCriteria;
+        $criteriaAdminBbqUsers->profil = "2";
+        $criteriaStandardUsers->inactif = "0";
+        $adminBbqUsers = User::model()->findAll($criteriaAdminBbqUsers);
+        $nbAdminBbqUsers = count($adminBbqUsers);
+        
+        $criteriaInactifUsers = new EMongoCriteria;
+        $criteriaInactifUsers->inactif = "1";
+        $inactifUsers = User::model()->findAll($criteriaInactifUsers);
+        $nbInactifUsers = count($inactifUsers);
 
         $this->render('admin', array(
             'model' => $model,
+            'nbStandardUsers' => $nbStandardUsers,
+            'nbAdminSystUsers' => $nbAdminSystUsers,
+            'nbAdminBbqUsers' => $nbAdminBbqUsers,
+            'nbInactifUsers' => $nbInactifUsers
         ));
     }
 

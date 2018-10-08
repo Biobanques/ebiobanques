@@ -349,6 +349,28 @@ class SiteController extends Controller
             $model->attributes = $_POST ['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
+                $userLog = new UserLog;
+                $userLog->username = $model->username;
+                $user = User::model()->findByAttributes(array('login'=>$userLog->username));
+                if ($user != null) {
+                    $userLog->email = $user->email;
+                    $userLog->profil = $user->profil;
+                    if ($user->biobank_id != null && $user->biobank_id != "") {
+                        $bbq = Biobank::model()->findByPk(new MongoID($user->biobank_id));
+                        if ($bbq != null && $bbq != "") {
+                            $userLog->biobank_name = $bbq->name;
+                            $userLog->biobank_id = $bbq->identifier;
+                        } else {
+                            $userLog->biobank_name = null;
+                            $userLog->biobank_id = null;
+                        }
+                    } else {
+                            $userLog->biobank_name = null;
+                            $userLog->biobank_id = null;
+                    }
+                }
+                $userLog->connectionDate = date("Y-m-d H:i:s");
+                $userLog->save();
                 $lastDemandRequest = Demande::model()->findByAttributes(array(
                     'id_user' => (string) Yii::app()->user->id,
                     'envoi' => 0

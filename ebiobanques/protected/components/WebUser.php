@@ -52,6 +52,16 @@ class WebUser extends CWebUser
     public function getEmail() {
         return $this->getState('email');
     }
+    
+    /**
+     * return user first name and last name
+     * @return first name + last name
+     */
+    public function getNomPrenomById($userId)
+    {
+        $model = User::model()->findByPk(new MongoId($userId));
+        return $model != null ? ucfirst($model->prenom) . " " . strtoupper($model->nom) : null;
+    }
 
 }
 ?>

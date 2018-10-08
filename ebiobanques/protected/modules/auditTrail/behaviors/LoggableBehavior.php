@@ -30,7 +30,7 @@ class LoggableBehavior extends CActiveRecordBehavior
                 if (!empty($oldattributes) && isset($oldattributes[$name])) {
                     $old = $oldattributes[$name];
                 } elseif (!empty($oldattributes) && !isset($oldattributes[$name])) {
-                    $old = 'Undefined : new attribute';
+                    $old = '';
                 } else {
                     $old = '';
                 }

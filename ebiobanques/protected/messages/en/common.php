@@ -248,6 +248,7 @@ BIOBANQUES can offer you several expert services and technical platforms for set
     'updateBtn' => 'Update',
     
     'system_log' => 'System log',
+    'userLog' => 'User log',
     
 // Stats biobank
     

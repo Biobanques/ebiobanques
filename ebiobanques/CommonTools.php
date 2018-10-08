@@ -2,8 +2,7 @@
 
 require_once 'protected/extensions/ExcelExt/PHPExcel/Reader/IReadFilter.php';
 
-class MyReadFilter implements PHPExcel_Reader_IReadFilter
-{
+class MyReadFilter implements PHPExcel_Reader_IReadFilter {
 
     public function readCell($column, $row, $worksheetName = '') {
         // Read title row and rows 20 - 30
@@ -22,11 +21,11 @@ class MyReadFilter implements PHPExcel_Reader_IReadFilter
  * @author nicolas malservet
  * @since version 0.1
  */
-class CommonTools
-{
+class CommonTools {
     /*
      * FORMAT DATE
      */
+
     const MYSQL_DATE_FORMAT = "Y-m-d H:i:s";
     const MYSQL_DATE_DAY_FORMAT = "Y-m-d 00:00:00";
     const FRENCH_DATE_FORMAT = "H:i:s d/m/Y";
@@ -141,6 +140,18 @@ class CommonTools
     public static function data_uri($bin, $mime) {
         $base64 = base64_encode($bin);
         return ('data:' . $mime . ';base64,' . $base64);
+    }
+
+    /**
+     * convert DatePickerRange to an array
+     * @return type
+     */
+    public function formatDatePicker($date) {
+        $res = array();
+        $answerDate = explode("-", str_replace(' ', '', $date));
+        $res['date_from'] = date(CommonTools::ENGLISH_SHORT_DATE_FORMAT, strtotime(str_replace('/', '-', $answerDate[0])));
+        $res['date_to'] = date(CommonTools::ENGLISH_SHORT_DATE_FORMAT, strtotime(str_replace('/', '-', $answerDate[1])));
+        return $res;
     }
 
     /**
@@ -782,6 +793,47 @@ class CommonTools
             $date = $model->_id->getTimestamp();
             $model->inscription_date = new MongoDate($date);
         }
+    }
+    
+    public static function frenchDates() {
+        return array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+    }
+    
+    /**
+     * Extract user inscription date from mongoId, if inscription_date is not already set,and save user
+     *
+     * @param User $model
+     */
+    public static function englishDates() {
+        return array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    }
+
+    /**
+     * Extract user inscription date from mongoId, if inscription_date is not already set,and save user
+     *
+     * @param User $model
+     */
+    public static function convertMonthEnToFr($monthEn) {
+        $monthsToFr = array(
+            "January" => "janvier",
+            "February" => "février",
+            "March" => "mars",
+            "April" => "avril",
+            "May" => "mai",
+            "June" => "june",
+            "July" => "juillet",
+            "August" => "août",
+            "September" => "septembre",
+            "October" => "octobre",
+            "November" => "novembre",
+            "December" => "décembre"
+        );
+        return $monthsToFr[$monthEn];
+    }
+    
+    public static function isVowel($month) {
+        $vowels = array("a", "e", "i", "o", "u", "y");
+        return in_array(substr($month, 0, 1), $vowels) ? true : false;
     }
 
 }

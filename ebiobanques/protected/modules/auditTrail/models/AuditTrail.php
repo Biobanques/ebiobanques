@@ -53,7 +53,7 @@ class AuditTrail extends EMongoDocument
             array('field', 'length', 'max' => 255),
             array('model_id', 'length', 'max' => 255),
             array('user_id', 'length', 'max' => 255),
-            array('id, new_value, old_value, action, model, field, stamp, user_id, model_id', 'safe', 'on' => 'search'),
+            array('id, new_value, old_value, action, model, field, stamp, user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -70,15 +70,13 @@ class AuditTrail extends EMongoDocument
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'old_value' => 'Old Value',
-            'new_value' => 'New Value',
-            'action' => 'Action',
-            'model' => 'Model',
-            'field' => 'Field',
-            'stamp' => 'Stamp',
-            'user_id' => 'User',
-            'model_id' => 'Model',
+            'old_value' => Yii::t('auditTrail', 'old_value'),
+            'new_value' => Yii::t('auditTrail', 'new_value'),
+            'action' => Yii::t('auditTrail', 'action'),
+            'model' => Yii::t('auditTrail', 'model'),
+            'field' => Yii::t('auditTrail', 'field'),
+            'stamp' => Yii::t('auditTrail', 'stamp'),
+            'user_id' => Yii::t('auditTrail', 'user_id')
         );
     }
 
@@ -88,6 +86,47 @@ class AuditTrail extends EMongoDocument
      */
     public function search($options = array()) {
         $criteria = new EMongoCriteria;
+        if (isset($this->old_value) && !empty($this->old_value)) {
+            $regex = '/' . $this->old_value . '/i';
+            $criteria->addCond('old_value', '==', new MongoRegex($regex));
+        }
+        if (isset($this->new_value) && !empty($this->new_value)) {
+            $regex = '/' . $this->new_value . '/i';
+            $criteria->addCond('new_value', '==', new MongoRegex($regex));
+        }
+        if (isset($this->model) && !empty($this->model)) {
+            $regex = '/' . $this->model . '/i';
+            $criteria->addCond('model', '==', new MongoRegex($regex));
+        }
+        if (isset($this->field) && !empty($this->field)) {
+            $regex = '/' . $this->field . '/i';
+            $criteria->addCond('field', '==', new MongoRegex($regex));
+        }
+        if (isset($this->action) && !empty($this->action)) {
+            $criteria->addCond('action', '==', new MongoRegex('/' . $this->action . '/i'));
+        }
+        if (isset($_GET['stamp_from']) && !empty($_GET['stamp_from']) && isset($_GET['stamp_to']) && !empty($_GET['stamp_to'])) {
+            $criteria->stamp = array('$gte' => date('Y-m-d', strtotime($_GET['stamp_from'])) . " 00:00:00.000000", '$lte' => date('Y-m-d', strtotime($_GET['stamp_to'])) . " 23:59:59.000000");
+        }
+        if (isset($_GET['nom']) || isset($_GET['prenom'])) {
+            $criteriaUser = new EMongoCriteria;
+            if (!empty($_GET['nom'])) {
+                $criteriaUser->nom = $_GET['nom'];
+            }
+            if (!empty($_GET['prenom'])) {
+                $criteriaUser->prenom = $_GET['prenom'];
+            }
+            $criteriaUser->select(array('_id'));
+            $users = User::model()->findAll($criteriaUser);
+            $listUsers = array();
+            if ($users != null) {
+                foreach ($users as $user) {
+                    $listUsers[] = $user->_id;
+                }
+            }
+            $criteria->addCond('user_id', 'in', $listUsers);
+        }
+        $criteria->sort('stamp', EMongoCriteria::SORT_DESC);
         return new EMongoDocumentDataProvider($this, array(
             'criteria' => $criteria
         ));
@@ -99,6 +138,37 @@ class AuditTrail extends EMongoDocument
                 'order' => ' t.stamp DESC ',
             ),
         );
+    }
+    
+    /**
+     * get actions.
+     */
+    public function getActions() {
+        $res = array();
+        $res ['CREATE'] = "CREATE";
+        $res ['SET'] = "SET";
+        $res ['CHANGE'] = "CHANGE";
+        $res ['DELETE'] = "DELETE";
+        return $res;
+    }
+    
+    /**
+     * get the timestamp into a french date format JJ/MM/AAAA
+     * @return type
+     */
+    public function getTimestamp() {
+        if ($this->stamp != null)
+            return date('d/m/Y H:i:s', strtotime($this->stamp));
+        else
+            return null;
+    }
+    
+    public function getNewValue() {
+        if (!is_array($this->new_value)) {
+            return $this->new_value;
+        } else {
+            return "N/A";
+        }
     }
 
 }

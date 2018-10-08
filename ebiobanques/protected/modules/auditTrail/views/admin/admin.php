@@ -15,12 +15,7 @@ $('.search-form form').submit(function(){
 
 <h1>Suivi des actions sur la base</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php echo CHtml::link(Yii::t('buttons', 'advancedSearch'),'#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
@@ -31,10 +26,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'id'=>'audit-trail-grid',
 	'dataProvider'=>$model->search(),
 	'columns'=>array(
-		'action',
-		'model',
-		'field',
-		'stamp',
-		'user_id',
+		array('header' => $model->attributeLabels()["action"], 'name' => 'action'),
+		array('header' => $model->attributeLabels()["model"], 'name' => 'model'),
+                array('header' => $model->attributeLabels()["field"], 'name' => 'field'),
+                array('header' => $model->attributeLabels()["old_value"], 'name' => 'old_value'),
+                array('header' => $model->attributeLabels()["new_value"], 'name' => 'new_value', 'value' => '$data->getNewValue()'),
+		array('header' => $model->attributeLabels()["stamp"], 'name' => 'stamp', 'value' => '$data->getTimestamp()'),
+		array('header' => $model->attributeLabels()["user_id"], 'name' => 'user_id', 'value' => 'Yii::app()->user->getNomPrenomById($data->user_id)')
 	),
 )); ?>

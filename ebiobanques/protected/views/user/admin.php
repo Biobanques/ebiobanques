@@ -2,8 +2,6 @@
 /* @var $this UserController */
 /* @var $model User */
 
-
-
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -18,17 +16,17 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo  Yii::t('common','manage_users')?></h1>
+<h1><?php echo Yii::t('common', 'manage_users') ?></h1>
 
 
 
 <?php
-echo CHtml::link(Yii::t('common','create_user'), Yii::app()->createUrl('user/create'));
+echo CHtml::link(Yii::t('common', 'create_user'), Yii::app()->createUrl('user/create'));
 ?>
 <br>
- <?php echo CHtml::link(Yii::t('common','advancedsearch'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('common', 'advancedsearch'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
-   <?php 
+    <?php
     $this->renderPartial('_search', array(
         'model' => $model,
     ));
@@ -56,43 +54,25 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'filter' => false
         ),
         array('name' => 'email', 'header' => Yii::t('common', 'email')),
-        array('header' =>  Yii::t('common','profil'),
+        array('header' => Yii::t('common', 'profil'),
             'name' => 'profil',
             'value' => '$data->getProfil()'),
         array(
-            'name' => Yii::t('common','inactive'),
+            'name' => Yii::t('common', 'inactive'),
             'type' => 'raw',
             'value' => 'CHtml::link($data->getActifLink()["label"],$data->getActifLink()["url"])'
         ),
-//        array('class' => 'CButtonColumn',
-//            'header' => 'actif',
-//            'template' => '{valider}{desactiver}',
-//            'buttons' => array(
-//                'valider' => array(
-//                    'label' => 'Valider',
-//                    'url' => 'Yii::app()->createUrl("user/validate",array("id"=>"$data->_id"))',
-//                    'visible' => '$data->inactif==1'
-//                ),
-//                'desactiver' => array(
-//                    'label' => 'Désactiver',
-//                    'url' => 'Yii::app()->createUrl("user/desactivate",array("id"=>"$data->_id"))',
-//                    'visible' => '$data->inactif==0'
-//                )
-//            )),
         array('class' => 'CButtonColumn',
             'template' => '{view}{update}{delete}',
             'buttons' => array(
                 'view' => array(
-                    'url' => 'Yii::app()->createUrl("user/view",array("id"=>"$data->_id", "asDialog"=>1))',
-                //'click'=>'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=1, location=no");return false;}'
+                    'url' => 'Yii::app()->createUrl("user/view",array("id"=>"$data->_id", "asDialog"=>1))'
                 ),
                 'update' => array(
-                    'url' => 'Yii::app()->createUrl("user/update",array("id"=>"$data->_id", "asDialog"=>1))',
-                //'click'=>'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=1, location=no");return false;}'
+                    'url' => 'Yii::app()->createUrl("user/update",array("id"=>"$data->_id", "asDialog"=>1))'
                 ),
                 'delete' => array(
-                    'url' => 'Yii::app()->createUrl("user/delete",array("id"=>"$data->_id"))',
-// 				'click'=>'function(){window.open(this.href,"_blank","left=100,top=100,width=760,height=650,toolbar=0,resizable=1, location=no");return false;}'
+                    'url' => 'Yii::app()->createUrl("user/delete",array("id"=>"$data->_id"))'
                 ),
             ),
         )
@@ -100,3 +80,38 @@ $this->widget('zii.widgets.grid.CGridView', array(
         )
 );
 ?>
+
+<h3 align="center">Profils utilisateurs</h3>
+<?php
+$this->widget(
+        'chartjs.widgets.ChPie', array(
+    'width' => 850,
+    'height' => 300,
+    'htmlOptions' => array(),
+    'drawLabels' => true,
+    'datasets' => array(
+        array(
+            "value" => $nbAdminSystUsers,
+            "color" => "rgba(220,30, 70,1)",
+            "label" => $nbAdminSystUsers . " " . Yii::t('common', 'system_admin')
+        ),
+        array(
+            "value" => $nbAdminBbqUsers,
+            "color" => "rgba(100,100,220,1)",
+            "label" => $nbAdminBbqUsers . " " . Yii::t('common', 'biobank_admin')
+        ),
+        array(
+            "value" => $nbStandardUsers,
+            "color" => "rgba(20,120,120,1)",
+            "label" => $nbStandardUsers . " " . Yii::t('common', 'standard_user')
+        ),
+        array(
+            "value" => $nbInactifUsers,
+            "color" => "rgba(66,66,66,1)",
+            "label" => $nbInactifUsers . " utilisateurs non validés"
+        ),
+    ),
+    'options' => array()
+        )
+);
+

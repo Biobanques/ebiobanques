@@ -269,6 +269,7 @@ Vous pouvez imprimer ou exporter (pdf, csv ou excel) l’ensemble de l’annuair
     'resetBtn' => 'Réinitialiser',
   
     'system_log' => 'Log système',
+    'userLog' => 'Log utilisateur',
     
     //Stats biobanques
     

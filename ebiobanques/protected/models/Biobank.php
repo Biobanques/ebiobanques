@@ -1280,7 +1280,7 @@ class Biobank extends LoggableActiveRecord
 
         foreach ($list as $contact) {
             if (isset($contact['lastName']) && $contact['lastName'] != '')
-                $result[strtolower($contact['lastName'] . '_' . $contact['firstName'])] = (isset($contact['civility']) && $contact['civility'] == "miss" ? 'Mme' : 'M.') . " " . ucfirst(strtolower($contact['firstName'])) . " " . strtoupper($contact['lastName']);
+                $result[strtolower($contact['lastName'] . '_' . $contact['firstName'])] = strtoupper($contact['lastName']) . " " . ucfirst(strtolower($contact['firstName']));
         }
         ksort($result);
 

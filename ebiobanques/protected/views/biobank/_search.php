@@ -52,10 +52,10 @@
         <?php echo $form->Label($model->address, 'city'); ?>
         <?php echo $form->dropDownList($model->address, 'city', $model->address->getActiveListOfCities(), array('prompt' => '----', 'style' => "width:33%")); ?>
     </div>
-    <div class="row">
+<!--    <div class="row">
         <?php echo $form->label($model->address, 'country'); ?>
         <?php echo $form->dropDownList($model->address, 'country', $model->address->getActiveListOfCountries(), array('prompt' => '----', 'style' => "width:33%")); ?>
-    </div>
+    </div>-->
     <div class="row">
         <?php echo $form->label($model, 'contact_id'); ?>
         <?php echo $form->dropDownList($model, 'contact_id', $model->getArrayActiveContact(), array('prompt' => '----', 'style' => "width:33%")); ?>

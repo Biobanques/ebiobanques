@@ -44,6 +44,8 @@
                 //array('label' => 'Export des contacts', 'url' => array('/contact/exportContact')),
                 array('label' => Yii::t('common','system_log'), 'url' => array('/auditTrail/admin')),
                 array('label' => Yii::t('common', 'userLog'), 'icon'=>'play', 'url' => array('/administration/userLog')),
+                array('label' => 'Exporter toutes les biobanques', 'icon'=>'play', 'url' => array('/administration/exportAllBiobanks')),
+                array('label' => 'Exporter tous les utilisateurs', 'icon'=>'play', 'url' => array('/administration/exportAllUsers'))
                 );
             if ($this->getAction()->getId() == 'update') {
                 $items[] = array('label' => Yii::t('common','old_update'), 'url' => array('/biobank/oldUpdate', 'id' => $this->getActionParams()['id']));

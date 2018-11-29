@@ -529,6 +529,99 @@ class Biobank extends LoggableActiveRecord
             
         );
     }
+    
+    public function attributeExportedLabelsForSql() {
+        return array(
+            'id' => 'id',
+            'identifier' => Yii::t('common', 'identifier'),
+            'name' => Yii::t('common', 'name'),
+            'long_name' => 'Nom de la biobanques',
+            'acronym' => Yii::t('common', 'acronym'),
+            'website' => Yii::t('common', 'website'),
+            'presentation' => Yii::t('common', 'presentation'),
+            'presentation_en' => Yii::t('common', 'presentation_en'),
+            'thematiques' => Yii::t('common', 'thematiques'),
+            'thematiques_en' => Yii::t('common', 'thematiques_en'),
+            'projetRecherche' => Yii::t('common', 'projetRecherche'),
+            'projetRecherche_en' => Yii::t('common', 'projetRecherche_en'),
+            'publications' => Yii::t('common', 'publications'),
+            'reseaux' => Yii::t('common', 'reseaux'),
+            'qualite' => Yii::t('common', 'qualite'),
+            'qualite_en' => Yii::t('common', 'qualite_en'),
+            'observations' => 'observations',
+            'gest_software' => 'gest_software',
+            'other_software' => 'other_software',
+            'contact_resp' => Yii::t('responsible', 'contact_resp'),
+            'responsable_op' => Yii::t('responsible', 'responsible_op'),
+            'responsable_qual' => Yii::t('responsible', 'responsible_qual'),
+            'responsable_adj' => Yii::t('responsible', 'responsable_adj'),
+            'collection_name' => Yii::t('common', 'collection_name'),
+            'collection_id' =>Yii::t('common', 'collection_id'),
+            'biobank_class' => 'biobank_class',
+            'date_entry' => 'date_entry',
+            'diagnosis_available' => Yii::t('common', 'diagnosisAvailable'),
+            'pathologies' => Yii::t('common', 'biobank.pathologies'),
+            'pathologies_en' => Yii::t('common', 'biobank.pathologies_en'),
+            'longitude' => 'longitude',
+            'latitude' => 'latitude',
+            'cim' => 'cim',
+            'keywords_MeSH' => Yii::t('common', 'biobank.keywords_MeSH'),
+            'keywords_MeSH_fr' => Yii::t('common', 'biobank.keywords_MeSH_fr'),
+            'materialStoredDNA' => Yii::t('common', 'biobank.materialStoredDNA'),
+            'materialStoredPlasma' => Yii::t('common', 'biobank.materialStoredPlasma'),
+            'materialStoredSerum' => Yii::t('common', 'biobank.materialStoredSerum'),
+            'materialStoredTissueFFPE' => Yii::t('common', 'biobank.materialStoredTissueFFPE'),
+            'materialStoredTissueFrozen' => Yii::t('common', 'biobank.materialStoredTissueFrozen'),
+            'materialStoredRNA' => Yii::t('common', 'biobank.materialStoredRNA'),
+            'materialStoredSaliva' => Yii::t('common', 'biobank.materialStoredSaliva'),
+            'materialStoredUrine' => Yii::t('common', 'biobank.materialStoredUrine'),
+            'materialStoredFaeces' => Yii::t('common', 'biobank.materialStoredFaeces'),
+            'materialStoredBlood' => Yii::t('common', 'biobank.materialStoredBlood'),
+            'materialStoredImmortalizedCellLines' => Yii::t('common', 'biobank.materialStoredImmortalizedCellLines'),
+            'materialTumoralTissue' => Yii::t('common', 'biobank.materialTumoralTissue'),
+            'materialHealthyTissue' => Yii::t('common', 'biobank.materialHealthyTissue'),
+            'materialLCR' => Yii::t('common', 'biobank.materialLCR'),
+            'materialPBMC'=> Yii::t('common', 'biobank.materialPBMC'),
+            'materialBuffyCoat'=> Yii::t('common', 'biobank.materialBuffyCoat'),
+            'materialPrimaryCells'=> Yii::t('common', 'biobank.materialPrimaryCells'),
+            'materialOther' => Yii::t('common', 'biobank.materialOther'),
+            'cert_ISO9001' => Yii::t('common', 'biobank.cert_ISO9001'),
+            'cert_NFS96900' => Yii::t('common', 'biobank.cert_NFS96900'),
+            'cert_autres' => Yii::t('common', 'biobank.cert_autres'),
+            'nb_total_samples' => Yii::t('common', 'biobank.nb_total_samples'),
+            'sampling_disease_group' => 'Disease group',
+            'sampling_disease_group_code' => 'Disease groupe code',
+            'nbs_dna_samples_affected' => 'DNA samples affected',
+            'nbs_dna_samples_relatives' => 'DNA samples relatives',
+            'nbs_cdna_samples_affected' => 'cDNA samples affected',
+            'nbs_cdna_samples_relatives' => 'cDNA samples relatives',
+            'nbs_wholeblood_samples_affected' => 'whole blood samples affected',
+            'nbs_wholeblood_samples_relatives' => 'whole blood samples relatives',
+            'nbs_bloodcellisolates_samples_affected' => 'blood cell isolates samples affected',
+            'nbs_bloodcellisolates_samples_relatives' => 'blood cell isolates samples relatives',
+            'nbs_serum_samples_affected' => 'serum samples affected',
+            'nbs_serum_samples_relatives' => 'serum sample<br />s relatives',
+            'nbs_plasma_samples_affected' => 'Plasma samples affected',
+            'nbs_plasma_samples_relatives' => 'Plasma samples relatives',
+            'nbs_fluids_samples_affected' => 'Fluids samples affected',
+            'nbs_fluids_samples_relatives' => 'Fluids samples relatives',
+            'nbs_tissuescryopreserved_samples_affected' => 'Tissues cryopreserved samples affected',
+            'nbs_tissuescryopreserved_samples_relatives' => 'Tissues cryopreserved samples related',
+            'nbs_tissuesparaffinembedded_samples_affected' => 'Tissues paraffin embedded samples affected',
+            'nbs_tissuesparaffinembedded_samples_relatives' => 'Tissues paraffin embedded samples relatives',
+            'nbs_celllines_samples_affected' => 'Cell lines samples affected',
+            'nbs_celllines_samples_relatives' => 'Cell lines samples relatives',
+            'nbs_other_samples_affected' => 'Other samples affected',
+            'nbs_other_samples_relatives' => 'Other samples relatives',
+            'nbs_other_specification' => 'nbs_other_specification',
+            'sampling_practice' => 'General sampling practice',
+            'collectionDataAccessFee' => 'collectionDataAccess',
+            'collectionDataAccessJointProjects' => 'collectionDataAccessJointProjects',
+            'collectionSampleAccessFee' => "collectionSampleAccessFee",
+            "collectionSampleAccessJointProjects" => 'collectionSampleAccessJointProjects',
+            'PartnerCharterSigned' => 'PartnerCharterSigned'
+        );
+    }
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -950,6 +1043,14 @@ class Biobank extends LoggableActiveRecord
     public function getRoundedTauxCompletude() {
         return round($this->getTauxCompletude() * 100, 2);
     }
+    
+    public function getCims() {
+        $cim = null;
+        foreach ($this->cims as $code) {
+            $cim = $code['code'];
+        }
+        return $cim;
+    }
 
     /**
      * retourne le contact principal (coordinateur)formaté en chaine courte.
@@ -1168,17 +1269,94 @@ class Biobank extends LoggableActiveRecord
     public function getResponsableOp() {
         return ( Yii::t('responsible', $this->responsable_op->civility) . " " . $this->responsable_op->firstName . " " . $this->responsable_op->lastName . "\n" . $this->responsable_op->email . "\n" . $this->responsable_op->direct_phone);
     }
+    
+    public function getResponsableOpCivility() {
+        return $this->responsable_op->civility;
+    }
+    
+    public function getResponsableOpFirstName() {
+        return $this->responsable_op->firstName;
+    }
+    
+    public function getResponsableOpLastName() {
+        return $this->responsable_op->lastName;
+    }
+    
+    public function getResponsableOpAddress() {
+        return $this->responsable_op->email;
+    }
+    public function getResponsableOpPhone() {
+        return $this->responsable_op->direct_phone;
+    }
 
     public function getResponsableAdj() {
         return ( Yii::t('responsible', $this->responsable_adj->civility) . " " . $this->responsable_adj->firstName . " " . $this->responsable_adj->lastName . "\n" . $this->responsable_adj->email . "\n" . $this->responsable_adj->direct_phone);
+    }
+    
+    public function getResponsableAdjCivility() {
+        return $this->responsable_adj->civility;
+    }
+    
+    public function getResponsableAdjFirstName() {
+        return $this->responsable_adj->firstName;
+    }
+    
+    public function getResponsableAdjLastName() {
+        return $this->responsable_adj->lastName;
+    }
+    
+    public function getResponsableAdjAddress() {
+        return $this->responsable_adj->email;
+    }
+    
+    public function getResponsableAdjPhone() {
+        return $this->responsable_adj->direct_phone;
     }
 
     public function getResponsableQual() {
         return ( Yii::t('responsible', $this->responsable_qual->civility) . " " . $this->responsable_qual->firstName . " " . $this->responsable_qual->lastName . "\n" . $this->responsable_qual->email . "\n" . $this->responsable_qual->direct_phone);
     }
+    
+    public function getResponsableQualCivility() {
+        return $this->responsable_qual->civility;
+    }
+    
+    public function getResponsableQualFirstName() {
+        return $this->responsable_qual->firstName;
+    }
+    
+    public function getResponsableQualLastName() {
+        return $this->responsable_qual->lastName;
+    }
+    
+    public function getResponsableQualAddress() {
+        return $this->responsable_qual->email;
+    }
+    public function getResponsableQualPhone() {
+        return $this->responsable_qual->direct_phone;
+    }
 
     public function getContactResp() {
         return ( Yii::t('responsible', $this->contact_resp->firstName) . " " . $this->contact_resp->lastName . "\n" . $this->contact_resp->email . "\n" . $this->contact_resp->direct_phone);
+    }
+    
+    public function getResponsableRespCivility() {
+        return $this->contact_resp->civility;
+    }
+    
+    public function getResponsableRespFirstName() {
+        return $this->contact_resp->firstName;
+    }
+    
+    public function getResponsableRespLastName() {
+        return $this->contact_resp->lastName;
+    }
+    
+    public function getResponsableRespAddress() {
+        return $this->contact_resp->email;
+    }
+    public function getResponsableRespPhone() {
+        return $this->contact_resp->direct_phone;
     }
     
      public function getShortContactResp() {

@@ -98,7 +98,7 @@ class User extends LoggableActiveRecord
      */
     public function rules() {
         $result = array(
-            array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
+            //array('verifyCode', 'CaptchaExtendedValidator', 'allowEmpty' => false, 'on' => 'subscribe'),
             array('profil, inactif, gsm, telephone', 'numerical', 'integerOnly' => true),
             array('prenom,nom', 'alphaOnly'),
             array('login', 'alphaNumericOnly'),
@@ -190,6 +190,25 @@ class User extends LoggableActiveRecord
             'inactif' => Yii::t('common', 'inactive'),
             'biobank_id' => Yii::t('common', 'biobank'),
             'verifyCode' => Yii::t('common', 'verifyCode'),
+        );
+    }
+    
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeExportedLabelsForSql() {
+        return array(
+            'id' => 'id',
+            'prenom' => Yii::t('common', 'firstname'),
+            'nom' => Yii::t('common', 'lastname'),
+            'login' => Yii::t('common', 'Login'),
+            'password' => Yii::t('common', 'password'),
+            'email' => Yii::t('common', 'email'),
+            'telephone' => Yii::t('common', 'phone'),
+            'gsm' => Yii::t('common', 'gsm'),
+            'profil' => Yii::t('common', 'profil'),
+            'inactif' => Yii::t('common', 'inactive'),
+            'biobank_id' => Yii::t('common', 'biobank')
         );
     }
 
